@@ -1,26 +1,25 @@
 {
-  "name": "article-template",
+  "name": "offsets-db-web",
   "version": "1.0.0",
-  "description": "template for developing a standalone carbonplan research article",
+  "description": "tool for exploring data from voluntary and compliance offset programs",
   "main": "index.js",
   "scripts": {
     "dev": "next -p 5001",
     "build": "next build",
     "start": "next start",
-    "format": "npm run format-js && npm run format-md",
-    "format-js": "prettier --write '*.js' '{components,pages,article,tool}/**/*.js'",
+    "format": "npm run format-js",
     "format-md": "prettier --write README.md 'article/**/*.md' --parser mdx"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carbonplan/article-template.git"
+    "url": "git+https://github.com/carbonplan/offsets-db-web.git"
   },
   "author": "carbonplan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/carbonplan/article-template/issues"
+    "url": "https://github.com/carbonplan/offsets-db-web/issues"
   },
-  "homepage": "https://github.com/carbonplan/article-template#readme",
+  "homepage": "https://github.com/carbonplan/offsets-db-web#readme",
   "dependencies": {
     "@carbonplan/components": "^12.0.0",
     "@carbonplan/layouts": "^3.0.0",
