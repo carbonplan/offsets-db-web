@@ -5,6 +5,20 @@ import { Box } from 'theme-ui'
 import { useCallback, useState } from 'react'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
+const sorters = {
+  default: (sort) => (a, b) => a[sort]?.localeCompare(b[sort]),
+  project_id: (a, b) => {
+    const values = [a.project_id, b.project_id]
+    const prefixes = values.map((d) => d.match(/\D+/)[0])
+    const numbers = values.map((d) => d.match(/\d+/)[0])
+
+    if (prefixes[0] !== prefixes[1]) {
+      return prefixes[0].localeCompare(prefixes[1])
+    } else {
+      return Number(numbers[0]) - Number(numbers[1])
+    }
+  },
+}
 
 const TableRow = ({ values, as, sx, Button }) => {
   const starts = values.reduce((accum, v, i) => {
@@ -103,24 +117,22 @@ const Projects = () => {
         ]}
       />
       <tbody>
-        {data
-          .sort((a, b) => a[sort]?.localeCompare(b[sort]))
-          .map((d) => (
-            <TableRow
-              key={d.project_id}
-              values={[
-                d.project_id,
-                { label: d.name, width: 4 },
-                d.country,
-                d.registered_at,
-              ]}
-              sx={{
-                color: 'secondary',
-                fontFamily: 'mono',
-                letterSpacing: 'mono',
-              }}
-            />
-          ))}
+        {data.sort(sorters[sort] ?? sorters.default(sort)).map((d) => (
+          <TableRow
+            key={d.project_id}
+            values={[
+              d.project_id,
+              { label: d.name, width: 4 },
+              d.country,
+              d.registered_at,
+            ]}
+            sx={{
+              color: 'secondary',
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
+            }}
+          />
+        ))}
       </tbody>
     </table>
   )
