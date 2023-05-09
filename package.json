@@ -22,6 +22,7 @@
   "homepage": "https://github.com/carbonplan/offsets-db-web#readme",
   "dependencies": {
     "@carbonplan/components": "^12.0.0",
+    "@carbonplan/icons": "^2.0.0",
     "@carbonplan/layouts": "^3.0.0",
     "@carbonplan/theme": "^8.0.0",
     "@mdx-js/loader": "^2.1.5",
