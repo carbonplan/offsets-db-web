@@ -1,10 +1,18 @@
-import { Badge, Column, Layout, Row } from '@carbonplan/components'
+import { Badge, Column, Filter, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
 import { Box, Divider, Flex } from 'theme-ui'
 import Projects from './projects'
 
 const Index = () => {
   const [mode, setMode] = useState('projects')
+  const [registries, setRegistries] = useState({
+    verra: true,
+    'gold-standard': true,
+    'global-carbon-council': true,
+    'american-carbon-registry': true,
+    'climate-action-reserve': true,
+    'art-trees': true,
+  })
 
   return (
     <Layout
@@ -21,6 +29,13 @@ const Index = () => {
           <Box as='h1' variant='styles.h1'>
             Offsets Database
           </Box>
+          <Divider sx={{ mr: [-4, -5, -5, -6] }} />
+          <Filter
+            values={registries}
+            setValues={setRegistries}
+            showAll
+            multiSelect
+          />
         </Column>
         <Column
           start={4}
@@ -58,7 +73,7 @@ const Index = () => {
             </Badge>
           </Flex>
           <Divider sx={{ ml: [-4, -5, -5, -6], my: 3 }} />
-          {mode === 'projects' && <Projects />}
+          {mode === 'projects' && <Projects registries={registries} />}
         </Column>
       </Row>
     </Layout>

@@ -4,7 +4,17 @@ import useSWR from 'swr'
 import { Box } from 'theme-ui'
 import { useCallback, useState } from 'react'
 
-const fetcher = (url) => fetch(url).then((r) => r.json())
+const fetcher = ([url, registries]) => {
+  const params = new URLSearchParams()
+  Object.keys(registries)
+    .filter((r) => registries[r])
+    .forEach((r) => params.append('registry', r))
+
+  const reqUrl = new URL(url)
+  reqUrl.search = params.toString()
+
+  return fetch(reqUrl).then((r) => r.json())
+}
 
 const sorters = {
   default: (sort) => (a, b) => a[sort]?.localeCompare(b[sort]),
@@ -96,10 +106,10 @@ const TableHead = ({ values, sort, setSort }) => {
   )
 }
 
-const Projects = () => {
+const Projects = ({ registries }) => {
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
-    'https://offsets-db.fly.dev/projects/',
+    ['https://offsets-db.fly.dev/projects/', registries],
     fetcher
   )
 
