@@ -5,6 +5,7 @@ import { Box } from 'theme-ui'
 import { useCallback, useState } from 'react'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
+
 const sorters = {
   default: (sort) => (a, b) => a[sort]?.localeCompare(b[sort]),
   project_id: (a, b) => {
@@ -98,7 +99,7 @@ const TableHead = ({ values, sort, setSort }) => {
 const Projects = () => {
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
-    'https://offsets-db.fly.dev/projects',
+    'https://offsets-db.fly.dev/projects/',
     fetcher
   )
 
