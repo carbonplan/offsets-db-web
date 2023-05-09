@@ -1,3 +1,3 @@
-import Index from '../tool/index.js'
+import Index from '../components/index.js'
 
 export default Index
