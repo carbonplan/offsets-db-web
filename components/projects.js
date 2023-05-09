@@ -1,4 +1,4 @@
-import { Column, Row } from '@carbonplan/components'
+import { Column, FadeIn, Row } from '@carbonplan/components'
 import { Triangle } from '@carbonplan/icons'
 import useSWR from 'swr'
 import { Box } from 'theme-ui'
@@ -115,8 +115,6 @@ const Projects = () => {
     fetcher
   )
 
-  if (!data) return
-
   return (
     <table>
       <TableHead
@@ -129,24 +127,26 @@ const Projects = () => {
           { value: 'registered_at', label: 'Registered' },
         ]}
       />
-      <tbody>
-        {data.sort(sorters[sort] ?? sorters.default(sort)).map((d) => (
-          <TableRow
-            key={d.project_id}
-            values={[
-              d.project_id,
-              { label: d.name, width: 4 },
-              d.country,
-              d.registered_at,
-            ]}
-            sx={{
-              color: 'secondary',
-              fontFamily: 'mono',
-              letterSpacing: 'mono',
-            }}
-          />
-        ))}
-      </tbody>
+      {data && (
+        <FadeIn as='tbody'>
+          {data.sort(sorters[sort] ?? sorters.default(sort)).map((d) => (
+            <TableRow
+              key={d.project_id}
+              values={[
+                d.project_id,
+                { label: d.name, width: 4 },
+                d.country,
+                d.registered_at,
+              ]}
+              sx={{
+                color: 'secondary',
+                fontFamily: 'mono',
+                letterSpacing: 'mono',
+              }}
+            />
+          ))}
+        </FadeIn>
+      )}
     </table>
   )
 }
