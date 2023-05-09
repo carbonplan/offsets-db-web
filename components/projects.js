@@ -3,6 +3,7 @@ import { Triangle } from '@carbonplan/icons'
 import useSWR from 'swr'
 import { Box } from 'theme-ui'
 import { useCallback, useState } from 'react'
+import { useQueries } from './queries'
 
 const fetcher = ([url, registries]) => {
   const params = new URLSearchParams()
@@ -106,10 +107,11 @@ const TableHead = ({ values, sort, setSort }) => {
   )
 }
 
-const Projects = ({ registries }) => {
+const Projects = () => {
+  const { registry } = useQueries()
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
-    ['https://offsets-db.fly.dev/projects/', registries],
+    ['https://offsets-db.fly.dev/projects/', registry],
     fetcher
   )
 
