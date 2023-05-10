@@ -47,7 +47,7 @@ const Projects = () => {
         setSort={setSort}
         values={[
           { value: 'project_id', label: 'Project ID' },
-          { value: 'name', label: 'Name', width: 4 },
+          { value: 'name', label: 'Name', width: 3 },
           { value: 'country', label: 'Country' },
           { value: 'registered_at', label: 'Registered' },
         ]}
@@ -61,7 +61,7 @@ const Projects = () => {
                 <Badge sx={{ '& :first-of-type': { fontFamily: 'body' } }}>
                   {d.project_id}
                 </Badge>,
-                { label: d.name ?? '?', width: 4 },
+                { label: d.name ?? '?', width: 3 },
                 d.country,
                 d.registered_at
                   ? formatDate(d.registered_at, { year: 'numeric' })

@@ -25,7 +25,8 @@ const TableRow = ({ values, as, sx, Button }) => {
             color: 'secondary',
             fontFamily: 'mono',
             letterSpacing: 'mono',
-            mb: 3,
+            mb: 4,
+            mt: 2,
             ...sx,
           }}
         >

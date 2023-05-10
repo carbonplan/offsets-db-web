@@ -67,6 +67,7 @@ const TableHead = ({ values, sort, setSort }) => {
           fontFamily: 'body',
           letterSpacing: 'body',
           mb: 2,
+          mt: 0,
         }}
       />
     </Box>
