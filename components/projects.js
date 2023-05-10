@@ -134,7 +134,7 @@ const Projects = () => {
               key={d.project_id}
               values={[
                 d.project_id,
-                { label: d.name, width: 4 },
+                { label: d.name ?? '?', width: 4 },
                 d.country,
                 d.registered_at,
               ]}
