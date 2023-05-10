@@ -64,8 +64,8 @@ const TableHead = ({ values, sort, setSort }) => {
         Button={Sort}
         sx={{
           color: 'primary',
-          fontFamily: 'heading',
-          letterSpacing: 'heading',
+          fontFamily: 'body',
+          letterSpacing: 'body',
           mb: 2,
         }}
       />

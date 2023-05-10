@@ -1,4 +1,4 @@
-import { FadeIn } from '@carbonplan/components'
+import { Badge, FadeIn, formatDate } from '@carbonplan/components'
 import useSWR from 'swr'
 import { useState } from 'react'
 
@@ -58,10 +58,14 @@ const Projects = () => {
             <TableRow
               key={d.project_id}
               values={[
-                d.project_id,
+                <Badge sx={{ '& :first-of-type': { fontFamily: 'body' } }}>
+                  {d.project_id}
+                </Badge>,
                 { label: d.name ?? '?', width: 4 },
                 d.country,
-                d.registered_at,
+                d.registered_at
+                  ? formatDate(d.registered_at, { year: 'numeric' })
+                  : '?',
               ]}
             />
           ))}
