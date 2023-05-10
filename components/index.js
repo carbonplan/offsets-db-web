@@ -60,7 +60,7 @@ const Index = () => {
                 Events
               </Badge>
             </Flex>
-            <Divider sx={{ ml: [-4, -5, -5, -6], my: 3 }} />
+            <Divider sx={{ ml: [-4, -5, -5, -6], mt: 3, mb: 2 }} />
             {mode === 'projects' && <Projects />}
           </Column>
         </Row>
