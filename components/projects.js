@@ -60,22 +60,35 @@ const Projects = () => {
             <TableRow
               key={d.project_id}
               values={[
-                <Badge sx={{ '& :first-of-type': { fontFamily: 'body' } }}>
-                  {d.project_id}
-                </Badge>,
-                { label: d.name ?? '?', width: 3 },
-                d.country,
-                d.registered_at
-                  ? formatDate(d.registered_at, { year: 'numeric' })
-                  : '?',
-                <Button
-                  href={d.details_url}
-                  suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
-                  inverted
-                  sx={{ fontSize: 1 }}
-                >
-                  {LABELS.registry[d.registry]}
-                </Button>,
+                {
+                  label: (
+                    <Badge sx={{ '& :first-of-type': { fontFamily: 'body' } }}>
+                      {d.project_id}
+                    </Badge>
+                  ),
+                  key: 'project_id',
+                },
+                { key: 'name', label: d.name ?? '?', width: 3 },
+                { key: 'country', label: d.country },
+                {
+                  key: 'registered_at',
+                  label: d.registered_at
+                    ? formatDate(d.registered_at, { year: 'numeric' })
+                    : '?',
+                },
+                {
+                  key: 'details_url',
+                  label: (
+                    <Button
+                      href={d.details_url}
+                      suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
+                      inverted
+                      sx={{ fontSize: 1 }}
+                    >
+                      {LABELS.registry[d.registry]}
+                    </Button>
+                  ),
+                },
               ]}
             />
           ))}

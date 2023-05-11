@@ -16,7 +16,7 @@ const TableRow = ({ values, as, sx, Button }) => {
       {values.map((value, i) => (
         <Column
           as={value?.as ?? as ?? 'td'}
-          key={value?.label ?? value}
+          key={value?.key ?? value?.label ?? value}
           start={starts[i]}
           width={value?.width ?? 1}
           sx={{
