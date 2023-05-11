@@ -1,6 +1,6 @@
-import { Column, Filter, Row } from '@carbonplan/components'
+import { Column, Filter, Input, Row } from '@carbonplan/components'
 import { createContext, useContext, useState } from 'react'
-import { Box } from 'theme-ui'
+import { Box, Flex } from 'theme-ui'
 import { LABELS } from './constants'
 
 const QueryContext = createContext({
@@ -42,7 +42,19 @@ const Queries = () => {
   const { registry, setRegistry } = useQueries()
 
   return (
-    <>
+    <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
+      <Row columns={[3]}>
+        <Column start={1} width={1}>
+          <Box sx={sx.label}>Search</Box>
+        </Column>
+        <Column start={[2]} width={[2]}>
+          <Input
+            placeholder='Enter search term'
+            size='xs'
+            sx={{ width: '100%', borderBottom: 0 }}
+          />
+        </Column>
+      </Row>
       <Row columns={[3]}>
         <Column start={1} width={1}>
           <Box sx={sx.label}>Registry</Box>
@@ -57,7 +69,7 @@ const Queries = () => {
           />
         </Column>
       </Row>
-    </>
+    </Flex>
   )
 }
 
