@@ -1,7 +1,9 @@
-import { Badge, FadeIn, formatDate } from '@carbonplan/components'
+import { Badge, Button, FadeIn, formatDate } from '@carbonplan/components'
+import { RotatingArrow } from '@carbonplan/icons'
 import useSWR from 'swr'
 import { useState } from 'react'
 
+import { LABELS } from './constants'
 import { useQueries } from './queries'
 import { TableHead, TableRow } from './table'
 
@@ -66,6 +68,14 @@ const Projects = () => {
                 d.registered_at
                   ? formatDate(d.registered_at, { year: 'numeric' })
                   : '?',
+                <Button
+                  href={d.details_url}
+                  suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
+                  inverted
+                  sx={{ fontSize: 1 }}
+                >
+                  {LABELS.registry[d.registry]}
+                </Button>,
               ]}
             />
           ))}

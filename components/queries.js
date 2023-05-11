@@ -1,6 +1,7 @@
 import { Column, Filter, Row } from '@carbonplan/components'
 import { createContext, useContext, useState } from 'react'
 import { Box } from 'theme-ui'
+import { LABELS } from './constants'
 
 const QueryContext = createContext({
   registry: {},
@@ -37,17 +38,6 @@ const sx = {
   },
 }
 
-const labels = {
-  registry: {
-    verra: 'VCS',
-    'gold-standard': 'GOLD',
-    'global-carbon-council': 'GCC',
-    'american-carbon-registry': 'ACR',
-    'climate-action-reserve': 'CAR',
-    'art-trees': 'ART',
-  },
-}
-
 const Queries = () => {
   const { registry, setRegistry } = useQueries()
 
@@ -61,7 +51,7 @@ const Queries = () => {
           <Filter
             values={registry}
             setValues={setRegistry}
-            labels={labels.registry}
+            labels={LABELS.registry}
             showAll
             multiSelect
           />
