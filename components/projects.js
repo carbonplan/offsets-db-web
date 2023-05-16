@@ -43,7 +43,8 @@ const Projects = () => {
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
     ['https://offsets-db.fly.dev/projects/', registry, search],
-    fetcher
+    fetcher,
+    { revalidateOnFocus: false }
   )
 
   return (
