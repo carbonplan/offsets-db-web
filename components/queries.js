@@ -17,9 +17,10 @@ export const QueryProvider = ({ children }) => {
     'climate-action-reserve': true,
     'art-trees': true,
   })
+  const [search, setSearch] = useState('')
 
   return (
-    <QueryContext.Provider value={{ registry, setRegistry }}>
+    <QueryContext.Provider value={{ registry, setRegistry, search, setSearch }}>
       {children}
     </QueryContext.Provider>
   )
@@ -39,7 +40,7 @@ const sx = {
 }
 
 const Queries = () => {
-  const { registry, setRegistry } = useQueries()
+  const { registry, setRegistry, search, setSearch } = useQueries()
 
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
@@ -52,6 +53,8 @@ const Queries = () => {
             placeholder='Enter search term'
             size='xs'
             sx={{ width: '100%', borderBottom: 0 }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </Column>
       </Row>

@@ -7,11 +7,15 @@ import { LABELS } from './constants'
 import { useQueries } from './queries'
 import { TableHead, TableRow } from './table'
 
-const fetcher = ([url, registries]) => {
+const fetcher = ([url, registries, search]) => {
   const params = new URLSearchParams()
   Object.keys(registries)
     .filter((r) => registries[r])
     .forEach((r) => params.append('registry', r))
+
+  if (search?.trim()) {
+    params.append('search', search.trim())
+  }
 
   const reqUrl = new URL(url)
   reqUrl.search = params.toString()
@@ -35,10 +39,10 @@ const sorters = {
 }
 
 const Projects = () => {
-  const { registry } = useQueries()
+  const { registry, search } = useQueries()
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
-    ['https://offsets-db.fly.dev/projects/', registry],
+    ['https://offsets-db.fly.dev/projects/', registry, search],
     fetcher
   )
 
