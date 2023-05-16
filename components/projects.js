@@ -2,13 +2,12 @@ import { Badge, Button, FadeIn, formatDate } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import useSWR from 'swr'
 import { useState } from 'react'
-import { Box } from 'theme-ui'
 
 import { LABELS } from './constants'
 import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
 
-const fetcher = ([url, registries, search]) => {
+const fetcher = ([url, registries, search, sort]) => {
   const params = new URLSearchParams()
   Object.keys(registries)
     .filter((r) => registries[r])
@@ -16,6 +15,10 @@ const fetcher = ([url, registries, search]) => {
 
   if (search?.trim()) {
     params.append('search', search.trim())
+  }
+
+  if (sort) {
+    params.append('sort', sort)
   }
 
   const reqUrl = new URL(url)
@@ -43,7 +46,7 @@ const Projects = () => {
   const { registry, search } = useQueries()
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
-    ['https://offsets-db.fly.dev/projects/', registry, search],
+    ['https://offsets-db.fly.dev/projects/', registry, search, sort],
     fetcher,
     { revalidateOnFocus: false }
   )
