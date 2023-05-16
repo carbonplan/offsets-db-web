@@ -2,10 +2,11 @@ import { Badge, Button, FadeIn, formatDate } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import useSWR from 'swr'
 import { useState } from 'react'
+import { Box } from 'theme-ui'
 
 import { LABELS } from './constants'
 import { useQueries } from './queries'
-import { TableHead, TableRow } from './table'
+import { Loading, TableHead, TableRow } from './table'
 
 const fetcher = ([url, registries, search]) => {
   const params = new URLSearchParams()
@@ -97,6 +98,26 @@ const Projects = () => {
               ]}
             />
           ))}
+        </FadeIn>
+      )}
+
+      {isLoading && (
+        <FadeIn as='tbody'>
+          <Loading
+            values={[
+              {
+                key: 'project_id',
+              },
+              { key: 'name', width: 3 },
+              { key: 'country' },
+              {
+                key: 'registered_at',
+              },
+              {
+                key: 'details_url',
+              },
+            ]}
+          />
         </FadeIn>
       )}
     </table>
