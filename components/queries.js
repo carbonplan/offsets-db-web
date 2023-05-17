@@ -18,9 +18,19 @@ export const QueryProvider = ({ children }) => {
     'art-trees': true,
   })
   const [search, setSearch] = useState('')
+  const [registrationBounds, setRegistrationBounds] = useState(null)
 
   return (
-    <QueryContext.Provider value={{ registry, setRegistry, search, setSearch }}>
+    <QueryContext.Provider
+      value={{
+        registry,
+        setRegistry,
+        search,
+        setSearch,
+        registrationBounds,
+        setRegistrationBounds,
+      }}
+    >
       {children}
     </QueryContext.Provider>
   )

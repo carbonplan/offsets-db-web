@@ -49,6 +49,7 @@ const TableHead = ({ values, sort, setSort }) => {
       sx={{
         '& tr': {
           border: 0,
+          borderTop: '1px',
           borderBottom: '1px',
           borderColor: 'muted',
           borderStyle: 'solid',
@@ -67,7 +68,7 @@ const TableHead = ({ values, sort, setSort }) => {
           fontFamily: 'body',
           letterSpacing: 'body',
           mb: 2,
-          mt: 0,
+          mt: 2,
         }}
       />
     </Box>

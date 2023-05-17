@@ -6,8 +6,9 @@ import { useState } from 'react'
 import { LABELS } from './constants'
 import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
+import ProjectCharts from './project-charts'
 
-const fetcher = ([url, registries, search, sort]) => {
+const fetcher = ([url, registries, search, sort, registrationBounds]) => {
   const params = new URLSearchParams()
   Object.keys(registries)
     .filter((r) => registries[r])
@@ -19,6 +20,11 @@ const fetcher = ([url, registries, search, sort]) => {
 
   if (sort) {
     params.append('sort', sort)
+  }
+
+  if (registrationBounds) {
+    params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
+    params.append('registered_at_to', `${registrationBounds[1]}-01-01`)
   }
 
   const reqUrl = new URL(url)
@@ -43,87 +49,98 @@ const sorters = {
 }
 
 const Projects = () => {
-  const { registry, search } = useQueries()
+  const { registry, search, registrationBounds } = useQueries()
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
-    ['https://offsets-db.fly.dev/projects/', registry, search, sort],
+    [
+      'https://offsets-db.fly.dev/projects/',
+      registry,
+      search,
+      sort,
+      registrationBounds,
+    ],
     fetcher,
     { revalidateOnFocus: false }
   )
 
   return (
-    <table>
-      <TableHead
-        sort={sort}
-        setSort={setSort}
-        values={[
-          { value: 'project_id', label: 'Project ID' },
-          { value: 'name', label: 'Name', width: 3 },
-          { value: 'country', label: 'Country' },
-          { value: 'registered_at', label: 'Registered' },
-        ]}
-      />
-      {data && (
-        <FadeIn as='tbody'>
-          {data.sort(sorters[sort] ?? sorters.default(sort)).map((d) => (
-            <TableRow
-              key={d.project_id}
+    <>
+      <ProjectCharts />
+      <table>
+        <TableHead
+          sort={sort}
+          setSort={setSort}
+          values={[
+            { value: 'project_id', label: 'Project ID' },
+            { value: 'name', label: 'Name', width: 3 },
+            { value: 'country', label: 'Country' },
+            { value: 'registered_at', label: 'Registered' },
+          ]}
+        />
+        {data && (
+          <FadeIn as='tbody'>
+            {data.sort(sorters[sort] ?? sorters.default(sort)).map((d) => (
+              <TableRow
+                key={d.project_id}
+                values={[
+                  {
+                    label: (
+                      <Badge
+                        sx={{ '& :first-of-type': { fontFamily: 'body' } }}
+                      >
+                        {d.project_id}
+                      </Badge>
+                    ),
+                    key: 'project_id',
+                  },
+                  { key: 'name', label: d.name ?? '?', width: 3 },
+                  { key: 'country', label: d.country },
+                  {
+                    key: 'registered_at',
+                    label: d.registered_at
+                      ? formatDate(d.registered_at, { year: 'numeric' })
+                      : '?',
+                  },
+                  {
+                    key: 'details_url',
+                    label: (
+                      <Button
+                        href={d.details_url}
+                        suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
+                        inverted
+                        sx={{ fontSize: 1 }}
+                      >
+                        {LABELS.registry[d.registry]}
+                      </Button>
+                    ),
+                  },
+                ]}
+              />
+            ))}
+          </FadeIn>
+        )}
+
+        {isLoading && (
+          <FadeIn as='tbody'>
+            <Loading
               values={[
                 {
-                  label: (
-                    <Badge sx={{ '& :first-of-type': { fontFamily: 'body' } }}>
-                      {d.project_id}
-                    </Badge>
-                  ),
                   key: 'project_id',
                 },
-                { key: 'name', label: d.name ?? '?', width: 3 },
-                { key: 'country', label: d.country },
+                { key: 'name', width: 3 },
+                { key: 'country' },
                 {
                   key: 'registered_at',
-                  label: d.registered_at
-                    ? formatDate(d.registered_at, { year: 'numeric' })
-                    : '?',
                 },
                 {
                   key: 'details_url',
-                  label: (
-                    <Button
-                      href={d.details_url}
-                      suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
-                      inverted
-                      sx={{ fontSize: 1 }}
-                    >
-                      {LABELS.registry[d.registry]}
-                    </Button>
-                  ),
                 },
               ]}
             />
-          ))}
-        </FadeIn>
-      )}
-
-      {isLoading && (
-        <FadeIn as='tbody'>
-          <Loading
-            values={[
-              {
-                key: 'project_id',
-              },
-              { key: 'name', width: 3 },
-              { key: 'country' },
-              {
-                key: 'registered_at',
-              },
-              {
-                key: 'details_url',
-              },
-            ]}
-          />
-        </FadeIn>
-      )}
-    </table>
+          </FadeIn>
+        )}
+      </table>
+    </>
   )
 }
 
