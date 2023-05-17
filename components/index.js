@@ -23,7 +23,7 @@ const Index = () => {
           <Row>
             <Column
               start={1}
-              width={3}
+              width={[6, 8, 3, 3]}
               sx={{
                 position: ['relative', 'relative', 'sticky', 'sticky'],
                 top: [0, 0, 56, 56],
@@ -54,7 +54,7 @@ const Index = () => {
               <Box as='h1' variant='styles.h1'>
                 Offsets Database
               </Box>
-              <Divider sx={{ mr: [-4, -5, -5, -6] }} />
+              <Divider sx={{ mr: [-4, -5, -5, -6], ml: [-4, -5, 0, 0] }} />
               <Queries />
             </Column>
             <Column
@@ -67,9 +67,19 @@ const Index = () => {
                 borderRightWidth: 1,
                 width: '50%',
                 height: '100%',
+                display: ['none', 'none', 'inherit', 'inherit'],
               }}
             />
             <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]}>
+              <Divider
+                sx={{
+                  display: ['inherit', 'inherit', 'none', 'none'],
+                  ml: [-4, -5, -5, -6],
+                  mr: [-4, -5, 0, 0],
+                  mt: 3,
+                  mb: 2,
+                }}
+              />
               <Flex
                 sx={{
                   gap: 3,
@@ -91,7 +101,9 @@ const Index = () => {
                   Events
                 </Badge>
               </Flex>
-              <Divider sx={{ ml: [-4, -5, -5, -6], mt: 3, mb: 2 }} />
+              <Divider
+                sx={{ ml: [-4, -5, -5, -6], mr: [-4, -5, 0, 0], mt: 3, mb: 2 }}
+              />
               {mode === 'projects' && <Projects />}
             </Column>
           </Row>

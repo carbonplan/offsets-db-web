@@ -55,6 +55,8 @@ const TableHead = ({ values, sort, setSort }) => {
           borderStyle: 'solid',
           mb: 2,
           ml: [-4, -5, -5, -6],
+          mr: [-4, -5, 0, 0],
+          pr: [4, 5, 0, 0],
           pl: [4, 5, 5, 6],
         },
       }}
