@@ -67,7 +67,7 @@ const Projects = () => {
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
     [
-      'https://offsets-db.fly.dev/projects/',
+      `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
       registry,
       category,
       search,
