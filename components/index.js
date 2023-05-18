@@ -86,7 +86,7 @@ const Index = () => {
                   fontFamily: 'mono',
                   letterSpacing: 'mono',
                   textTransform: 'uppercase',
-                  mt: 3,
+                  my: 3,
                 }}
               >
                 <Box sx={{ color: 'secondary' }}>View by</Box>
@@ -101,9 +101,6 @@ const Index = () => {
                   Events
                 </Badge>
               </Flex>
-              <Divider
-                sx={{ ml: [-4, -5, -5, -6], mr: [-4, -5, 0, 0], mt: 3, mb: 2 }}
-              />
               {mode === 'projects' && <Projects />}
             </Column>
           </Row>
