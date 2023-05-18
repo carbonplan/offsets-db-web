@@ -59,6 +59,7 @@ const sx = {
     fontFamily: 'mono',
     letterSpacing: 'mono',
     fontSize: 1,
+    mb: [2, 0, 0, 0],
   },
 }
 
@@ -68,11 +69,11 @@ const Queries = () => {
 
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
-      <Row columns={[3]}>
-        <Column start={1} width={1}>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Search</Box>
         </Column>
-        <Column start={[2]} width={[2]}>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
           <Input
             placeholder='Enter search term'
             size='xs'
@@ -82,11 +83,11 @@ const Queries = () => {
           />
         </Column>
       </Row>
-      <Row columns={[3]}>
-        <Column start={1} width={1}>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Registry</Box>
         </Column>
-        <Column start={[2]} width={[2]}>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
           <Filter
             values={registry}
             setValues={setRegistry}
@@ -96,11 +97,11 @@ const Queries = () => {
           />
         </Column>
       </Row>
-      <Row columns={[3]}>
-        <Column start={1} width={1}>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Category</Box>
         </Column>
-        <Column start={[2]} width={[2]}>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
           <Filter
             values={category}
             setValues={setCategory}

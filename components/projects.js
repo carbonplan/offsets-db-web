@@ -2,6 +2,7 @@ import { Badge, Button, FadeIn, formatDate } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import useSWR from 'swr'
 import { useState } from 'react'
+import { Box } from 'theme-ui'
 
 import { COLORS, LABELS } from './constants'
 import { useQueries } from './queries'
@@ -80,7 +81,7 @@ const Projects = () => {
   return (
     <>
       <ProjectCharts />
-      <table>
+      <Box as='table' sx={{ width: '100%' }}>
         <TableHead
           sort={sort}
           setSort={setSort}
@@ -161,7 +162,7 @@ const Projects = () => {
             />
           </FadeIn>
         )}
-      </table>
+      </Box>
     </>
   )
 }

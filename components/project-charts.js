@@ -53,7 +53,7 @@ const ProjectCharts = () => {
 
   return (
     <Row
-      columns={[8]}
+      columns={[6, 8, 8, 8]}
       sx={{
         color: 'primary',
         fontFamily: 'mono',
@@ -61,7 +61,7 @@ const ProjectCharts = () => {
         textTransform: 'uppercase',
       }}
     >
-      <Column start={1} width={[4]}>
+      <Column start={1} width={[6, 4, 4, 4]}>
         <Flex sx={{ gap: 3 }}>
           Project registration
           <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
@@ -81,7 +81,7 @@ const ProjectCharts = () => {
           </Chart>
         </Box>
       </Column>
-      <Column start={5} width={[4]}>
+      <Column start={5} width={[6, 4, 4, 4]}>
         <Box sx={{ height: '200px' }}>TK</Box>
       </Column>
     </Row>
