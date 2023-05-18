@@ -85,10 +85,14 @@ const Projects = () => {
           sort={sort}
           setSort={setSort}
           values={[
-            { value: 'project_id', label: 'Project ID' },
+            { value: 'project_id', label: 'Project ID', width: [2, 1, 1, 1] },
             { value: 'name', label: 'Name', width: 3 },
-            { value: 'country', label: 'Country' },
-            { value: 'registered_at', label: 'Registered' },
+            { value: 'country', label: 'Country', width: [0, 1, 1, 1] },
+            {
+              value: 'registered_at',
+              label: 'Registered',
+              width: [0, 1, 1, 1],
+            },
           ]}
         />
         {data && (
@@ -111,14 +115,16 @@ const Projects = () => {
                       </Badge>
                     ),
                     key: 'project_id',
+                    width: [2, 1, 1, 1],
                   },
-                  { key: 'name', label: d.name ?? '?', width: 3 },
-                  { key: 'country', label: d.country },
+                  { key: 'name', label: d.name ?? '?', width: [4, 3, 3, 3] },
+                  { key: 'country', label: d.country, width: [0, 1, 1, 1] },
                   {
                     key: 'registered_at',
                     label: d.registered_at
                       ? formatDate(d.registered_at, { year: 'numeric' })
                       : '?',
+                    width: [0, 1, 1, 1],
                   },
                   {
                     key: 'details_url',
@@ -132,6 +138,7 @@ const Projects = () => {
                         {LABELS.registry[d.registry]}
                       </Button>
                     ),
+                    width: [0, 1, 1, 1],
                   },
                 ]}
               />
@@ -143,16 +150,12 @@ const Projects = () => {
           <FadeIn as='tbody'>
             <Loading
               values={[
-                {
-                  key: 'project_id',
-                },
+                { key: 'project_id', width: [2, 1, 1, 1] },
                 { key: 'name', width: 3 },
-                { key: 'country' },
+                { key: 'country', width: [0, 1, 1, 1] },
                 {
                   key: 'registered_at',
-                },
-                {
-                  key: 'details_url',
+                  width: [0, 1, 1, 1],
                 },
               ]}
             />

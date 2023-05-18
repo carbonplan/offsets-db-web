@@ -3,10 +3,16 @@ import { Column, Row } from '@carbonplan/components'
 const TableRow = ({ values, as, sx, Button }) => {
   const starts = values.reduce((accum, v, i) => {
     if (accum.length === 0) {
-      accum.push(1)
+      accum.push([1, 1, 1, 1])
     } else {
-      const prevWidth = values[i - 1].width ?? 1
-      accum.push(accum[accum.length - 1] + prevWidth)
+      let prevWidth = values[i - 1].width
+      if (typeof prevWidth === 'number') {
+        prevWidth = [prevWidth, prevWidth, prevWidth, prevWidth]
+      } else if (!prevWidth) {
+        prevWidth = [1, 1, 1, 1]
+      }
+
+      accum.push(accum[accum.length - 1].map((d, i) => d + prevWidth[i]))
     }
     return accum
   }, [])
@@ -27,6 +33,9 @@ const TableRow = ({ values, as, sx, Button }) => {
             letterSpacing: 'mono',
             mb: 4,
             mt: 2,
+            display: value?.width?.map
+              ? value.width.map((w) => (w === 0 ? 'none' : 'inherit'))
+              : 'inherit',
             ...sx,
           }}
         >
