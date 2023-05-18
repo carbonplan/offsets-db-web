@@ -38,6 +38,8 @@ const fetcher = ([
     params.append('registered_at_to', `${registrationBounds[1]}-01-01`)
   }
 
+  params.append('limit', 50)
+
   const reqUrl = new URL(url)
   reqUrl.search = params.toString()
 
