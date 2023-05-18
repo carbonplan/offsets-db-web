@@ -3,16 +3,27 @@ import { RotatingArrow } from '@carbonplan/icons'
 import useSWR from 'swr'
 import { useState } from 'react'
 
-import { LABELS } from './constants'
+import { COLORS, LABELS } from './constants'
 import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
 import ProjectCharts from './project-charts'
 
-const fetcher = ([url, registries, search, sort, registrationBounds]) => {
+const fetcher = ([
+  url,
+  registry,
+  category,
+  search,
+  sort,
+  registrationBounds,
+]) => {
   const params = new URLSearchParams()
-  Object.keys(registries)
-    .filter((r) => registries[r])
+  Object.keys(registry)
+    .filter((r) => registry[r])
     .forEach((r) => params.append('registry', r))
+
+  Object.keys(category)
+    .filter((c) => category[c])
+    .forEach((c) => params.append('category', c))
 
   if (search?.trim()) {
     params.append('search', search.trim())
@@ -49,12 +60,13 @@ const sorters = {
 }
 
 const Projects = () => {
-  const { registry, search, registrationBounds } = useQueries()
+  const { registry, category, search, registrationBounds } = useQueries()
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
     [
       'https://offsets-db.fly.dev/projects/',
       registry,
+      category,
       search,
       sort,
       registrationBounds,
@@ -86,7 +98,12 @@ const Projects = () => {
                   {
                     label: (
                       <Badge
-                        sx={{ '& :first-of-type': { fontFamily: 'body' } }}
+                        sx={{
+                          color: COLORS.category[d.category],
+                          '& :first-of-type': {
+                            fontFamily: 'body',
+                          },
+                        }}
                       >
                         {d.project_id}
                       </Badge>

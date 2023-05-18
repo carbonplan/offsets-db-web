@@ -1,7 +1,7 @@
 import { Column, Filter, Input, Row } from '@carbonplan/components'
 import { createContext, useContext, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
-import { LABELS } from './constants'
+import { COLORS, LABELS } from './constants'
 
 const QueryContext = createContext({
   registry: {},
@@ -17,6 +17,17 @@ export const QueryProvider = ({ children }) => {
     'climate-action-reserve': true,
     'art-trees': true,
   })
+  const [category, setCategory] = useState({
+    'mine-methane': true,
+    soil: true,
+    agriculture: true,
+    forest: true,
+    landfill: true,
+    'industrial-gases': true,
+    renewable: true,
+    transportation: true,
+    other: true,
+  })
   const [search, setSearch] = useState('')
   const [registrationBounds, setRegistrationBounds] = useState(null)
 
@@ -25,6 +36,8 @@ export const QueryProvider = ({ children }) => {
       value={{
         registry,
         setRegistry,
+        category,
+        setCategory,
         search,
         setSearch,
         registrationBounds,
@@ -50,7 +63,8 @@ const sx = {
 }
 
 const Queries = () => {
-  const { registry, setRegistry, search, setSearch } = useQueries()
+  const { registry, setRegistry, category, setCategory, search, setSearch } =
+    useQueries()
 
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
@@ -77,6 +91,21 @@ const Queries = () => {
             values={registry}
             setValues={setRegistry}
             labels={LABELS.registry}
+            showAll
+            multiSelect
+          />
+        </Column>
+      </Row>
+      <Row columns={[3]}>
+        <Column start={1} width={1}>
+          <Box sx={sx.label}>Category</Box>
+        </Column>
+        <Column start={[2]} width={[2]}>
+          <Filter
+            values={category}
+            setValues={setCategory}
+            labels={LABELS.category}
+            colors={COLORS.category}
             showAll
             multiSelect
           />
