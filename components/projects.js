@@ -141,6 +141,17 @@ const Projects = () => {
                   ]}
                 />
               ))}
+            {data.length === 0 ? (
+              <TableRow
+                values={[
+                  {
+                    label: 'No results found',
+                    key: 'empty',
+                    width: [6, 8, 8, 8],
+                  },
+                ]}
+              />
+            ) : null}
           </FadeIn>
         )}
 
