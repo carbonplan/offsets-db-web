@@ -8,6 +8,7 @@ import { COLORS, LABELS } from './constants'
 import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
 import ProjectCharts from './project-charts'
+import { projectSorters, useDebounce } from './utils'
 
 const fetcher = ([
   url,
@@ -47,32 +48,17 @@ const fetcher = ([
   return fetch(reqUrl).then((r) => r.json())
 }
 
-const sorters = {
-  default: (sort) => (a, b) => a[sort]?.localeCompare(b[sort]),
-  project_id: (a, b) => {
-    const values = [a.project_id, b.project_id]
-    const prefixes = values.map((d) => d.match(/\D+/)[0])
-    const numbers = values.map((d) => d.match(/\d+/)[0])
-
-    if (prefixes[0] !== prefixes[1]) {
-      return prefixes[0].localeCompare(prefixes[1])
-    } else {
-      return Number(numbers[0]) - Number(numbers[1])
-    }
-  },
-}
-
 const Projects = () => {
   const { registry, category, search, registrationBounds } = useQueries()
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
     [
       `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
-      registry,
-      category,
-      search,
-      sort,
-      registrationBounds,
+      useDebounce(registry),
+      useDebounce(category),
+      useDebounce(search),
+      useDebounce(sort, 10),
+      useDebounce(registrationBounds),
     ],
     fetcher,
     { revalidateOnFocus: false }
@@ -107,52 +93,54 @@ const Projects = () => {
         />
         {data && (
           <FadeIn as='tbody'>
-            {data.sort(sorters[sort] ?? sorters.default(sort)).map((d) => (
-              <TableRow
-                key={d.project_id}
-                values={[
-                  {
-                    label: (
-                      <Badge
-                        sx={{
-                          color: COLORS.category[d.category],
-                          '& :first-of-type': {
-                            fontFamily: 'body',
-                          },
-                        }}
-                      >
-                        {d.project_id}
-                      </Badge>
-                    ),
-                    key: 'project_id',
-                    width: [2, 1, 1, 1],
-                  },
-                  { key: 'name', label: d.name ?? '?', width: [4, 3, 3, 3] },
-                  { key: 'country', label: d.country, width: [0, 1, 1, 1] },
-                  {
-                    key: 'registered_at',
-                    label: d.registered_at
-                      ? formatDate(d.registered_at, { year: 'numeric' })
-                      : '?',
-                    width: [0, 1, 1, 1],
-                  },
-                  {
-                    key: 'details_url',
-                    label: (
-                      <Button
-                        href={d.details_url}
-                        suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
-                        inverted
-                        sx={{ fontSize: 1 }}
-                      >
-                        {LABELS.registry[d.registry]}
-                      </Button>
-                    ),
-                    width: [0, 1, 1, 1],
-                  },
-                ]}
-              />
-            ))}
+            {data
+              .sort(projectSorters[sort] ?? projectSorters.default(sort))
+              .map((d) => (
+                <TableRow
+                  key={d.project_id}
+                  values={[
+                    {
+                      label: (
+                        <Badge
+                          sx={{
+                            color: COLORS.category[d.category],
+                            '& :first-of-type': {
+                              fontFamily: 'body',
+                            },
+                          }}
+                        >
+                          {d.project_id}
+                        </Badge>
+                      ),
+                      key: 'project_id',
+                      width: [2, 1, 1, 1],
+                    },
+                    { key: 'name', label: d.name ?? '?', width: [4, 3, 3, 3] },
+                    { key: 'country', label: d.country, width: [0, 1, 1, 1] },
+                    {
+                      key: 'registered_at',
+                      label: d.registered_at
+                        ? formatDate(d.registered_at, { year: 'numeric' })
+                        : '?',
+                      width: [0, 1, 1, 1],
+                    },
+                    {
+                      key: 'details_url',
+                      label: (
+                        <Button
+                          href={d.details_url}
+                          suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
+                          inverted
+                          sx={{ fontSize: 1 }}
+                        >
+                          {LABELS.registry[d.registry]}
+                        </Button>
+                      ),
+                      width: [0, 1, 1, 1],
+                    },
+                  ]}
+                />
+              ))}
           </FadeIn>
         )}
 
