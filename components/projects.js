@@ -129,7 +129,11 @@ const Projects = () => {
                       label: (
                         <Button
                           href={d.details_url}
-                          suffix={<RotatingArrow sx={{ mt: '-3px' }} />}
+                          suffix={
+                            <RotatingArrow
+                              sx={{ mt: '-3px', width: 13, height: 13 }}
+                            />
+                          }
                           inverted
                           sx={{ fontSize: 1 }}
                         >
