@@ -25,16 +25,21 @@ const TableHead = ({ values, sort, setSort }) => {
               },
             },
           }}
-          onClick={() => setSort(value.value)}
+          onClick={() =>
+            setSort((prev) =>
+              prev === value.value ? `-${value.value}` : value.value
+            )
+          }
         >
           <Triangle
             id={`${value.value}-triangle`}
             sx={{
               transition: 'stroke 0.15s',
-              stroke: sort === value.value ? 'primary' : 'muted',
+              stroke: sort.includes(value.value) ? 'primary' : 'muted',
               fill: 'none',
               width: 10,
               height: 10,
+              transform: sort == `-${value.value}` ? 'rotate(180deg)' : null,
             }}
           />
         </Box>
