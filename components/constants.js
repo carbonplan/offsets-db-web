@@ -8,13 +8,13 @@ export const LABELS = {
     'art-trees': 'ART',
   },
   category: {
-    'mine-methane': 'Mine methane',
-    soil: 'Soil',
     agriculture: 'Agriculture',
     forest: 'Forest',
-    landfill: 'Landfill',
     'industrial-gases': 'Industrial gases',
+    landfill: 'Landfill',
+    'mine-methane': 'Mine methane',
     renewable: 'Renewable',
+    soil: 'Soil',
     transportation: 'Transportation',
     other: 'Other',
   },
@@ -22,14 +22,14 @@ export const LABELS = {
 
 export const COLORS = {
   category: {
-    'mine-methane': 'red',
-    soil: 'orange',
     agriculture: 'yellow',
     forest: 'green',
-    landfill: 'teal',
-    'industrial-gases': 'blue',
+    'industrial-gases': 'pink',
+    landfill: 'blue',
+    'mine-methane': 'red',
     renewable: 'purple',
-    transportation: 'pink',
+    soil: 'orange',
+    transportation: 'teal',
     other: 'grey',
   },
 }

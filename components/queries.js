@@ -18,13 +18,13 @@ export const QueryProvider = ({ children }) => {
     'art-trees': true,
   })
   const [category, setCategory] = useState({
-    'mine-methane': true,
-    soil: true,
     agriculture: true,
     forest: true,
-    landfill: true,
     'industrial-gases': true,
+    landfill: true,
+    'mine-methane': true,
     renewable: true,
+    soil: true,
     transportation: true,
     other: true,
   })
