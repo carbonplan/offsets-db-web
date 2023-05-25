@@ -11,9 +11,19 @@ import { RotatingArrow, XCircle } from '@carbonplan/icons'
 import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
 import { Box, Flex, IconButton } from 'theme-ui'
+import { keyframes } from '@emotion/react'
 
 import { COLORS, LABELS } from './constants'
 import { TableRow } from './table'
+
+const fade = keyframes({
+  from: {
+    opacity: 0,
+  },
+  to: {
+    opacity: 1,
+  },
+})
 
 const sx = {
   expanded: {
@@ -24,6 +34,10 @@ const sx = {
     pl: [4, 5, 5, 6],
     mr: [-4, -5, 0, 0],
     pr: [4, 5, 0, 0],
+    animationDuration: 300 + 'ms',
+    animationDelay: 0 + 'ms',
+    animationName: fade.toString(),
+    animationFillMode: 'backwards',
   },
   expandedHeading: {
     borderColor: 'secondary',
