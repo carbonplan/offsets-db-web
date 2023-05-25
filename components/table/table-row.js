@@ -18,12 +18,12 @@ const TableRow = ({ values, as, sx, Button }) => {
   }, [])
 
   return (
-    <Row as='tr' columns={[6, 8, 8, 8]}>
+    <Row as='tr' columns={[6, 8, 8, 8]} sx={sx}>
       {values.map((value, i) => (
         <Column
           as={value?.as ?? as ?? 'td'}
           key={value?.key ?? value?.label ?? value}
-          start={starts[i]}
+          start={value.start ?? starts[i]}
           width={value?.width ?? 1}
           sx={{
             fontSize: 1,
@@ -36,7 +36,6 @@ const TableRow = ({ values, as, sx, Button }) => {
             display: value?.width?.map
               ? value.width.map((w) => (w === 0 ? 'none' : 'inherit'))
               : 'inherit',
-            ...sx,
           }}
         >
           {Button && <Button value={value} />}

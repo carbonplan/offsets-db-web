@@ -49,10 +49,12 @@ const TableHead = ({ values, sort, setSort }) => {
   )
 
   return (
-    <Box
-      as='thead'
-      sx={{
-        '& tr': {
+    <Box as='thead'>
+      <TableRow
+        as='th'
+        values={values}
+        Button={Sort}
+        sx={{
           border: 0,
           borderTop: '1px',
           borderBottom: '1px',
@@ -63,19 +65,13 @@ const TableHead = ({ values, sort, setSort }) => {
           mr: [-4, -5, 0, 0],
           pr: [4, 5, 0, 0],
           pl: [4, 5, 5, 6],
-        },
-      }}
-    >
-      <TableRow
-        as='th'
-        values={values}
-        Button={Sort}
-        sx={{
-          color: 'primary',
-          fontFamily: 'body',
-          letterSpacing: 'body',
-          mb: 2,
-          mt: 2,
+          '& th': {
+            color: 'primary',
+            fontFamily: 'body',
+            letterSpacing: 'body',
+            mb: 2,
+            mt: 2,
+          },
         }}
       />
     </Box>
