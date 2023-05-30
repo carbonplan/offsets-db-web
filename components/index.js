@@ -1,8 +1,21 @@
 import { Badge, Column, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
-import { Box, Container, Divider, Flex } from 'theme-ui'
+import { Box, Container, Divider, Flex, Link } from 'theme-ui'
+import Events from './events'
 import Projects from './projects'
 import Queries, { QueryProvider } from './queries'
+
+const sx = {
+  badge: (selected) => ({
+    transition: 'color 0.15s',
+    '& div': {
+      color: selected ? 'primary' : 'secondary',
+    },
+    '&:hover div': {
+      color: !selected ? 'primary' : 'secondary',
+    },
+  }),
+}
 
 const Index = () => {
   const [mode, setMode] = useState('projects')
@@ -90,18 +103,21 @@ const Index = () => {
                 }}
               >
                 <Box sx={{ color: 'secondary' }}>View by</Box>
-                <Badge
-                  sx={{ color: mode === 'projects' ? 'primary' : 'secondary' }}
+                <Link
+                  sx={sx.badge(mode === 'projects')}
+                  onClick={() => setMode('projects')}
                 >
-                  Projects
-                </Badge>
-                <Badge
-                  sx={{ color: mode === 'projects' ? 'secondary' : 'primary' }}
+                  <Badge>Projects</Badge>
+                </Link>
+                <Link
+                  sx={sx.badge(mode === 'events')}
+                  onClick={() => setMode('events')}
                 >
-                  Events
-                </Badge>
+                  <Badge>Events</Badge>
+                </Link>
               </Flex>
               {mode === 'projects' && <Projects />}
+              {mode === 'events' && <Events />}
             </Column>
           </Row>
         </QueryProvider>
