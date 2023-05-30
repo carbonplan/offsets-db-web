@@ -13,6 +13,7 @@ const fetcher = ([
   url,
   registry,
   category,
+  complianceOnly,
   search,
   sort,
   registrationBounds,
@@ -34,6 +35,9 @@ const fetcher = ([
     params.append('sort', sort)
   }
 
+  if (complianceOnly) {
+    params.append('is_arb', complianceOnly)
+  }
   if (registrationBounds) {
     params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
     params.append('registered_at_to', `${registrationBounds[1]}-01-01`)
@@ -48,14 +52,15 @@ const fetcher = ([
 }
 
 const Projects = () => {
-  const { registry, category, search, registrationBounds } = useQueries()
-  const [expanded, setExpanded] = useState(null)
+  const { registry, category, complianceOnly, search, registrationBounds } =
+    useQueries()
   const [sort, setSort] = useState('project_id')
   const { data, error, isLoading } = useSWR(
     [
       `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
       useDebounce(registry),
       useDebounce(category),
+      complianceOnly,
       useDebounce(search),
       useDebounce(sort, 10),
       useDebounce(registrationBounds),

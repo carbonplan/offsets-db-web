@@ -1,4 +1,4 @@
-import { Column, Filter, Input, Row } from '@carbonplan/components'
+import { Column, Filter, Input, Row, Toggle } from '@carbonplan/components'
 import { createContext, useContext, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 import { COLORS, LABELS } from './constants'
@@ -28,6 +28,7 @@ export const QueryProvider = ({ children }) => {
     transportation: true,
     other: true,
   })
+  const [complianceOnly, setComplianceOnly] = useState(false)
   const [search, setSearch] = useState('')
   const [registrationBounds, setRegistrationBounds] = useState(null)
 
@@ -38,6 +39,8 @@ export const QueryProvider = ({ children }) => {
         setRegistry,
         category,
         setCategory,
+        complianceOnly,
+        setComplianceOnly,
         search,
         setSearch,
         registrationBounds,
@@ -64,8 +67,16 @@ const sx = {
 }
 
 const Queries = () => {
-  const { registry, setRegistry, category, setCategory, search, setSearch } =
-    useQueries()
+  const {
+    registry,
+    setRegistry,
+    category,
+    setCategory,
+    complianceOnly,
+    setComplianceOnly,
+    search,
+    setSearch,
+  } = useQueries()
 
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
@@ -109,6 +120,17 @@ const Queries = () => {
             colors={COLORS.category}
             showAll
             multiSelect
+          />
+        </Column>
+      </Row>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
+          <Box sx={sx.label}>Compliance</Box>
+        </Column>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+          <Toggle
+            value={complianceOnly}
+            onClick={() => setComplianceOnly((prev) => !prev)}
           />
         </Column>
       </Row>
