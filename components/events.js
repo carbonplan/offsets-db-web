@@ -99,10 +99,10 @@ const Events = () => {
           <FadeIn as='tbody'>
             <Loading
               values={[
-                { value: 'transaction_date', width: [2, 1, 1, 1] },
-                { value: 'transaction_type', width: [0, 1, 1, 1] },
-                { value: 'project_id', width: [2, 1, 1, 1] },
-                { value: 'quantity', width: 3 },
+                { key: 'transaction_date', width: [2, 1, 1, 1] },
+                { key: 'transaction_type', width: [0, 1, 1, 1] },
+                { key: 'project_id', width: [2, 1, 1, 1] },
+                { key: 'quantity', width: 3 },
               ]}
             />
           </FadeIn>
