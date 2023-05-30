@@ -31,6 +31,7 @@ export const QueryProvider = ({ children }) => {
   const [complianceOnly, setComplianceOnly] = useState(false)
   const [search, setSearch] = useState('')
   const [registrationBounds, setRegistrationBounds] = useState(null)
+  const [transactionBounds, setTransactionBounds] = useState(null)
 
   return (
     <QueryContext.Provider
@@ -45,6 +46,8 @@ export const QueryProvider = ({ children }) => {
         setSearch,
         registrationBounds,
         setRegistrationBounds,
+        transactionBounds,
+        setTransactionBounds,
       }}
     >
       {children}

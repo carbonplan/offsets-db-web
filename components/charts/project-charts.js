@@ -1,53 +1,9 @@
 import { Column, Row } from '@carbonplan/components'
-import {
-  Chart,
-  Grid,
-  Plot,
-  Ticks,
-  TickLabels,
-  useChart,
-} from '@carbonplan/charts'
+import { Chart, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
 import { Box, Flex } from 'theme-ui'
-import { select } from 'd3-selection'
-import { brushX } from 'd3-brush'
-import { useEffect, useRef } from 'react'
-import { useQueries } from './queries'
+import { useQueries } from '../queries'
+import Brush from './brush'
 
-const Brush = ({ setBounds }) => {
-  const brush = useRef(null)
-  const { x } = useChart()
-
-  useEffect(() => {
-    if (brush.current) {
-      select(brush.current).call(
-        brushX()
-          .extent([
-            [0, 0],
-            [100, 100],
-          ])
-          .on('start brush', (e) => {
-            if (e.selection[0] == e.selection[1]) {
-              setBounds(null)
-            } else {
-              setBounds(
-                [x.invert(e.selection[0]), x.invert(e.selection[1])].map(
-                  Math.round
-                )
-              )
-            }
-          })
-      )
-    }
-  }, [])
-
-  return (
-    <Box
-      as='g'
-      ref={brush}
-      sx={{ '.selection': { stroke: 'none', fill: 'secondary' } }}
-    />
-  )
-}
 const ProjectCharts = () => {
   const { registrationBounds, setRegistrationBounds } = useQueries()
 

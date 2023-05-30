@@ -5,7 +5,7 @@ import { Box, Divider } from 'theme-ui'
 
 import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
-import ProjectCharts from './project-charts'
+import ProjectCharts from './charts/project-charts'
 import { projectSorters, useDebounce } from './utils'
 import Project from './project'
 

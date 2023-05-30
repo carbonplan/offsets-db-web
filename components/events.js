@@ -6,32 +6,26 @@ import { Box, Divider } from 'theme-ui'
 import { Loading, TableHead, TableRow } from './table'
 import { useDebounce } from './utils'
 import Event from './event'
+import EventCharts from './charts/event-charts'
+import { useQueries } from './queries'
 
-const fetcher = ([url, sort]) => {
+const fetcher = ([url, sort, transactionType, transactionBounds]) => {
   const params = new URLSearchParams()
-  // Object.keys(registry)
-  //   .filter((r) => registry[r])
-  //   .forEach((r) => params.append('registry', r))
 
-  // Object.keys(category)
-  //   .filter((c) => category[c])
-  //   .forEach((c) => params.append('category', c))
-
-  // if (search?.trim()) {
-  //   params.append('search', search.trim())
-  // }
+  // TODO: include filtering on project attributes
 
   if (sort) {
     params.append('sort', sort)
   }
 
-  // if (complianceOnly) {
-  //   params.append('is_arb', complianceOnly)
-  // }
-  // if (registrationBounds) {
-  //   params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
-  //   params.append('registered_at_to', `${registrationBounds[1]}-01-01`)
-  // }
+  if (transactionType) {
+    params.append('transaction_type', transactionType)
+  }
+
+  if (transactionBounds) {
+    params.append('transaction_date_from', `${transactionBounds[0]}-01-01`)
+    params.append('transaction_date_to', `${transactionBounds[1]}-01-01`)
+  }
 
   params.append('limit', 50)
 
@@ -42,9 +36,16 @@ const fetcher = ([url, sort]) => {
 }
 
 const Events = () => {
+  const { transactionBounds } = useQueries()
   const [sort, setSort] = useState('transaction_date')
+  const [transactionType, setTransactionType] = useState(null)
   const { data, error, isLoading } = useSWR(
-    [`${process.env.NEXT_PUBLIC_API_URL}/credits/`, useDebounce(sort, 10)],
+    [
+      `${process.env.NEXT_PUBLIC_API_URL}/credits/`,
+      useDebounce(sort, 10),
+      useDebounce(transactionType, 10),
+      useDebounce(transactionBounds, 10),
+    ],
     fetcher,
     { revalidateOnFocus: false }
   )
@@ -59,8 +60,10 @@ const Events = () => {
             my: 3,
           }}
         />
-        {/* <ProjectCharts /> */}
-        TK
+        <EventCharts
+          transactionType={transactionType}
+          setTransactionType={setTransactionType}
+        />
       </Box>
       <Box as='table' sx={{ width: '100%' }}>
         <TableHead
