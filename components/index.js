@@ -110,14 +110,14 @@ const Index = () => {
                   <Badge>Projects</Badge>
                 </Link>
                 <Link
-                  sx={sx.badge(mode === 'events')}
-                  onClick={() => setMode('events')}
+                  sx={sx.badge(mode === 'credits')}
+                  onClick={() => setMode('credits')}
                 >
-                  <Badge>Events</Badge>
+                  <Badge>Credits</Badge>
                 </Link>
               </Flex>
               {mode === 'projects' && <Projects />}
-              {mode === 'events' && <Events />}
+              {mode === 'credits' && <Events />}
             </Column>
           </Row>
         </QueryProvider>
