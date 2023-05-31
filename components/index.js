@@ -22,7 +22,7 @@ const Index = () => {
 
   return (
     <Layout
-      title='Offsets Database – CarbonPlan'
+      title='Offsets DB – CarbonPlan'
       description='TK'
       card='TK'
       footer={false}
@@ -65,7 +65,7 @@ const Index = () => {
               }}
             >
               <Box as='h1' variant='styles.h1'>
-                Offsets Database
+                Offsets DB
               </Box>
               <Divider sx={{ mr: [-4, -5, -5, -6], ml: [-4, -5, 0, 0] }} />
               <Queries />
