@@ -1,6 +1,7 @@
 import { Badge, Button, formatDate } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex, Text } from 'theme-ui'
+import { format } from 'd3-format'
 import { TableRow } from './table'
 
 const Event = ({ event }) => {
@@ -61,7 +62,9 @@ const Event = ({ event }) => {
             key: 'quantity',
             label: (
               <Flex sx={{ gap: 3 }}>
-                <Badge>{quantity}</Badge>
+                <Badge>
+                  {quantity > 100 ? format('.3s')(quantity) : quantity}
+                </Badge>
                 <Box sx={{ display: ['inherit', 'none', 'none', 'none'] }}>
                   {transaction_type === 'retirement' ? 'retired' : 'issued'}
                 </Box>
