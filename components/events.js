@@ -9,10 +9,32 @@ import Event from './event'
 import EventCharts from './charts/event-charts'
 import { useQueries } from './queries'
 
-const fetcher = ([url, sort, transactionType, transactionBounds]) => {
+const fetcher = ([
+  url,
+  sort,
+  transactionType,
+  transactionBounds,
+  registry,
+  category,
+  complianceOnly,
+  search,
+]) => {
   const params = new URLSearchParams()
 
-  // TODO: include filtering on project attributes
+  Object.keys(registry)
+    .filter((r) => registry[r])
+    .forEach((r) => params.append('registry', r))
+
+  Object.keys(category)
+    .filter((c) => category[c])
+    .forEach((c) => params.append('category', c))
+
+  if (search?.trim()) {
+    params.append('search', search.trim())
+  }
+  if (complianceOnly) {
+    params.append('is_arb', complianceOnly)
+  }
 
   if (sort) {
     params.append('sort', sort)
@@ -36,7 +58,8 @@ const fetcher = ([url, sort, transactionType, transactionBounds]) => {
 }
 
 const Events = () => {
-  const { transactionBounds } = useQueries()
+  const { registry, category, complianceOnly, search, transactionBounds } =
+    useQueries()
   const [sort, setSort] = useState('transaction_date')
   const [transactionType, setTransactionType] = useState(null)
   const { data, error, isLoading } = useSWR(
@@ -45,6 +68,10 @@ const Events = () => {
       useDebounce(sort, 10),
       useDebounce(transactionType, 10),
       useDebounce(transactionBounds, 10),
+      useDebounce(registry),
+      useDebounce(category),
+      complianceOnly,
+      useDebounce(search),
     ],
     fetcher,
     { revalidateOnFocus: false }
