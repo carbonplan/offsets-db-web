@@ -8,9 +8,11 @@ import { useDebounce } from './utils'
 import Event from './event'
 import EventCharts from './charts/event-charts'
 import { useQueries } from './queries'
+import Pagination from './pagination'
 
 const fetcher = ([
   url,
+  page,
   sort,
   transactionType,
   transactionBounds,
@@ -49,7 +51,8 @@ const fetcher = ([
     params.append('transaction_date_to', `${transactionBounds[1]}-01-01`)
   }
 
-  params.append('limit', 50)
+  params.append('current_page', page)
+  params.append('per_page', 25)
 
   const reqUrl = new URL(url)
   reqUrl.search = params.toString()
@@ -61,10 +64,12 @@ const Events = () => {
   const { registry, category, complianceOnly, search, transactionBounds } =
     useQueries()
   const [sort, setSort] = useState('transaction_date')
+  const [page, setPage] = useState(1)
   const [transactionType, setTransactionType] = useState(null)
   const { data, error, isLoading } = useSWR(
     [
       `${process.env.NEXT_PUBLIC_API_URL}/credits/`,
+      page,
       useDebounce(sort, 10),
       useDebounce(transactionType, 10),
       useDebounce(transactionBounds, 10),
@@ -105,10 +110,10 @@ const Events = () => {
         />
         {data && (
           <FadeIn as='tbody'>
-            {data.map((d) => (
+            {data.data.map((d) => (
               <Event key={d.transaction_serial_number} event={d} />
             ))}
-            {data.length === 0 ? (
+            {data.data.length === 0 ? (
               <TableRow
                 values={[
                   {
@@ -135,6 +140,7 @@ const Events = () => {
           </FadeIn>
         )}
       </Box>
+      {data && <Pagination pagination={data.pagination} setPage={setPage} />}
     </>
   )
 }

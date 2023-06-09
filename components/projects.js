@@ -8,9 +8,11 @@ import { Loading, TableHead, TableRow } from './table'
 import ProjectCharts from './charts/project-charts'
 import { projectSorters, useDebounce } from './utils'
 import Project from './project'
+import Pagination from './pagination'
 
 const fetcher = ([
   url,
+  page,
   registry,
   category,
   complianceOnly,
@@ -43,7 +45,8 @@ const fetcher = ([
     params.append('registered_at_to', `${registrationBounds[1]}-01-01`)
   }
 
-  params.append('limit', 50)
+  params.append('current_page', page)
+  params.append('per_page', 25)
 
   const reqUrl = new URL(url)
   reqUrl.search = params.toString()
@@ -55,9 +58,11 @@ const Projects = () => {
   const { registry, category, complianceOnly, search, registrationBounds } =
     useQueries()
   const [sort, setSort] = useState('project_id')
+  const [page, setPage] = useState(1)
   const { data, error, isLoading } = useSWR(
     [
       `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
+      page,
       useDebounce(registry),
       useDebounce(category),
       complianceOnly,
@@ -98,12 +103,12 @@ const Projects = () => {
         />
         {data && (
           <FadeIn as='tbody'>
-            {data
+            {data.data
               .sort(projectSorters[sort] ?? projectSorters.default(sort))
               .map((d) => (
                 <Project key={d.project_id} project={d} />
               ))}
-            {data.length === 0 ? (
+            {data.data.length === 0 ? (
               <TableRow
                 values={[
                   {
@@ -133,6 +138,7 @@ const Projects = () => {
           </FadeIn>
         )}
       </Box>
+      {data && <Pagination pagination={data.pagination} setPage={setPage} />}
     </>
   )
 }
