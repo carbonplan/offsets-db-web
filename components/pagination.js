@@ -6,7 +6,12 @@ const sx = {
   arrow: {
     p: 0,
     alignItems: 'flex-start',
+    cursor: 'pointer',
     mt: 1,
+    '&:disabled': {
+      cursor: 'inherit',
+    },
+
     '& svg': {
       height: [14, 14, 14, 16],
     },
