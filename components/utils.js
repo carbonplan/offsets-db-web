@@ -15,7 +15,7 @@ export const projectSorters = {
   },
 }
 
-export const useDebounce = (value, delay = 1000) => {
+export const useDebounce = (value, delay = 100) => {
   const [debounced, setDebounced] = useState(value)
 
   useEffect(() => {

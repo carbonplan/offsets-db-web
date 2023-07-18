@@ -1,5 +1,6 @@
 import { Column, Filter, Input, Row, Toggle } from '@carbonplan/components'
-import { createContext, useContext, useState } from 'react'
+import { useRouter } from 'next/router'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 import { COLORS, LABELS } from './constants'
 
@@ -9,6 +10,7 @@ const QueryContext = createContext({
 })
 
 export const QueryProvider = ({ children }) => {
+  const router = useRouter()
   const [registry, setRegistry] = useState({
     verra: true,
     'gold-standard': true,
@@ -32,6 +34,13 @@ export const QueryProvider = ({ children }) => {
   const [search, setSearch] = useState('')
   const [registrationBounds, setRegistrationBounds] = useState(null)
   const [transactionBounds, setTransactionBounds] = useState(null)
+
+  useEffect(() => {
+    if (router.query.project_id) {
+      setSearch(router.query.project_id)
+      router.replace({ pathname: router.pathname, query: {} })
+    }
+  }, [router.query.project_id])
 
   return (
     <QueryContext.Provider
