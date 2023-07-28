@@ -133,8 +133,8 @@ const Events = () => {
               values={[
                 { key: 'transaction_date', width: [2, 1, 1, 1] },
                 { key: 'transaction_type', width: [0, 1, 1, 1] },
-                { key: 'project_id', width: [2, 1, 1, 1] },
-                { key: 'quantity', width: 3 },
+                { key: 'project_id', width: 2 },
+                { key: 'quantity', width: 1 },
               ]}
             />
           </FadeIn>
