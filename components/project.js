@@ -12,6 +12,7 @@ import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
 import { Box, Flex, IconButton } from 'theme-ui'
 import { keyframes } from '@emotion/react'
+import { format } from 'd3-format'
 
 import { COLORS, LABELS } from './constants'
 import { TableRow } from './table'
@@ -58,6 +59,8 @@ const Project = ({ project }) => {
     category,
     name,
     country,
+    issued,
+    retired,
     registered_at,
     details_url,
     registry,
@@ -111,28 +114,25 @@ const Project = ({ project }) => {
             width: [2, 1, 1, 1],
           },
           { key: 'name', label: name ?? '?', width: [4, 3, 3, 3] },
-          { key: 'country', label: country, width: [0, 1, 1, 1] },
+          {
+            key: 'issued',
+            label: (
+              <Badge>{issued > 100 ? format('.3s')(issued) : issued}</Badge>
+            ),
+            width: [0, 1, 1, 1],
+          },
+          {
+            key: 'retired',
+            label: (
+              <Badge>{retired > 100 ? format('.3s')(retired) : retired}</Badge>
+            ),
+            width: [0, 1, 1, 1],
+          },
           {
             key: 'registered_at',
             label: registered_at
               ? formatDate(registered_at, { year: 'numeric' })
               : '?',
-            width: [0, 1, 1, 1],
-          },
-          {
-            key: 'details_url',
-            label: (
-              <Button
-                href={details_url}
-                suffix={
-                  <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
-                }
-                inverted
-                sx={{ fontSize: 1 }}
-              >
-                {LABELS.registry[registry]}
-              </Button>
-            ),
             width: [0, 1, 1, 1],
           },
         ]}
@@ -177,6 +177,28 @@ const Project = ({ project }) => {
                       </Tag>
                       {protocol}
                     </Flex>
+                  </Column>
+
+                  <Column
+                    start={1}
+                    width={[6, 3, 3, 3]}
+                    sx={{ ...sx.expandedHeading, mt: [0, 4, 4, 4] }}
+                  >
+                    Details
+                  </Column>
+                  <Column start={1} width={[3, 3, 3, 3]}>
+                    <Button
+                      href={details_url}
+                      suffix={
+                        <RotatingArrow
+                          sx={{ mt: '-3px', width: 13, height: 13 }}
+                        />
+                      }
+                      inverted
+                      sx={{ fontSize: 1 }}
+                    >
+                      {LABELS.registry[registry]}
+                    </Button>
                   </Column>
                 </Row>
               ),

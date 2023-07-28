@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 export const projectSorters = {
   default: (sort) => (a, b) => a[sort]?.localeCompare(b[sort]),
+  retired: (sort) => (a, b) => a[sort] - b[sort],
+  issued: (sort) => (a, b) => a[sort] - b[sort],
   project_id: (a, b) => {
     const values = [a.project_id, b.project_id]
     const prefixes = values.map((d) => d.match(/\D+/)[0])
