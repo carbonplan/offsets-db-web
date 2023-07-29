@@ -10,7 +10,7 @@ import {
 import { RotatingArrow, XCircle } from '@carbonplan/icons'
 import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
-import { Box, Flex, IconButton } from 'theme-ui'
+import { Box, IconButton } from 'theme-ui'
 import { keyframes } from '@emotion/react'
 import { format } from 'd3-format'
 
@@ -41,15 +41,13 @@ const sx = {
     animationFillMode: 'backwards',
   },
   expandedHeading: {
-    borderColor: 'secondary',
-    borderStyle: 'solid',
-    borderWidth: 0,
-    borderBottomWidth: '1px',
-    fontFamily: 'heading',
-    letterSpacing: 'heading',
-    fontSize: 2,
-    pb: 2,
-    mb: 3,
+    color: 'secondary',
+    fontFamily: 'mono',
+    letterSpacing: 'mono',
+    textTransform: 'uppercase',
+    fontSize: 1,
+    mt: [5, 3, 3, 3],
+    mb: 2,
   },
 }
 
@@ -142,74 +140,12 @@ const Project = ({ project }) => {
           sx={sx.expanded}
           values={[
             {
-              key: 'protocol',
-              width: [6, 3, 3, 3],
-              label: (
-                <Row
-                  columns={[6, 3, 3, 3]}
-                  sx={{
-                    color: 'primary',
-                    height: 'fit-content',
-                  }}
-                >
-                  <Column
-                    start={1}
-                    width={[6, 3, 3, 3]}
-                    sx={sx.expandedHeading}
-                  >
-                    Protocol
-                  </Column>
-                  <Column start={1} width={[3, 3, 3, 3]}>
-                    <Flex
-                      sx={{
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        gap: 3,
-                      }}
-                    >
-                      <Tag
-                        sx={{
-                          color: COLORS.category[category],
-                          width: 'fit-content',
-                        }}
-                      >
-                        {category}
-                      </Tag>
-                      {protocol}
-                    </Flex>
-                  </Column>
-
-                  <Column
-                    start={1}
-                    width={[6, 3, 3, 3]}
-                    sx={{ ...sx.expandedHeading, mt: [0, 4, 4, 4] }}
-                  >
-                    Details
-                  </Column>
-                  <Column start={1} width={[3, 3, 3, 3]}>
-                    <Button
-                      href={details_url}
-                      suffix={
-                        <RotatingArrow
-                          sx={{ mt: '-3px', width: 13, height: 13 }}
-                        />
-                      }
-                      inverted
-                      sx={{ fontSize: 1 }}
-                    >
-                      {LABELS.registry[registry]}
-                    </Button>
-                  </Column>
-                </Row>
-              ),
-            },
-            {
               key: 'description',
-              width: [6, 5, 5, 5],
-              start: [1, 4, 4, 4],
+              width: [6, 8, 8, 8],
+              start: 1,
               label: (
                 <Row
-                  columns={[6, 5, 5, 5]}
+                  columns={[6, 8, 8, 8]}
                   sx={{
                     color: 'primary',
                     height: 'fit-content',
@@ -217,10 +153,9 @@ const Project = ({ project }) => {
                 >
                   <Column
                     start={1}
-                    width={[6, 4, 4, 4]}
-                    sx={{ ...sx.expandedHeading, position: 'relative' }}
+                    width={[6, 7, 7, 7]}
+                    sx={{ position: 'relative' }}
                   >
-                    Description
                     <IconButton
                       aria-label='Collapse'
                       onClick={() => setExpanded(false)}
@@ -232,7 +167,6 @@ const Project = ({ project }) => {
                           [4, 5, 5, 6].map(
                             (i) => `calc(-${theme.space[i]}px - 32px)`
                           ),
-                        top: -1,
                         cursor: 'pointer',
                       }}
                     >
@@ -247,8 +181,55 @@ const Project = ({ project }) => {
                       />
                     </IconButton>
                   </Column>
-                  <Column start={1} width={[6, 4, 4, 4]}>
-                    {description}
+                  <Column start={[1]} width={[6, 2, 2, 2]}>
+                    <Box sx={{ ...sx.expandedHeading, mt: 3 }}>Country</Box>
+                    {country}
+                  </Column>
+
+                  <Column start={[1, 3, 3, 3]} width={[3, 2, 2, 2]}>
+                    <Box sx={sx.expandedHeading}>Category</Box>
+                    <Tag
+                      sx={{
+                        color: COLORS.category[category],
+                        width: 'fit-content',
+                      }}
+                    >
+                      {category}
+                    </Tag>
+                  </Column>
+
+                  <Column start={[4, 5, 5, 5]} width={[3, 2, 2, 2]}>
+                    <Box sx={sx.expandedHeading}>Protocol</Box>
+                    {protocol}
+                  </Column>
+
+                  <Column
+                    start={1}
+                    width={[6, 6, 6, 6]}
+                    sx={{ mt: [0, 3, 3, 3] }}
+                  >
+                    <Box sx={sx.expandedHeading}>Description</Box>
+                    <Box sx={{ fontSize: 0 }}>{description}</Box>
+                  </Column>
+
+                  <Column
+                    start={[1, 7, 7, 7]}
+                    width={[6, 1, 1, 1]}
+                    sx={{ mt: [0, 3, 3, 3] }}
+                  >
+                    <Box sx={sx.expandedHeading}>Details</Box>
+                    <Button
+                      href={details_url}
+                      suffix={
+                        <RotatingArrow
+                          sx={{ mt: '-3px', width: 13, height: 13 }}
+                        />
+                      }
+                      inverted
+                      sx={{ fontSize: 1 }}
+                    >
+                      {LABELS.registry[registry]}
+                    </Button>
                   </Column>
                 </Row>
               ),
