@@ -4,17 +4,17 @@ import {
   Plot,
   Ticks,
   TickLabels,
-  Scatter,
+  useChart,
 } from '@carbonplan/charts'
-import { Box, Flex } from 'theme-ui'
+import { Box, Flex, useThemeUI } from 'theme-ui'
 import useSWR from 'swr'
+import { mix } from 'polished'
 
 import Brush from './brush'
 import { useQueries } from '../queries'
 import { useDebounce } from '../utils'
 import { useMemo } from 'react'
 import { COLORS } from '../constants'
-import { alpha } from '@theme-ui/color'
 
 const CATEGORY_ORDER = Object.keys(COLORS)
 
@@ -53,37 +53,59 @@ const fetcher = ([
   return fetch(reqUrl).then((r) => r.json())
 }
 
-const mungeData = (data, key, opacity = 1) => {
+const mungeData = (data, theme, max, key, mixer) => {
   if (!data) {
     return []
   } else {
-    console.log(CATEGORY_ORDER)
-    const categoryData = data.reduce(
-      (accum, { start, end, category, value }) => {
+    return data
+      .map(({ start, end, category, value }) => {
         if (start != null && end != null) {
           const year = new Date(`${start}T00:00:00`).getFullYear()
           const datum = [year, 9 - CATEGORY_ORDER.indexOf(category)]
-          if (accum[category]) {
-            accum[category].push(datum)
-          } else {
-            accum[category] = [datum]
+          const color = mixer
+            ? mix(
+                0.25,
+                theme.rawColors[COLORS[category]],
+                theme.rawColors[mixer]
+              )
+            : theme.rawColors[COLORS[category]]
+          return {
+            key,
+            value: datum,
+            color: mix(value / max, color, theme.rawColors.background),
           }
+        } else {
+          return null
         }
-        return accum
-      },
-      {}
-    )
-
-    return Object.keys(categoryData).reduce((accum, category) => {
-      accum.push({
-        key: `${category}-${key}`,
-        color:
-          opacity < 1 ? alpha(COLORS[category], opacity) : COLORS[category],
-        data: categoryData[category].sort(),
-      })
-      return accum
-    }, [])
+      }, {})
+      .filter(Boolean)
   }
+}
+
+const Heatmap = ({ data, size = 10 }) => {
+  const { x, y } = useChart()
+
+  return (
+    <>
+      {data.map(({ key, value, color }) => (
+        <Box
+          key={`${key}-${value.join(',')}`}
+          as='path'
+          d={`M${x(value[0])} ${y(value[1])} A0 0 0 0 1 ${
+            x(value[0]) + 0.0001
+          } ${y(value[1]) + 0.0001}`}
+          sx={{
+            stroke: color,
+            strokeWidth: size,
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+            fill: 'none',
+            vectorEffect: 'non-scaling-stroke',
+          }}
+        />
+      ))}
+    </>
+  )
 }
 
 const ProjectRegistration = () => {
@@ -95,6 +117,7 @@ const ProjectRegistration = () => {
     registrationBounds,
     setRegistrationBounds,
   } = useQueries()
+  const { theme } = useThemeUI()
   const { data, error, isLoading } = useSWR(
     [`${process.env.NEXT_PUBLIC_API_URL}/charts/projects_by_registration_date`],
     fetcher,
@@ -119,10 +142,10 @@ const ProjectRegistration = () => {
 
   const lines = useMemo(() => {
     return [
-      ...mungeData(data, 'all', 0.5),
-      ...mungeData(filteredData, 'filtered', 1),
+      ...mungeData(data, theme, 3, 'all', 'secondary'),
+      ...mungeData(filteredData, theme, 3, 'filtered', null),
     ]
-  }, [data, filteredData])
+  }, [data, filteredData, theme])
 
   return (
     <>
@@ -141,9 +164,7 @@ const ProjectRegistration = () => {
           <Grid vertical />
           <Plot>
             <Brush setBounds={setRegistrationBounds} />
-            {lines.map(({ color, data, key }) => (
-              <Scatter key={key} color={color} data={data} />
-            ))}
+            <Heatmap data={lines} />
           </Plot>
         </Chart>
       </Box>
