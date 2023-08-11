@@ -81,7 +81,7 @@ const Project = ({ project }) => {
                   position: 'relative',
                   '@media (hover: hover) and (pointer: fine)': {
                     '&:hover #expander': {
-                      stroke: COLORS.category[category],
+                      stroke: COLORS[category],
                     },
                   },
                 }}
@@ -98,7 +98,7 @@ const Project = ({ project }) => {
                 />
                 <Badge
                   sx={{
-                    color: COLORS.category[category],
+                    color: COLORS[category],
                     '& :first-of-type': {
                       fontFamily: 'body',
                     },
@@ -173,7 +173,7 @@ const Project = ({ project }) => {
                       <XCircle
                         sx={{
                           transition: '0.15s',
-                          stroke: COLORS.category[category],
+                          stroke: COLORS[category],
                           '&:hover': {
                             stroke: 'primary',
                           },
@@ -190,7 +190,7 @@ const Project = ({ project }) => {
                     <Box sx={sx.expandedHeading}>Category</Box>
                     <Tag
                       sx={{
-                        color: COLORS.category[category],
+                        color: COLORS[category],
                         width: 'fit-content',
                       }}
                     >

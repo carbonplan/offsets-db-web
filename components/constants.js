@@ -21,15 +21,13 @@ export const LABELS = {
 }
 
 export const COLORS = {
-  category: {
-    agriculture: 'yellow',
-    forest: 'green',
-    'industrial-gases': 'pink',
-    landfill: 'blue',
-    'mine-methane': 'red',
-    renewable: 'purple',
-    soil: 'orange',
-    transportation: 'teal',
-    other: 'grey',
-  },
+  agriculture: 'yellow',
+  forest: 'green',
+  'industrial-gases': 'pink',
+  landfill: 'blue',
+  'mine-methane': 'red',
+  renewable: 'purple',
+  soil: 'orange',
+  transportation: 'teal',
+  other: 'grey',
 }
