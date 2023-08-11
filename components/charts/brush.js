@@ -48,7 +48,7 @@ const Brush = ({ clear, setBounds }) => {
     <Box
       as='g'
       ref={g}
-      sx={{ '.selection': { stroke: 'none', fill: 'secondary' } }}
+      sx={{ '.selection': { stroke: 'none', fill: 'secondary', opacity: 0.8 } }}
     />
   )
 }

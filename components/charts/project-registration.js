@@ -100,6 +100,7 @@ const Heatmap = ({ data, size = 10 }) => {
             strokeLinecap: 'round',
             strokeLinejoin: 'round',
             fill: 'none',
+            pointerEvents: 'none',
             vectorEffect: 'non-scaling-stroke',
           }}
         />
@@ -140,8 +141,20 @@ const ProjectRegistration = () => {
     { revalidateOnFocus: false }
   )
 
-  const lines = useMemo(() => {
+  const points = useMemo(() => {
     return [
+      ...Array(24)
+        .fill(null)
+        .map((a, i) =>
+          Array(9)
+            .fill(null)
+            .map((d, j) => ({
+              color: 'muted',
+              value: [2000 + i, j],
+              key: 'background',
+            }))
+        )
+        .flat(),
       ...mungeData(data, theme, 3, 'all', 'secondary'),
       ...mungeData(filteredData, theme, 3, 'filtered', null),
     ]
@@ -158,13 +171,13 @@ const ProjectRegistration = () => {
         </Box>
       </Flex>
       <Box sx={{ height: '200px', mt: 3 }}>
-        <Chart x={[2000, 2023]} y={[0, 9]} padding={{ left: 0 }}>
+        <Chart x={[2000, 2023]} y={[-0.5, 8.45]} padding={{ left: 0 }}>
           <Ticks bottom />
           <TickLabels bottom />
           <Grid vertical />
           <Plot>
             <Brush setBounds={setRegistrationBounds} />
-            <Heatmap data={lines} />
+            <Heatmap data={points} />
           </Plot>
         </Chart>
       </Box>
