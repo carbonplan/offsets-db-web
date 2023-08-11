@@ -15,6 +15,7 @@ import { useQueries } from '../queries'
 import { useDebounce } from '../utils'
 import { useMemo } from 'react'
 import { COLORS } from '../constants'
+import { alpha } from '@theme-ui/color'
 
 const CATEGORY_ORDER = Object.keys(COLORS)
 
@@ -95,6 +96,7 @@ const Heatmap = ({ data, size = 10 }) => {
             x(value[0]) + 0.0001
           } ${y(value[1]) + 0.0001}`}
           sx={{
+            transition: 'stroke 0.15s',
             stroke: color,
             strokeWidth: size,
             strokeLinecap: 'round',
@@ -149,7 +151,7 @@ const ProjectRegistration = () => {
           Array(9)
             .fill(null)
             .map((d, j) => ({
-              color: 'muted',
+              color: !!registrationBounds ? alpha('muted', 0.5) : 'muted',
               value: [2000 + i, j],
               key: 'background',
             }))
@@ -158,7 +160,7 @@ const ProjectRegistration = () => {
       ...mungeData(data, theme, 3, 'all', 'secondary'),
       ...mungeData(filteredData, theme, 3, 'filtered', null),
     ]
-  }, [data, filteredData, theme])
+  }, [data, filteredData, theme, !!registrationBounds])
 
   return (
     <>
