@@ -85,6 +85,9 @@ const CreditTransactions = ({ transactionType, setTransactionType }) => {
 
   const points = useMemo(() => {
     const max = data ? Math.max(...data.map((d) => d.value)) : 0
+    const background = !!transactionBounds
+      ? alpha('muted', 0.5)
+      : theme.rawColors.muted
     return [
       ...Array(24)
         .fill(null)
@@ -98,8 +101,8 @@ const CreditTransactions = ({ transactionType, setTransactionType }) => {
             }))
         )
         .flat(),
-      ...mungeData(data, theme, max, 'all', 'secondary'),
-      ...mungeData(filteredData, theme, max, 'filtered', null),
+      ...mungeData(data, theme, max, 'all', background, 'secondary'),
+      ...mungeData(filteredData, theme, max, 'filtered', background, null),
     ]
   }, [data, filteredData, theme, !!transactionBounds])
 

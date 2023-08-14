@@ -85,6 +85,9 @@ const ProjectRegistration = () => {
         )
       : 0
 
+    const background = !!registrationBounds
+      ? alpha('muted', 0.5)(theme)
+      : theme.rawColors.muted
     return [
       ...Array(24)
         .fill(null)
@@ -92,14 +95,14 @@ const ProjectRegistration = () => {
           Array(9)
             .fill(null)
             .map((d, j) => ({
-              color: !!registrationBounds ? alpha('muted', 0.5) : 'muted',
+              color: background,
               value: [2000 + i, j],
               key: 'background',
             }))
         )
         .flat(),
-      ...mungeData(data, theme, max, 'all', 'secondary'),
-      ...mungeData(filteredData, theme, max, 'filtered', null),
+      ...mungeData(data, theme, max, 'all', background, 'secondary'),
+      ...mungeData(filteredData, theme, max, 'filtered', background, null),
     ]
   }, [data, filteredData, theme, !!registrationBounds])
 

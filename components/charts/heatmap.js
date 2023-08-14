@@ -6,7 +6,7 @@ import { COLORS } from '../constants'
 
 const CATEGORY_ORDER = Object.keys(COLORS)
 
-export const mungeData = (data, theme, max, key, mixer) => {
+export const mungeData = (data, theme, max, key, background, mixer) => {
   if (!data) {
     return []
   } else {
@@ -14,7 +14,7 @@ export const mungeData = (data, theme, max, key, mixer) => {
       .map(({ start, end, category, value }) => {
         if (start != null && end != null) {
           const year = new Date(`${start}T00:00:00`).getFullYear()
-          const datum = [year, 9 - CATEGORY_ORDER.indexOf(category)]
+          const datum = [year, 8 - CATEGORY_ORDER.indexOf(category)]
           const color = mixer
             ? mix(
                 0.25,
@@ -26,7 +26,7 @@ export const mungeData = (data, theme, max, key, mixer) => {
           return {
             key,
             value: datum,
-            color: mix(value / max, color, theme.rawColors.background),
+            color: mix(value / max, color, background),
           }
         } else {
           return null
