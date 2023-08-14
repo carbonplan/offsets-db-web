@@ -1,8 +1,7 @@
-import { Column, Row } from '@carbonplan/components'
 import { Chart, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import useSWR from 'swr'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { alpha } from '@theme-ui/color'
 
 import Brush from './brush'
@@ -48,7 +47,7 @@ const fetcher = ([
   return fetch(reqUrl).then((r) => r.json())
 }
 
-const EventCharts = ({ transactionType, setTransactionType }) => {
+const CreditTransactions = ({ transactionType, setTransactionType }) => {
   const {
     registry,
     category,
@@ -61,7 +60,7 @@ const EventCharts = ({ transactionType, setTransactionType }) => {
   const { data, error, isLoading } = useSWR(
     [
       `${process.env.NEXT_PUBLIC_API_URL}/charts/credits_by_transaction_date`,
-      'issuance',
+      transactionType,
     ],
     fetcher,
     { revalidateOnFocus: false }
@@ -73,7 +72,7 @@ const EventCharts = ({ transactionType, setTransactionType }) => {
   } = useSWR(
     [
       `${process.env.NEXT_PUBLIC_API_URL}/charts/credits_by_transaction_date`,
-      'issuance',
+      transactionType,
       useDebounce(registry),
       useDebounce(category),
       complianceOnly,
@@ -103,65 +102,35 @@ const EventCharts = ({ transactionType, setTransactionType }) => {
     ]
   }, [data, filteredData, theme, !!transactionBounds])
 
+  const handleBoundsChange = useCallback(
+    (bounds) => {
+      setTransactionBounds(bounds)
+      setTransactionType(bounds ? transactionType : null)
+    },
+    [transactionType, setTransactionBounds]
+  )
+
   return (
-    <Row
-      columns={[6, 8, 8, 8]}
-      sx={{
-        color: 'primary',
-        fontFamily: 'mono',
-        letterSpacing: 'mono',
-        textTransform: 'uppercase',
-      }}
-    >
-      <Column start={1} width={[6, 4, 4, 4]}>
-        <Flex sx={{ gap: 3 }}>
-          Credits issued / year
-          <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
-            {transactionBounds
-              ? transactionBounds.join(' - ')
-              : 'Drag to filter'}
-          </Box>
-        </Flex>
-        <Box sx={{ height: '200px', mt: 3 }}>
-          <Chart x={[2000, 2023]} y={[-0.5, 8.45]} padding={{ left: 0 }}>
-            <Ticks bottom />
-            <TickLabels bottom />
-            <Grid vertical />
-            <Plot>
-              <Brush setBounds={setTransactionBounds} />
-              <Heatmap data={points} />
-            </Plot>
-          </Chart>
+    <>
+      <Flex sx={{ gap: 3 }}>
+        Credits {transactionType === 'issuance' ? 'issued' : 'retired'} / year
+        <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
+          {transactionBounds ? transactionBounds.join(' - ') : 'Drag to filter'}
         </Box>
-      </Column>
-      <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
-        <Flex sx={{ gap: 3 }}>
-          Credits retired / year
-          <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
-            {transactionBounds
-              ? transactionBounds.join(' - ')
-              : 'Drag to filter'}
-          </Box>
-        </Flex>
-        <Box sx={{ height: '200px', mt: 3 }}>
-          <Chart x={[2000, 2023]} y={[0, 6]} padding={{ left: 0 }}>
-            <Ticks bottom />
-            <TickLabels bottom />
-            <Grid vertical />
-            <Plot>
-              <Brush
-                clear={transactionType === 'issuance'}
-                setBounds={(value) => {
-                  setTransactionBounds(value)
-                  setTransactionType(value ? 'retirement' : null)
-                }}
-              />
-            </Plot>
-          </Chart>
-        </Box>
-      </Column>
-    </Row>
+      </Flex>
+      <Box sx={{ height: '200px', mt: 3 }}>
+        <Chart x={[2000, 2023]} y={[-0.5, 8.45]} padding={{ left: 0 }}>
+          <Ticks bottom />
+          <TickLabels bottom />
+          <Grid vertical />
+          <Plot>
+            <Brush setBounds={handleBoundsChange} />
+            <Heatmap data={points} />
+          </Plot>
+        </Chart>
+      </Box>
+    </>
   )
 }
 
-export default EventCharts
+export default CreditTransactions

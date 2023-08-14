@@ -6,7 +6,7 @@ import { Box, Divider } from 'theme-ui'
 import { Loading, TableHead, TableRow } from './table'
 import { useDebounce } from './utils'
 import Event from './event'
-import EventCharts from './charts/event-charts'
+import CreditCharts from './charts/credit-charts'
 import { useQueries } from './queries'
 import Pagination from './pagination'
 
@@ -92,10 +92,7 @@ const Events = () => {
             my: 3,
           }}
         />
-        <EventCharts
-          transactionType={transactionType}
-          setTransactionType={setTransactionType}
-        />
+        <CreditCharts setTransactionType={setTransactionType} />
       </Box>
       <Box as='table' sx={{ width: '100%' }}>
         <TableHead
