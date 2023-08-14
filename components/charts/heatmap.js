@@ -26,7 +26,7 @@ export const mungeData = (data, theme, max, key, background, mixer) => {
           return {
             key,
             value: datum,
-            color: mix(value / max, color, background),
+            color: mix(Math.min((value * 10) / max, 1), color, background),
           }
         } else {
           return null
