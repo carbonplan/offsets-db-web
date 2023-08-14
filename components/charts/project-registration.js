@@ -77,6 +77,14 @@ const ProjectRegistration = () => {
   )
 
   const points = useMemo(() => {
+    const max = data
+      ? Math.max(
+          ...data
+            .filter((d) => d.start != null && d.end != null)
+            .map((d) => d.value)
+        )
+      : 0
+
     return [
       ...Array(24)
         .fill(null)
@@ -90,8 +98,8 @@ const ProjectRegistration = () => {
             }))
         )
         .flat(),
-      ...mungeData(data, theme, 3, 'all', 'secondary'),
-      ...mungeData(filteredData, theme, 3, 'filtered', null),
+      ...mungeData(data, theme, max, 'all', 'secondary'),
+      ...mungeData(filteredData, theme, max, 'filtered', null),
     ]
   }, [data, filteredData, theme, !!registrationBounds])
 
