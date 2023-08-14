@@ -1,23 +1,13 @@
-import {
-  Chart,
-  Grid,
-  Plot,
-  Ticks,
-  TickLabels,
-  useChart,
-} from '@carbonplan/charts'
+import { Chart, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import useSWR from 'swr'
-import { mix } from 'polished'
+import { alpha } from '@theme-ui/color'
+import { useMemo } from 'react'
 
 import Brush from './brush'
+import Heatmap, { mungeData } from './heatmap'
 import { useQueries } from '../queries'
 import { useDebounce } from '../utils'
-import { useMemo } from 'react'
-import { COLORS } from '../constants'
-import { alpha } from '@theme-ui/color'
-
-const CATEGORY_ORDER = Object.keys(COLORS)
 
 const fetcher = ([
   url,
@@ -52,63 +42,6 @@ const fetcher = ([
   reqUrl.search = params.toString()
 
   return fetch(reqUrl).then((r) => r.json())
-}
-
-const mungeData = (data, theme, max, key, mixer) => {
-  if (!data) {
-    return []
-  } else {
-    return data
-      .map(({ start, end, category, value }) => {
-        if (start != null && end != null) {
-          const year = new Date(`${start}T00:00:00`).getFullYear()
-          const datum = [year, 9 - CATEGORY_ORDER.indexOf(category)]
-          const color = mixer
-            ? mix(
-                0.25,
-                theme.rawColors[COLORS[category]],
-                theme.rawColors[mixer]
-              )
-            : theme.rawColors[COLORS[category]]
-          return {
-            key,
-            value: datum,
-            color: mix(value / max, color, theme.rawColors.background),
-          }
-        } else {
-          return null
-        }
-      }, {})
-      .filter(Boolean)
-  }
-}
-
-const Heatmap = ({ data, size = 10 }) => {
-  const { x, y } = useChart()
-
-  return (
-    <>
-      {data.map(({ key, value, color }) => (
-        <Box
-          key={`${key}-${value.join(',')}`}
-          as='path'
-          d={`M${x(value[0])} ${y(value[1])} A0 0 0 0 1 ${
-            x(value[0]) + 0.0001
-          } ${y(value[1]) + 0.0001}`}
-          sx={{
-            transition: 'stroke 0.15s',
-            stroke: color,
-            strokeWidth: size,
-            strokeLinecap: 'round',
-            strokeLinejoin: 'round',
-            fill: 'none',
-            pointerEvents: 'none',
-            vectorEffect: 'non-scaling-stroke',
-          }}
-        />
-      ))}
-    </>
-  )
 }
 
 const ProjectRegistration = () => {
