@@ -129,7 +129,7 @@ const Queries = () => {
             values={category}
             setValues={setCategory}
             labels={LABELS.category}
-            colors={COLORS.category}
+            colors={COLORS}
             showAll
             multiSelect
           />

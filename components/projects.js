@@ -42,7 +42,7 @@ const fetcher = ([
   }
   if (registrationBounds) {
     params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
-    params.append('registered_at_to', `${registrationBounds[1]}-01-01`)
+    params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
   }
 
   params.append('current_page', page)
