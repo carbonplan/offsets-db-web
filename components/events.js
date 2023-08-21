@@ -1,6 +1,6 @@
 import { FadeIn } from '@carbonplan/components'
 import useSWR from 'swr'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Divider } from 'theme-ui'
 
 import { Loading, TableHead, TableRow } from './table'
@@ -81,6 +81,18 @@ const Events = () => {
     fetcher,
     { revalidateOnFocus: false }
   )
+
+  useEffect(() => {
+    setPage(1)
+  }, [
+    sort,
+    transactionType,
+    transactionBounds,
+    registry,
+    category,
+    complianceOnly,
+    search,
+  ])
 
   return (
     <>

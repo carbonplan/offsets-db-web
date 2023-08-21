@@ -1,6 +1,6 @@
 import { FadeIn } from '@carbonplan/components'
 import useSWR from 'swr'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Divider } from 'theme-ui'
 
 import { useQueries } from './queries'
@@ -73,6 +73,10 @@ const Projects = () => {
     fetcher,
     { revalidateOnFocus: false }
   )
+
+  useEffect(() => {
+    setPage(1)
+  }, [registry, category, complianceOnly, search, sort, registrationBounds])
 
   return (
     <>
