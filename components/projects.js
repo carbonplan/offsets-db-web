@@ -1,4 +1,4 @@
-import { FadeIn } from '@carbonplan/components'
+import { Badge, FadeIn } from '@carbonplan/components'
 import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { Box, Divider } from 'theme-ui'
@@ -9,6 +9,7 @@ import ProjectCharts from './charts/project-charts'
 import { projectSorters, useDebounce } from './utils'
 import Project from './project'
 import Pagination from './pagination'
+import SummaryRow from './table/summary-row'
 
 const fetcher = ([
   url,
@@ -54,6 +55,8 @@ const fetcher = ([
   return fetch(reqUrl).then((r) => r.json())
 }
 
+const empty = {}
+
 const Projects = () => {
   const { registry, category, complianceOnly, search, registrationBounds } =
     useQueries()
@@ -69,6 +72,21 @@ const Projects = () => {
       useDebounce(search),
       useDebounce(sort, 10),
       useDebounce(registrationBounds),
+    ],
+    fetcher,
+    { revalidateOnFocus: false }
+  )
+
+  const { data: unfilteredData } = useSWR(
+    [
+      `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
+      1,
+      empty,
+      empty,
+      false,
+      null,
+      null,
+      null,
     ],
     fetcher,
     { revalidateOnFocus: false }
@@ -108,6 +126,14 @@ const Projects = () => {
         />
         {data && (
           <FadeIn as='tbody'>
+            {unfilteredData && (
+              <SummaryRow
+                count={data.pagination.total_entries}
+                total={unfilteredData.pagination.total_entries}
+                label='projects'
+              />
+            )}
+
             {data.data
               .sort(projectSorters[sort] ?? projectSorters.default(sort))
               .map((d) => (

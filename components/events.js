@@ -9,6 +9,7 @@ import Event from './event'
 import CreditCharts from './charts/credit-charts'
 import { useQueries } from './queries'
 import Pagination from './pagination'
+import SummaryRow from './table/summary-row'
 
 const fetcher = ([
   url,
@@ -60,6 +61,7 @@ const fetcher = ([
   return fetch(reqUrl).then((r) => r.json())
 }
 
+const empty = {}
 const Events = () => {
   const { registry, category, complianceOnly, search, transactionBounds } =
     useQueries()
@@ -77,6 +79,22 @@ const Events = () => {
       useDebounce(category),
       complianceOnly,
       useDebounce(search),
+    ],
+    fetcher,
+    { revalidateOnFocus: false }
+  )
+
+  const { data: unfilteredData } = useSWR(
+    [
+      `${process.env.NEXT_PUBLIC_API_URL}/credits/`,
+      1,
+      null,
+      null,
+      null,
+      {},
+      {},
+      false,
+      null,
     ],
     fetcher,
     { revalidateOnFocus: false }
@@ -119,6 +137,13 @@ const Events = () => {
         />
         {data && (
           <FadeIn as='tbody'>
+            {unfilteredData && (
+              <SummaryRow
+                count={data.pagination.total_entries}
+                total={unfilteredData.pagination.total_entries}
+                label='credits'
+              />
+            )}
             {data.data.map((d) => (
               <Event key={d.transaction_serial_number} event={d} />
             ))}
