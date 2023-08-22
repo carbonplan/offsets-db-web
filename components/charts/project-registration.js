@@ -1,11 +1,9 @@
-import { Chart, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
+import { Chart, Grid, Plot, Ticks, TickLabels, Bar } from '@carbonplan/charts'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import useSWR from 'swr'
-import { alpha } from '@theme-ui/color'
 import { useMemo } from 'react'
 
 import Brush from './brush'
-import Heatmap, { mungeData } from './heatmap'
 import { useQueries } from '../queries'
 import { useDebounce } from '../utils'
 
@@ -76,35 +74,61 @@ const ProjectRegistration = () => {
     { revalidateOnFocus: false }
   )
 
-  const points = useMemo(() => {
-    const max = data
-      ? Math.max(
-          ...data
-            .filter((d) => d.start != null && d.end != null)
-            .map((d) => d.value)
-        )
-      : 0
+  const { lines, range } = useMemo(() => {
+    if (!data) {
+      return { lines: [], range: [0, 0] }
+    } else {
+      const lines = data
+        .reduce((accum, { start, end, category, value }) => {
+          if (start != null && end != null) {
+            const year = new Date(`${start}T00:00:00`).getFullYear()
 
-    const background = !!registrationBounds
-      ? alpha('muted', 0.5)(theme)
-      : theme.rawColors.muted
-    return [
-      ...Array(24)
-        .fill(null)
-        .map((a, i) =>
-          Array(9)
-            .fill(null)
-            .map((d, j) => ({
-              color: background,
-              value: [2000 + i, j],
-              key: 'background',
-            }))
-        )
-        .flat(),
-      ...mungeData(data, theme, max, 'all', background, 'secondary'),
-      ...mungeData(filteredData, theme, max, 'filtered', background, null),
-    ]
-  }, [data, filteredData, theme, !!registrationBounds])
+            const existingEntry = accum.find((d) => d[0] === year)
+            if (existingEntry) {
+              existingEntry[1] += value
+            } else {
+              accum.push([year, value])
+            }
+            return accum
+          } else {
+            return accum
+          }
+        }, [])
+        .sort((a, b) => b[0] - a[0])
+
+      const range = lines.reduce(
+        ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
+        [Infinity, -Infinity]
+      )
+      return { lines, range }
+    }
+  }, [data])
+
+  const { lines: filteredLines } = useMemo(() => {
+    if (!filteredData) {
+      return { lines: [], range: [0, 0] }
+    } else {
+      const lines = filteredData
+        .reduce((accum, { start, end, category, value }) => {
+          if (start != null && end != null) {
+            const year = new Date(`${start}T00:00:00`).getFullYear()
+
+            const existingEntry = accum.find((d) => d[0] === year)
+            if (existingEntry) {
+              existingEntry[1] += value
+            } else {
+              accum.push([year, value])
+            }
+            return accum
+          } else {
+            return accum
+          }
+        }, [])
+        .sort((a, b) => b[0] - a[0])
+
+      return { lines }
+    }
+  }, [filteredData])
 
   return (
     <>
@@ -117,13 +141,15 @@ const ProjectRegistration = () => {
         </Box>
       </Flex>
       <Box sx={{ height: '200px', mt: 3 }}>
-        <Chart x={[2000, 2023]} y={[-0.5, 8.45]} padding={{ left: 0 }}>
+        <Chart x={[2000, 2023]} y={range} padding={{ left: 0 }}>
           <Ticks bottom />
           <TickLabels bottom />
+          <TickLabels left values={[0, 1200]} />
           <Grid vertical />
           <Plot>
             <Brush setBounds={setRegistrationBounds} />
-            <Heatmap data={points} />
+            <Bar data={lines} color='secondary' />
+            <Bar data={filteredLines} />
           </Plot>
         </Chart>
       </Box>

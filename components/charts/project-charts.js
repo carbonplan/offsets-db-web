@@ -1,7 +1,6 @@
 import { Column, Row } from '@carbonplan/components'
 
 import ProjectRegistration from './project-registration'
-import ProjectRegistrationLine from './project-registration-line'
 
 const ProjectCharts = () => {
   return (
@@ -17,9 +16,7 @@ const ProjectCharts = () => {
       <Column start={1} width={[6, 4, 4, 4]}>
         <ProjectRegistration />
       </Column>
-      <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
-        <ProjectRegistrationLine />
-      </Column>
+      <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}></Column>
     </Row>
   )
 }
