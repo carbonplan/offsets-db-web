@@ -4,6 +4,7 @@ import { Box, Divider, Flex } from 'theme-ui'
 import { COLORS, LABELS } from './constants'
 import Layout from './layout'
 import Sidebar from './sidebar'
+import Timeline from './timeline'
 
 const Empty = () => {
   return <Box sx={{ color: 'secondary' }}>N/A</Box>
@@ -135,6 +136,8 @@ const Project = ({ project }) => {
 
         <Column start={[5]} width={[3]}>
           <Box sx={sx.sectionLabel}>Timeline</Box>
+
+          <Timeline project={project} />
         </Column>
       </Row>
     </Layout>
