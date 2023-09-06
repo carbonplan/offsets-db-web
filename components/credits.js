@@ -5,7 +5,7 @@ import { Box, Divider } from 'theme-ui'
 
 import { Loading, TableHead, TableRow } from './table'
 import { useDebounce } from './utils'
-import Event from './event'
+import CreditRow from './credit-row'
 import CreditCharts from './charts/credit-charts'
 import { useQueries } from './queries'
 import Pagination from './pagination'
@@ -62,7 +62,7 @@ const fetcher = ([
 }
 
 const empty = {}
-const Events = () => {
+const Credits = () => {
   const { registry, category, complianceOnly, search, transactionBounds } =
     useQueries()
   const [sort, setSort] = useState('transaction_date')
@@ -145,7 +145,7 @@ const Events = () => {
               />
             )}
             {data.data.map((d) => (
-              <Event key={d.transaction_serial_number} event={d} />
+              <CreditRow key={d.transaction_serial_number} event={d} />
             ))}
             {data.data.length === 0 ? (
               <TableRow
@@ -179,4 +179,4 @@ const Events = () => {
   )
 }
 
-export default Events
+export default Credits

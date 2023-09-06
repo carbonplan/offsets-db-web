@@ -4,7 +4,7 @@ import { Box, Flex, Text } from 'theme-ui'
 import { format } from 'd3-format'
 import { TableRow } from './table'
 
-const Event = ({ event }) => {
+const CreditRow = ({ event }) => {
   const {
     project_id,
     transaction_date,
@@ -95,4 +95,4 @@ const Event = ({ event }) => {
   )
 }
 
-export default Event
+export default CreditRow

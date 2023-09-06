@@ -2,7 +2,7 @@ import { Badge } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { Box, Flex, Link } from 'theme-ui'
 
-import Events from './events'
+import Credits from './credits'
 import Layout from './layout'
 import Projects from './projects'
 import Queries from './queries'
@@ -55,7 +55,7 @@ const Index = ({ mode }) => {
         </Link>
       </Flex>
       {mode === 'projects' && <Projects />}
-      {mode === 'credits' && <Events />}
+      {mode === 'credits' && <Credits />}
     </Layout>
   )
 }
