@@ -1,13 +1,19 @@
 import { Badge, Button, Column, Link, Row, Tag } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
+import { format } from 'd3-format'
 import { Box, Divider, Flex } from 'theme-ui'
 import { COLORS, LABELS } from './constants'
+import Credits from './credits'
 import Layout from './layout'
 import Sidebar from './sidebar'
 import Timeline from './timeline'
 
 const Empty = () => {
   return <Box sx={{ color: 'secondary' }}>N/A</Box>
+}
+
+const formatter = (value) => {
+  return value > 10000 ? format('.3s')(value) : value
 }
 
 const Project = ({ project }) => {
@@ -24,6 +30,8 @@ const Project = ({ project }) => {
     details_url,
     registry,
     description,
+    issued,
+    retired,
   } = project
   const color = COLORS[category]
 
@@ -46,6 +54,18 @@ const Project = ({ project }) => {
       fontFamily: 'mono',
       letterSpacing: 'mono',
       fontSize: 1,
+    },
+    creditsLabel: {
+      fontFamily: 'mono',
+      letterSpacing: 'mono',
+      textTransform: 'uppercase',
+      color: 'secondary',
+      mt: [4, 2, 2, 2],
+    },
+    creditsAmount: {
+      mt: 3,
+      fontSize: 4,
+      height: ['34px'],
     },
     badge: {
       transition: 'color 0.15s',
@@ -182,6 +202,28 @@ const Project = ({ project }) => {
           <Timeline project={project} />
         </Column>
       </Row>
+
+      <Row columns={[6, 8, 8, 8]} sx={{ mt: 6 }}>
+        <Column start={[1]} width={[6, 6, 4, 4]}>
+          <Box sx={sx.sectionLabel}>Credits</Box>
+        </Column>
+        <Column start={[1]} width={[6, 2, 2, 2]}>
+          <Box sx={sx.creditsLabel}>Credits issued</Box>
+          <Badge sx={sx.creditsAmount}>{formatter(issued)}</Badge>
+        </Column>
+        <Column start={[1, 3, 3, 3]} width={[6, 2, 2, 2]}>
+          <Box sx={sx.creditsLabel}>Credits retired</Box>
+          <Badge sx={sx.creditsAmount}>{formatter(retired)}</Badge>
+        </Column>
+      </Row>
+
+      <Row columns={[6, 8, 8, 8]} sx={{ mt: 6 }}>
+        <Column start={[1]} width={[6, 6, 4, 4]}>
+          <Box sx={sx.sectionLabel}>Transactions</Box>
+        </Column>
+      </Row>
+
+      <Credits project_id={project_id} charts={false} borderTop={false} />
     </Layout>
   )
 }

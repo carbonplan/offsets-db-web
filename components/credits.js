@@ -21,6 +21,7 @@ const fetcher = ([
   category,
   complianceOnly,
   search,
+  project_id,
 ]) => {
   const params = new URLSearchParams()
 
@@ -43,6 +44,10 @@ const fetcher = ([
     params.append('sort', sort)
   }
 
+  if (project_id) {
+    params.append('project_id', project_id)
+  }
+
   if (transactionType) {
     params.append('transaction_type', transactionType)
   }
@@ -61,8 +66,7 @@ const fetcher = ([
   return fetch(reqUrl).then((r) => r.json())
 }
 
-const empty = {}
-const Credits = () => {
+const Credits = ({ project_id, charts = true, borderTop = true }) => {
   const { registry, category, complianceOnly, search, transactionBounds } =
     useQueries()
   const [sort, setSort] = useState('transaction_date')
@@ -79,6 +83,7 @@ const Credits = () => {
       useDebounce(category),
       complianceOnly,
       useDebounce(search),
+      project_id,
     ],
     fetcher,
     { revalidateOnFocus: false }
@@ -95,6 +100,7 @@ const Credits = () => {
       {},
       false,
       null,
+      project_id,
     ],
     fetcher,
     { revalidateOnFocus: false }
@@ -114,16 +120,18 @@ const Credits = () => {
 
   return (
     <>
-      <Box sx={{ display: ['none', 'block', 'block', 'block'] }}>
-        <Divider
-          sx={{
-            ml: [-4, -5, -5, -6],
-            mr: [-4, -5, 0, 0],
-            my: 3,
-          }}
-        />
-        <CreditCharts setTransactionType={setTransactionType} />
-      </Box>
+      {charts && (
+        <Box sx={{ display: ['none', 'block', 'block', 'block'] }}>
+          <Divider
+            sx={{
+              ml: [-4, -5, -5, -6],
+              mr: [-4, -5, 0, 0],
+              my: 3,
+            }}
+          />
+          <CreditCharts setTransactionType={setTransactionType} />
+        </Box>
+      )}
       <Box as='table' sx={{ width: '100%' }}>
         <TableHead
           sort={sort}
@@ -134,6 +142,7 @@ const Credits = () => {
             { value: 'project_id', label: 'Project ID', width: 2 },
             { value: 'quantity', label: 'Quantity', width: 1 },
           ]}
+          borderTop={borderTop}
         />
         {data && (
           <FadeIn as='tbody'>

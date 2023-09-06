@@ -3,7 +3,7 @@ import { Box } from 'theme-ui'
 import { useCallback } from 'react'
 import TableRow from './table-row'
 
-const TableHead = ({ values, sort, setSort }) => {
+const TableHead = ({ values, sort, setSort, borderTop }) => {
   const Sort = useCallback(
     ({ value }) => {
       return (
@@ -56,7 +56,7 @@ const TableHead = ({ values, sort, setSort }) => {
         Button={Sort}
         sx={{
           border: 0,
-          borderTop: '1px',
+          borderTop: borderTop ? '1px' : 0,
           borderBottom: '1px',
           borderColor: 'muted',
           borderStyle: 'solid',
