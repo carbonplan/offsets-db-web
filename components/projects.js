@@ -7,7 +7,7 @@ import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
 import ProjectCharts from './charts/project-charts'
 import { projectSorters, useDebounce } from './utils'
-import Project from './project'
+import ProjectRow from './project-row'
 import Pagination from './pagination'
 import SummaryRow from './table/summary-row'
 
@@ -137,7 +137,7 @@ const Projects = () => {
             {data.data
               .sort(projectSorters[sort] ?? projectSorters.default(sort))
               .map((d) => (
-                <Project key={d.project_id} project={d} />
+                <ProjectRow key={d.project_id} project={d} />
               ))}
             {data.data.length === 0 ? (
               <TableRow

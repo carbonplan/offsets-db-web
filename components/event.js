@@ -50,7 +50,7 @@ const Event = ({ event }) => {
                 suffix={
                   <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
                 }
-                href={`/projects?project_id=${project_id}`}
+                href={`/projects/${project_id}`}
                 sx={{ fontSize: 2, mt: -2 }}
               >
                 {project_id}
