@@ -141,7 +141,7 @@ const Events = () => {
               <SummaryRow
                 count={data.pagination.total_entries}
                 total={unfilteredData.pagination.total_entries}
-                label='credits'
+                label='transactions'
               />
             )}
             {data.data.map((d) => (
