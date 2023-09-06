@@ -58,7 +58,11 @@ const Timeline = ({ project }) => {
                   mb: 3,
                 }}
               >
-                <Column start={1} width={2} sx={{ position: 'relative' }}>
+                <Column
+                  start={1}
+                  width={[4, 4, 2, 2]}
+                  sx={{ position: 'relative' }}
+                >
                   <Box
                     as='svg'
                     width='12'
