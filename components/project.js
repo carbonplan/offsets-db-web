@@ -1,4 +1,4 @@
-import { Badge, Button, Column, Row, Tag } from '@carbonplan/components'
+import { Badge, Button, Column, Link, Row, Tag } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { Box, Divider, Flex } from 'theme-ui'
 import { COLORS, LABELS } from './constants'
@@ -47,10 +47,50 @@ const Project = ({ project }) => {
       letterSpacing: 'mono',
       fontSize: 1,
     },
+    badge: {
+      transition: 'color 0.15s',
+      '& div': {
+        color: 'secondary',
+      },
+      '&:hover div': {
+        color: 'primary',
+      },
+    },
   }
 
   return (
-    <Layout sidebar={<Sidebar />}>
+    <Layout
+      sidebar={
+        <Sidebar>
+          <Flex
+            sx={{
+              gap: 3,
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
+              textTransform: 'uppercase',
+              mt: 3,
+              mb: [0, 0, 3, 3],
+            }}
+          >
+            <Box sx={{ color: 'secondary' }}>Back to</Box>
+            <Link sx={sx.badge} href='/projects'>
+              <Badge>Projects</Badge>
+            </Link>
+            <Link sx={sx.badge} href='/credits'>
+              <Badge>Credits</Badge>
+            </Link>
+          </Flex>
+
+          <Divider
+            sx={{
+              mr: [-4, -5, -5, -6],
+              ml: [-4, -5, 0, 0],
+              display: ['none', 'none', 'inherit', 'inherit'],
+            }}
+          />
+        </Sidebar>
+      }
+    >
       <Flex sx={{ gap: 3, my: 3 }}>
         <Badge
           sx={{
@@ -107,7 +147,7 @@ const Project = ({ project }) => {
             </Column>
             <Column start={[4, 5, 3, 3]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>ARB</Box>
-              <Box sx={sx.fieldValue}>{is_arb ? 'yes' : 'no'}</Box>
+              <Box sx={sx.fieldValue}>{is_arb ? 'Yes' : 'No'}</Box>
             </Column>
 
             <Column start={[1]} width={[3, 2, 1, 1]}>
