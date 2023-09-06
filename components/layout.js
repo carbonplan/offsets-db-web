@@ -4,7 +4,7 @@ import { Divider } from 'theme-ui'
 const Layout = ({ sidebar, children }) => {
   return (
     <Row>
-      {sidebar}{' '}
+      {sidebar}
       <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]}>
         <Divider
           sx={{

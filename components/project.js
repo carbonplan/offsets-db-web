@@ -76,45 +76,45 @@ const Project = ({ project }) => {
         }}
       />
       <Row columns={[6, 8, 8, 8]}>
-        <Column start={[1]} width={[6, 4, 4, 4]}>
+        <Column start={[1]} width={[6, 6, 4, 4]}>
           <Box sx={sx.sectionLabel}>Overview</Box>
 
-          <Row columns={[6, 4, 4, 4]}>
-            <Column start={[1]} width={[1]}>
+          <Row columns={[6, 6, 4, 4]}>
+            <Column start={[1]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Country</Box>
               <Box sx={sx.fieldValue}>{country}</Box>
             </Column>
-            <Column start={[2]} width={[1]}>
+            <Column start={[4, 3, 2, 2]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Status</Box>
               <Box sx={sx.fieldValue}>{status}</Box>
             </Column>
-            <Column start={[3]} width={[1]}>
+            <Column start={[1, 5, 3, 3]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Developer</Box>
               <Box sx={sx.fieldValue}>{developer ?? <Empty />}</Box>
             </Column>
 
-            <Column start={[1]} width={[1]}>
+            <Column start={[4, 1, 1, 1]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Category</Box>
               <Box sx={sx.fieldValue}>
                 <Tag sx={{ color }}>{category}</Tag>
               </Box>
             </Column>
-            <Column start={[2]} width={[1]}>
+            <Column start={[1, 3, 2, 2]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Protocol</Box>
               <Box sx={{ ...sx.fieldValue, textTransform: 'uppercase' }}>
                 {protocol ?? <Empty />}
               </Box>
             </Column>
-            <Column start={[3]} width={[1]}>
+            <Column start={[4, 5, 3, 3]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>ARB</Box>
               <Box sx={sx.fieldValue}>{is_arb ? 'yes' : 'no'}</Box>
             </Column>
 
-            <Column start={[1]} width={[1]}>
+            <Column start={[1]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Proponent</Box>
               <Box sx={sx.fieldValue}>{proponent ?? <Empty />}</Box>
             </Column>
-            <Column start={[2]} width={[1]}>
+            <Column start={[4, 3, 2, 2]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Registry</Box>
               <Box sx={sx.fieldValue}>
                 <Button
@@ -127,14 +127,14 @@ const Project = ({ project }) => {
               </Box>
             </Column>
 
-            <Column start={[1]} width={[6, 4, 4, 4]}>
+            <Column start={[1]} width={[6, 6, 4, 4]}>
               <Box sx={sx.fieldLabel}>Registry description</Box>
               <Box sx={sx.fieldValue}>{description}</Box>
             </Column>
           </Row>
         </Column>
 
-        <Column start={[5]} width={[3]}>
+        <Column start={[1, 1, 5, 5]} width={[6, 8, 3, 3]}>
           <Box sx={sx.sectionLabel}>Timeline</Box>
 
           <Timeline project={project} />

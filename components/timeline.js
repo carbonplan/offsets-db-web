@@ -13,10 +13,10 @@ const Timeline = ({ project }) => {
   )
 
   return (
-    <Row columns={[6, 6, 3, 3]}>
-      <Column start={2} width={[5, 5, 2, 2]}>
+    <Row columns={[6, 8, 3, 3]}>
+      <Column start={2} width={[4, 4, 2, 2]}>
         <Row
-          columns={[5, 5, 2, 2]}
+          columns={[4, 4, 2, 2]}
           sx={{
             borderWidth: 0,
             borderLeft: '1px',
@@ -40,12 +40,12 @@ const Timeline = ({ project }) => {
             <Column
               key={date}
               start={1}
-              width={[5, 5, 2, 2]}
+              width={[4, 4, 2, 2]}
               sx={{ mt: 3, mb: 2 }}
             >
               <Divider sx={{ my: 0 }} />
               <Row
-                columns={[5, 5, 2, 2]}
+                columns={[4, 4, 2, 2]}
                 sx={{
                   color: 'secondary',
                   fontFamily: 'mono',
