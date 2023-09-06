@@ -13,7 +13,7 @@ const Timeline = ({ project }) => {
   )
 
   return (
-    <Row columns={[6, 8, 3, 3]}>
+    <Row columns={[6, 8, 3, 3]} sx={{ mt: 4 }}>
       <Column start={2} width={[4, 4, 2, 2]}>
         <Row
           columns={[4, 4, 2, 2]}
