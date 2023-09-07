@@ -1,7 +1,7 @@
 import { Chart, Bar, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import useSWR from 'swr'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import Brush from './brush'
 import { useQueries } from '../queries'
@@ -46,7 +46,11 @@ const fetcher = ([
   return fetch(reqUrl).then((r) => r.json())
 }
 
-const CreditTransactions = ({ transactionType, setTransactionType }) => {
+const CreditTransactions = ({
+  project_id, // TODO: thread this through to queries
+  transactionType,
+  setTransactionType,
+}) => {
   const {
     registry,
     category,
@@ -81,6 +85,15 @@ const CreditTransactions = ({ transactionType, setTransactionType }) => {
     fetcher,
     { revalidateOnFocus: false }
   )
+
+  const handleBoundsChange = useCallback(
+    (bounds) => {
+      setTransactionBounds(bounds)
+      setTransactionType(bounds ? transactionType : null)
+    },
+    [transactionType, setTransactionBounds]
+  )
+
   const { lines, range } = useMemo(() => {
     if (!data) {
       return { lines: [], range: [0, 0] }
@@ -152,7 +165,7 @@ const CreditTransactions = ({ transactionType, setTransactionType }) => {
           <TickLabels left count={3} format={format('~s')} />
           <Grid vertical />
           <Plot>
-            <Brush setBounds={setTransactionBounds} />
+            <Brush setBounds={handleBoundsChange} />
             <Bar data={lines} color='secondary' />
             <Bar data={filteredLines} />
           </Plot>

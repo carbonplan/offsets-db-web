@@ -2,6 +2,7 @@ import { Badge, Button, Column, Link, Row, Tag } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { format } from 'd3-format'
 import { Box, Divider, Flex } from 'theme-ui'
+import CreditCharts from './charts/credit-charts'
 import { COLORS, LABELS } from './constants'
 import Credits from './credits'
 import Layout from './layout'
@@ -214,6 +215,10 @@ const Project = ({ project }) => {
         <Column start={[1, 3, 3, 3]} width={[6, 2, 2, 2]}>
           <Box sx={sx.creditsLabel}>Credits retired</Box>
           <Badge sx={sx.creditsAmount}>{formatter(retired)}</Badge>
+        </Column>
+
+        <Column start={[1]} width={[6, 8, 8, 8]} sx={{ mt: 5 }}>
+          <CreditCharts project_id={project_id} />
         </Column>
       </Row>
 
