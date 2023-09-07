@@ -1,13 +1,12 @@
-import { Chart, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
+import { Chart, Bar, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import useSWR from 'swr'
-import { useCallback, useMemo } from 'react'
-import { alpha } from '@theme-ui/color'
+import { useMemo } from 'react'
 
 import Brush from './brush'
-import Heatmap, { mungeData } from './heatmap'
 import { useQueries } from '../queries'
 import { useDebounce } from '../utils'
+import { format } from 'd3-format'
 
 const fetcher = ([
   url,
@@ -37,8 +36,8 @@ const fetcher = ([
     params.append('is_arb', complianceOnly)
   }
   if (transactionBounds) {
-    params.append('registered_at_from', `${transactionBounds[0]}-01-01`)
-    params.append('registered_at_to', `${transactionBounds[1]}-12-31`)
+    params.append('transaction_date_from', `${transactionBounds[0]}-01-01`)
+    params.append('transaction_date_to', `${transactionBounds[1]}-12-31`)
   }
 
   const reqUrl = new URL(url)
@@ -82,37 +81,61 @@ const CreditTransactions = ({ transactionType, setTransactionType }) => {
     fetcher,
     { revalidateOnFocus: false }
   )
+  const { lines, range } = useMemo(() => {
+    if (!data) {
+      return { lines: [], range: [0, 0] }
+    } else {
+      const lines = data
+        .reduce((accum, { start, end, value }) => {
+          if (start != null && end != null) {
+            const year = new Date(`${start}T00:00:00`).getFullYear()
 
-  const points = useMemo(() => {
-    const max = data ? Math.max(...data.map((d) => d.value)) : 0
-    const background = !!transactionBounds
-      ? alpha('muted', 0.5)
-      : theme.rawColors.muted
-    return [
-      ...Array(24)
-        .fill(null)
-        .map((a, i) =>
-          Array(9)
-            .fill(null)
-            .map((d, j) => ({
-              color: !!transactionBounds ? alpha('muted', 0.5) : 'muted',
-              value: [2000 + i, j],
-              key: 'background',
-            }))
-        )
-        .flat(),
-      ...mungeData(data, theme, max, 'all', background, 'secondary'),
-      ...mungeData(filteredData, theme, max, 'filtered', background, null),
-    ]
-  }, [data, filteredData, theme, !!transactionBounds])
+            const existingEntry = accum.find((d) => d[0] === year)
+            if (existingEntry) {
+              existingEntry[1] += value
+            } else {
+              accum.push([year, value])
+            }
+            return accum
+          } else {
+            return accum
+          }
+        }, [])
+        .sort((a, b) => b[0] - a[0])
 
-  const handleBoundsChange = useCallback(
-    (bounds) => {
-      setTransactionBounds(bounds)
-      setTransactionType(bounds ? transactionType : null)
-    },
-    [transactionType, setTransactionBounds]
-  )
+      const range = lines.reduce(
+        ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
+        [Infinity, -Infinity]
+      )
+      return { lines, range }
+    }
+  }, [data])
+
+  const { lines: filteredLines } = useMemo(() => {
+    if (!filteredData) {
+      return { lines: [], range: [0, 0] }
+    } else {
+      const lines = filteredData
+        .reduce((accum, { start, end, value }) => {
+          if (start != null && end != null) {
+            const year = new Date(`${start}T00:00:00`).getFullYear()
+
+            const existingEntry = accum.find((d) => d[0] === year)
+            if (existingEntry) {
+              existingEntry[1] += value
+            } else {
+              accum.push([year, value])
+            }
+            return accum
+          } else {
+            return accum
+          }
+        }, [])
+        .sort((a, b) => b[0] - a[0])
+
+      return { lines }
+    }
+  }, [filteredData])
 
   return (
     <>
@@ -123,13 +146,15 @@ const CreditTransactions = ({ transactionType, setTransactionType }) => {
         </Box>
       </Flex>
       <Box sx={{ height: '200px', mt: 3 }}>
-        <Chart x={[2000, 2023]} y={[-0.5, 8.45]} padding={{ left: 0 }}>
+        <Chart x={[2000, 2023]} y={range} padding={{ left: 32 }}>
           <Ticks bottom />
           <TickLabels bottom />
+          <TickLabels left count={3} format={format('~s')} />
           <Grid vertical />
           <Plot>
-            <Brush setBounds={handleBoundsChange} />
-            <Heatmap data={points} />
+            <Brush setBounds={setTransactionBounds} />
+            <Bar data={lines} color='secondary' />
+            <Bar data={filteredLines} />
           </Plot>
         </Chart>
       </Box>

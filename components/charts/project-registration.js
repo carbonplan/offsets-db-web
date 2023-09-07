@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import Brush from './brush'
 import { useQueries } from '../queries'
 import { useDebounce } from '../utils'
+import { format } from 'd3-format'
 
 const fetcher = ([
   url,
@@ -141,10 +142,10 @@ const ProjectRegistration = () => {
         </Box>
       </Flex>
       <Box sx={{ height: '200px', mt: 3 }}>
-        <Chart x={[2000, 2023]} y={range} padding={{ left: 0 }}>
+        <Chart x={[2000, 2023]} y={range} padding={{ left: 32 }}>
           <Ticks bottom />
           <TickLabels bottom />
-          <TickLabels left values={[0, 1200]} />
+          <TickLabels left count={3} format={format('~s')} />
           <Grid vertical />
           <Plot>
             <Brush setBounds={setRegistrationBounds} />
