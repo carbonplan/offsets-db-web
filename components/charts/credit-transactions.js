@@ -16,6 +16,7 @@ const fetcher = ([
   complianceOnly,
   search,
   transactionBounds,
+  countries,
 ]) => {
   const params = new URLSearchParams()
   params.append('transaction_type', type)
@@ -40,6 +41,10 @@ const fetcher = ([
     params.append('transaction_date_to', `${transactionBounds[1]}-12-31`)
   }
 
+  if (countries) {
+    params.append('country', countries)
+  }
+
   const reqUrl = new URL(url)
   reqUrl.search = params.toString()
 
@@ -58,6 +63,7 @@ const CreditTransactions = ({
     search,
     transactionBounds,
     setTransactionBounds,
+    countries,
   } = useQueries()
   const { theme } = useThemeUI()
   const { data, error, isLoading } = useSWR(
@@ -81,6 +87,7 @@ const CreditTransactions = ({
       complianceOnly,
       useDebounce(search),
       useDebounce(transactionBounds),
+      countries,
     ],
     fetcher,
     { revalidateOnFocus: false }

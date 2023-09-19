@@ -2,7 +2,7 @@ import { Column, Filter, Input, Row, Toggle } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
-import { COLORS, LABELS } from './constants'
+import { COLORS, COUNTRIES, LABELS } from './constants'
 
 const QueryContext = createContext({
   registry: {},
@@ -34,6 +34,7 @@ export const QueryProvider = ({ children }) => {
   const [search, setSearch] = useState('')
   const [registrationBounds, setRegistrationBounds] = useState(null)
   const [transactionBounds, setTransactionBounds] = useState(null)
+  const [countries, setCountries] = useState(null)
 
   useEffect(() => {
     if (router.query.project_id) {
@@ -57,6 +58,8 @@ export const QueryProvider = ({ children }) => {
         setRegistrationBounds,
         transactionBounds,
         setTransactionBounds,
+        countries,
+        setCountries,
       }}
     >
       {children}
@@ -79,6 +82,7 @@ const sx = {
 }
 
 const Queries = () => {
+  const [countrySelection, setCountrySelection] = useState(false)
   const {
     registry,
     setRegistry,
@@ -88,6 +92,8 @@ const Queries = () => {
     setComplianceOnly,
     search,
     setSearch,
+    countries,
+    setCountries,
   } = useQueries()
 
   return (
@@ -133,6 +139,47 @@ const Queries = () => {
             showAll
             multiSelect
           />
+        </Column>
+      </Row>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
+          <Box sx={sx.label}>Country</Box>
+        </Column>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+          {countrySelection ? (
+            <Filter
+              values={{
+                All: !countrySelection,
+                ...COUNTRIES.reduce((a, c) => {
+                  a[c] = countries ? countries.includes(c) : false
+                  return a
+                }, {}),
+              }}
+              setValues={(obj) => {
+                if (obj['All']) {
+                  setCountrySelection(false)
+                  setCountries(null)
+                } else {
+                  setCountries(Object.keys(obj).filter((k) => obj[k]))
+                }
+              }}
+              sx={{
+                maxHeight: '300px',
+                overflowY: 'scroll',
+                pr: [4, 5, 5, 6],
+                mr: [-4, -5, -5, -6],
+              }}
+              multiSelect
+            />
+          ) : (
+            <Filter
+              values={{
+                All: !countrySelection,
+                'Select countries': countrySelection,
+              }}
+              setValues={(obj) => setCountrySelection(!obj['All'])}
+            />
+          )}
         </Column>
       </Row>
       <Row columns={[6, 8, 3, 3]}>

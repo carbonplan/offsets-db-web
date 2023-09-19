@@ -20,6 +20,7 @@ const fetcher = ([
   search,
   sort,
   registrationBounds,
+  countries,
 ]) => {
   const params = new URLSearchParams()
   Object.keys(registry)
@@ -46,6 +47,10 @@ const fetcher = ([
     params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
   }
 
+  if (countries) {
+    params.append('country', countries)
+  }
+
   params.append('current_page', page)
   params.append('per_page', 25)
 
@@ -58,8 +63,14 @@ const fetcher = ([
 const empty = {}
 
 const Projects = () => {
-  const { registry, category, complianceOnly, search, registrationBounds } =
-    useQueries()
+  const {
+    registry,
+    category,
+    complianceOnly,
+    search,
+    registrationBounds,
+    countries,
+  } = useQueries()
   const [sort, setSort] = useState('project_id')
   const [page, setPage] = useState(1)
   const { data, error, isLoading } = useSWR(
@@ -72,6 +83,7 @@ const Projects = () => {
       useDebounce(search),
       useDebounce(sort, 10),
       useDebounce(registrationBounds),
+      countries,
     ],
     fetcher,
     { revalidateOnFocus: false }

@@ -15,6 +15,7 @@ const fetcher = ([
   complianceOnly,
   search,
   registrationBounds,
+  countries,
 ]) => {
   const params = new URLSearchParams()
   Object.keys(registry)
@@ -32,9 +33,14 @@ const fetcher = ([
   if (complianceOnly) {
     params.append('is_arb', complianceOnly)
   }
+
   if (registrationBounds) {
     params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
     params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
+  }
+
+  if (countries) {
+    params.append('country', countries)
   }
 
   const reqUrl = new URL(url)
@@ -51,6 +57,7 @@ const ProjectRegistration = () => {
     search,
     registrationBounds,
     setRegistrationBounds,
+    countries,
   } = useQueries()
   const { theme } = useThemeUI()
   const { data, error, isLoading } = useSWR(
@@ -70,6 +77,7 @@ const ProjectRegistration = () => {
       complianceOnly,
       useDebounce(search),
       useDebounce(registrationBounds),
+      countries,
     ],
     fetcher,
     { revalidateOnFocus: false }

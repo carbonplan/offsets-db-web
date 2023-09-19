@@ -22,6 +22,7 @@ const fetcher = ([
   complianceOnly,
   search,
   project_id,
+  countries,
 ]) => {
   const params = new URLSearchParams()
 
@@ -48,6 +49,10 @@ const fetcher = ([
     params.append('project_id', project_id)
   }
 
+  if (countries) {
+    params.append('country', countries)
+  }
+
   if (transactionType) {
     params.append('transaction_type', transactionType)
   }
@@ -67,8 +72,14 @@ const fetcher = ([
 }
 
 const Credits = ({ project_id, charts = true, borderTop = true }) => {
-  const { registry, category, complianceOnly, search, transactionBounds } =
-    useQueries()
+  const {
+    registry,
+    category,
+    complianceOnly,
+    search,
+    transactionBounds,
+    countries,
+  } = useQueries()
   const [sort, setSort] = useState('transaction_date')
   const [page, setPage] = useState(1)
   const [transactionType, setTransactionType] = useState(null)
@@ -84,6 +95,7 @@ const Credits = ({ project_id, charts = true, borderTop = true }) => {
       complianceOnly,
       useDebounce(search),
       project_id,
+      countries,
     ],
     fetcher,
     { revalidateOnFocus: false }
