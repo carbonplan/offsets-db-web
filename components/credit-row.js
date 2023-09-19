@@ -4,7 +4,7 @@ import { Box, Flex, Text } from 'theme-ui'
 import { format } from 'd3-format'
 import { TableRow } from './table'
 
-const CreditRow = ({ event }) => {
+const CreditRow = ({ event, projectView }) => {
   const {
     project_id,
     transaction_date,
@@ -42,23 +42,29 @@ const CreditRow = ({ event }) => {
                 {transaction_type}
               </Text>
             ),
-            width: [0, 1, 1, 1],
+            width: projectView ? [0, 3, 3, 3] : [0, 1, 1, 1],
           },
-          {
-            label: (
-              <Button
-                suffix={
-                  <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
-                }
-                href={`/projects/${project_id}`}
-                sx={{ fontSize: 2 }}
-              >
-                {project_id}
-              </Button>
-            ),
-            key: 'project_id',
-            width: 2,
-          },
+          ...(projectView
+            ? []
+            : [
+                {
+                  label: (
+                    <Button
+                      suffix={
+                        <RotatingArrow
+                          sx={{ mt: '-3px', width: 13, height: 13 }}
+                        />
+                      }
+                      href={`/projects/${project_id}`}
+                      sx={{ fontSize: 2 }}
+                    >
+                      {project_id}
+                    </Button>
+                  ),
+                  key: 'project_id',
+                  width: 2,
+                },
+              ]),
           {
             key: 'quantity',
             label: (

@@ -112,7 +112,7 @@ const Project = ({ project }) => {
         </Sidebar>
       }
     >
-      <Flex sx={{ gap: 3, my: 3 }}>
+      <Flex sx={{ gap: 3, my: 3, alignItems: 'flex-end' }}>
         <Badge
           sx={{
             color,
@@ -127,7 +127,9 @@ const Project = ({ project }) => {
         >
           {project_id}
         </Badge>
-        <Box sx={{ fontFamily: 'mono', letterSpacing: 'mono' }}>{name}</Box>
+        <Box sx={{ fontFamily: 'mono', letterSpacing: 'mono', mb: 1 }}>
+          {name}
+        </Box>
       </Flex>
       <Divider
         sx={{

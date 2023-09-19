@@ -138,8 +138,14 @@ const Credits = ({ project_id, charts = true, borderTop = true }) => {
           setSort={setSort}
           values={[
             { value: 'transaction_date', label: 'Date', width: [2, 1, 1, 1] },
-            { value: 'transaction_type', label: 'Type', width: [0, 1, 1, 1] },
-            { value: 'project_id', label: 'Project ID', width: 2 },
+            {
+              value: 'transaction_type',
+              label: 'Type',
+              width: project_id ? [0, 3, 3, 3] : [0, 1, 1, 1],
+            },
+            ...(project_id
+              ? []
+              : [{ value: 'project_id', label: 'Project ID', width: 2 }]),
             { value: 'quantity', label: 'Quantity', width: 1 },
           ]}
           borderTop={borderTop}
@@ -154,7 +160,11 @@ const Credits = ({ project_id, charts = true, borderTop = true }) => {
               />
             )}
             {data.data.map((d) => (
-              <CreditRow key={d.transaction_serial_number} event={d} />
+              <CreditRow
+                key={d.transaction_serial_number}
+                event={d}
+                projectView={!!project_id}
+              />
             ))}
             {data.data.length === 0 ? (
               <TableRow
@@ -175,8 +185,11 @@ const Credits = ({ project_id, charts = true, borderTop = true }) => {
             <Loading
               values={[
                 { key: 'transaction_date', width: [2, 1, 1, 1] },
-                { key: 'transaction_type', width: [0, 1, 1, 1] },
-                { key: 'project_id', width: 2 },
+                {
+                  key: 'transaction_type',
+                  width: project_id ? [0, 3, 3, 3] : [0, 1, 1, 1],
+                },
+                ...(project_id ? [] : [{ key: 'project_id', width: 2 }]),
                 { key: 'quantity', width: 1 },
               ]}
             />
