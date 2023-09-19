@@ -117,11 +117,6 @@ const Projects = () => {
             { value: 'name', label: 'Name', width: 3 },
             { value: 'issued', label: 'Issued', width: [0, 1, 1, 1] },
             { value: 'retired', label: 'Retired', width: [0, 1, 1, 1] },
-            {
-              value: 'registered_at',
-              label: 'Registered',
-              width: [0, 1, 1, 1],
-            },
           ]}
         />
         {data && (

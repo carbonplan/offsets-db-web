@@ -51,7 +51,7 @@ const CreditRow = ({ event }) => {
                   <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
                 }
                 href={`/projects/${project_id}`}
-                sx={{ fontSize: 2, mt: -2 }}
+                sx={{ fontSize: 2 }}
               >
                 {project_id}
               </Button>
@@ -82,7 +82,7 @@ const CreditRow = ({ event }) => {
                   <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
                 }
                 inverted
-                sx={{ fontSize: 1 }}
+                sx={{ fontSize: 1, mt: '5px' }}
               >
                 Details
               </Button>

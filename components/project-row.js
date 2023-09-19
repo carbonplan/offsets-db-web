@@ -127,10 +127,19 @@ const ProjectRow = ({ project }) => {
             width: [0, 1, 1, 1],
           },
           {
-            key: 'registered_at',
-            label: registered_at
-              ? formatDate(registered_at, { year: 'numeric' })
-              : '?',
+            key: 'details',
+            label: (
+              <Button
+                suffix={
+                  <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
+                }
+                href={`/projects/${project_id}`}
+                inverted
+                sx={{ fontSize: 1, mt: '5px' }}
+              >
+                Details
+              </Button>
+            ),
             width: [0, 1, 1, 1],
           },
         ]}
