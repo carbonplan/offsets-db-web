@@ -5,10 +5,11 @@ import { Column, formatDate, Row } from '@carbonplan/components'
 const Timeline = ({ project }) => {
   const { theme } = useThemeUI()
   const sortedEntries = useMemo(
-    () => [
-      { date: project.registered_at, label: 'Project registered' },
-      { date: project.started_at, label: 'Project listed' },
-    ],
+    () =>
+      [
+        { date: project.registered_at, label: 'Project registered' },
+        { date: project.started_at, label: 'Project listed' },
+      ].filter((d) => d.date),
     [project]
   )
 
