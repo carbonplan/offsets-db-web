@@ -236,7 +236,6 @@ const ProjectRow = ({ project }) => {
                     width={[6, 1, 1, 1]}
                     sx={{ mt: [0, 3, 3, 3] }}
                   >
-                    <Box sx={sx.expandedHeading}>Details</Box>
                     <Button
                       href={details_url}
                       suffix={
