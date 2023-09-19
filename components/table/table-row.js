@@ -1,6 +1,6 @@
 import { Column, Row } from '@carbonplan/components'
 
-const TableRow = ({ values, as, sx, Button }) => {
+const TableRow = ({ values, as, sx, Button, ...props }) => {
   const starts = values.reduce((accum, v, i) => {
     if (accum.length === 0) {
       accum.push([1, 1, 1, 1])
@@ -18,7 +18,7 @@ const TableRow = ({ values, as, sx, Button }) => {
   }, [])
 
   return (
-    <Row as='tr' columns={[6, 8, 8, 8]} sx={sx}>
+    <Row as='tr' columns={[6, 8, 8, 8]} sx={sx} {...props}>
       {values.map((value, i) => (
         <Column
           as={value?.as ?? as ?? 'td'}
