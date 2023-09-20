@@ -1,5 +1,7 @@
 import { Filter, Input } from '@carbonplan/components'
-import { useMemo, useState } from 'react'
+import { X } from '@carbonplan/icons'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Box, IconButton } from 'theme-ui'
 import { COUNTRIES } from './constants'
 import { useQueries } from './queries'
 
@@ -18,6 +20,7 @@ const Countries = () => {
   const [countrySelection, setCountrySelection] = useState(false)
   const [query, setQuery] = useState('')
   const { countries, setCountries } = useQueries()
+  const ref = useRef()
 
   const { values, order } = useMemo(() => {
     const selected =
@@ -45,6 +48,12 @@ const Countries = () => {
     return { order, values }
   }, [countries, query])
 
+  useEffect(() => {
+    if (countrySelection) {
+      ref.current.focus()
+    }
+  }, [countrySelection])
+
   return (
     <>
       <Filter
@@ -58,24 +67,48 @@ const Countries = () => {
             setCountries(null)
           } else {
             setCountrySelection(true)
+            setCountries([])
           }
         }}
       />
       {countrySelection && (
         <>
-          <Input
-            sx={{
-              fontFamily: 'mono',
-              letterSpacing: 'mono',
-              fontSize: 1,
-              mt: 3,
-              mb: 2,
-              width: '100%',
-            }}
-            placeholder='Enter country'
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+          <Box sx={{ position: 'relative' }}>
+            <Input
+              ref={ref}
+              sx={{
+                fontFamily: 'mono',
+                letterSpacing: 'mono',
+                fontSize: 1,
+                mt: 3,
+                mb: 2,
+                width: '100%',
+              }}
+              placeholder='Enter country'
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <IconButton
+              onClick={() => {
+                if (query) {
+                  setQuery('')
+                } else {
+                  setCountrySelection(false)
+                  setCountries(null)
+                }
+              }}
+              sx={{
+                position: 'absolute',
+                right: 0,
+                bottom: -1,
+                width: 22,
+                color: 'secondary',
+                cursor: 'pointer',
+              }}
+            >
+              <X />
+            </IconButton>
+          </Box>
           <Filter
             values={values}
             setValues={(obj) =>
