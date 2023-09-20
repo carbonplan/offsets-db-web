@@ -10,7 +10,7 @@ import {
 import { RotatingArrow, XCircle } from '@carbonplan/icons'
 import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
-import { Box, IconButton } from 'theme-ui'
+import { Box, Flex, IconButton } from 'theme-ui'
 import { keyframes } from '@emotion/react'
 import { format } from 'd3-format'
 
@@ -222,7 +222,11 @@ const ProjectRow = ({ project }) => {
 
                   <Column start={[4, 5, 5, 5]} width={[3, 2, 2, 2]}>
                     <Box sx={sx.expandedHeading}>Protocol</Box>
-                    {protocol}
+                    <Flex sx={{ flexDirection: 'column', gap: 2 }}>
+                      {protocol.map((d) => (
+                        <Box key={d}>{d}</Box>
+                      ))}
+                    </Flex>
                   </Column>
 
                   <Column

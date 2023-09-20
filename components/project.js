@@ -175,7 +175,15 @@ const Project = ({ project }) => {
             <Column start={[1, 3, 2, 2]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Protocol</Box>
               <Box sx={{ ...sx.fieldValue, textTransform: 'uppercase' }}>
-                {protocol ?? <Empty />}
+                {protocol.length > 0 ? (
+                  <Flex sx={{ flexDirection: 'column', gap: 2 }}>
+                    {protocol.map((d) => (
+                      <Box key={d}>{d}</Box>
+                    ))}
+                  </Flex>
+                ) : (
+                  <Empty />
+                )}
               </Box>
             </Column>
             <Column start={[4, 5, 3, 3]} width={[3, 2, 1, 1]}>
