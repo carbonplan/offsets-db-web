@@ -34,7 +34,7 @@ const Project = ({ project }) => {
     issued,
     retired,
   } = project
-  const color = COLORS[category]
+  const color = COLORS[category[0]]
 
   const sx = {
     sectionLabel: {
@@ -159,7 +159,17 @@ const Project = ({ project }) => {
             <Column start={[4, 1, 1, 1]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Category</Box>
               <Box sx={sx.fieldValue}>
-                <Tag sx={{ color }}>{category}</Tag>
+                {category.map((c) => (
+                  <Tag
+                    key={c}
+                    sx={{
+                      color: COLORS[c],
+                      width: 'fit-content',
+                    }}
+                  >
+                    {c}
+                  </Tag>
+                ))}
               </Box>
             </Column>
             <Column start={[1, 3, 2, 2]} width={[3, 2, 1, 1]}>
