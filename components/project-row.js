@@ -74,7 +74,6 @@ const ProjectRow = ({ project }) => {
           {
             label: (
               <Box
-                onClick={() => setExpanded((prev) => !prev)}
                 sx={{
                   transition: 'color 0.15s',
                   cursor: 'pointer',
