@@ -10,7 +10,6 @@ const CreditRow = ({ event, projectView }) => {
     transaction_date,
     transaction_type,
     transaction_serial_number,
-    details_url,
     quantity,
     vintage,
   } = event
@@ -78,22 +77,6 @@ const CreditRow = ({ event, projectView }) => {
               </Flex>
             ),
             width: [2, 1, 1, 1],
-          },
-          {
-            key: 'details_url',
-            label: (
-              <Button
-                href={details_url}
-                suffix={
-                  <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
-                }
-                inverted
-                sx={{ fontSize: 1, mt: '5px' }}
-              >
-                Details
-              </Button>
-            ),
-            width: [0, 1, 1, 1],
           },
         ]}
       />
