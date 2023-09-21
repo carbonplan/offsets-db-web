@@ -79,22 +79,6 @@ const CreditRow = ({ event, projectView }) => {
             ),
             width: [2, 1, 1, 1],
           },
-          {
-            key: 'details_url',
-            label: (
-              <Button
-                href={details_url}
-                suffix={
-                  <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
-                }
-                inverted
-                sx={{ fontSize: 1, mt: '5px' }}
-              >
-                Details
-              </Button>
-            ),
-            width: [0, 1, 1, 1],
-          },
         ]}
       />
     </>
