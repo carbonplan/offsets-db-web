@@ -10,7 +10,7 @@ import {
 import { RotatingArrow, XCircle } from '@carbonplan/icons'
 import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
-import { Box, IconButton } from 'theme-ui'
+import { Box, Flex, IconButton } from 'theme-ui'
 import { keyframes } from '@emotion/react'
 import { format } from 'd3-format'
 
@@ -66,6 +66,7 @@ const ProjectRow = ({ project }) => {
     description,
   } = project
   const [expanded, setExpanded] = useState(false)
+  const color = COLORS[category[0]]
 
   return (
     <>
@@ -80,7 +81,7 @@ const ProjectRow = ({ project }) => {
                   position: 'relative',
                   '@media (hover: hover) and (pointer: fine)': {
                     '&:hover #expander': {
-                      stroke: COLORS[category],
+                      stroke: color,
                     },
                   },
                 }}
@@ -97,7 +98,7 @@ const ProjectRow = ({ project }) => {
                 />
                 <Badge
                   sx={{
-                    color: COLORS[category],
+                    color: color,
                     '& :first-of-type': {
                       fontFamily: 'body',
                     },
@@ -146,7 +147,7 @@ const ProjectRow = ({ project }) => {
         sx={{
           '@media (hover: hover) and (pointer: fine)': {
             '&:hover #expander': {
-              stroke: COLORS[category],
+              stroke: color,
             },
           },
           cursor: 'pointer',
@@ -191,7 +192,7 @@ const ProjectRow = ({ project }) => {
                       <XCircle
                         sx={{
                           transition: '0.15s',
-                          stroke: COLORS[category],
+                          stroke: color,
                           '&:hover': {
                             stroke: 'primary',
                           },
@@ -206,19 +207,26 @@ const ProjectRow = ({ project }) => {
 
                   <Column start={[1, 3, 3, 3]} width={[3, 2, 2, 2]}>
                     <Box sx={sx.expandedHeading}>Category</Box>
-                    <Tag
-                      sx={{
-                        color: COLORS[category],
-                        width: 'fit-content',
-                      }}
-                    >
-                      {category}
-                    </Tag>
+                    {category.map((c) => (
+                      <Tag
+                        key={c}
+                        sx={{
+                          color: COLORS[c],
+                          width: 'fit-content',
+                        }}
+                      >
+                        {c}
+                      </Tag>
+                    ))}
                   </Column>
 
                   <Column start={[4, 5, 5, 5]} width={[3, 2, 2, 2]}>
                     <Box sx={sx.expandedHeading}>Protocol</Box>
-                    {protocol}
+                    <Flex sx={{ flexDirection: 'column', gap: 2 }}>
+                      {protocol.map((d) => (
+                        <Box key={d}>{d}</Box>
+                      ))}
+                    </Flex>
                   </Column>
 
                   <Column
