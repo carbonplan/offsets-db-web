@@ -10,7 +10,6 @@ const CreditRow = ({ event, projectView }) => {
     transaction_date,
     transaction_type,
     transaction_serial_number,
-    details_url,
     quantity,
     vintage,
   } = event
