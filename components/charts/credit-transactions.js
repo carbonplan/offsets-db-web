@@ -42,7 +42,7 @@ const fetcher = ([
   }
 
   if (countries) {
-    params.append('country', countries)
+    countries.forEach((country) => params.append('country', country))
   }
 
   const reqUrl = new URL(url)
