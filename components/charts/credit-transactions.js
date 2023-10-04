@@ -52,7 +52,7 @@ const fetcher = ([
 }
 
 const CreditTransactions = ({
-  project_id, // TODO: thread this through to queries
+  project_id,
   transactionType,
   setTransactionType,
 }) => {
@@ -66,21 +66,19 @@ const CreditTransactions = ({
     countries,
   } = useQueries()
   const { theme } = useThemeUI()
-  const { data, error, isLoading } = useSWR(
-    [
-      `${process.env.NEXT_PUBLIC_API_URL}/charts/credits_by_transaction_date`,
-      transactionType,
-    ],
-    fetcher,
-    { revalidateOnFocus: false }
-  )
+  const url = `${
+    process.env.NEXT_PUBLIC_API_URL
+  }/charts/credits_by_transaction_date${project_id ? '/' + project_id : ''}`
+  const { data, error, isLoading } = useSWR([url, transactionType], fetcher, {
+    revalidateOnFocus: false,
+  })
   const {
     data: filteredData,
     error: filteredError,
     isLoading: filteredLoading,
   } = useSWR(
     [
-      `${process.env.NEXT_PUBLIC_API_URL}/charts/credits_by_transaction_date`,
+      url,
       transactionType,
       useDebounce(registry),
       useDebounce(category),
