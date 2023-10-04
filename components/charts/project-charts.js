@@ -1,4 +1,5 @@
 import { Column, Row } from '@carbonplan/components'
+import ProjectCredits from './project-credits'
 
 import ProjectRegistration from './project-registration'
 
@@ -16,7 +17,9 @@ const ProjectCharts = () => {
       <Column start={1} width={[6, 4, 4, 4]}>
         <ProjectRegistration />
       </Column>
-      <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}></Column>
+      <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
+        <ProjectCredits />
+      </Column>
     </Row>
   )
 }

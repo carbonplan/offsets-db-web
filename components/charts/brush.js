@@ -33,7 +33,7 @@ const Brush = ({ clear, setBounds }) => {
 
       select(g.current).call(brush.current)
     }
-  }, [])
+  }, [x])
 
   useEffect(() => {
     if (clear && g.current && brush.current) {
