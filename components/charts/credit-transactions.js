@@ -1,95 +1,30 @@
 import { Chart, Bar, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
-import { Box, Flex, useThemeUI } from 'theme-ui'
-import useSWR from 'swr'
+import { Box, Flex } from 'theme-ui'
 import { useCallback, useMemo } from 'react'
+import { format } from 'd3-format'
 
 import Brush from './brush'
 import { useQueries } from '../queries'
-import { useDebounce } from '../utils'
-import { format } from 'd3-format'
-
-const fetcher = ([
-  url,
-  type,
-  registry = {},
-  category = {},
-  complianceOnly,
-  search,
-  transactionBounds,
-  countries,
-]) => {
-  const params = new URLSearchParams()
-  params.append('transaction_type', type)
-
-  Object.keys(registry)
-    .filter((r) => registry[r])
-    .forEach((r) => params.append('registry', r))
-
-  Object.keys(category)
-    .filter((c) => category[c])
-    .forEach((c) => params.append('category', c))
-
-  if (search?.trim()) {
-    params.append('search', search.trim())
-  }
-
-  if (complianceOnly) {
-    params.append('is_arb', complianceOnly)
-  }
-  if (transactionBounds) {
-    params.append('transaction_date_from', `${transactionBounds[0]}-01-01`)
-    params.append('transaction_date_to', `${transactionBounds[1]}-12-31`)
-  }
-
-  if (countries) {
-    countries.forEach((country) => params.append('country', country))
-  }
-
-  const reqUrl = new URL(url)
-  reqUrl.search = params.toString()
-
-  return fetch(reqUrl).then((r) => r.json())
-}
+import useFetcher from '../use-fetcher'
 
 const CreditTransactions = ({
   project_id,
   transactionType,
   setTransactionType,
 }) => {
-  const {
-    registry,
-    category,
-    complianceOnly,
-    search,
-    transactionBounds,
-    setTransactionBounds,
-    countries,
-  } = useQueries()
-  const { theme } = useThemeUI()
-  const url = `${
-    process.env.NEXT_PUBLIC_API_URL
-  }/charts/credits_by_transaction_date${project_id ? '/' + project_id : ''}`
-  const { data, error, isLoading } = useSWR([url, transactionType], fetcher, {
-    revalidateOnFocus: false,
+  const { transactionBounds, setTransactionBounds } = useQueries()
+  const url = `charts/credits_by_transaction_date${
+    project_id ? '/' + project_id : ''
+  }`
+  const { data, error, isLoading } = useFetcher(url, {
+    transactionType,
+    filters: false,
   })
   const {
     data: filteredData,
     error: filteredError,
     isLoading: filteredLoading,
-  } = useSWR(
-    [
-      url,
-      transactionType,
-      useDebounce(registry),
-      useDebounce(category),
-      complianceOnly,
-      useDebounce(search),
-      useDebounce(transactionBounds),
-      countries,
-    ],
-    fetcher,
-    { revalidateOnFocus: false }
-  )
+  } = useFetcher(url, { transactionType })
 
   const handleBoundsChange = useCallback(
     (bounds) => {

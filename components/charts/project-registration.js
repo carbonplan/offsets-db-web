@@ -1,87 +1,23 @@
 import { Chart, Grid, Plot, Ticks, TickLabels, Bar } from '@carbonplan/charts'
-import { Box, Flex, useThemeUI } from 'theme-ui'
-import useSWR from 'swr'
+import { Box, Flex } from 'theme-ui'
 import { useMemo } from 'react'
+import { format } from 'd3-format'
 
 import Brush from './brush'
 import { useQueries } from '../queries'
-import { useDebounce } from '../utils'
-import { format } from 'd3-format'
-
-const fetcher = ([
-  url,
-  registry = {},
-  category = {},
-  complianceOnly,
-  search,
-  registrationBounds,
-  countries,
-]) => {
-  const params = new URLSearchParams()
-  Object.keys(registry)
-    .filter((r) => registry[r])
-    .forEach((r) => params.append('registry', r))
-
-  Object.keys(category)
-    .filter((c) => category[c])
-    .forEach((c) => params.append('category', c))
-
-  if (search?.trim()) {
-    params.append('search', search.trim())
-  }
-
-  if (complianceOnly) {
-    params.append('is_arb', complianceOnly)
-  }
-
-  if (registrationBounds) {
-    params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
-    params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
-  }
-
-  if (countries) {
-    countries.forEach((country) => params.append('country', country))
-  }
-
-  const reqUrl = new URL(url)
-  reqUrl.search = params.toString()
-
-  return fetch(reqUrl).then((r) => r.json())
-}
+import useFetcher from '../use-fetcher'
 
 const ProjectRegistration = () => {
-  const {
-    registry,
-    category,
-    complianceOnly,
-    search,
-    registrationBounds,
-    setRegistrationBounds,
-    countries,
-  } = useQueries()
-  const { theme } = useThemeUI()
-  const { data, error, isLoading } = useSWR(
-    [`${process.env.NEXT_PUBLIC_API_URL}/charts/projects_by_registration_date`],
-    fetcher,
-    { revalidateOnFocus: false }
+  const { registrationBounds, setRegistrationBounds } = useQueries()
+  const { data, error, isLoading } = useFetcher(
+    'charts/projects_by_registration_date',
+    { filters: false }
   )
   const {
     data: filteredData,
     error: filteredError,
     isLoading: filteredLoading,
-  } = useSWR(
-    [
-      `${process.env.NEXT_PUBLIC_API_URL}/charts/projects_by_registration_date`,
-      useDebounce(registry),
-      useDebounce(category),
-      complianceOnly,
-      useDebounce(search),
-      useDebounce(registrationBounds),
-      countries,
-    ],
-    fetcher,
-    { revalidateOnFocus: false }
-  )
+  } = useFetcher('charts/projects_by_registration_date', {})
 
   const { lines, range } = useMemo(() => {
     if (!data) {

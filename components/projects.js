@@ -1,108 +1,30 @@
-import { Badge, FadeIn } from '@carbonplan/components'
-import useSWR from 'swr'
+import { FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
 import { Box, Divider } from 'theme-ui'
 
 import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
 import ProjectCharts from './charts/project-charts'
-import { projectSorters, useDebounce } from './utils'
+import { projectSorters } from './utils'
 import ProjectRow from './project-row'
 import Pagination from './pagination'
 import SummaryRow from './table/summary-row'
-
-const fetcher = ([
-  url,
-  page,
-  registry,
-  category,
-  complianceOnly,
-  search,
-  sort,
-  registrationBounds,
-  countries,
-]) => {
-  const params = new URLSearchParams()
-  Object.keys(registry)
-    .filter((r) => registry[r])
-    .forEach((r) => params.append('registry', r))
-
-  Object.keys(category)
-    .filter((c) => category[c])
-    .forEach((c) => params.append('category', c))
-
-  if (search?.trim()) {
-    params.append('search', search.trim())
-  }
-
-  if (sort) {
-    params.append('sort', sort)
-  }
-
-  if (complianceOnly) {
-    params.append('is_arb', complianceOnly)
-  }
-  if (registrationBounds) {
-    params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
-    params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
-  }
-
-  if (countries) {
-    countries.forEach((country) => params.append('country', country))
-  }
-
-  params.append('current_page', page)
-  params.append('per_page', 25)
-
-  const reqUrl = new URL(url)
-  reqUrl.search = params.toString()
-
-  return fetch(reqUrl).then((r) => r.json())
-}
-
-const empty = {}
+import useFetcher from './use-fetcher'
 
 const Projects = () => {
-  const {
-    registry,
-    category,
-    complianceOnly,
-    search,
-    registrationBounds,
-    countries,
-  } = useQueries()
+  const { registry, category, complianceOnly, search, registrationBounds } =
+    useQueries()
   const [sort, setSort] = useState('project_id')
   const [page, setPage] = useState(1)
-  const { data, error, isLoading } = useSWR(
-    [
-      `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
-      page,
-      useDebounce(registry),
-      useDebounce(category),
-      complianceOnly,
-      useDebounce(search),
-      useDebounce(sort, 10),
-      useDebounce(registrationBounds),
-      countries,
-    ],
-    fetcher,
-    { revalidateOnFocus: false }
-  )
+  const { data, error, isLoading } = useFetcher('projects/', {
+    page,
+    sort,
+  })
 
-  const { data: unfilteredData } = useSWR(
-    [
-      `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
-      1,
-      empty,
-      empty,
-      false,
-      null,
-      null,
-      null,
-    ],
-    fetcher,
-    { revalidateOnFocus: false }
-  )
+  const { data: unfilteredData } = useFetcher('projects/', {
+    filters: false,
+    page: 1,
+  })
 
   useEffect(() => {
     setPage(1)

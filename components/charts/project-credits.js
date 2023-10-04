@@ -1,104 +1,26 @@
 import { Chart, Grid, Plot, Ticks, TickLabels, Bar } from '@carbonplan/charts'
-import { Box, Flex, useThemeUI } from 'theme-ui'
-import useSWR from 'swr'
+import { Box, Flex } from 'theme-ui'
 import { useMemo } from 'react'
+import { format } from 'd3-format'
 
 import Brush from './brush'
 import { useQueries } from '../queries'
-import { useDebounce } from '../utils'
-import { format } from 'd3-format'
-
-const fetcher = ([
-  url,
-  creditType,
-  registry = {},
-  category = {},
-  complianceOnly,
-  search,
-  registrationBounds,
-  issuedBounds,
-  countries,
-]) => {
-  const params = new URLSearchParams()
-  if (creditType) {
-    params.append('credit_type', creditType)
-  }
-
-  Object.keys(registry)
-    .filter((r) => registry[r])
-    .forEach((r) => params.append('registry', r))
-
-  Object.keys(category)
-    .filter((c) => category[c])
-    .forEach((c) => params.append('category', c))
-
-  if (search?.trim()) {
-    params.append('search', search.trim())
-  }
-
-  if (complianceOnly) {
-    params.append('is_arb', complianceOnly)
-  }
-
-  if (registrationBounds) {
-    params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
-    params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
-  }
-
-  if (issuedBounds) {
-    params.append('issued_min', issuedBounds[0])
-    params.append('issued_max', issuedBounds[1])
-  }
-
-  if (countries) {
-    countries.forEach((country) => params.append('country', country))
-  }
-
-  const reqUrl = new URL(url)
-  reqUrl.search = params.toString()
-
-  return fetch(reqUrl).then((r) => r.json())
-}
+import useFetcher from '../use-fetcher'
 
 const ProjectCredits = ({ creditType = 'issued' }) => {
-  const {
-    registry,
-    category,
-    complianceOnly,
-    search,
-    issuedBounds,
-    setIssuedBounds,
-    registrationBounds,
-    countries,
-  } = useQueries()
-  const { theme } = useThemeUI()
-  const { data, error, isLoading } = useSWR(
-    [
-      `${process.env.NEXT_PUBLIC_API_URL}/charts/projects_by_credit_totals`,
+  const { issuedBounds, setIssuedBounds } = useQueries()
+  const { data, error, isLoading } = useFetcher(
+    'charts/projects_by_credit_totals',
+    {
+      filters: false,
       creditType,
-    ],
-    fetcher,
-    { revalidateOnFocus: false }
+    }
   )
   const {
     data: filteredData,
     error: filteredError,
     isLoading: filteredLoading,
-  } = useSWR(
-    [
-      `${process.env.NEXT_PUBLIC_API_URL}/charts/projects_by_credit_totals`,
-      creditType,
-      useDebounce(registry),
-      useDebounce(category),
-      complianceOnly,
-      useDebounce(search),
-      useDebounce(registrationBounds),
-      useDebounce(issuedBounds),
-      countries,
-    ],
-    fetcher,
-    { revalidateOnFocus: false }
-  )
+  } = useFetcher('charts/projects_by_credit_totals', { creditType })
 
   const { lines, range, domain } = useMemo(() => {
     if (!data) {
