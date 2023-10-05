@@ -1,7 +1,9 @@
 import { Badge, Button, Column, Link, Row, Tag } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { format } from 'd3-format'
+import { useState } from 'react'
 import { Box, Divider, Flex } from 'theme-ui'
+
 import CreditCharts from './charts/credit-charts'
 import { COLORS, LABELS } from './constants'
 import Credits from './credits'
@@ -18,6 +20,7 @@ const formatter = (value) => {
 }
 
 const Project = ({ project }) => {
+  const [transactionType, setTransactionType] = useState(null)
   const {
     project_id,
     name,
@@ -238,7 +241,10 @@ const Project = ({ project }) => {
         </Column>
 
         <Column start={[1]} width={[6, 8, 8, 8]} sx={{ mt: 5 }}>
-          <CreditCharts project_id={project_id} />
+          <CreditCharts
+            project_id={project_id}
+            setTransactionType={setTransactionType}
+          />
         </Column>
       </Row>
 
@@ -248,7 +254,12 @@ const Project = ({ project }) => {
         </Column>
       </Row>
 
-      <Credits project_id={project_id} charts={false} borderTop={false} />
+      <Credits
+        project_id={project_id}
+        transactionType={transactionType}
+        charts={false}
+        borderTop={false}
+      />
     </Layout>
   )
 }

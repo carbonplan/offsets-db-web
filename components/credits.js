@@ -10,12 +10,17 @@ import Pagination from './pagination'
 import SummaryRow from './table/summary-row'
 import useFetcher from './use-fetcher'
 
-const Credits = ({ project_id, charts = true, borderTop = true }) => {
+const Credits = ({
+  project_id,
+  transactionType: transactionTypeProp,
+  charts = true,
+  borderTop = true,
+}) => {
   const { registry, category, complianceOnly, search, transactionBounds } =
     useQueries()
   const [sort, setSort] = useState('transaction_date')
   const [page, setPage] = useState(1)
-  const [transactionType, setTransactionType] = useState(null)
+  const [transactionType, setTransactionType] = useState(transactionTypeProp)
   const { data, error, isLoading } = useFetcher('credits/', {
     page,
     sort,
@@ -39,6 +44,10 @@ const Credits = ({ project_id, charts = true, borderTop = true }) => {
     complianceOnly,
     search,
   ])
+
+  useEffect(() => {
+    setTransactionType(transactionTypeProp)
+  }, [transactionTypeProp])
 
   return (
     <>
