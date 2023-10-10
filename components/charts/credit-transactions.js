@@ -142,6 +142,7 @@ const CreditTransactions = ({
       </Flex>
       <Box sx={{ height: '200px', mt: 3 }}>
         <Chart
+          key={domain[1] - domain[0]}
           x={[domain[0] - step / 2, domain[1] + step / 2]}
           y={range}
           padding={{ left: 32 }}
