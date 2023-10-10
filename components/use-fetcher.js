@@ -15,6 +15,7 @@ const fetcher = ([
   complianceOnly,
   search,
   registrationBounds,
+  transactionBounds,
   issuedBounds,
   countries,
 ]) => {
@@ -61,6 +62,11 @@ const fetcher = ([
     params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
   }
 
+  if (transactionBounds) {
+    params.append('transaction_date_from', `${transactionBounds[0]}-01-01`)
+    params.append('transaction_date_to', `${transactionBounds[1]}-12-31`)
+  }
+
   if (issuedBounds) {
     params.append('issued_min', issuedBounds[0])
     params.append('issued_max', issuedBounds[1])
@@ -86,6 +92,7 @@ const useFetcher = (
     complianceOnly,
     search,
     registrationBounds,
+    transactionBounds,
     issuedBounds,
     countries,
   } = useQueries()
@@ -96,6 +103,7 @@ const useFetcher = (
     complianceOnly,
     useDebounce(search),
     useDebounce(registrationBounds),
+    useDebounce(transactionBounds),
     useDebounce(issuedBounds),
     countries,
   ]
