@@ -29,7 +29,7 @@ const Project = ({ project }) => {
     status,
     developer,
     protocol,
-    is_arb,
+    is_compliance,
     proponent,
     details_url,
     registry,
@@ -191,7 +191,7 @@ const Project = ({ project }) => {
             </Column>
             <Column start={[4, 5, 3, 3]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>ARB</Box>
-              <Box sx={sx.fieldValue}>{is_arb ? 'Yes' : 'No'}</Box>
+              <Box sx={sx.fieldValue}>{is_compliance ? 'Yes' : 'No'}</Box>
             </Column>
 
             <Column start={[1]} width={[3, 2, 1, 1]}>

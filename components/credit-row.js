@@ -5,14 +5,8 @@ import { format } from 'd3-format'
 import { TableRow } from './table'
 
 const CreditRow = ({ event, projectView }) => {
-  const {
-    project_id,
-    transaction_date,
-    transaction_type,
-    transaction_serial_number,
-    quantity,
-    vintage,
-  } = event
+  const { project_id, transaction_date, transaction_type, quantity, vintage } =
+    event
 
   return (
     <>

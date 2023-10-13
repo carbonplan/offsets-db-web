@@ -3,16 +3,15 @@ import {
   Button,
   Column,
   Expander,
-  formatDate,
   Row,
   Tag,
 } from '@carbonplan/components'
 import { RotatingArrow, XCircle } from '@carbonplan/icons'
+import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
+import { format } from 'd3-format'
 import { useState } from 'react'
 import { Box, Flex, IconButton } from 'theme-ui'
-import { keyframes } from '@emotion/react'
-import { format } from 'd3-format'
 
 import { COLORS, LABELS } from './constants'
 import { TableRow } from './table'
@@ -59,7 +58,7 @@ const ProjectRow = ({ project }) => {
     country,
     issued,
     retired,
-    registered_at,
+    listed_at,
     details_url,
     registry,
     protocol,
