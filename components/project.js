@@ -190,7 +190,7 @@ const Project = ({ project }) => {
               </Box>
             </Column>
             <Column start={[4, 5, 3, 3]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>ARB</Box>
+              <Box sx={sx.fieldLabel}>Compliance</Box>
               <Box sx={sx.fieldValue}>{is_compliance ? 'Yes' : 'No'}</Box>
             </Column>
 
