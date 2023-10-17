@@ -1,13 +1,13 @@
-import { Box, Divider, useThemeUI } from 'theme-ui'
+import { Column, Row, formatDate } from '@carbonplan/components'
 import { useMemo } from 'react'
-import { Column, formatDate, Row } from '@carbonplan/components'
+import { Box, Divider, useThemeUI } from 'theme-ui'
 
 const Timeline = ({ project }) => {
   const { theme } = useThemeUI()
   const sortedEntries = useMemo(
     () =>
       [
-        { date: project.registered_at, label: 'Project registered' },
+        { date: project.listed_at, label: 'Project registered' },
         { date: project.started_at, label: 'Project listed' },
       ].filter((d) => d.date),
     [project]

@@ -2,17 +2,17 @@ import { FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
 import { Box, Divider } from 'theme-ui'
 
+import ProjectCharts from './charts/project-charts'
+import Pagination from './pagination'
+import ProjectRow from './project-row'
 import { useQueries } from './queries'
 import { Loading, TableHead, TableRow } from './table'
-import ProjectCharts from './charts/project-charts'
-import { projectSorters } from './utils'
-import ProjectRow from './project-row'
-import Pagination from './pagination'
 import SummaryRow from './table/summary-row'
 import useFetcher from './use-fetcher'
+import { projectSorters } from './utils'
 
 const Projects = () => {
-  const { registry, category, complianceOnly, search, registrationBounds } =
+  const { registry, category, complianceOnly, search, listingBounds } =
     useQueries()
   const [sort, setSort] = useState('project_id')
   const [page, setPage] = useState(1)
@@ -28,7 +28,7 @@ const Projects = () => {
 
   useEffect(() => {
     setPage(1)
-  }, [registry, category, complianceOnly, search, sort, registrationBounds])
+  }, [registry, category, complianceOnly, search, sort, listingBounds])
 
   return (
     <>
@@ -91,7 +91,7 @@ const Projects = () => {
                 { key: 'issued', width: [0, 1, 1, 1] },
                 { key: 'retired', width: [0, 1, 1, 1] },
                 {
-                  key: 'registered_at',
+                  key: 'listed_at',
                   width: [0, 1, 1, 1],
                 },
               ]}

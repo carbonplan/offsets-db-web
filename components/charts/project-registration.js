@@ -1,23 +1,23 @@
-import { Chart, Grid, Plot, Ticks, TickLabels, Bar } from '@carbonplan/charts'
-import { Box, Flex } from 'theme-ui'
-import { useMemo } from 'react'
+import { Bar, Chart, Grid, Plot, TickLabels, Ticks } from '@carbonplan/charts'
 import { format } from 'd3-format'
+import { useMemo } from 'react'
+import { Box, Flex } from 'theme-ui'
 
-import Brush from './brush'
 import { useQueries } from '../queries'
 import useFetcher from '../use-fetcher'
+import Brush from './brush'
 
 const ProjectRegistration = () => {
-  const { registrationBounds, setRegistrationBounds } = useQueries()
+  const { listingBounds, setlistingBounds } = useQueries()
   const { data, error, isLoading } = useFetcher(
-    'charts/projects_by_registration_date',
+    'charts/projects_by_listing_date',
     { filters: false }
   )
   const {
     data: filteredData,
     error: filteredError,
     isLoading: filteredLoading,
-  } = useFetcher('charts/projects_by_registration_date', {})
+  } = useFetcher('charts/projects_by_listing_date', {})
 
   const { lines, range } = useMemo(() => {
     if (!data) {
@@ -80,9 +80,7 @@ const ProjectRegistration = () => {
       <Flex sx={{ gap: 3 }}>
         Project registration
         <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
-          {registrationBounds
-            ? registrationBounds.join(' - ')
-            : 'Drag to filter'}
+          {listingBounds ? listingBounds.join(' - ') : 'Drag to filter'}
         </Box>
       </Flex>
       <Box sx={{ height: '200px', mt: 3 }}>
@@ -92,7 +90,7 @@ const ProjectRegistration = () => {
           <TickLabels left count={3} format={format('~s')} />
           <Grid vertical />
           <Plot>
-            <Brush setBounds={setRegistrationBounds} />
+            <Brush setBounds={setlistingBounds} />
             <Bar data={lines} color='secondary' />
             <Bar data={filteredLines} />
           </Plot>

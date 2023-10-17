@@ -91,11 +91,7 @@ const Credits = ({
               />
             )}
             {data.data.map((d) => (
-              <CreditRow
-                key={d.transaction_serial_number}
-                event={d}
-                projectView={!!project_id}
-              />
+              <CreditRow key={d.id} event={d} projectView={!!project_id} />
             ))}
             {data.data.length === 0 ? (
               <TableRow

@@ -14,7 +14,7 @@ const fetcher = ([
   category = {},
   complianceOnly,
   search,
-  registrationBounds,
+  listingBounds,
   transactionBounds,
   issuedBounds,
   countries,
@@ -54,12 +54,12 @@ const fetcher = ([
   }
 
   if (complianceOnly) {
-    params.append('is_arb', complianceOnly)
+    params.append('is_compliance', complianceOnly)
   }
 
-  if (registrationBounds) {
-    params.append('registered_at_from', `${registrationBounds[0]}-01-01`)
-    params.append('registered_at_to', `${registrationBounds[1]}-12-31`)
+  if (listingBounds) {
+    params.append('listed_at_from', `${listingBounds[0]}-01-01`)
+    params.append('listed_at_to', `${listingBounds[1]}-12-31`)
   }
 
   if (transactionBounds) {
@@ -91,7 +91,7 @@ const useFetcher = (
     category,
     complianceOnly,
     search,
-    registrationBounds,
+    listingBounds,
     transactionBounds,
     issuedBounds,
     countries,
@@ -102,7 +102,7 @@ const useFetcher = (
     useDebounce(category),
     complianceOnly,
     useDebounce(search),
-    useDebounce(registrationBounds),
+    useDebounce(listingBounds),
     useDebounce(transactionBounds),
     useDebounce(issuedBounds),
     countries,
