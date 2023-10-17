@@ -31,7 +31,7 @@ const Project = ({ project }) => {
     protocol,
     is_compliance,
     proponent,
-    details_url,
+    project_url,
     registry,
     description,
     issued,
@@ -202,7 +202,7 @@ const Project = ({ project }) => {
               <Box sx={sx.fieldLabel}>Registry</Box>
               <Box sx={sx.fieldValue}>
                 <Button
-                  href={details_url}
+                  href={project_url}
                   suffix={<RotatingArrow />}
                   sx={sx.fieldValue}
                 >

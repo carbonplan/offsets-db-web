@@ -59,7 +59,7 @@ const ProjectRow = ({ project }) => {
     issued,
     retired,
     listed_at,
-    details_url,
+    project_url,
     registry,
     protocol,
     description,
@@ -243,7 +243,7 @@ const ProjectRow = ({ project }) => {
                     sx={{ mt: [0, 3, 3, 3] }}
                   >
                     <Button
-                      href={details_url}
+                      href={project_url}
                       suffix={
                         <RotatingArrow
                           sx={{ mt: '-3px', width: 13, height: 13 }}
