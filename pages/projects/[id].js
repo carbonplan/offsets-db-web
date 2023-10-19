@@ -8,7 +8,7 @@ export default ProjectPage
 
 export async function getServerSideProps({ params }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/projects/${params.id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/projects/${params.id.toUpperCase()}`
   )
   const project = await res.json()
 
