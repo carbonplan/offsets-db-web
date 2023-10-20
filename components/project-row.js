@@ -34,10 +34,7 @@ const ProjectRow = ({ project }) => {
     issued,
     retired,
     listed_at,
-    project_url,
-    registry,
     protocol,
-    description,
   } = project
   const [expanded, setExpanded] = useState(false)
   const color = COLORS[category[0]] ?? COLORS.other
@@ -226,34 +223,6 @@ const ProjectRow = ({ project }) => {
                         <Box key={d}>{d}</Box>
                       ))}
                     </Flex>
-                  </Column>
-
-                  <Column
-                    start={1}
-                    width={[6, 6, 6, 6]}
-                    sx={{ mt: [0, 3, 3, 3] }}
-                  >
-                    <Box sx={sx.expandedHeading}>Description</Box>
-                    <Box sx={{ fontSize: 0 }}>{description}</Box>
-                  </Column>
-
-                  <Column
-                    start={[1, 7, 7, 7]}
-                    width={[6, 1, 1, 1]}
-                    sx={{ mt: [0, 3, 3, 3] }}
-                  >
-                    <Button
-                      href={project_url}
-                      suffix={
-                        <RotatingArrow
-                          sx={{ mt: '-3px', width: 13, height: 13 }}
-                        />
-                      }
-                      inverted
-                      sx={{ fontSize: 1 }}
-                    >
-                      {LABELS.registry[registry]}
-                    </Button>
                   </Column>
                 </Row>
               ),

@@ -33,7 +33,6 @@ const Project = ({ project }) => {
     proponent,
     project_url,
     registry,
-    description,
     issued,
     retired,
   } = project
@@ -208,13 +207,6 @@ const Project = ({ project }) => {
                 >
                   {LABELS.registry[registry]}
                 </Button>
-              </Box>
-            </Column>
-
-            <Column start={[1]} width={[6, 6, 4, 4]}>
-              <Box sx={sx.fieldLabel}>Registry description</Box>
-              <Box sx={{ ...sx.fieldValue, wordWrap: 'break-word' }}>
-                {description}
               </Box>
             </Column>
           </Row>
