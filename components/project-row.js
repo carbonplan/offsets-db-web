@@ -25,31 +25,6 @@ const fade = keyframes({
   },
 })
 
-const sx = {
-  expanded: {
-    background: alpha('muted', 0.5),
-    py: 1,
-    mb: 3,
-    ml: [-4, -5, -5, -6],
-    pl: [4, 5, 5, 6],
-    mr: [-4, -5, 0, 0],
-    pr: [4, 5, 0, 0],
-    animationDuration: 300 + 'ms',
-    animationDelay: 0 + 'ms',
-    animationName: fade.toString(),
-    animationFillMode: 'backwards',
-  },
-  expandedHeading: {
-    color: 'secondary',
-    fontFamily: 'mono',
-    letterSpacing: 'mono',
-    textTransform: 'uppercase',
-    fontSize: 1,
-    mt: [5, 3, 3, 3],
-    mb: 2,
-  },
-}
-
 const ProjectRow = ({ project }) => {
   const {
     project_id,
@@ -66,6 +41,31 @@ const ProjectRow = ({ project }) => {
   } = project
   const [expanded, setExpanded] = useState(false)
   const color = COLORS[category[0]] ?? COLORS.other
+
+  const sx = {
+    expanded: {
+      background: alpha(color, 0.2),
+      py: 1,
+      mb: 3,
+      ml: [-4, -5, -5, -6],
+      pl: [4, 5, 5, 6],
+      mr: [-4, -5, 0, 0],
+      pr: [4, 5, 0, 0],
+      animationDuration: 300 + 'ms',
+      animationDelay: 0 + 'ms',
+      animationName: fade.toString(),
+      animationFillMode: 'backwards',
+    },
+    expandedHeading: {
+      color: color,
+      fontFamily: 'mono',
+      letterSpacing: 'mono',
+      textTransform: 'uppercase',
+      fontSize: 1,
+      mt: [5, 3, 3, 3],
+      mb: 2,
+    },
+  }
 
   return (
     <>
