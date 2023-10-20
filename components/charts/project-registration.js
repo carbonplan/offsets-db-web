@@ -78,7 +78,7 @@ const ProjectRegistration = () => {
   return (
     <>
       <Flex sx={{ gap: 3 }}>
-        Project registration
+        Project listing
         <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
           {listingBounds ? listingBounds.join(' - ') : 'Drag to filter'}
         </Box>
