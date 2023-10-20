@@ -29,6 +29,11 @@ const CreditRow = ({ event, projectView }) => {
             width: [2, 1, 1, 1],
           },
           {
+            key: 'vintage',
+            label: vintage ?? '?',
+            width: [projectView ? 1 : 0, 1, 1, 1],
+          },
+          {
             key: 'transaction_type',
             label: (
               <Text sx={{ textTransform: 'uppercase' }}>
