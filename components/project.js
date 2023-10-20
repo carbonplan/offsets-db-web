@@ -1,4 +1,12 @@
-import { Badge, Button, Column, Link, Row, Tag } from '@carbonplan/components'
+import {
+  Badge,
+  Button,
+  Column,
+  formatDate,
+  Link,
+  Row,
+  Tag,
+} from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { format } from 'd3-format'
 import { useState } from 'react'
@@ -11,8 +19,8 @@ import Layout from './layout'
 import Sidebar from './sidebar'
 import Timeline from './timeline'
 
-const Empty = () => {
-  return <Box sx={{ color: 'secondary' }}>N/A</Box>
+const Empty = ({ label = 'N/A' }) => {
+  return <Box sx={{ color: 'secondary' }}>{label}</Box>
 }
 
 const formatter = (value) => {
@@ -24,6 +32,7 @@ const Project = ({ project }) => {
   const {
     project_id,
     name,
+    listed_at,
     category,
     country,
     status,
@@ -150,12 +159,23 @@ const Project = ({ project }) => {
               <Box sx={sx.fieldValue}>{country}</Box>
             </Column>
             <Column start={[4, 3, 2, 2]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Status</Box>
-              <Box sx={sx.fieldValue}>{status}</Box>
+              <Box sx={sx.fieldLabel}>Listed</Box>
+              <Box sx={sx.fieldValue}>
+                {listed_at ? (
+                  formatDate(listed_at, {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric',
+                    separator: '-',
+                  })
+                ) : (
+                  <Empty label='?' />
+                )}
+              </Box>
             </Column>
             <Column start={[1, 5, 3, 3]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Developer</Box>
-              <Box sx={sx.fieldValue}>{developer ?? <Empty />}</Box>
+              <Box sx={sx.fieldLabel}>Status</Box>
+              <Box sx={sx.fieldValue}>{status}</Box>
             </Column>
 
             <Column start={[4, 1, 1, 1]} width={[3, 2, 1, 1]}>
@@ -189,15 +209,21 @@ const Project = ({ project }) => {
               </Box>
             </Column>
             <Column start={[4, 5, 3, 3]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Compliance</Box>
-              <Box sx={sx.fieldValue}>{is_compliance ? 'Yes' : 'No'}</Box>
+              <Box sx={sx.fieldLabel}>Developer</Box>
+              <Box sx={sx.fieldValue}>{developer ?? <Empty />}</Box>
             </Column>
 
             <Column start={[1]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Proponent</Box>
               <Box sx={sx.fieldValue}>{proponent ?? <Empty />}</Box>
             </Column>
+
             <Column start={[4, 3, 2, 2]} width={[3, 2, 1, 1]}>
+              <Box sx={sx.fieldLabel}>Compliance</Box>
+              <Box sx={sx.fieldValue}>{is_compliance ? 'Yes' : 'No'}</Box>
+            </Column>
+
+            <Column start={[1, 5, 3, 3]} width={[3, 2, 1, 1]}>
               <Box sx={sx.fieldLabel}>Registry</Box>
               <Box sx={sx.fieldValue}>
                 <Button

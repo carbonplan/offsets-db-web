@@ -3,6 +3,7 @@ import {
   Button,
   Column,
   Expander,
+  formatDate,
   Row,
   Tag,
 } from '@carbonplan/components'
@@ -11,7 +12,7 @@ import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
 import { format } from 'd3-format'
 import { useState } from 'react'
-import { Box, Flex, IconButton } from 'theme-ui'
+import { Box, Flex, IconButton, Text } from 'theme-ui'
 
 import { COLORS, LABELS } from './constants'
 import { TableRow } from './table'
@@ -108,6 +109,22 @@ const ProjectRow = ({ project }) => {
             width: [2, 1, 1, 1],
           },
           { key: 'name', label: name ?? '?', width: [4, 3, 3, 3] },
+          {
+            key: 'listed_at',
+            label: listed_at ? (
+              <Text sx={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                {formatDate(listed_at, {
+                  day: 'numeric',
+                  month: 'numeric',
+                  year: 'numeric',
+                  separator: '-',
+                })}
+              </Text>
+            ) : (
+              '?'
+            ),
+            width: [2, 1, 1, 1],
+          },
           {
             key: 'issued',
             label: (

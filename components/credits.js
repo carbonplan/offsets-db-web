@@ -118,6 +118,11 @@ const Credits = ({
               values={[
                 { key: 'transaction_date', width: [2, 1, 1, 1] },
                 {
+                  value: 'vintage',
+                  width: [project_id ? 1 : 0, 1, 1, 1],
+                },
+
+                {
                   key: 'transaction_type',
                   width: project_id ? [0, 3, 3, 3] : [0, 1, 1, 1],
                 },
