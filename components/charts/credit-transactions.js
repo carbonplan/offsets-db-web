@@ -7,6 +7,37 @@ import Brush from './brush'
 import { useQueries } from '../queries'
 import useFetcher from '../use-fetcher'
 
+const getLines = (data) => {
+  return data
+    .reduce((accum, { start, end, value }) => {
+      if (start != null && end != null) {
+        const year = new Date(`${start}T00:00:00`).getFullYear()
+        const existingEntry = accum.find((d) => d[0] === year)
+        if (existingEntry) {
+          existingEntry[1] += value
+        } else {
+          accum.push([year, value])
+        }
+        return accum
+      } else {
+        return accum
+      }
+    }, [])
+    .sort((a, b) => a[0] - b[0])
+    .reduce((accum, [year, value]) => {
+      if (accum.length === 0 || accum[accum.length - 1][0] === year - 1) {
+        accum.push([year, value])
+      } else {
+        for (let i = accum[accum.length - 1][0] + 1; i < year; i++) {
+          accum.push([i, 0])
+        }
+        accum.push([year, value])
+      }
+
+      return accum
+    }, [])
+}
+
 const CreditTransactions = ({
   project_id,
   transactionType,
@@ -40,23 +71,7 @@ const CreditTransactions = ({
     if (!data) {
       return { lines: [], range: [0, 0], domain: [1999, 2023] }
     } else {
-      const lines = data
-        .reduce((accum, { start, end, value }) => {
-          if (start != null && end != null) {
-            const year = new Date(`${start}T00:00:00`).getFullYear()
-
-            const existingEntry = accum.find((d) => d[0] === year)
-            if (existingEntry) {
-              existingEntry[1] += value
-            } else {
-              accum.push([year, value])
-            }
-            return accum
-          } else {
-            return accum
-          }
-        }, [])
-        .sort((a, b) => b[0] - a[0])
+      const lines = getLines(data)
 
       const range = lines.reduce(
         ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
@@ -85,22 +100,7 @@ const CreditTransactions = ({
     if (!filteredData) {
       return { lines: [], range: [0, 0] }
     } else {
-      const lines = filteredData
-        .reduce((accum, { start, end, value }) => {
-          if (start != null && end != null) {
-            const year = new Date(`${start}T00:00:00`).getFullYear()
-            const existingEntry = accum.find((d) => d[0] === year)
-            if (existingEntry) {
-              existingEntry[1] += value
-            } else {
-              accum.push([year, value])
-            }
-            return accum
-          } else {
-            return accum
-          }
-        }, [])
-        .sort((a, b) => b[0] - a[0])
+      const lines = getLines(filteredData)
 
       return { lines }
     }
@@ -112,7 +112,7 @@ const CreditTransactions = ({
     }
 
     const width = domain[1] - domain[0]
-    if (width >= 15) {
+    if (width >= 6) {
       return { step: 0 }
     }
 
@@ -142,7 +142,7 @@ const CreditTransactions = ({
       </Flex>
       <Box sx={{ height: '200px', mt: 3 }}>
         <Chart
-          key={domain[1] - domain[0]}
+          key={`${domain[0]},${domain[1]}`}
           x={[domain[0] - step / 2, domain[1] + step / 2]}
           y={range}
           padding={{ left: 32 }}
