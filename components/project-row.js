@@ -65,7 +65,7 @@ const ProjectRow = ({ project }) => {
     description,
   } = project
   const [expanded, setExpanded] = useState(false)
-  const color = COLORS[category[0]]
+  const color = COLORS[category[0]] ?? COLORS.other
 
   return (
     <>
@@ -210,11 +210,11 @@ const ProjectRow = ({ project }) => {
                       <Tag
                         key={c}
                         sx={{
-                          color: COLORS[c],
+                          color: COLORS[c] ?? COLORS.other,
                           width: 'fit-content',
                         }}
                       >
-                        {c}
+                        {c.replace(/-/g, ' ')}
                       </Tag>
                     ))}
                   </Column>

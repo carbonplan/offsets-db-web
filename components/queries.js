@@ -2,7 +2,8 @@ import { Column, Filter, Input, Row, Toggle } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
-import { COLORS, LABELS } from './constants'
+import Category from './category'
+import { ALL_CATEGORIES, LABELS } from './constants'
 import Countries from './countries'
 
 const QueryContext = createContext({
@@ -20,17 +21,12 @@ export const QueryProvider = ({ children }) => {
     'climate-action-reserve': true,
     'art-trees': true,
   })
-  const [category, setCategory] = useState({
-    agriculture: true,
-    forest: true,
-    'industrial-gases': true,
-    landfill: true,
-    'mine-methane': true,
-    renewable: true,
-    soil: true,
-    transportation: true,
-    other: true,
-  })
+  const [category, setCategory] = useState(() =>
+    ALL_CATEGORIES.reduce((a, k) => {
+      a[k] = true
+      return a
+    }, {})
+  )
   const [complianceOnly, setComplianceOnly] = useState(false)
   const [search, setSearch] = useState('')
   const [listingBounds, setlistingBounds] = useState(null)
@@ -89,8 +85,6 @@ const Queries = () => {
   const {
     registry,
     setRegistry,
-    category,
-    setCategory,
     complianceOnly,
     setComplianceOnly,
     search,
@@ -132,14 +126,7 @@ const Queries = () => {
           <Box sx={sx.label}>Category</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <Filter
-            values={category}
-            setValues={setCategory}
-            labels={LABELS.category}
-            colors={COLORS}
-            showAll
-            multiSelect
-          />
+          <Category />
         </Column>
       </Row>
       <Row columns={[6, 8, 3, 3]}>

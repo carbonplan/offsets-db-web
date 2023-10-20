@@ -13,7 +13,7 @@ export const LABELS = {
     'industrial-gases': 'Industrial gases',
     landfill: 'Landfill',
     'mine-methane': 'Mine methane',
-    renewable: 'Renewable',
+    'renewable-energy': 'Renewable',
     soil: 'Soil',
     transportation: 'Transportation',
     other: 'Other',
@@ -26,11 +26,32 @@ export const COLORS = {
   'industrial-gases': 'pink',
   landfill: 'blue',
   'mine-methane': 'red',
-  renewable: 'purple',
+  'renewable-energy': 'purple',
   soil: 'orange',
   transportation: 'teal',
   other: 'grey',
 }
+
+export const ALL_CATEGORIES = [
+  'agriculture',
+  'biochar',
+  'cookstoves',
+  'energy-efficiency',
+  'forest',
+  'grassland',
+  'industrial-gases',
+  'industrial-processes',
+  'land-use',
+  'landfill',
+  'livestock',
+  'mine-methane',
+  'oil-and-gas',
+  'renewable-energy',
+  'soil',
+  'transportation',
+  'unknown',
+  'waste-management',
+]
 
 export const COUNTRIES = [
   'Afghanistan',

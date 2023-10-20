@@ -37,7 +37,7 @@ const Project = ({ project }) => {
     issued,
     retired,
   } = project
-  const color = COLORS[category[0]]
+  const color = COLORS[category[0]] ?? COLORS.other
 
   const sx = {
     sectionLabel: {
@@ -166,11 +166,11 @@ const Project = ({ project }) => {
                   <Tag
                     key={c}
                     sx={{
-                      color: COLORS[c],
+                      color: COLORS[c] ?? COLORS.other,
                       width: 'fit-content',
                     }}
                   >
-                    {c}
+                    {c.replace(/-/g, ' ')}
                   </Tag>
                 ))}
               </Box>
