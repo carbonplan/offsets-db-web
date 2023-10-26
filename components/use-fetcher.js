@@ -10,6 +10,7 @@ const fetcher = ([
   project_id,
   sort,
   page,
+  binWidth,
   registry = {},
   category = {},
   complianceOnly,
@@ -39,6 +40,10 @@ const fetcher = ([
   if (page) {
     params.append('current_page', page)
     params.append('per_page', 25)
+  }
+
+  if (binWidth) {
+    params.append('bin_width', binWidth)
   }
 
   Object.keys(registry)
@@ -84,7 +89,15 @@ const fetcher = ([
 
 const useFetcher = (
   path,
-  { creditType, transactionType, project_id, filters = true, sort, page }
+  {
+    creditType,
+    transactionType,
+    project_id,
+    filters = true,
+    sort,
+    page,
+    binWidth,
+  }
 ) => {
   const {
     registry,
@@ -116,6 +129,7 @@ const useFetcher = (
       project_id,
       useDebounce(sort, 10),
       page,
+      binWidth,
       ...(filters ? filterArgs : []),
     ],
     fetcher,
