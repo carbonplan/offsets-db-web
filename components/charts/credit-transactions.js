@@ -24,18 +24,17 @@ const getLines = (data) => {
       }
     }, [])
     .sort((a, b) => a[0] - b[0])
-    .reduce((accum, [year, value]) => {
-      if (accum.length === 0 || accum[accum.length - 1][0] === year - 1) {
-        accum.push([year, value])
-      } else {
-        for (let i = accum[accum.length - 1][0] + 1; i < year; i++) {
-          accum.push([i, 0])
-        }
-        accum.push([year, value])
-      }
+}
 
-      return accum
-    }, [])
+const fillBars = (lines, domain) => {
+  const xMap = new Map(lines)
+  const result = []
+  for (let year = domain[0]; year <= domain[1]; year++) {
+    const value = xMap.has(year) ? xMap.get(year) : 0
+    result.push([year, value])
+  }
+
+  return result
 }
 
 const CreditTransactions = ({
@@ -75,20 +74,23 @@ const CreditTransactions = ({
 
       const range = lines.reduce(
         ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
-        [Infinity, -Infinity]
+        [0, -Infinity]
       )
       return { lines, range }
     }
   }, [data])
 
-  const domain = useMemo(
-    () =>
-      lines.reduce(
-        ([min, max], d) => [Math.min(min, d[0]), Math.max(max, d[0])],
-        domainProp ?? [Infinity, -Infinity]
-      ),
-    [lines, domainProp]
-  )
+  const domain = useMemo(() => {
+    const d = lines.reduce(
+      ([min, max], d) => [Math.min(min, d[0]), Math.max(max, d[0])],
+      domainProp ?? [Infinity, -Infinity]
+    )
+    if (d[0] === d[1]) {
+      return [d[0] - 1, d[1]]
+    }
+
+    return d
+  }, [lines, domainProp])
 
   useEffect(() => {
     if (setDomain) {
@@ -132,6 +134,13 @@ const CreditTransactions = ({
     return { ticks, labels, step }
   }, [domain])
 
+  const { bars, filteredBars } = useMemo(() => {
+    return {
+      bars: fillBars(lines, domain),
+      filteredBars: fillBars(filteredLines, domain),
+    }
+  }, [lines, filteredLines, domain])
+
   return (
     <>
       <Flex sx={{ gap: 3 }}>
@@ -153,8 +162,8 @@ const CreditTransactions = ({
           <TickLabels left count={3} format={format('~s')} />
           <Plot>
             <Brush setBounds={handleBoundsChange} />
-            <Bar data={lines} color='secondary' />
-            <Bar data={filteredLines} />
+            <Bar data={bars} color='secondary' />
+            <Bar data={filteredBars} />
           </Plot>
         </Chart>
       </Box>
