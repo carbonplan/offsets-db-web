@@ -23,7 +23,7 @@ const ProjectRegistration = () => {
     if (!data) {
       return { lines: [], range: [0, 0] }
     } else {
-      const lines = data
+      const lines = data.data
         .reduce((accum, { start, end, category, value }) => {
           if (start != null && end != null) {
             const year = new Date(`${start}T00:00:00`).getFullYear()
@@ -53,7 +53,7 @@ const ProjectRegistration = () => {
     if (!filteredData) {
       return { lines: [], range: [0, 0] }
     } else {
-      const lines = filteredData
+      const lines = filteredData.data
         .reduce((accum, { start, end, category, value }) => {
           if (start != null && end != null) {
             const year = new Date(`${start}T00:00:00`).getFullYear()

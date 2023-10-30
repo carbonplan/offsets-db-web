@@ -70,7 +70,7 @@ const CreditTransactions = ({
     if (!data) {
       return { lines: [], range: [0, 0], domain: [1999, 2023] }
     } else {
-      const lines = getLines(data)
+      const lines = getLines(data.data)
 
       const range = lines.reduce(
         ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
@@ -102,7 +102,7 @@ const CreditTransactions = ({
     if (!filteredData) {
       return { lines: [], range: [0, 0] }
     } else {
-      const lines = getLines(filteredData)
+      const lines = getLines(filteredData.data)
 
       return { lines }
     }

@@ -31,7 +31,7 @@ const ProjectCredits = ({ creditType = 'issued' }) => {
       return { lines: [], range: [0, 0], domain: [0, 0], binWidth: null }
     } else {
       let binWidth = 0
-      const lines = data
+      const lines = data.data
         .reduce((accum, { start, end, category, value }) => {
           if (start != null && end != null) {
             binWidth = end - start
@@ -69,7 +69,7 @@ const ProjectCredits = ({ creditType = 'issued' }) => {
     if (!filteredData) {
       return { lines: [], range: [0, 0] }
     } else {
-      const lines = filteredData
+      const lines = filteredData.data
         .reduce((accum, { start, end, category, value }) => {
           if (start != null && end != null) {
             const existingEntry = accum.find((d) => d[0] === start)
