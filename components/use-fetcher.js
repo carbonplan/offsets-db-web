@@ -11,8 +11,8 @@ const fetcher = ([
   sort,
   page,
   binWidth,
-  registry = {},
-  category = {},
+  registry,
+  category,
   complianceOnly,
   search,
   listingBounds,
@@ -46,13 +46,24 @@ const fetcher = ([
     params.append('bin_width', binWidth)
   }
 
-  Object.keys(registry)
-    .filter((r) => registry[r])
-    .forEach((r) => params.append('registry', r))
+  if (registry) {
+    const registries = Object.keys(registry).filter((r) => registry[r])
+    if (registries.length === 0) {
+      params.append('registry', 'none')
+    } else {
+      registries.forEach((r) => params.append('registry', r))
+    }
+  }
 
-  Object.keys(category)
-    .filter((c) => category[c])
-    .forEach((c) => params.append('category', c))
+  if (category) {
+    const categories = Object.keys(category).filter((c) => category[c])
+
+    if (categories.length === 0) {
+      params.append('category', 'none')
+    } else {
+      categories.forEach((c) => params.append('category', c))
+    }
+  }
 
   if (search?.trim()) {
     params.append('search', search.trim())
