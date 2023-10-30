@@ -96,6 +96,7 @@ const ProjectRow = ({ project }) => {
                 <Badge
                   sx={{
                     color: color,
+                    userSelect: 'all',
                     '& :first-of-type': {
                       fontFamily: 'body',
                     },

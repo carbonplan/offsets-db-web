@@ -131,6 +131,7 @@ const Project = ({ project }) => {
             height: ['46px'],
             flexShrink: 0,
             px: 2,
+            userSelect: 'all',
             '& :first-of-type': {
               fontFamily: 'body',
             },
