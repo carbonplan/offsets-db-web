@@ -69,7 +69,7 @@ const fetcher = ([
     params.append('search', search.trim())
   }
 
-  if (complianceOnly) {
+  if (typeof complianceOnly === 'boolean') {
     params.append('is_compliance', complianceOnly)
   }
 

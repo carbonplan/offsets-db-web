@@ -27,7 +27,7 @@ export const QueryProvider = ({ children }) => {
       return a
     }, {})
   )
-  const [complianceOnly, setComplianceOnly] = useState(false)
+  const [complianceOnly, setComplianceOnly] = useState(null)
   const [search, setSearch] = useState('')
   const [listingBounds, setlistingBounds] = useState(null)
   const [issuedBounds, setIssuedBounds] = useState(null)
@@ -139,12 +139,26 @@ const Queries = () => {
       </Row>
       <Row columns={[6, 8, 3, 3]}>
         <Column start={1} width={[2, 2, 1, 1]}>
-          <Box sx={sx.label}>Compliance</Box>
+          <Box sx={sx.label}>Program</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <Toggle
-            value={complianceOnly}
-            onClick={() => setComplianceOnly((prev) => !prev)}
+          <Filter
+            values={{
+              all: typeof complianceOnly !== 'boolean',
+              compliance: complianceOnly,
+              voluntary: !complianceOnly,
+            }}
+            setValues={(obj) => {
+              let value
+              if (obj.all) {
+                value = null
+              } else if (obj.compliance) {
+                value = true
+              } else if (obj.voluntary) {
+                value = false
+              }
+              setComplianceOnly(value)
+            }}
           />
         </Column>
       </Row>
