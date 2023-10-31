@@ -15,6 +15,20 @@ const Timeline = ({ project }) => {
 
   return (
     <Row columns={[6, 8, 3, 3]} sx={{ mt: 4 }}>
+      {sortedEntries.length === 0 && (
+        <Column start={1} width={[4, 4, 2, 2]}>
+          <Box
+            sx={{
+              color: 'secondary',
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
+              textTransform: 'uppercase',
+            }}
+          >
+            No updates
+          </Box>
+        </Column>
+      )}
       <Column start={2} width={[4, 4, 2, 2]}>
         <Row
           columns={[4, 4, 2, 2]}
