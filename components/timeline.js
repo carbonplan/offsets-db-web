@@ -1,4 +1,5 @@
-import { Column, Row, formatDate } from '@carbonplan/components'
+import { Column, Row, formatDate, Button } from '@carbonplan/components'
+import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo } from 'react'
 import { Box, Divider, useThemeUI } from 'theme-ui'
 
@@ -7,6 +8,11 @@ const Timeline = ({ project }) => {
   const sortedEntries = useMemo(
     () =>
       [
+        ...project.clips.map(({ published_at, title, url }) => ({
+          date: published_at.match(/\d{4}-\d{2}-\d{2}/)[0],
+          label: title,
+          url,
+        })),
         { date: project.listed_at, label: 'Project registered' },
         { date: project.started_at, label: 'Project listed' },
       ].filter((d) => d.date),
@@ -26,7 +32,7 @@ const Timeline = ({ project }) => {
               textTransform: 'uppercase',
             }}
           >
-            No updates
+            No events
           </Box>
         </Column>
       )}
@@ -52,7 +58,7 @@ const Timeline = ({ project }) => {
             ],
           }}
         >
-          {sortedEntries.map(({ date, label }) => (
+          {sortedEntries.map(({ date, label, url }) => (
             <Column
               key={date}
               start={1}
@@ -108,7 +114,13 @@ const Timeline = ({ project }) => {
                   {date && formatDate(date)}
                 </Column>
               </Row>
-              {label}
+              {url ? (
+                <Button href={url} suffix={<RotatingArrow />} size='xs'>
+                  {label}
+                </Button>
+              ) : (
+                label
+              )}
             </Column>
           ))}
         </Row>
