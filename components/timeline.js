@@ -19,6 +19,7 @@ const Timeline = ({ project }) => {
         <Column start={1} width={[4, 4, 2, 2]}>
           <Box
             sx={{
+              mt: 3,
               color: 'secondary',
               fontFamily: 'mono',
               letterSpacing: 'mono',
