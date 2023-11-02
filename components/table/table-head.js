@@ -24,6 +24,16 @@ const SORTS = {
     primary: '-retired',
     inverted: 'retired',
   },
+  transaction_date: {
+    primary: '-transaction_date',
+    inverted: 'transaction_date',
+  },
+  vintage: { primary: '-vintage', inverted: 'vintage' },
+  transaction_type: {
+    primary: 'transaction_type',
+    inverted: '-transaction_type',
+  },
+  quantity: { primary: '-quantity', inverted: 'quantity' },
 }
 
 const TableHead = ({ values, sort, setSort, borderTop }) => {
