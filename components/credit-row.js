@@ -26,7 +26,7 @@ const CreditRow = ({ event, projectView }) => {
             ) : (
               '?'
             ),
-            width: [2, 1, 1, 1],
+            width: 2,
           },
           {
             key: 'vintage',
@@ -40,7 +40,7 @@ const CreditRow = ({ event, projectView }) => {
                 {transaction_type}
               </Text>
             ),
-            width: projectView ? [0, 3, 3, 3] : [0, 1, 1, 1],
+            width: projectView ? [0, 3, 3, 3] : [0, 2, 2, 2],
           },
           ...(projectView
             ? []

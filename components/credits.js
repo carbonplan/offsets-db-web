@@ -68,7 +68,7 @@ const Credits = ({
           sort={sort}
           setSort={setSort}
           values={[
-            { value: 'transaction_date', label: 'Date', width: [2, 1, 1, 1] },
+            { value: 'transaction_date', label: 'Date', width: 2 },
             {
               value: 'vintage',
               label: 'Vintage',
@@ -77,7 +77,7 @@ const Credits = ({
             {
               value: 'transaction_type',
               label: 'Type',
-              width: project_id ? [0, 3, 3, 3] : [0, 1, 1, 1],
+              width: project_id ? [0, 3, 3, 3] : [0, 2, 2, 2],
             },
             ...(project_id
               ? []
@@ -116,7 +116,7 @@ const Credits = ({
           <FadeIn as='tbody'>
             <Loading
               values={[
-                { key: 'transaction_date', width: [2, 1, 1, 1] },
+                { key: 'transaction_date', width: 2 },
                 {
                   value: 'vintage',
                   width: [project_id ? 1 : 0, 1, 1, 1],
@@ -124,7 +124,7 @@ const Credits = ({
 
                 {
                   key: 'transaction_type',
-                  width: project_id ? [0, 3, 3, 3] : [0, 1, 1, 1],
+                  width: project_id ? [0, 3, 3, 3] : [0, 2, 2, 2],
                 },
                 ...(project_id ? [] : [{ key: 'project_id', width: 2 }]),
                 { key: 'quantity', width: 1 },
