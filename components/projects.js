@@ -14,7 +14,7 @@ import { projectSorters } from './utils'
 const Projects = () => {
   const { registry, category, complianceOnly, search, listingBounds } =
     useQueries()
-  const [sort, setSort] = useState('project_id')
+  const [sort, setSort] = useState('-issued')
   const [page, setPage] = useState(1)
   const { data, error, isLoading } = useFetcher('projects/', {
     page,

@@ -3,9 +3,33 @@ import { Box } from 'theme-ui'
 import { useCallback } from 'react'
 import TableRow from './table-row'
 
+const SORTS = {
+  project_id: {
+    primary: 'project_id',
+    inverted: '-project_id',
+  },
+  name: {
+    primary: 'name',
+    inverted: '-name',
+  },
+  listed_at: {
+    primary: '-listed_at',
+    inverted: 'listed_at',
+  },
+  issued: {
+    primary: '-issued',
+    inverted: 'issued',
+  },
+  retired: {
+    primary: '-retired',
+    inverted: 'retired',
+  },
+}
+
 const TableHead = ({ values, sort, setSort, borderTop }) => {
   const Sort = useCallback(
     ({ value }) => {
+      const { primary, inverted } = SORTS[value.value]
       return (
         <Box
           as='button'
@@ -26,9 +50,7 @@ const TableHead = ({ values, sort, setSort, borderTop }) => {
             },
           }}
           onClick={() =>
-            setSort((prev) =>
-              prev === value.value ? `-${value.value}` : value.value
-            )
+            setSort((prev) => (prev === primary ? inverted : primary))
           }
         >
           <Triangle
@@ -39,7 +61,7 @@ const TableHead = ({ values, sort, setSort, borderTop }) => {
               fill: 'none',
               width: 10,
               height: 10,
-              transform: sort == `-${value.value}` ? 'rotate(180deg)' : null,
+              transform: sort == inverted ? 'rotate(180deg)' : null,
             }}
           />
         </Box>
