@@ -18,7 +18,7 @@ const Credits = ({
 }) => {
   const { registry, category, complianceOnly, search, transactionBounds } =
     useQueries()
-  const [sort, setSort] = useState('transaction_date')
+  const [sort, setSort] = useState('-transaction_date')
   const [page, setPage] = useState(1)
   const [transactionType, setTransactionType] = useState(transactionTypeProp)
   const { data, error, isLoading } = useFetcher('credits/', {
