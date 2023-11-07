@@ -1,27 +1,15 @@
-import {
-  Badge,
-  Button,
-  Column,
-  formatDate,
-  Link,
-  Row,
-  Tag,
-} from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
+import { Badge, Column, Link, Row } from '@carbonplan/components'
 import { format } from 'd3-format'
 import { useState } from 'react'
 import { Box, Divider, Flex } from 'theme-ui'
 
+import { COLORS } from './constants'
 import CreditCharts from './charts/credit-charts'
-import { COLORS, LABELS } from './constants'
 import Credits from './credits'
 import Layout from './layout'
+import ProjectOverview from './project-overview'
 import Sidebar from './sidebar'
 import Timeline from './timeline'
-
-const Empty = ({ label = 'N/A' }) => {
-  return <Box sx={{ color: 'secondary' }}>{label}</Box>
-}
 
 const formatter = (value) => {
   return value > 10000 ? format('.3s')(value) : value
@@ -29,22 +17,7 @@ const formatter = (value) => {
 
 const Project = ({ project }) => {
   const [transactionType, setTransactionType] = useState(null)
-  const {
-    project_id,
-    name,
-    listed_at,
-    category,
-    country,
-    status,
-    developer,
-    protocol,
-    is_compliance,
-    proponent,
-    project_url,
-    registry,
-    issued,
-    retired,
-  } = project
+  const { project_id, name, category, issued, retired } = project
   const color = COLORS[category[0]] ?? COLORS.other
 
   const sx = {
@@ -56,16 +29,6 @@ const Project = ({ project }) => {
       fontSize: 4,
       mt: 5,
       mb: 2,
-    },
-    fieldLabel: {
-      color,
-      mt: 5,
-      mb: 2,
-    },
-    fieldValue: {
-      fontFamily: 'mono',
-      letterSpacing: 'mono',
-      fontSize: 1,
     },
     creditsLabel: {
       fontFamily: 'mono',
@@ -155,71 +118,7 @@ const Project = ({ project }) => {
           <Box sx={sx.sectionLabel}>Overview</Box>
 
           <Row columns={[6, 6, 4, 4]}>
-            <Column start={[1]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Country</Box>
-              <Box sx={sx.fieldValue}>{country}</Box>
-            </Column>
-            <Column start={[4, 3, 2, 2]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Status</Box>
-              <Box sx={sx.fieldValue}>{status}</Box>
-            </Column>
-            <Column start={[1, 5, 3, 3]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Category</Box>
-              <Box sx={sx.fieldValue}>
-                {category.map((c) => (
-                  <Tag
-                    key={c}
-                    sx={{
-                      color: COLORS[c] ?? COLORS.other,
-                      width: 'fit-content',
-                    }}
-                  >
-                    {c.replace(/-/g, ' ')}
-                  </Tag>
-                ))}
-              </Box>
-            </Column>
-
-            <Column start={[4, 1, 1, 1]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Protocol</Box>
-              <Box sx={{ ...sx.fieldValue, textTransform: 'uppercase' }}>
-                {protocol.length > 0 ? (
-                  <Flex sx={{ flexDirection: 'column', gap: 2 }}>
-                    {protocol.map((d) => (
-                      <Box key={d}>{d}</Box>
-                    ))}
-                  </Flex>
-                ) : (
-                  <Empty />
-                )}
-              </Box>
-            </Column>
-            <Column start={[1, 3, 2, 2]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Developer</Box>
-              <Box sx={sx.fieldValue}>{developer ?? <Empty />}</Box>
-            </Column>
-            <Column start={[4, 5, 3, 3]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Proponent</Box>
-              <Box sx={sx.fieldValue}>{proponent ?? <Empty />}</Box>
-            </Column>
-
-            <Column start={[1]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Compliance</Box>
-              <Box sx={sx.fieldValue}>{is_compliance ? 'Yes' : 'No'}</Box>
-            </Column>
-
-            <Column start={[4, 3, 2, 2]} width={[3, 2, 1, 1]}>
-              <Box sx={sx.fieldLabel}>Registry</Box>
-              <Box sx={sx.fieldValue}>
-                <Button
-                  href={project_url}
-                  suffix={<RotatingArrow />}
-                  sx={sx.fieldValue}
-                >
-                  {LABELS.registry[registry]}
-                </Button>
-              </Box>
-            </Column>
+            <ProjectOverview project={project} />
           </Row>
         </Column>
 

@@ -5,17 +5,17 @@ import {
   Expander,
   formatDate,
   Row,
-  Tag,
 } from '@carbonplan/components'
 import { RotatingArrow, XCircle } from '@carbonplan/icons'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
 import { format } from 'd3-format'
 import { useState } from 'react'
-import { Box, Flex, IconButton, Text } from 'theme-ui'
+import { Box, IconButton, Text } from 'theme-ui'
 
-import { COLORS, LABELS } from './constants'
+import { COLORS } from './constants'
 import { TableRow } from './table'
+import ProjectOverview from './project-overview'
 
 const fade = keyframes({
   from: {
@@ -27,16 +27,7 @@ const fade = keyframes({
 })
 
 const ProjectRow = ({ project }) => {
-  const {
-    project_id,
-    category,
-    name,
-    country,
-    issued,
-    retired,
-    listed_at,
-    protocol,
-  } = project
+  const { project_id, category, name, issued, retired, listed_at } = project
   const [expanded, setExpanded] = useState(false)
   const color = COLORS[category[0]] ?? COLORS.other
 
@@ -214,34 +205,8 @@ const ProjectRow = ({ project }) => {
                       />
                     </IconButton>
                   </Column>
-                  <Column start={[1]} width={[6, 2, 2, 2]}>
-                    <Box sx={{ ...sx.expandedHeading, mt: 3 }}>Country</Box>
-                    {country}
-                  </Column>
 
-                  <Column start={[1, 3, 3, 3]} width={[3, 2, 2, 2]}>
-                    <Box sx={sx.expandedHeading}>Category</Box>
-                    {category.map((c) => (
-                      <Tag
-                        key={c}
-                        sx={{
-                          color: COLORS[c] ?? COLORS.other,
-                          width: 'fit-content',
-                        }}
-                      >
-                        {c.replace(/-/g, ' ')}
-                      </Tag>
-                    ))}
-                  </Column>
-
-                  <Column start={[4, 5, 5, 5]} width={[3, 2, 2, 2]}>
-                    <Box sx={sx.expandedHeading}>Protocol</Box>
-                    <Flex sx={{ flexDirection: 'column', gap: 2 }}>
-                      {protocol.map((d) => (
-                        <Box key={d}>{d}</Box>
-                      ))}
-                    </Flex>
-                  </Column>
+                  <ProjectOverview project={project} minWidth={2} />
                 </Row>
               ),
             },
