@@ -39,7 +39,11 @@ const SORTS = {
 const TableHead = ({ values, sort, setSort, borderTop }) => {
   const Sort = useCallback(
     ({ value }) => {
+      if (!SORTS[value.value]) {
+        return <Box sx={{ height: '16px', mb: 1 }} />
+      }
       const { primary, inverted } = SORTS[value.value]
+
       return (
         <Box
           as='button'

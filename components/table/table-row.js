@@ -29,8 +29,7 @@ const TableRow = ({ values, as, sx, Button, ...props }) => {
             fontSize: 1,
             textAlign: 'left',
             color: 'secondary',
-            fontFamily: 'mono',
-            letterSpacing: 'mono',
+            fontFamily: 'body',
             mb: 4,
             mt: 2,
             display: value?.width?.map

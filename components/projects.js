@@ -49,9 +49,10 @@ const Projects = () => {
           values={[
             { value: 'project_id', label: 'Project ID', width: [2, 1, 1, 1] },
             { value: 'name', label: 'Name', width: 3 },
-            { value: 'listed_at', label: 'Listed', width: [2, 1, 1, 1] },
             { value: 'issued', label: 'Issued', width: [0, 1, 1, 1] },
             { value: 'retired', label: 'Retired', width: [0, 1, 1, 1] },
+            { value: 'listed_at', label: 'Listed', width: [2, 1, 1, 1] },
+            { value: 'details', label: 'Details', width: [2, 1, 1, 1] },
           ]}
         />
         {data && (
@@ -89,11 +90,11 @@ const Projects = () => {
               values={[
                 { key: 'project_id', width: [2, 1, 1, 1] },
                 { key: 'name', width: 3 },
-                { value: 'listed_at', width: [2, 1, 1, 1] },
                 { key: 'issued', width: [0, 1, 1, 1] },
                 { key: 'retired', width: [0, 1, 1, 1] },
+                { key: 'listed_at', width: [2, 1, 1, 1] },
                 {
-                  key: 'listed_at',
+                  key: 'details',
                   width: [0, 1, 1, 1],
                 },
               ]}

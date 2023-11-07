@@ -11,7 +11,7 @@ import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
 import { format } from 'd3-format'
 import { useState } from 'react'
-import { Box, IconButton, Text } from 'theme-ui'
+import { Box, IconButton } from 'theme-ui'
 
 import { COLORS } from './constants'
 import { TableRow } from './table'
@@ -44,15 +44,6 @@ const ProjectRow = ({ project }) => {
       animationDelay: 0 + 'ms',
       animationName: fade.toString(),
       animationFillMode: 'backwards',
-    },
-    expandedHeading: {
-      color: color,
-      fontFamily: 'mono',
-      letterSpacing: 'mono',
-      textTransform: 'uppercase',
-      fontSize: 1,
-      mt: [5, 3, 3, 3],
-      mb: 2,
     },
   }
 
@@ -88,9 +79,6 @@ const ProjectRow = ({ project }) => {
                   sx={{
                     color: color,
                     userSelect: 'all',
-                    '& :first-of-type': {
-                      fontFamily: 'body',
-                    },
                   }}
                 >
                   {project_id}
@@ -101,22 +89,6 @@ const ProjectRow = ({ project }) => {
             width: [2, 1, 1, 1],
           },
           { key: 'name', label: name ?? '?', width: [4, 3, 3, 3] },
-          {
-            key: 'listed_at',
-            label: listed_at ? (
-              <Text sx={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-                {formatDate(listed_at, {
-                  day: 'numeric',
-                  month: 'numeric',
-                  year: 'numeric',
-                  separator: '-',
-                })}
-              </Text>
-            ) : (
-              '?'
-            ),
-            width: [2, 1, 1, 1],
-          },
           {
             key: 'issued',
             label: (
@@ -132,19 +104,33 @@ const ProjectRow = ({ project }) => {
             width: [0, 1, 1, 1],
           },
           {
+            key: 'listed_at',
+            label: (
+              <Badge sx={{ whiteSpace: 'nowrap' }}>
+                {listed_at
+                  ? formatDate(listed_at, {
+                      day: 'numeric',
+                      month: 'numeric',
+                      year: 'numeric',
+                      separator: '-',
+                    })
+                  : '?'}
+              </Badge>
+            ),
+            width: [2, 1, 1, 1],
+          },
+
+          {
             key: 'details',
             label: (
-              <Button
-                suffix={
-                  <RotatingArrow sx={{ mt: '-3px', width: 13, height: 13 }} />
-                }
-                href={`/projects/${project_id}`}
-                onClick={(e) => e.stopPropagation()}
-                inverted
-                sx={{ fontSize: 1, mt: '5px' }}
-              >
-                Details
-              </Button>
+              <Badge>
+                <Button
+                  href={`/projects/${project_id}`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <RotatingArrow sx={{ mt: 1, width: 13, height: 13 }} />
+                </Button>
+              </Badge>
             ),
             width: [0, 1, 1, 1],
           },
