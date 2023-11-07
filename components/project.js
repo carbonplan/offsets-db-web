@@ -34,7 +34,6 @@ const Project = ({ project }) => {
       fontFamily: 'mono',
       letterSpacing: 'mono',
       textTransform: 'uppercase',
-      color: 'secondary',
       mt: [4, 2, 2, 2],
     },
     creditsAmount: {
@@ -95,9 +94,6 @@ const Project = ({ project }) => {
             flexShrink: 0,
             px: 2,
             userSelect: 'all',
-            '& :first-of-type': {
-              fontFamily: 'body',
-            },
           }}
         >
           {project_id}
