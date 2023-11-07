@@ -25,12 +25,15 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
   const sx = {
     label: {
       color,
+      fontFamily: 'mono',
+      letterSpacing: 'mono',
+      textTransform: 'uppercase',
       mt: 5,
       mb: 2,
     },
     value: {
-      fontFamily: 'mono',
-      letterSpacing: 'mono',
+      fontFamily: 'faux',
+      letterSpacing: 'faux',
       fontSize: 1,
     },
   }
@@ -46,7 +49,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         width={[3, 2, minWidth, minWidth]}
       >
         <Box sx={sx.label}>Status</Box>
-        <Box sx={sx.value}>{status}</Box>
+        <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>{status}</Box>
       </Column>
       <Column
         start={[1, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
@@ -55,15 +58,15 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         <Box sx={sx.label}>Category</Box>
         <Box sx={sx.value}>
           {category.map((c) => (
-            <Tag
+            <Box
               key={c}
               sx={{
-                color: COLORS[c] ?? COLORS.other,
+                textTransform: 'capitalize',
                 width: 'fit-content',
               }}
             >
               {c.replace(/-/g, ' ')}
-            </Tag>
+            </Box>
           ))}
         </Box>
       </Column>
@@ -108,7 +111,11 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
       >
         <Box sx={sx.label}>Registry</Box>
         <Box sx={sx.value}>
-          <Button href={project_url} suffix={<RotatingArrow />} sx={sx.value}>
+          <Button
+            href={project_url}
+            suffix={<RotatingArrow sx={{ mt: -1 }} />}
+            sx={sx.value}
+          >
             {LABELS.registry[registry]}
           </Button>
         </Box>
