@@ -9,7 +9,7 @@ export const formatValue = (value) => {
     if (value >= 1e9) {
       return result.replace('G', 'B')
     }
-    return result
+    return result.toUpperCase(0)
   }
 }
 
