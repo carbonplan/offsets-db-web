@@ -10,8 +10,8 @@ const CategoryBar = ({ label, total, mapping }) => {
   const [expanded, setExpanded] = useState(false)
 
   const background = useMemo(() => {
-    if (mapping.length === 0) {
-      return 'secondary'
+    if (Object.keys(mapping).length === 0) {
+      return 'muted'
     } else {
       const colors = Object.keys(LABELS.category).map((key) => COLORS[key])
       const percentages = Object.keys(LABELS.category).reduce(
@@ -19,7 +19,6 @@ const CategoryBar = ({ label, total, mapping }) => {
           let mapValue = mapping[key]
           if (typeof mapValue !== 'number') {
             mapValue = 0
-            console.warn(`Category total missing for category: ${key}`)
           }
           let value = (mapValue / total) * 100
           if (accum[i - 1]) {
@@ -41,6 +40,8 @@ const CategoryBar = ({ label, total, mapping }) => {
     }
   }, [total, mapping])
 
+  const isEmpty = Object.keys(mapping).length === 0
+
   return (
     <Box sx={{ mt: 3 }}>
       <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
@@ -50,7 +51,7 @@ const CategoryBar = ({ label, total, mapping }) => {
           {label}
         </Box>
         <Badge sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}>
-          {formatValue(total)}
+          {isEmpty === 0 ? '-' : formatValue(total)}
         </Badge>
       </Flex>
 
@@ -70,6 +71,7 @@ const CategoryBar = ({ label, total, mapping }) => {
             mb: 3,
             width: '100%',
             height: '28px',
+            transition: 'background 0.2s',
             background,
           }}
         />
@@ -100,18 +102,21 @@ const CategoryBar = ({ label, total, mapping }) => {
                 />
                 {LABELS.category[l]}
               </Flex>
-              <Badge>{formatValue(mapping[l] ?? 0)}</Badge>
+              <Badge>{isEmpty ? '-' : formatValue(mapping[l] ?? 0)}</Badge>
             </Flex>
             <Box
               sx={{
                 height: '5px',
                 width: '100%',
-                background: (theme) =>
-                  `linear-gradient(to right, ${theme.colors[COLORS[l]]} 0% ${
-                    ((mapping[l] ?? 0) / total) * 100
-                  }%, ${theme.colors.muted} ${
-                    ((mapping[l] ?? 0) / total) * 100
-                  }% 100%)`,
+                transition: 'background 0.2s',
+                background: isEmpty
+                  ? 'muted'
+                  : (theme) =>
+                      `linear-gradient(to right, ${
+                        theme.colors[COLORS[l]]
+                      } 0% ${((mapping[l] ?? 0) / total) * 100}%, ${
+                        theme.colors.muted
+                      } ${((mapping[l] ?? 0) / total) * 100}% 100%)`,
               }}
             />
           </Box>
