@@ -16,7 +16,12 @@ const CategoryBar = ({ label, total, mapping }) => {
       const colors = Object.keys(LABELS.category).map((key) => COLORS[key])
       const percentages = Object.keys(LABELS.category).reduce(
         (accum, key, i) => {
-          let value = (mapping[key] / total) * 100
+          let mapValue = mapping[key]
+          if (typeof mapValue !== 'number') {
+            mapValue = 0
+            console.warn(`Category total missing for category: ${key}`)
+          }
+          let value = (mapValue / total) * 100
           if (accum[i - 1]) {
             value = value + accum[i - 1]
           }
@@ -95,7 +100,7 @@ const CategoryBar = ({ label, total, mapping }) => {
                 />
                 {LABELS.category[l]}
               </Flex>
-              <Badge>{formatValue(mapping[l])}</Badge>
+              <Badge>{formatValue(mapping[l] ?? 0)}</Badge>
             </Flex>
             <Box
               sx={{
@@ -103,9 +108,9 @@ const CategoryBar = ({ label, total, mapping }) => {
                 width: '100%',
                 background: (theme) =>
                   `linear-gradient(to right, ${theme.colors[COLORS[l]]} 0% ${
-                    (mapping[l] / total) * 100
+                    ((mapping[l] ?? 0) / total) * 100
                   }%, ${theme.colors.muted} ${
-                    (mapping[l] / total) * 100
+                    ((mapping[l] ?? 0) / total) * 100
                   }% 100%)`,
               }}
             />
