@@ -54,6 +54,7 @@ const Projects = () => {
             { value: 'listed_at', label: 'Listed', width: [2, 1, 1, 1] },
             { value: 'details', label: 'Details', width: [2, 1, 1, 1] },
           ]}
+          borderTop
         />
         {data && (
           <FadeIn as='tbody'>

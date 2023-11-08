@@ -43,7 +43,7 @@ const CategoryBar = ({ label, total, mapping }) => {
   const isEmpty = Object.keys(mapping).length === 0
 
   return (
-    <Box sx={{ mt: 3 }}>
+    <Box sx={{ mt: 3, mb: 6 }}>
       <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
         <Box
           sx={{ fontFamily: 'mono', letterSpacing: 'mono', color: 'secondary' }}
@@ -55,7 +55,7 @@ const CategoryBar = ({ label, total, mapping }) => {
         </Badge>
       </Flex>
 
-      <Box sx={{ mt: 3, position: 'relative' }}>
+      <Box sx={{ mt: 4, position: 'relative' }}>
         <Expander
           value={expanded}
           onClick={() => setExpanded(!expanded)}
@@ -68,7 +68,6 @@ const CategoryBar = ({ label, total, mapping }) => {
         />
         <Box
           sx={{
-            mb: 3,
             width: '100%',
             height: '28px',
             transition: 'background 0.2s',
@@ -82,45 +81,47 @@ const CategoryBar = ({ label, total, mapping }) => {
         height={expanded ? 'auto' : 0}
         easing={'linear'}
       >
-        {Object.keys(LABELS.category).map((l) => (
-          <Box key={l} sx={{ mb: 2 }}>
-            <Flex
-              sx={{
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                fontSize: 1,
-                mb: 2,
-              }}
-            >
-              <Flex sx={{ gap: 2, alignItems: 'center' }}>
-                <Box
-                  sx={{
-                    width: '8px',
-                    height: '8px',
-                    backgroundColor: COLORS[l],
-                  }}
-                />
-                {LABELS.category[l]}
+        <Box sx={{ mt: 3 }}>
+          {Object.keys(LABELS.category).map((l) => (
+            <Box key={l} sx={{ mb: 2 }}>
+              <Flex
+                sx={{
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  fontSize: 1,
+                  mb: 2,
+                }}
+              >
+                <Flex sx={{ gap: 2, alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      width: '8px',
+                      height: '8px',
+                      backgroundColor: COLORS[l],
+                    }}
+                  />
+                  {LABELS.category[l]}
+                </Flex>
+                <Badge>{isEmpty ? '-' : formatValue(mapping[l] ?? 0)}</Badge>
               </Flex>
-              <Badge>{isEmpty ? '-' : formatValue(mapping[l] ?? 0)}</Badge>
-            </Flex>
-            <Box
-              sx={{
-                height: '5px',
-                width: '100%',
-                transition: 'background 0.2s',
-                background: isEmpty
-                  ? 'muted'
-                  : (theme) =>
-                      `linear-gradient(to right, ${
-                        theme.colors[COLORS[l]]
-                      } 0% ${((mapping[l] ?? 0) / total) * 100}%, ${
-                        theme.colors.muted
-                      } ${((mapping[l] ?? 0) / total) * 100}% 100%)`,
-              }}
-            />
-          </Box>
-        ))}
+              <Box
+                sx={{
+                  height: '5px',
+                  width: '100%',
+                  transition: 'background 0.2s',
+                  background: isEmpty
+                    ? 'muted'
+                    : (theme) =>
+                        `linear-gradient(to right, ${
+                          theme.colors[COLORS[l]]
+                        } 0% ${((mapping[l] ?? 0) / total) * 100}%, ${
+                          theme.colors.muted
+                        } ${((mapping[l] ?? 0) / total) * 100}% 100%)`,
+                }}
+              />
+            </Box>
+          ))}
+        </Box>
       </AnimateHeight>
     </Box>
   )
