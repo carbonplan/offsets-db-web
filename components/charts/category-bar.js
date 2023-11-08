@@ -3,6 +3,7 @@ import { format } from 'd3-format'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS, LABELS } from '../constants'
+import { formatValue } from '../utils'
 
 const CategoryBar = ({ label, total, mapping }) => {
   return (
@@ -14,7 +15,7 @@ const CategoryBar = ({ label, total, mapping }) => {
           {label}
         </Box>
         <Badge sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}>
-          {total > 100 ? format('.3s')(total) : total}
+          {formatValue(total)}
         </Badge>
       </Flex>
 

@@ -1,8 +1,9 @@
 import { Badge, Button, formatDate } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex, Text } from 'theme-ui'
-import { format } from 'd3-format'
+
 import { TableRow } from './table'
+import { formatValue } from './utils'
 
 const CreditRow = ({ event, projectView }) => {
   const { project_id, transaction_date, transaction_type, quantity, vintage } =
@@ -30,7 +31,7 @@ const CreditRow = ({ event, projectView }) => {
           },
           {
             key: 'vintage',
-            label: vintage ?? '?',
+            label: <Badge>{vintage ?? '?'}</Badge>,
             width: [projectView ? 1 : 0, 1, 1, 1],
           },
           {
@@ -67,9 +68,7 @@ const CreditRow = ({ event, projectView }) => {
             key: 'quantity',
             label: (
               <Flex sx={{ gap: 3 }}>
-                <Badge>
-                  {quantity > 100 ? format('.3s')(quantity) : quantity}
-                </Badge>
+                <Badge>{formatValue(quantity)}</Badge>
                 <Box sx={{ display: ['inherit', 'none', 'none', 'none'] }}>
                   {transaction_type === 'retirement' ? 'retired' : 'issued'}
                 </Box>

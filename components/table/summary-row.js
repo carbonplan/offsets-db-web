@@ -1,12 +1,8 @@
 import { Badge } from '@carbonplan/components'
-import { format } from 'd3-format'
 import { Box } from 'theme-ui'
 
+import { formatValue } from '../utils'
 import TableRow from './table-row'
-
-const formatter = (value) => {
-  return value > 10000 ? format('.3s')(value) : value
-}
 
 const SummaryRow = ({ count, total, label }) => {
   return (
@@ -23,8 +19,8 @@ const SummaryRow = ({ count, total, label }) => {
                   letterSpacing: 'mono',
                 }}
               >
-                Count: <Badge>{formatter(count)}</Badge> /{' '}
-                <Badge>{formatter(total)}</Badge> {label}
+                Count: <Badge>{formatValue(count)}</Badge> /{' '}
+                <Badge>{formatValue(total)}</Badge> {label}
               </Box>
             </Box>
           ),

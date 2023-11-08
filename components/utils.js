@@ -1,4 +1,17 @@
+import { format } from 'd3-format'
 import { useEffect, useState } from 'react'
+
+export const formatValue = (value) => {
+  if (value < 1000) {
+    return value
+  } else {
+    let result = format('.3s')(value)
+    if (value >= 1e9) {
+      return result.replace('G', 'B')
+    }
+    return result
+  }
+}
 
 export const projectSorters = {
   default: (sort) => (a, b) => a[sort]?.localeCompare(b[sort]),

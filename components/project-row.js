@@ -9,12 +9,12 @@ import {
 import { RotatingArrow, XCircle } from '@carbonplan/icons'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
-import { format } from 'd3-format'
 import { useState } from 'react'
 import { Box, IconButton } from 'theme-ui'
 
 import { COLORS } from './constants'
 import { TableRow } from './table'
+import { formatValue } from './utils'
 import ProjectOverview from './project-overview'
 
 const fade = keyframes({
@@ -91,16 +91,12 @@ const ProjectRow = ({ project }) => {
           { key: 'name', label: name ?? '?', width: [4, 3, 3, 3] },
           {
             key: 'issued',
-            label: (
-              <Badge>{issued > 100 ? format('.3s')(issued) : issued}</Badge>
-            ),
+            label: <Badge>{formatValue(issued)}</Badge>,
             width: [0, 1, 1, 1],
           },
           {
             key: 'retired',
-            label: (
-              <Badge>{retired > 100 ? format('.3s')(retired) : retired}</Badge>
-            ),
+            label: <Badge>{formatValue(retired)}</Badge>,
             width: [0, 1, 1, 1],
           },
           {

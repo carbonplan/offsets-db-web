@@ -1,19 +1,15 @@
 import { Badge, Column, Link, Row } from '@carbonplan/components'
-import { format } from 'd3-format'
 import { useState } from 'react'
 import { Box, Divider, Flex } from 'theme-ui'
 
 import { COLORS } from './constants'
+import { formatValue } from './utils'
 import CreditCharts from './charts/credit-charts'
 import Credits from './credits'
 import Layout from './layout'
 import ProjectOverview from './project-overview'
 import Sidebar from './sidebar'
 import Timeline from './timeline'
-
-const formatter = (value) => {
-  return value > 10000 ? format('.3s')(value) : value
-}
 
 const Project = ({ project }) => {
   const [transactionType, setTransactionType] = useState(null)
@@ -131,11 +127,11 @@ const Project = ({ project }) => {
         </Column>
         <Column start={[1]} width={[6, 2, 2, 2]}>
           <Box sx={sx.creditsLabel}>Credits issued</Box>
-          <Badge sx={sx.creditsAmount}>{formatter(issued)}</Badge>
+          <Badge sx={sx.creditsAmount}>{formatValue(issued)}</Badge>
         </Column>
         <Column start={[1, 3, 3, 3]} width={[6, 2, 2, 2]}>
           <Box sx={sx.creditsLabel}>Credits retired</Box>
-          <Badge sx={sx.creditsAmount}>{formatter(retired)}</Badge>
+          <Badge sx={sx.creditsAmount}>{formatValue(retired)}</Badge>
         </Column>
 
         <Column start={[1]} width={[6, 8, 8, 8]} sx={{ mt: 5 }}>
