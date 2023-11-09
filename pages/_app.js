@@ -15,6 +15,7 @@ const App = ({ Component, pageProps }) => {
           title='Offsets DB – CarbonPlan'
           description='TK'
           card='TK'
+          dimmer='top'
           footer={false}
           metadata={false}
           container={false}
