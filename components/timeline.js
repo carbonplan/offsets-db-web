@@ -5,17 +5,20 @@ import { Box, Divider, useThemeUI } from 'theme-ui'
 
 const Timeline = ({ project }) => {
   const { theme } = useThemeUI()
+
   const sortedEntries = useMemo(
     () =>
       [
-        ...project.clips.map(({ published_at, title, url }) => ({
-          date: published_at.match(/\d{4}-\d{2}-\d{2}/)[0],
+        ...project.clips.map(({ date, title, url }) => ({
+          date: date.match(/\d{4}-\d{2}-\d{2}/)[0],
           label: title,
           url,
         })),
         { date: project.listed_at, label: 'Project registered' },
         { date: project.started_at, label: 'Project listed' },
-      ].filter((d) => d.date),
+      ]
+        .filter((d) => d.date)
+        .sort((a, b) => b.date.localeCompare(a.date)),
     [project]
   )
 
