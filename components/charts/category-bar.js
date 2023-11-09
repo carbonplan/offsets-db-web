@@ -51,7 +51,7 @@ const CategoryBar = ({ label, total, mapping }) => {
           {label}
         </Box>
         <Badge sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}>
-          {isEmpty === 0 ? '-' : formatValue(total)}
+          {isEmpty ? '-' : formatValue(total)}
         </Badge>
       </Flex>
 
