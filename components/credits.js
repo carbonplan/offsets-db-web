@@ -1,14 +1,14 @@
-import { FadeIn } from '@carbonplan/components'
+import { Badge, FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
-import { Box, Divider } from 'theme-ui'
+import { Box, Divider, Flex } from 'theme-ui'
 
-import { Loading, TableHead, TableRow } from './table'
+import { Loading, TableFoot, TableHead, TableRow } from './table'
 import CreditRow from './credit-row'
 import CreditCharts from './charts/credit-charts'
 import { useQueries } from './queries'
 import Pagination from './pagination'
-import SummaryRow from './table/summary-row'
 import useFetcher from './use-fetcher'
+import { formatValue } from './utils'
 
 const Credits = ({
   project_id,
@@ -88,13 +88,6 @@ const Credits = ({
         />
         {data && (
           <FadeIn as='tbody'>
-            {unfilteredData && (
-              <SummaryRow
-                count={data.pagination.total_entries}
-                total={unfilteredData.pagination.total_entries}
-                label='transactions'
-              />
-            )}
             {data.data.map((d) => (
               <CreditRow key={d.id} event={d} projectView={!!project_id} />
             ))}
@@ -132,8 +125,83 @@ const Credits = ({
             />
           </FadeIn>
         )}
+        {data && (
+          <TableFoot
+            values={[
+              {
+                label: (
+                  <Flex
+                    sx={{
+                      gap: 3,
+                      alignItems: 'baseline',
+                      color: 'secondary',
+                      textTransform: 'uppercase',
+                      fontFamily: 'mono',
+                      letterSpacing: 'mono',
+                      whiteSpace: 'nowrap',
+                      mt: '13px',
+                    }}
+                  >
+                    Total
+                    <Badge sx={{ whiteSpace: 'nowrap' }}>
+                      {formatValue(unfilteredData.pagination.total_entries)}
+                    </Badge>
+                  </Flex>
+                ),
+                key: 'total',
+                start: 1,
+                width: [3, 2, 2, 2],
+              },
+              {
+                label: (
+                  <Flex
+                    sx={{
+                      gap: 3,
+                      alignItems: 'baseline',
+                      color: 'secondary',
+                      textTransform: 'uppercase',
+                      fontFamily: 'mono',
+                      letterSpacing: 'mono',
+                      whiteSpace: 'nowrap',
+                      mt: '13px',
+                    }}
+                  >
+                    Selected
+                    <Badge sx={{ flexShrink: 0 }}>
+                      {formatValue(data.pagination.total_entries)}
+                    </Badge>
+                  </Flex>
+                ),
+                key: 'selected',
+                start: [4, 3, 3, 3],
+                width: [3, 2, 2, 2],
+              },
+              {
+                label: (
+                  <Flex
+                    sx={{
+                      justifyContent: [
+                        'flex-start',
+                        'flex-end',
+                        'flex-end',
+                        'flex-end',
+                      ],
+                    }}
+                  >
+                    <Pagination
+                      pagination={data.pagination}
+                      setPage={setPage}
+                    />
+                  </Flex>
+                ),
+                key: 'pagination',
+                start: [1, 5, 5, 5],
+                width: [6, 4, 4, 4],
+              },
+            ]}
+          />
+        )}
       </Box>
-      {data && <Pagination pagination={data.pagination} setPage={setPage} />}
     </>
   )
 }
