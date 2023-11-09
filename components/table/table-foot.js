@@ -16,6 +16,11 @@ const TableFoot = ({ values }) => {
           mr: [-4, -5, 0, 0],
           pr: [4, 5, 0, 0],
           pl: [4, 5, 5, 6],
+          pt: 3,
+          pb: 2,
+          '& td': {
+            my: 0,
+          },
         }}
         values={values}
       />

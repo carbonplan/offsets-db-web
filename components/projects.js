@@ -107,7 +107,6 @@ const Projects = () => {
                       fontFamily: 'mono',
                       letterSpacing: 'mono',
                       whiteSpace: 'nowrap',
-                      mt: '13px',
                     }}
                   >
                     Total
@@ -131,7 +130,6 @@ const Projects = () => {
                       fontFamily: 'mono',
                       letterSpacing: 'mono',
                       whiteSpace: 'nowrap',
-                      mt: '13px',
                     }}
                   >
                     Selected

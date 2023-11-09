@@ -57,7 +57,7 @@ const Pagination = ({ pagination, setPage }) => {
   }
 
   return (
-    <Flex sx={{ gap: 1, mt: 3, mb: 4 }}>
+    <Flex sx={{ gap: 1, mt: 1 }}>
       <IconButton
         sx={sx.arrow}
         disabled={current_page === 1}

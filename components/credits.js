@@ -139,7 +139,6 @@ const Credits = ({
                       fontFamily: 'mono',
                       letterSpacing: 'mono',
                       whiteSpace: 'nowrap',
-                      mt: '13px',
                     }}
                   >
                     Total
@@ -163,7 +162,6 @@ const Credits = ({
                       fontFamily: 'mono',
                       letterSpacing: 'mono',
                       whiteSpace: 'nowrap',
-                      mt: '13px',
                     }}
                   >
                     Selected
