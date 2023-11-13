@@ -1,6 +1,6 @@
 import { Badge, FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
-import { Box, Divider, Flex } from 'theme-ui'
+import { Box, Flex } from 'theme-ui'
 
 import { Loading, TableFoot, TableHead, TableRow } from './table'
 import CreditRow from './credit-row'
@@ -52,14 +52,7 @@ const Credits = ({
   return (
     <>
       {charts && (
-        <Box sx={{ display: ['none', 'block', 'block', 'block'] }}>
-          <Divider
-            sx={{
-              ml: [-4, -5, -5, -6],
-              mr: [-4, -5, 0, 0],
-              my: 3,
-            }}
-          />
+        <Box sx={{ display: ['none', 'block', 'block', 'block'], mt: 3 }}>
           <CreditCharts setTransactionType={setTransactionType} />
         </Box>
       )}

@@ -1,6 +1,6 @@
 import { Badge, FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
-import { Box, Divider, Flex } from 'theme-ui'
+import { Box, Flex } from 'theme-ui'
 
 import { Loading, TableFoot, TableHead, TableRow } from './table'
 import { useQueries } from './queries'
@@ -32,13 +32,6 @@ const Projects = () => {
   return (
     <>
       <Box sx={{ display: ['none', 'block', 'block', 'block'] }}>
-        <Divider
-          sx={{
-            ml: [-4, -5, -5, -6],
-            mr: [-4, -5, 0, 0],
-            my: 3,
-          }}
-        />
         <ProjectCharts />
       </Box>
       <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>

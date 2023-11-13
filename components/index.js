@@ -1,6 +1,4 @@
-import { Badge } from '@carbonplan/components'
 import { useRouter } from 'next/router'
-import { Box, Flex, Link } from 'theme-ui'
 
 import Credits from './credits'
 import Layout from './layout'
@@ -31,29 +29,6 @@ const Index = ({ mode }) => {
         </Sidebar>
       }
     >
-      <Flex
-        sx={{
-          gap: 3,
-          fontFamily: 'mono',
-          letterSpacing: 'mono',
-          textTransform: 'uppercase',
-          my: 3,
-        }}
-      >
-        <Box sx={{ color: 'secondary' }}>View by</Box>
-        <Link
-          sx={sx.badge(mode === 'projects')}
-          onClick={() => router.push('/projects')}
-        >
-          <Badge>Projects</Badge>
-        </Link>
-        <Link
-          sx={sx.badge(mode === 'credits')}
-          onClick={() => router.push('/credits')}
-        >
-          <Badge>Credits</Badge>
-        </Link>
-      </Flex>
       {mode === 'projects' && <Projects />}
       {mode === 'credits' && <Credits />}
     </Layout>

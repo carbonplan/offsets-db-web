@@ -1,6 +1,7 @@
-import { Badge, Column, Link, Row } from '@carbonplan/components'
+import { Badge, Button, Column, Row } from '@carbonplan/components'
 import { useState } from 'react'
 import { Box, Divider, Flex } from 'theme-ui'
+import { Left } from '@carbonplan/icons'
 
 import { COLORS } from './constants'
 import { formatValue } from './utils'
@@ -52,32 +53,21 @@ const Project = ({ project }) => {
     <Layout
       sidebar={
         <Sidebar>
-          <Flex
-            sx={{
-              gap: 3,
-              fontFamily: 'mono',
-              letterSpacing: 'mono',
-              textTransform: 'uppercase',
-              mt: 3,
-              mb: [0, 0, 3, 3],
+          <Button
+            inverted
+            size='xs'
+            onClick={() => {
+              if (window.history.state?.idx) {
+                window.history.back()
+              } else {
+                window.location.href = '/projects'
+              }
             }}
+            prefix={<Left />}
+            sx={{ mt: 3, mb: [0, 0, 3, 3] }}
           >
-            <Box sx={{ color: 'secondary' }}>Back to</Box>
-            <Link sx={sx.badge} href='/projects'>
-              <Badge>Projects</Badge>
-            </Link>
-            <Link sx={sx.badge} href='/credits'>
-              <Badge>Credits</Badge>
-            </Link>
-          </Flex>
-
-          <Divider
-            sx={{
-              mr: [-4, -5, -5, -6],
-              ml: [-4, -5, 0, 0],
-              display: ['none', 'none', 'inherit', 'inherit'],
-            }}
-          />
+            Back
+          </Button>
         </Sidebar>
       }
     >
