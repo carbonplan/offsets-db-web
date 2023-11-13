@@ -93,7 +93,7 @@ const Projects = () => {
             />
           </FadeIn>
         )}
-        {data && (
+        {data && unfilteredData && (
           <TableFoot
             values={[
               {

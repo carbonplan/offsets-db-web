@@ -125,7 +125,7 @@ const Credits = ({
             />
           </FadeIn>
         )}
-        {data && (
+        {data && unfilteredData && (
           <TableFoot
             values={[
               {
