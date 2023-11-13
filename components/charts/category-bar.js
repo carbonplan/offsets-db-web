@@ -43,7 +43,7 @@ const CategoryBar = ({ label, total, mapping }) => {
   const isEmpty = Object.keys(mapping).length === 0
 
   return (
-    <Box sx={{ mt: 3, mb: 6 }}>
+    <Box sx={{ mt: [3, 3, '56px', '56px'], mb: 6 }}>
       <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
         <Box
           sx={{ fontFamily: 'mono', letterSpacing: 'mono', color: 'secondary' }}
@@ -55,7 +55,7 @@ const CategoryBar = ({ label, total, mapping }) => {
         </Badge>
       </Flex>
 
-      <Box sx={{ mt: 4, position: 'relative' }}>
+      <Box sx={{ mt: [4, '38px', '38px', '38px'], position: 'relative' }}>
         <Expander
           value={expanded}
           onClick={() => setExpanded(!expanded)}
