@@ -34,10 +34,10 @@ const Sidebar = ({ children }) => {
           ],
         }}
       >
-        <Box as='h1' variant='styles.h1'>
+        <Box as='h1' sx={{ variant: 'styles.h1', mt: 4 }}>
           Offsets DB
         </Box>
-        <Box as='p' sx={{ mt: -2, mb: 5 }}>
+        <Box as='p' sx={{ mb: 5 }}>
           These are all the carbon offset projects listed globally by the six
           largest offset registries: Verra (VCS), Gold Standard (GOLD), Global
           Carbon Council (GCC), American Carbon Registry (ACR), Climate Action
