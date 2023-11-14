@@ -1,21 +1,25 @@
 import { Layout } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { Container } from 'theme-ui'
+import { Container, Flex } from 'theme-ui'
 
 import Project from '../../components/project'
+import CustomTimeout from '../../components/custom-timeout'
 
-const ProjectPage = ({ project }) => {
+const ProjectPage = ({ project, error }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (!project?.project_id) {
+    if (!error && !project?.project_id) {
       router.push('/404')
     }
-  }, [project?.project_id])
+  }, [error, project?.project_id])
 
-  if (!project?.project_id) {
-    return null
+  let content
+  if (error) {
+    content = <CustomTimeout />
+  } else if (project?.project_id) {
+    content = <Project project={project} />
   }
   return (
     <Layout
@@ -29,22 +33,41 @@ const ProjectPage = ({ project }) => {
       nav={'research'}
       url={'https://carbonplan.org/research/offsets-db'}
     >
-      <Container>
-        <Project project={project} />
-      </Container>
+      <Container>{content}</Container>
     </Layout>
   )
 }
 
 export default ProjectPage
 
-export async function getServerSideProps({ params }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/projects/${params.id.toUpperCase()}`
-  )
-  const project = await res.json()
+export const maxDuration = 15 // This function can run for a maximum of 15 seconds
 
-  return {
-    props: { project },
+function withTimeout(promise, ms) {
+  let timeoutId
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(new Error('Request timed out'))
+    }, ms)
+  })
+
+  return Promise.race([promise, timeoutPromise]).then((result) => {
+    clearTimeout(timeoutId)
+    return result
+  })
+}
+
+export async function getServerSideProps({ params }) {
+  try {
+    const res = await withTimeout(
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/${params.id.toUpperCase()}`
+      ),
+      maxDuration * 1000 - 1
+    )
+    const project = await res.json()
+
+    return { props: { project } }
+  } catch (error) {
+    return { props: { error: error.message } }
   }
 }
