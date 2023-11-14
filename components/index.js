@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router'
+import { Layout as PageLayout } from '@carbonplan/components'
+import { Container } from 'theme-ui'
 
 import Credits from './credits'
 import Layout from './layout'
@@ -19,19 +20,31 @@ const sx = {
 }
 
 const Index = ({ mode }) => {
-  const router = useRouter()
-
   return (
-    <Layout
-      sidebar={
-        <Sidebar>
-          <Queries />
-        </Sidebar>
-      }
+    <PageLayout
+      title='Offsets DB – CarbonPlan'
+      description='TK'
+      card='TK'
+      dimmer='top'
+      footer={false}
+      metadata={false}
+      container={false}
+      nav={'research'}
+      url={'https://carbonplan.org/research/offsets-db'}
     >
-      {mode === 'projects' && <Projects />}
-      {mode === 'credits' && <Credits />}
-    </Layout>
+      <Container>
+        <Layout
+          sidebar={
+            <Sidebar>
+              <Queries />
+            </Sidebar>
+          }
+        >
+          {mode === 'projects' && <Projects />}
+          {mode === 'credits' && <Credits />}
+        </Layout>
+      </Container>
+    </PageLayout>
   )
 }
 
