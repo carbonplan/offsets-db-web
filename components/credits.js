@@ -120,7 +120,7 @@ const Credits = ({
 
                 {
                   key: 'transaction_type',
-                  width: project_id ? [0, 3, 3, 3] : [0, 2, 2, 2],
+                  width: [0, 2, 2, 2],
                 },
                 ...(project_id ? [] : [{ key: 'project_id', width: 2 }]),
                 { key: 'quantity', width: 1 },
@@ -145,7 +145,7 @@ const Credits = ({
                   }}
                 >
                   Total
-                  <Badge sx={{ color, whiteSpace: 'nowrap' }}>
+                  <Badge sx={{ color, whiteSpace: 'nowrap', flexShrink: 0 }}>
                     {unfilteredData
                       ? formatValue(unfilteredData.pagination.total_entries)
                       : '-'}
@@ -154,7 +154,7 @@ const Credits = ({
               ),
               key: 'total',
               start: 1,
-              width: [3, 2, 2, 2],
+              width: [2, 2, 2, 2],
             },
             {
               label: (
@@ -177,8 +177,8 @@ const Credits = ({
                 </Flex>
               ),
               key: 'pagination',
-              start: [1, 5, 5, 5],
-              width: [6, 4, 4, 4],
+              start: [3, 5, 5, 5],
+              width: [4, 4, 4, 4],
             },
           ]}
         />

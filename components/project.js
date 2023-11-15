@@ -47,10 +47,12 @@ const Project = ({ project }) => {
 
   return (
     <Box>
-      <Row>
-        <Flex sx={{ height: '100%', alignItems: 'flex-end' }}>
-          <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
-        </Flex>
+      <Row sx={{ my: [4, 6, 6, 6] }}>
+        <Column start={[1]} width={[6, 1, 1, 1]}>
+          <Flex sx={{ height: '100%', alignItems: 'flex-end' }}>
+            <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
+          </Flex>
+        </Column>
         <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
           <Box as='h1' variant='styles.h1' sx={{ my: [0, 0, 0, 0] }}>
             Offsets DB — Project{' '}
@@ -63,6 +65,7 @@ const Project = ({ project }) => {
           <Box
             sx={{
               fontSize: [2, 2, 2, 3],
+              mt: '42px',
             }}
           >
             Details on{' '}
@@ -74,7 +77,11 @@ const Project = ({ project }) => {
       </Row>
 
       <Row>
-        <Column start={2} width={[5, 7, 11, 11]}>
+        <Column
+          start={[1, 2, 2, 2]}
+          width={[6, 7, 11, 11]}
+          sx={{ mt: [2, 0, 4, 4] }}
+        >
           <Row columns={[5, 7, 11, 11]}>
             <Column start={[1]} width={[6, 6, 4, 4]}>
               <Row columns={[6, 6, 4, 4]}>
@@ -84,7 +91,7 @@ const Project = ({ project }) => {
             </Column>
 
             <Column start={[1, 1, 5, 5]} width={[6, 6, 6, 6]}>
-              <Row columns={[6, 6, 6, 6]}>
+              <Row columns={[6, 6, 6, 6]} sx={{ mt: [3, 5, 0, 0] }}>
                 <Column start={[1]} width={[6, 6, 6, 6]}>
                   <Box sx={sx.sectionLabel}>Credits</Box>
                 </Column>
@@ -92,18 +99,18 @@ const Project = ({ project }) => {
                   <Box sx={sx.creditsLabel}>Credits issued</Box>
                   <Box sx={sx.creditsAmount}>{formatValue(issued)}</Box>
                 </Column>
-                <Column start={[1, 4, 4, 4]} width={[6, 3, 3, 3]}>
+                <Column start={[1, 4, 4, 4]} width={[5, 3, 3, 3]}>
                   <Box sx={sx.creditsLabel}>Credits retired</Box>
                   <Box sx={sx.creditsAmount}>{formatValue(retired)}</Box>
                 </Column>
 
-                <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: 5 }}>
+                <Column start={[1]} width={[5, 6, 6, 6]} sx={{ mt: 5 }}>
                   <CreditCharts color={color} project_id={project_id} />
                 </Column>
               </Row>
             </Column>
 
-            <Column start={[1]} width={[6, 6, 6, 6]}>
+            <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: [3, 5, 5, 5] }}>
               <Box sx={sx.sectionLabel}>Transactions</Box>
 
               <Credits
@@ -114,7 +121,11 @@ const Project = ({ project }) => {
               />
             </Column>
 
-            <Column start={[1, 1, 8, 8]} width={[6, 8, 3, 3]}>
+            <Column
+              start={[1, 1, 8, 8]}
+              width={[6, 8, 3, 3]}
+              sx={{ mt: [3, 5, 5, 5], mb: 7 }}
+            >
               <Box sx={sx.sectionLabel}>Timeline</Box>
 
               <Timeline project={project} />
