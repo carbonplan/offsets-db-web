@@ -99,9 +99,14 @@ const Queries = () => {
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
           <Input
-            placeholder='Enter search term'
+            placeholder='enter search term'
             size='xs'
-            sx={{ width: '100%', borderBottom: 0 }}
+            sx={{
+              fontSize: 1,
+              fontFamily: 'mono',
+              width: '100%',
+              borderBottom: 0,
+            }}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

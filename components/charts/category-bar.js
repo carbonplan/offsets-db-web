@@ -46,7 +46,12 @@ const CategoryBar = ({ label, total, mapping }) => {
     <Box sx={{ mt: [3, 3, '56px', '56px'], mb: 6 }}>
       <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
         <Box
-          sx={{ fontFamily: 'mono', letterSpacing: 'mono', color: 'secondary' }}
+          sx={{
+            fontSize: 1,
+            fontFamily: 'mono',
+            letterSpacing: 'mono',
+            color: 'secondary',
+          }}
         >
           {label}
         </Box>
