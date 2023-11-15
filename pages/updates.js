@@ -33,7 +33,7 @@ const Project = () => {
               <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
             </Flex>
           </Column>
-          <Column start={[1, 2, 2, 2]} width={[6, 6, 6, 6]}>
+          <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
             <Box as='h1' variant='styles.h1' sx={{ my: [0, 0, 0, 0] }}>
               Offsets DB — Updates
             </Box>

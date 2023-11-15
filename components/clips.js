@@ -164,6 +164,7 @@ const Clips = ({ clips }) => {
                     height='100%'
                     viewBox='0 0 13 13'
                     fill='none'
+                    sx={{ strokeWidth: '1px' }}
                   >
                     <circle
                       cx='6.5'
@@ -171,6 +172,7 @@ const Clips = ({ clips }) => {
                       r='6'
                       fill={theme.colors.background}
                       stroke={theme.colors.secondary}
+                      style={{ vectorEffect: 'non-scaling-stroke' }}
                     />
                   </Box>
                 </Box>
