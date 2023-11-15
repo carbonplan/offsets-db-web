@@ -5,7 +5,7 @@ import { Box, Flex } from 'theme-ui'
 import { COLORS, LABELS } from './constants'
 
 const Empty = ({ label = 'N/A' }) => {
-  return <Box sx={{ color: 'secondary' }}>{label}</Box>
+  return <Box>{label}</Box>
 }
 
 const ProjectOverview = ({ project, minWidth = 1 }) => {
