@@ -12,6 +12,7 @@ import { formatValue } from './utils'
 
 const Credits = ({
   project_id,
+  color,
   transactionType: transactionTypeProp,
   charts = true,
   borderTop = true,
@@ -58,6 +59,8 @@ const Credits = ({
       )}
       <Box as='table' sx={{ width: '100%' }}>
         <TableHead
+          color={color}
+          columns={[6, 6, 6, 6]}
           sort={sort}
           setSort={setSort}
           values={[
@@ -70,7 +73,7 @@ const Credits = ({
             {
               value: 'transaction_type',
               label: 'Type',
-              width: project_id ? [0, 3, 3, 3] : [0, 2, 2, 2],
+              width: [0, 2, 2, 2],
             },
             ...(project_id
               ? []
@@ -82,15 +85,21 @@ const Credits = ({
         {data && (
           <FadeIn as='tbody'>
             {data.data.map((d) => (
-              <CreditRow key={d.id} event={d} projectView={!!project_id} />
+              <CreditRow
+                color={color}
+                key={d.id}
+                event={d}
+                projectView={!!project_id}
+              />
             ))}
             {data.data.length === 0 ? (
               <TableRow
+                columns={[6, 6, 6, 6]}
                 values={[
                   {
                     label: 'No results found',
                     key: 'empty',
-                    width: [6, 8, 8, 8],
+                    width: [6, 6, 6, 6],
                   },
                 ]}
               />
@@ -101,6 +110,7 @@ const Credits = ({
         {isLoading && (
           <FadeIn as='tbody'>
             <Loading
+              columns={[6, 6, 6, 6]}
               values={[
                 { key: 'transaction_date', width: 2 },
                 {
@@ -119,6 +129,7 @@ const Credits = ({
           </FadeIn>
         )}
         <TableFoot
+          columns={[6, 6, 6, 6]}
           values={[
             {
               label: (
@@ -134,7 +145,7 @@ const Credits = ({
                   }}
                 >
                   Total
-                  <Badge sx={{ whiteSpace: 'nowrap' }}>
+                  <Badge sx={{ color, whiteSpace: 'nowrap' }}>
                     {unfilteredData
                       ? formatValue(unfilteredData.pagination.total_entries)
                       : '-'}
@@ -143,29 +154,6 @@ const Credits = ({
               ),
               key: 'total',
               start: 1,
-              width: [3, 2, 2, 2],
-            },
-            {
-              label: (
-                <Flex
-                  sx={{
-                    gap: 3,
-                    alignItems: 'baseline',
-                    color: 'secondary',
-                    textTransform: 'uppercase',
-                    fontFamily: 'mono',
-                    letterSpacing: 'mono',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Selected
-                  <Badge sx={{ flexShrink: 0 }}>
-                    {data ? formatValue(data.pagination.total_entries) : '-'}
-                  </Badge>
-                </Flex>
-              ),
-              key: 'selected',
-              start: [4, 3, 3, 3],
               width: [3, 2, 2, 2],
             },
             {
@@ -181,6 +169,7 @@ const Credits = ({
                   }}
                 >
                   <Pagination
+                    color={color}
                     pagination={data?.pagination}
                     setPage={setPage}
                     isLoading={isLoading}

@@ -22,7 +22,12 @@ const sx = {
   },
 }
 
-const Pagination = ({ pagination: paginationProp, isLoading, setPage }) => {
+const Pagination = ({
+  color = 'primary',
+  pagination: paginationProp,
+  isLoading,
+  setPage,
+}) => {
   const pagination = useRef({})
   pagination.current = paginationProp ?? pagination.current
   const {
@@ -80,6 +85,7 @@ const Pagination = ({ pagination: paginationProp, isLoading, setPage }) => {
               value={current_page === t}
               onClick={() => setPage(t)}
               disabled={isLoading}
+              sx={{ color }}
             >
               {t}
             </Tag>

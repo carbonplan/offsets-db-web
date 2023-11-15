@@ -5,13 +5,14 @@ import { Box, Flex, Text } from 'theme-ui'
 import { TableRow } from './table'
 import { formatValue } from './utils'
 
-const CreditRow = ({ event, projectView }) => {
+const CreditRow = ({ color, event, projectView, ...props }) => {
   const { project_id, transaction_date, transaction_type, quantity, vintage } =
     event
 
   return (
     <>
       <TableRow
+        columns={[6, 6, 6, 6]}
         values={[
           {
             key: 'transaction_date',
@@ -31,17 +32,17 @@ const CreditRow = ({ event, projectView }) => {
           },
           {
             key: 'vintage',
-            label: <Badge>{vintage ?? '?'}</Badge>,
+            label: <Badge sx={{ color }}>{vintage ?? '?'}</Badge>,
             width: [projectView ? 1 : 0, 1, 1, 1],
           },
           {
             key: 'transaction_type',
             label: (
-              <Text sx={{ textTransform: 'uppercase' }}>
+              <Text sx={{ textTransform: 'capitalize' }}>
                 {transaction_type}
               </Text>
             ),
-            width: projectView ? [0, 3, 3, 3] : [0, 2, 2, 2],
+            width: [0, 2, 2, 2],
           },
           ...(projectView
             ? []
@@ -68,7 +69,7 @@ const CreditRow = ({ event, projectView }) => {
             key: 'quantity',
             label: (
               <Flex sx={{ gap: 3 }}>
-                <Badge>{formatValue(quantity)}</Badge>
+                <Badge sx={{ color }}>{formatValue(quantity)}</Badge>
                 <Box sx={{ display: ['inherit', 'none', 'none', 'none'] }}>
                   {transaction_type === 'retirement' ? 'retired' : 'issued'}
                 </Box>
@@ -77,6 +78,7 @@ const CreditRow = ({ event, projectView }) => {
             width: [2, 1, 1, 1],
           },
         ]}
+        {...props}
       />
     </>
   )

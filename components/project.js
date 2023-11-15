@@ -107,6 +107,7 @@ const Project = ({ project }) => {
               <Box sx={sx.sectionLabel}>Transactions</Box>
 
               <Credits
+                color={color}
                 project_id={project_id}
                 charts={false}
                 borderTop={false}
