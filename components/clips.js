@@ -34,8 +34,8 @@ const Clips = ({ clips }) => {
   )
 
   return (
-    <Box sx={{ mt: 4 }}>
-      {sortedEntries.length === 0 && (
+    <Box sx={{ mt: 4, position: 'relative' }}>
+      {sortedEntries.length === 0 ? (
         <Row>
           <Column start={[1, 2, 2, 2]} width={[4, 4, 2, 2]}>
             <Box
@@ -51,11 +51,26 @@ const Clips = ({ clips }) => {
             </Box>
           </Column>
         </Row>
+      ) : (
+        <Box
+          sx={{
+            pointerEvents: 'none',
+            position: 'absolute',
+            width: [CIRCLE_WIDTHS[0] / 2, '50%', '50%', '50%'],
+            height: '100%',
+            borderColor: 'secondary',
+            borderWidth: 0,
+            borderRightWidth: 1,
+            borderStyle: 'solid',
+            zIndex: -1,
+          }}
+        />
       )}
+
       {sortedEntries.map(({ date, label, url, projects, source }, i) => {
         const left = i % 2 === 0
         return (
-          <Row key={label}>
+          <Row key={label} sx={{ mt: i > 0 ? [0, -6, -6, -6] : 0 }}>
             <Column
               start={left ? [2, 1, 3, 3] : [2, 6, 8, 8]}
               width={[4, 3, 3, 3]}
