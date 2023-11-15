@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { Box } from 'theme-ui'
 import TableRow from './table-row'
 
-const Loading = ({ values }) => {
+const Loading = ({ columns, values }) => {
   const rowValues = useMemo(
     () =>
       values.map((v) => ({
@@ -16,25 +16,11 @@ const Loading = ({ values }) => {
   )
   return (
     <>
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
-      <TableRow values={rowValues} />
+      {Array(10)
+        .fill(null)
+        .map((d, i) => (
+          <TableRow key={i} values={rowValues} columns={columns} />
+        ))}
     </>
   )
 }

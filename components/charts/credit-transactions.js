@@ -1,10 +1,16 @@
-import { Chart, Bar, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
-import { Box, Flex } from 'theme-ui'
-import { useCallback, useEffect, useMemo } from 'react'
+import {
+  Chart,
+  Bar,
+  Grid,
+  Plot,
+  Ticks,
+  TickLabels,
+  Axis,
+} from '@carbonplan/charts'
+import { Box } from 'theme-ui'
+import { useEffect, useMemo } from 'react'
 import { format } from 'd3-format'
 
-import Brush from './brush'
-import { useQueries } from '../queries'
 import useFetcher from '../use-fetcher'
 
 const getLines = (data) => {
@@ -39,12 +45,11 @@ const fillBars = (lines, domain) => {
 
 const CreditTransactions = ({
   project_id,
+  color,
   transactionType,
-  setTransactionType,
   domain: domainProp,
   setDomain,
 }) => {
-  const { transactionBounds, setTransactionBounds } = useQueries()
   const url = `charts/credits_by_transaction_date${
     project_id ? '/' + project_id : ''
   }`
@@ -57,14 +62,6 @@ const CreditTransactions = ({
     error: filteredError,
     isLoading: filteredLoading,
   } = useFetcher(url, { transactionType })
-
-  const handleBoundsChange = useCallback(
-    (bounds) => {
-      setTransactionBounds(bounds)
-      setTransactionType(bounds ? transactionType : null)
-    },
-    [transactionType, setTransactionBounds]
-  )
 
   const { lines, range } = useMemo(() => {
     if (!data) {
@@ -143,27 +140,24 @@ const CreditTransactions = ({
 
   return (
     <>
-      <Flex sx={{ gap: 3 }}>
-        Credits {transactionType === 'issuance' ? 'issued' : 'retired'} / year
-        <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
-          {transactionBounds ? transactionBounds.join(' - ') : 'Drag to filter'}
-        </Box>
-      </Flex>
-      <Box sx={{ height: '200px', mt: 3 }}>
+      <Box sx={{ color }}>
+        {transactionType === 'issuance' ? 'Issuances' : 'Retirements'} over time
+      </Box>
+      <Box sx={{ height: ['120px', '150px', '170px', '170px'], mt: 3 }}>
         <Chart
           key={`${domain[0]},${domain[1]}`}
           x={[domain[0] - step / 2, domain[1] + step / 2]}
           y={range}
           padding={{ left: 32 }}
         >
+          <Axis bottom sx={{ borderColor: color }} />
           <Grid vertical values={ticks} />
-          <Ticks bottom values={ticks} />
-          <TickLabels bottom values={labels} />
+          <Ticks bottom values={ticks} sx={{ borderColor: color }} />
+          <TickLabels bottom values={labels} sx={{ color }} />
           <TickLabels left count={3} format={format('~s')} />
           <Plot>
-            <Brush setBounds={handleBoundsChange} />
             <Bar data={bars} color='secondary' />
-            <Bar data={filteredBars} />
+            <Bar data={filteredBars} color={color} />
           </Plot>
         </Chart>
       </Box>
