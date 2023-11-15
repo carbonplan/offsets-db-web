@@ -3,7 +3,7 @@ import { Column, Row } from '@carbonplan/components'
 
 import CreditTransactions from './credit-transactions'
 
-const CreditCharts = ({ project_id, setTransactionType }) => {
+const CreditCharts = ({ color, project_id }) => {
   const [domain, setDomain] = useState(null)
 
   const handleDomain = useCallback((value) => {
@@ -32,7 +32,7 @@ const CreditCharts = ({ project_id, setTransactionType }) => {
         <CreditTransactions
           transactionType='issuance'
           project_id={project_id}
-          setTransactionType={setTransactionType}
+          color={color}
           domain={domain}
           setDomain={handleDomain}
         />
@@ -41,7 +41,7 @@ const CreditCharts = ({ project_id, setTransactionType }) => {
         <CreditTransactions
           transactionType='retirement'
           project_id={project_id}
-          setTransactionType={setTransactionType}
+          color={color}
           domain={domain}
           setDomain={handleDomain}
         />

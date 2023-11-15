@@ -1,5 +1,4 @@
 import { Column, Row } from '@carbonplan/components'
-import { useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS } from './constants'
@@ -11,7 +10,6 @@ import Timeline from './timeline'
 import BackButton from './back-button'
 
 const Project = ({ project }) => {
-  const [transactionType, setTransactionType] = useState(null)
   const { project_id, name, category, issued, retired } = project
   const color = COLORS[category[0]] ?? COLORS.other
 
@@ -100,10 +98,7 @@ const Project = ({ project }) => {
                 </Column>
 
                 <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: 5 }}>
-                  <CreditCharts
-                    project_id={project_id}
-                    setTransactionType={setTransactionType}
-                  />
+                  <CreditCharts color={color} project_id={project_id} />
                 </Column>
               </Row>
             </Column>
@@ -113,7 +108,6 @@ const Project = ({ project }) => {
 
               <Credits
                 project_id={project_id}
-                transactionType={transactionType}
                 charts={false}
                 borderTop={false}
               />
