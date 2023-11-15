@@ -31,8 +31,8 @@ const Project = () => {
       <Container>
         <Heading
           description='A regularly updating list of stories and press events related to offset projects in the database.'
-          descriptionStart={[1, 3, 8, 8]}
-          descriptionWidth={[5, 5, 5, 4]}
+          descriptionStart={[1, 5, 8, 8]}
+          descriptionWidth={[5, 3, 5, 4]}
           variant='h1'
         >
           Offsets DB — Updates
