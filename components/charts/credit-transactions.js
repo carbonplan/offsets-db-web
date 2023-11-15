@@ -143,7 +143,7 @@ const CreditTransactions = ({
       <Box sx={{ color }}>
         {transactionType === 'issuance' ? 'Issuances' : 'Retirements'} over time
       </Box>
-      <Box sx={{ height: '200px', mt: 3 }}>
+      <Box sx={{ height: ['120px', '150px', '170px', '170px'], mt: 3 }}>
         <Chart
           key={`${domain[0]},${domain[1]}`}
           x={[domain[0] - step / 2, domain[1] + step / 2]}
