@@ -43,7 +43,7 @@ const TableHead = ({
   setSort,
   borderTop,
   sx,
-  columns = [6, 8, 8, 8],
+  columns,
 }) => {
   const Sort = useCallback(
     ({ value }) => {
