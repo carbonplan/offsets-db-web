@@ -32,6 +32,7 @@ const Sidebar = ({ children }) => {
             `calc(-1 * (32px + (100vw - 13 * 32px) / 12 / 2))`,
             `calc(-1 * (48px + (100vw - 13 * 48px) / 12 / 2))`,
           ],
+          pb: [4, 3, 5, 5],
         }}
       >
         <Box as='h1' sx={{ variant: 'styles.h1', mt: 4 }}>

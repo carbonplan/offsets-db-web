@@ -8,7 +8,7 @@ const Layout = ({ sidebar, children }) => {
       <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]}>
         <Divider
           sx={{
-            display: ['inherit', 'inherit', 'none', 'none'],
+            display: ['none', 'inherit', 'none', 'none'],
             ml: [-4, -5, -5, -6],
             mr: [-4, -5, 0, 0],
             mt: 3,
