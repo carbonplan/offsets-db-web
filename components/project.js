@@ -1,7 +1,6 @@
-import { Badge, Button, Column, Row } from '@carbonplan/components'
+import { Badge, Column, Row } from '@carbonplan/components'
 import { useState } from 'react'
 import { Box, Divider, Flex } from 'theme-ui'
-import { Left } from '@carbonplan/icons'
 
 import { COLORS } from './constants'
 import { formatValue } from './utils'
@@ -11,6 +10,7 @@ import Layout from './layout'
 import ProjectOverview from './project-overview'
 import Sidebar from './sidebar'
 import Timeline from './timeline'
+import BackButton from './back-button'
 
 const Project = ({ project }) => {
   const [transactionType, setTransactionType] = useState(null)
@@ -53,21 +53,7 @@ const Project = ({ project }) => {
     <Layout
       sidebar={
         <Sidebar>
-          <Button
-            inverted
-            size='xs'
-            onClick={() => {
-              if (window.history.state?.idx) {
-                window.history.back()
-              } else {
-                window.location.href = '/projects'
-              }
-            }}
-            prefix={<Left />}
-            sx={{ mt: 3, mb: [0, 0, 3, 3] }}
-          >
-            Back
-          </Button>
+          <BackButton sx={{ mt: 3, mb: [0, 0, 3, 3] }} />
         </Sidebar>
       }
     >
