@@ -3,7 +3,7 @@ import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo } from 'react'
 import { Box, Divider, useThemeUI } from 'theme-ui'
 
-const Timeline = ({ project }) => {
+const Timeline = ({ project, color }) => {
   const { theme } = useThemeUI()
 
   const sortedEntries = useMemo(
@@ -45,7 +45,7 @@ const Timeline = ({ project }) => {
           sx={{
             borderWidth: 0,
             borderLeft: '1px',
-            borderColor: 'secondary',
+            borderColor: color,
             borderStyle: 'solid',
             ml: [
               `calc(-1 * (24px + (100vw - 7 * 24px) / 6 / 2))`,
@@ -68,11 +68,10 @@ const Timeline = ({ project }) => {
               width={[4, 4, 2, 2]}
               sx={{ mt: 3, mb: 2 }}
             >
-              <Divider sx={{ my: 0 }} />
               <Row
                 columns={[4, 4, 2, 2]}
                 sx={{
-                  color: 'secondary',
+                  color,
                   fontFamily: 'mono',
                   letterSpacing: '0.05em',
                   fontSize: [1, 1, 1, 2],
@@ -83,6 +82,19 @@ const Timeline = ({ project }) => {
                   mb: 3,
                 }}
               >
+                <Column start={1} width={1} sx={{ position: 'relative' }}>
+                  <Divider
+                    sx={{
+                      top: 2,
+                      position: 'absolute',
+                      my: 0,
+                      borderColor: color,
+                      width: '50%',
+                      left: '-50%',
+                      ml: [-4, -5, -5, -6],
+                    }}
+                  />
+                </Column>
                 <Column
                   start={1}
                   width={[4, 4, 2, 2]}
@@ -110,7 +122,8 @@ const Timeline = ({ project }) => {
                       cy='6.5'
                       r='6'
                       fill={theme.colors.background}
-                      stroke={theme.colors.secondary}
+                      stroke={theme.colors[color]}
+                      style={{ vectorEffect: 'non-scaling-stroke' }}
                     />
                   </Box>
 

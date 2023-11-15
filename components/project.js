@@ -128,7 +128,7 @@ const Project = ({ project }) => {
             >
               <Box sx={sx.sectionLabel}>Timeline</Box>
 
-              <Timeline project={project} />
+              <Timeline project={project} color={color} />
             </Column>
           </Row>
         </Column>
