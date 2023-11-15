@@ -36,7 +36,7 @@ const SORTS = {
   quantity: { primary: '-quantity', inverted: 'quantity' },
 }
 
-const TableHead = ({ values, sort, setSort, borderTop }) => {
+const TableHead = ({ values, sort, setSort, borderTop, sx }) => {
   const Sort = useCallback(
     ({ value }) => {
       if (!SORTS[value.value]) {
@@ -85,7 +85,7 @@ const TableHead = ({ values, sort, setSort, borderTop }) => {
   )
 
   return (
-    <Box as='thead'>
+    <Box as='thead' sx={sx}>
       <TableRow
         as='th'
         values={values}
@@ -93,6 +93,7 @@ const TableHead = ({ values, sort, setSort, borderTop }) => {
         sx={{
           border: 0,
           borderTop: borderTop ? '1px' : 0,
+          background: 'background',
           borderBottom: '1px',
           borderColor: 'muted',
           borderStyle: 'solid',

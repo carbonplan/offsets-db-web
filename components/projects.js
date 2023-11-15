@@ -47,6 +47,11 @@ const Projects = () => {
             { value: 'details', label: 'Details', width: [2, 1, 1, 1] },
           ]}
           borderTop
+          sx={{
+            position: 'sticky',
+            top: 55,
+            zIndex: 1,
+          }}
         />
         {data && (
           <FadeIn as='tbody'>
