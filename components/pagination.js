@@ -24,7 +24,7 @@ const sx = {
 const Pagination = ({ pagination, setPage }) => {
   const { total_entries, current_page, total_pages } = pagination
 
-  if (total_entries === 0) {
+  if (total_entries === 0 || total_pages === 1) {
     return null
   }
 

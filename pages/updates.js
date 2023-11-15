@@ -6,14 +6,18 @@ import {
   Link,
   Row,
 } from '@carbonplan/components'
-import { Box, Container, Divider, Flex } from 'theme-ui'
+import { useState } from 'react'
+import { Container, Flex } from 'theme-ui'
 
 import Clips from '../components/clips'
+import Pagination from '../components/pagination'
 import useFetcher from '../components/use-fetcher'
 
 const Project = () => {
+  const [page, setPage] = useState(1)
   const { data } = useFetcher('clips/', {
     filters: false,
+    page,
   })
 
   return (
@@ -38,6 +42,20 @@ const Project = () => {
           Offsets DB — Updates
         </Heading>
         {data && <Clips clips={data.data} />}
+
+        {data && (
+          <Row>
+            <Column
+              start={1}
+              width={[6, 8, 10, 10]}
+              sx={{ mr: [0, 0, -5, -6] }}
+            >
+              <Flex sx={{ my: 4, justifyContent: 'flex-end' }}>
+                <Pagination pagination={data.pagination} setPage={setPage} />
+              </Flex>
+            </Column>
+          </Row>
+        )}
       </Container>
     </PageLayout>
   )
