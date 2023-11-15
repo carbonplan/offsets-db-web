@@ -1,8 +1,18 @@
-import { Column, Row, formatDate, Button, Badge } from '@carbonplan/components'
+import {
+  Column,
+  Row,
+  formatDate,
+  Button,
+  Badge,
+  Tag,
+} from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo } from 'react'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import { COLORS } from './constants'
+
+// 10px less than column gutter widths
+const CIRCLE_WIDTHS = [24 - 10, 32 - 10, 32 - 10, 48 - 10]
 
 const Clips = ({ clips }) => {
   const { theme } = useThemeUI()
@@ -10,11 +20,12 @@ const Clips = ({ clips }) => {
   const sortedEntries = useMemo(
     () =>
       [
-        ...clips.map(({ date, title, url, projects }) => ({
+        ...clips.map(({ date, title, url, projects, source }) => ({
           date: date.match(/\d{4}-\d{2}-\d{2}/)[0],
           label: title,
           url,
           projects,
+          source,
         })),
       ]
         .filter((d) => d.date)
@@ -41,7 +52,7 @@ const Clips = ({ clips }) => {
           </Column>
         </Row>
       )}
-      {sortedEntries.map(({ date, label, url, projects }, i) => {
+      {sortedEntries.map(({ date, label, url, projects, source }, i) => {
         const left = i % 2 === 0
         return (
           <Row key={label}>
@@ -58,23 +69,22 @@ const Clips = ({ clips }) => {
                 order: left ? [1, 0, 0, 0] : 1,
               }}
             >
-              <Row
-                columns={[4, 3, 3, 3]}
-                sx={{
-                  color: 'secondary',
-                  fontFamily: 'mono',
-                  letterSpacing: '0.05em',
-                  fontSize: [1, 1, 1, 2],
-                  userSelect: 'none',
-                  textTransform: 'uppercase',
-                  flexShrink: 0,
-                  mb: 3,
-                }}
-              >
-                <Column start={1} width={[4, 3, 3, 3]}>
+              <Flex sx={{ mb: 4, justifyContent: 'space-between' }}>
+                <Box
+                  sx={{
+                    color: 'secondary',
+                    fontFamily: 'mono',
+                    letterSpacing: '0.05em',
+                    fontSize: [1, 1, 1, 2],
+                    userSelect: 'none',
+                    textTransform: 'uppercase',
+                    flexShrink: 0,
+                  }}
+                >
                   {date && formatDate(date)}
-                </Column>
-              </Row>
+                </Box>
+                {source && <Tag>{source}</Tag>}
+              </Flex>
 
               <Box sx={{ mb: 3 }}>
                 {url ? (
@@ -88,38 +98,68 @@ const Clips = ({ clips }) => {
 
               <Flex sx={{ gap: 2 }}>
                 {projects?.map(({ project_id, category }) => (
-                  <Badge
-                    key={project_id}
-                    sx={{ color: COLORS[category[0]], mt: 3 }}
-                  >
-                    {project_id}
-                  </Badge>
+                  <a href={`/projects/${project_id}`}>
+                    <Badge
+                      key={project_id}
+                      sx={{ color: COLORS[category[0]], mt: 3 }}
+                    >
+                      {project_id}
+                    </Badge>
+                  </a>
                 ))}
               </Flex>
             </Column>
 
             <Column
-              start={[1, 5, 7, 7]}
-              width={1}
-              sx={{ mt: 3, pt: 4, order: left ? [0, 1, 1, 1] : 0 }}
+              start={[1, left ? 4 : 5, left ? 6 : 7, left ? 6 : 7]}
+              width={[1]}
+              sx={{
+                borderColor: 'secondary',
+                borderWidth: 0,
+                borderTopWidth: 1,
+                borderStyle: 'solid',
+                mt: 46,
+                [left ? 'mr' : 'ml']: [0, -16, -16, -24],
+                [left ? 'pr' : 'pl']: [0, 16, 16, 24],
+                order: left ? [0, 1, 1, 1] : 0,
+              }}
             >
-              <Box
-                as='svg'
-                viewBox='0 0 13 13'
-                fill='none'
+              <Flex
                 sx={{
-                  ml: [0, -32 + 5, -32 + 5, -48 + 5],
-                  width: [24 - 10, 32 - 10, 32 - 10, 48 - 10],
+                  justifyContent: [
+                    'flex-start',
+                    left ? 'flex-end' : 'flex-start',
+                    left ? 'flex-end' : 'flex-start',
+                    left ? 'flex-end' : 'flex-start',
+                  ],
                 }}
               >
-                <circle
-                  cx='6.5'
-                  cy='6.5'
-                  r='6'
-                  fill={theme.colors.background}
-                  stroke={theme.colors.secondary}
-                />
-              </Box>
+                <Box
+                  sx={{
+                    width: CIRCLE_WIDTHS,
+                    [left ? 'mr' : 'ml']: [0, -32 + 5, -32 + 5, -48 + 5],
+                    mt: CIRCLE_WIDTHS.map((d, i) =>
+                      i === 0 ? '-10px' : `${(d * -1) / 2}px`
+                    ),
+                  }}
+                >
+                  <Box
+                    as='svg'
+                    width='100%'
+                    height='100%'
+                    viewBox='0 0 13 13'
+                    fill='none'
+                  >
+                    <circle
+                      cx='6.5'
+                      cy='6.5'
+                      r='6'
+                      fill={theme.colors.background}
+                      stroke={theme.colors.secondary}
+                    />
+                  </Box>
+                </Box>
+              </Flex>
             </Column>
           </Row>
         )
