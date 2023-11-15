@@ -53,19 +53,15 @@ const Project = () => {
 
         {data && <Clips clips={data.data} />}
 
-        {data && (
-          <Row>
-            <Column
-              start={1}
-              width={[6, 8, 10, 10]}
-              sx={{ mr: [0, 0, -5, -6] }}
-            >
-              <Flex sx={{ my: 4, justifyContent: 'flex-end' }}>
+        <Row>
+          <Column start={1} width={[6, 8, 10, 10]} sx={{ mr: [0, 0, -5, -6] }}>
+            <Flex sx={{ my: 4, justifyContent: 'flex-end' }}>
+              {data && data.pagination.total_pages > 1 && (
                 <Pagination pagination={data.pagination} setPage={setPage} />
-              </Flex>
-            </Column>
-          </Row>
-        )}
+              )}
+            </Flex>
+          </Column>
+        </Row>
       </Container>
     </PageLayout>
   )

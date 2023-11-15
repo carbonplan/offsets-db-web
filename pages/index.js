@@ -1,6 +1,3 @@
-import Index from '../components/index.js'
+import Index from './projects'
 
-const ProjectsIndex = () => {
-  return <Index mode='projects' />
-}
-export default ProjectsIndex
+export default Index

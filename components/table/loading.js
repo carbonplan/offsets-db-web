@@ -24,6 +24,17 @@ const Loading = ({ values }) => {
       <TableRow values={rowValues} />
       <TableRow values={rowValues} />
       <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
+      <TableRow values={rowValues} />
     </>
   )
 }
