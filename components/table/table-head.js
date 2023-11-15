@@ -85,7 +85,15 @@ const TableHead = ({ values, sort, setSort, borderTop, sx }) => {
   )
 
   return (
-    <Box as='thead' sx={sx}>
+    <Box
+      as='thead'
+      sx={{
+        position: 'sticky',
+        top: 55,
+        zIndex: 1,
+        ...sx,
+      }}
+    >
       <TableRow
         as='th'
         values={values}
