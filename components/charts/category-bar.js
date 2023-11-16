@@ -67,6 +67,7 @@ const CategoryBar = ({ label, total, mapping }) => {
           sx={{
             position: 'absolute',
             left: '-22px',
+            top: '3px',
             width: '18px',
             height: '18px',
           }}
