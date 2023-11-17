@@ -14,8 +14,9 @@ const Timeline = ({ project, color }) => {
           label: title,
           url,
         })),
-        { date: project.listed_at, label: 'Project registered' },
-        { date: project.started_at, label: 'Project listed' },
+        { date: project.listed_at, label: 'Project listed' },
+        { date: project.first_issuance_at, label: 'First credits issued' },
+        { date: project.first_retirement_at, label: 'First credits retired' },
       ]
         .filter((d) => d.date)
         .sort((a, b) => b.date.localeCompare(a.date)),
