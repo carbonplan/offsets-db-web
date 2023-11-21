@@ -1,4 +1,4 @@
-import { Button, Column, Row, Tag } from '@carbonplan/components'
+import { Button, Column } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex } from 'theme-ui'
 
@@ -13,7 +13,6 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
     category,
     country,
     status,
-    developer,
     protocol,
     is_compliance,
     proponent,
@@ -89,26 +88,18 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         start={[1, 3, minWidth + 1, minWidth + 1]}
         width={[3, 2, minWidth, minWidth]}
       >
-        <Box sx={sx.label}>Developer</Box>
-        <Box sx={sx.value}>{developer ?? <Empty />}</Box>
+        <Box sx={sx.label}>Proponent</Box>
+        <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
       </Column>
       <Column
         start={[4, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
         width={[3, 2, minWidth, minWidth]}
       >
-        <Box sx={sx.label}>Proponent</Box>
-        <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
-      </Column>
-
-      <Column start={[1]} width={[3, 2, minWidth, minWidth]}>
         <Box sx={sx.label}>Compliance</Box>
         <Box sx={sx.value}>{is_compliance ? 'Yes' : 'No'}</Box>
       </Column>
 
-      <Column
-        start={[4, 3, minWidth + 1, minWidth + 1]}
-        width={[3, 2, minWidth, minWidth]}
-      >
+      <Column start={[1]} width={[3, 2, minWidth, minWidth]}>
         <Box sx={sx.label}>Registry</Box>
         <Box sx={sx.value}>
           <Button
