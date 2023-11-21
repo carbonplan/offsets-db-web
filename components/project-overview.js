@@ -99,7 +99,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         <Box sx={sx.value}>{is_compliance ? 'Yes' : 'No'}</Box>
       </Column>
 
-      <Column start={[1]} width={[3, 2, minWidth, minWidth]}>
+      <Column start={[1]} width={[3, 2, minWidth * 3, minWidth * 3]}>
         <Box sx={sx.label}>Registry</Box>
         <Box sx={sx.value}>
           <Button
