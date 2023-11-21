@@ -150,20 +150,23 @@ const Queries = () => {
           <Filter
             values={{
               all: typeof complianceOnly !== 'boolean',
-              compliance: complianceOnly,
+              compliance: complianceOnly || typeof complianceOnly !== 'boolean',
               voluntary: !complianceOnly,
             }}
             setValues={(obj) => {
               let value
-              if (obj.all) {
+              if (obj.compliance && obj.voluntary) {
                 value = null
               } else if (obj.compliance) {
                 value = true
               } else if (obj.voluntary) {
                 value = false
+              } else {
+                return
               }
               setComplianceOnly(value)
             }}
+            multiSelect
           />
         </Column>
       </Row>
