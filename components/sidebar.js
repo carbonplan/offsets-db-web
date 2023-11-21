@@ -42,7 +42,8 @@ const Sidebar = ({ children }) => {
           These are all the carbon offset projects listed globally by the six
           largest offset registries: Verra (VCS), Gold Standard (GOLD), Global
           Carbon Council (GCC), American Carbon Registry (ACR), Climate Action
-          Reserve (CAR), and ART TREES (ART). Read the{' '}
+          Reserve (CAR), and ART TREES (ART). Read the latest{' '}
+          <Link href='/updates'>updates</Link>, view the{' '}
           <Link href='#'>documentation</Link> or download the{' '}
           <Link href='#'>data</Link>.
         </Box>
