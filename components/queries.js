@@ -1,4 +1,4 @@
-import { Column, Filter, Input, Row, Toggle } from '@carbonplan/components'
+import { Column, Filter, Input, Row } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
