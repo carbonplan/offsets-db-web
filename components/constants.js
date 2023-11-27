@@ -10,47 +10,37 @@ export const LABELS = {
   category: {
     agriculture: 'Agriculture',
     forest: 'Forest',
-    'industrial-gases': 'Industrial gases',
-    landfill: 'Landfill',
-    'mine-methane': 'Mine methane',
-    'renewable-energy': 'Renewable',
-    soil: 'Soil',
-    transportation: 'Transportation',
+    cookstove: 'Cookstove',
+    'ghg-management': 'GHG management',
+    'land-use': 'Land use',
+    'renewable-energy': 'Renewable energy',
     other: 'Other',
   },
 }
 
 export const COLORS = {
-  agriculture: 'yellow',
+  agriculture: 'orange',
   forest: 'green',
-  'industrial-gases': 'pink',
-  landfill: 'blue',
-  'mine-methane': 'red',
+  cookstove: 'pink',
+  'ghg-management': 'blue',
+  'land-use': 'yellow',
   'renewable-energy': 'purple',
-  soil: 'orange',
-  transportation: 'teal',
   other: 'grey',
 }
 
 export const ALL_CATEGORIES = [
   'agriculture',
   'biochar',
-  'cookstoves',
+  'cookstove',
   'energy-efficiency',
   'forest',
-  'grassland',
-  'industrial-gases',
-  'industrial-processes',
+  'fuel-switching',
+  'ghg-management',
   'land-use',
-  'landfill',
-  'livestock',
   'mine-methane',
-  'oil-and-gas',
   'renewable-energy',
-  'soil',
   'transportation',
   'unknown',
-  'waste-management',
 ]
 
 export const COUNTRIES = [
