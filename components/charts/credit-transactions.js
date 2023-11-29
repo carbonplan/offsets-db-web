@@ -65,7 +65,11 @@ const CreditTransactions = ({
 
   const { lines, range } = useMemo(() => {
     if (!data) {
-      return { lines: [], range: [0, 0], domain: [1999, 2023] }
+      return {
+        lines: [],
+        range: [0, 0],
+        domain: [1999, new Date().getFullYear()],
+      }
     } else {
       const lines = getLines(data.data)
 
