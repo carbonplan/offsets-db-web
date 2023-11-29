@@ -1,20 +1,9 @@
-import { Filter, Input } from '@carbonplan/components'
+import { Badge, Button, Filter, Input } from '@carbonplan/components'
 import { X } from '@carbonplan/icons'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Box, IconButton } from 'theme-ui'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Box, Flex, IconButton } from 'theme-ui'
 import { COUNTRIES } from './constants'
 import { useQueries } from './queries'
-
-const sx = {
-  label: {
-    color: 'secondary',
-    textTransform: 'uppercase',
-    fontFamily: 'mono',
-    letterSpacing: 'mono',
-    fontSize: 1,
-    mb: [2, 0, 0, 0],
-  },
-}
 
 const Countries = () => {
   const [countrySelection, setCountrySelection] = useState(false)
@@ -22,31 +11,38 @@ const Countries = () => {
   const { countries, setCountries } = useQueries()
   const ref = useRef()
 
-  const { values, order } = useMemo(() => {
-    const selected =
-      countries?.reduce((a, c) => {
-        a[c] = true
-        return a
-      }, {}) ?? {}
-
+  const { filtered, hidden } = useMemo(() => {
+    let hidden = 0
     if (!query) {
-      return { values: selected, order: countries ?? [] }
+      return { filtered: [], hidden }
     }
+
     const filtered = COUNTRIES.filter(
       (c) =>
         !countries?.includes(c) &&
         c.toLocaleLowerCase().includes(query.toLocaleLowerCase())
     )
 
-    const order = [...(countries ?? []), ...filtered]
+    if (filtered.length > 5) {
+      hidden = filtered.length - 5
+      filtered = filtered.slice(0, 5)
+    }
 
-    const values = filtered.reduce((a, c) => {
-      a[c] = false
-      return a
-    }, selected)
-
-    return { order, values }
+    return { filtered, hidden }
   }, [countries, query])
+
+  const addCountry = useCallback(
+    (country) => {
+      setCountries([...countries, country].sort())
+    },
+    [countries, setCountries]
+  )
+  const removeCountry = useCallback(
+    (country) => {
+      setCountries(countries.filter((c) => country !== c))
+    },
+    [countries, setCountries]
+  )
 
   useEffect(() => {
     if (countrySelection) {
@@ -78,13 +74,12 @@ const Countries = () => {
               ref={ref}
               sx={{
                 fontFamily: 'mono',
-                letterSpacing: 'mono',
                 fontSize: 1,
                 mt: 3,
                 mb: 2,
                 width: '100%',
               }}
-              placeholder='Enter country'
+              placeholder='enter country'
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -109,20 +104,56 @@ const Countries = () => {
               <X />
             </IconButton>
           </Box>
-          <Filter
-            values={values}
-            setValues={(obj) =>
-              setCountries([...Object.keys(obj).filter((k) => obj[k])])
-            }
-            order={order}
+          {countries.length > 0 && (
+            <Flex sx={{ flexWrap: 'wrap', gap: 2, mt: 3 }}>
+              {countries.map((c) => (
+                <Badge sx={{ color: 'primary' }} key={c}>
+                  <Button
+                    sx={{ fontFamily: 'mono', fontSize: 1, mt: 1 }}
+                    suffix={<X sx={{ height: 10, width: 10 }} />}
+                    onClick={() => removeCountry(c)}
+                  >
+                    {c}
+                  </Button>
+                </Badge>
+              ))}
+            </Flex>
+          )}
+          <Flex
             sx={{
+              flexDirection: 'column',
+              gap: 2,
+              mt: countries.length > 0 ? 2 : 3,
               maxHeight: '300px',
               overflowY: 'scroll',
               pr: [4, 5, 5, 6],
               mr: [-4, -5, -5, -6],
             }}
-            multiSelect
-          />
+          >
+            {filtered.map((c) => (
+              <Button
+                inverted
+                key={c}
+                size='xs'
+                sx={{ fontFamily: 'mono', fontSize: 1 }}
+                onClick={() => addCountry(c)}
+              >
+                {c}
+              </Button>
+            ))}
+            {hidden > 0 && (
+              <Box
+                sx={{
+                  fontFamily: 'mono',
+                  fontSize: 1,
+                  color: 'secondary',
+                  mt: 2,
+                }}
+              >
+                +{hidden} more
+              </Box>
+            )}
+          </Flex>
         </>
       )}
     </>
