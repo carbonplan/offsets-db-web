@@ -1,6 +1,6 @@
 import { Column, Layout as PageLayout, Row } from '@carbonplan/components'
 import { useState } from 'react'
-import { Box, Container, Flex } from 'theme-ui'
+import { Box, Container, Flex, Spinner } from 'theme-ui'
 import BackButton from '../components/back-button'
 
 import Clips from '../components/clips'
@@ -9,7 +9,7 @@ import useFetcher from '../components/use-fetcher'
 
 const Project = () => {
   const [page, setPage] = useState(1)
-  const { data } = useFetcher('clips/', {
+  const { data, isLoading } = useFetcher('clips/', {
     filters: false,
     page,
   })
@@ -50,6 +50,12 @@ const Project = () => {
             </Box>
           </Column>
         </Row>
+
+        {isLoading && (
+          <Flex sx={{ width: '100%', justifyContent: 'center' }}>
+            <Spinner size={32} />
+          </Flex>
+        )}
 
         {data && <Clips clips={data.data} />}
 
