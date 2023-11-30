@@ -57,11 +57,6 @@ const CreditTransactions = ({
     transactionType,
     filters: false,
   })
-  const {
-    data: filteredData,
-    error: filteredError,
-    isLoading: filteredLoading,
-  } = useFetcher(url, { transactionType })
 
   const { lines, range } = useMemo(() => {
     if (!data) {
@@ -99,16 +94,6 @@ const CreditTransactions = ({
     }
   }, [setDomain, domain])
 
-  const { lines: filteredLines } = useMemo(() => {
-    if (!filteredData) {
-      return { lines: [], range: [0, 0] }
-    } else {
-      const lines = getLines(filteredData.data)
-
-      return { lines }
-    }
-  }, [filteredData])
-
   const { ticks, labels, step } = useMemo(() => {
     if (!Number.isFinite(domain[0]) || !Number.isFinite(domain[1])) {
       return { step: 0 }
@@ -135,12 +120,7 @@ const CreditTransactions = ({
     return { ticks, labels, step }
   }, [domain])
 
-  const { bars, filteredBars } = useMemo(() => {
-    return {
-      bars: fillBars(lines, domain),
-      filteredBars: fillBars(filteredLines, domain),
-    }
-  }, [lines, filteredLines, domain])
+  const bars = useMemo(() => fillBars(lines, domain), [lines, domain])
 
   return (
     <>
@@ -160,8 +140,7 @@ const CreditTransactions = ({
           <TickLabels bottom values={labels} sx={{ color }} />
           <TickLabels left count={3} format={format('~s')} />
           <Plot>
-            <Bar data={bars} color='secondary' />
-            <Bar data={filteredBars} color={color} />
+            <Bar data={bars} color={color} />
           </Plot>
         </Chart>
       </Box>
