@@ -8,6 +8,7 @@ import {
   Axis,
 } from '@carbonplan/charts'
 import { Box } from 'theme-ui'
+import { alpha } from '@theme-ui/color'
 import { useEffect, useMemo } from 'react'
 import { format } from 'd3-format'
 
@@ -63,7 +64,6 @@ const CreditTransactions = ({
       return {
         lines: [],
         range: [0, 0],
-        domain: [1999, new Date().getFullYear()],
       }
     } else {
       const lines = getLines(data.data)
@@ -128,21 +128,35 @@ const CreditTransactions = ({
         {transactionType === 'issuance' ? 'Issuances' : 'Retirements'} over time
       </Box>
       <Box sx={{ height: ['120px', '150px', '170px', '170px'], mt: 3 }}>
-        <Chart
-          key={`${domain[0]},${domain[1]}`}
-          x={[domain[0] - step / 2, domain[1] + step / 2]}
-          y={range}
-          padding={{ left: 32 }}
-        >
-          <Axis bottom sx={{ borderColor: color }} />
-          <Grid vertical values={ticks} />
-          <Ticks bottom values={ticks} sx={{ borderColor: color }} />
-          <TickLabels bottom values={labels} sx={{ color }} />
-          <TickLabels left count={3} format={format('~s')} />
-          <Plot>
-            <Bar data={bars} color={color} />
-          </Plot>
-        </Chart>
+        {isLoading ? (
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              pb: 50,
+            }}
+          >
+            <Box
+              sx={{ width: '100%', height: '100%', bg: alpha('muted', 0.4) }}
+            />
+          </Box>
+        ) : (
+          <Chart
+            key={`${domain[0]},${domain[1]}`}
+            x={[domain[0] - step / 2, domain[1] + step / 2]}
+            y={range}
+            padding={{ left: 32 }}
+          >
+            <Axis bottom sx={{ borderColor: color }} />
+            <Grid vertical values={ticks} />
+            <Ticks bottom values={ticks} sx={{ borderColor: color }} />
+            <TickLabels bottom values={labels} sx={{ color }} />
+            <TickLabels left count={3} format={format('~s')} />
+            <Plot>
+              <Bar data={bars} color={color} />
+            </Plot>
+          </Chart>
+        )}
       </Box>
     </>
   )
