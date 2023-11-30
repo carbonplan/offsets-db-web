@@ -64,7 +64,7 @@ const Timeline = ({ project, color }) => {
         >
           {sortedEntries.map(({ date, label, url }) => (
             <Column
-              key={date}
+              key={label}
               start={1}
               width={[4, 4, 2, 2]}
               sx={{ mt: 3, mb: 2 }}
