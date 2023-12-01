@@ -51,7 +51,7 @@ const Countries = () => {
   }, [countrySelection])
 
   return (
-    <>
+    <Box>
       <Filter
         values={{
           All: !countrySelection,
@@ -156,7 +156,7 @@ const Countries = () => {
           </Flex>
         </>
       )}
-    </>
+    </Box>
   )
 }
 
