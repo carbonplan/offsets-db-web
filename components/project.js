@@ -82,7 +82,7 @@ const Project = ({ project }) => {
           width={[6, 7, 11, 11]}
           sx={{ mt: [2, 0, 4, 4] }}
         >
-          <Row columns={[5, 7, 11, 11]}>
+          <Row columns={[6, 7, 11, 11]}>
             <Column start={[1]} width={[6, 6, 4, 4]}>
               <Row columns={[6, 6, 4, 4]}>
                 <Box sx={sx.sectionLabel}>Overview</Box>
@@ -99,12 +99,12 @@ const Project = ({ project }) => {
                   <Box sx={sx.creditsLabel}>Credits issued</Box>
                   <Box sx={sx.creditsAmount}>{formatValue(issued)}</Box>
                 </Column>
-                <Column start={[1, 4, 4, 4]} width={[5, 3, 3, 3]}>
+                <Column start={[1, 4, 4, 4]} width={[6, 3, 3, 3]}>
                   <Box sx={sx.creditsLabel}>Credits retired</Box>
                   <Box sx={sx.creditsAmount}>{formatValue(retired)}</Box>
                 </Column>
 
-                <Column start={[1]} width={[5, 6, 6, 6]} sx={{ mt: 5 }}>
+                <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: 5 }}>
                   <CreditCharts color={color} project_id={project_id} />
                 </Column>
               </Row>
