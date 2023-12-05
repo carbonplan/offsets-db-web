@@ -2,7 +2,13 @@ import { Badge, FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 
-import { Loading, TableFoot, TableHead, TableRow } from './table'
+import {
+  ErrorState,
+  LoadingState,
+  TableFoot,
+  TableHead,
+  TableRow,
+} from './table'
 import { useQueries } from './queries'
 import { formatValue } from './utils'
 import useFetcher from './use-fetcher'
@@ -82,7 +88,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
 
       {isLoading && (
         <FadeIn as='tbody'>
-          <Loading
+          <LoadingState
             columns={[6, 6, 6, 6]}
             values={[
               { key: 'transaction_date', width: 2 },
@@ -99,6 +105,11 @@ const Credits = ({ project_id, color, borderTop = true }) => {
               { key: 'quantity', width: 1 },
             ]}
           />
+        </FadeIn>
+      )}
+      {error && (
+        <FadeIn as='tbody'>
+          <ErrorState error={error} width={6} />
         </FadeIn>
       )}
       <TableFoot

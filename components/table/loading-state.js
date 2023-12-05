@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { Box } from 'theme-ui'
 import TableRow from './table-row'
 
-const Loading = ({ columns, values }) => {
+const LoadingState = ({ columns, values }) => {
   const rowValues = useMemo(
     () =>
       values.map((v) => ({
@@ -25,4 +25,4 @@ const Loading = ({ columns, values }) => {
   )
 }
 
-export default Loading
+export default LoadingState

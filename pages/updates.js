@@ -9,7 +9,7 @@ import useFetcher from '../components/use-fetcher'
 
 const Project = () => {
   const [page, setPage] = useState(1)
-  const { data, isLoading } = useFetcher('clips/', {
+  const { data, error, isLoading } = useFetcher('clips/', {
     filters: false,
     page,
   })
@@ -55,6 +55,25 @@ const Project = () => {
           <Flex sx={{ width: '100%', justifyContent: 'center' }}>
             <Spinner size={32} />
           </Flex>
+        )}
+
+        {error && (
+          <Row>
+            <Column start={[1, 2, 2, 2]} width={[6, 7, 10, 10]}>
+              <Box
+                sx={{
+                  color: 'secondary',
+                  fontFamily: 'mono',
+                  letterSpacing: 'mono',
+                  textTransform: 'uppercase',
+                  mb: 4,
+                  mt: 2,
+                }}
+              >
+                Error loading data{error?.message ? `: ${error?.message}` : ''}
+              </Box>
+            </Column>
+          </Row>
         )}
 
         {data && <Clips clips={data.data} />}

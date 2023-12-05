@@ -95,7 +95,19 @@ const fetcher = ([
   const reqUrl = new URL(url)
   reqUrl.search = params.toString()
 
-  return fetch(reqUrl).then((r) => r.json())
+  return fetch(reqUrl)
+    .then((r) => {
+      if (!r.ok) {
+        throw new Error(`Status code ${r.status} ${r.statusText}`)
+      }
+      return r.json()
+    })
+    .then((r) => {
+      if (!r || !r.data) {
+        throw new Error(r?.detail ?? 'Not found')
+      }
+      return r
+    })
 }
 
 const useFetcher = (
