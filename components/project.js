@@ -122,7 +122,7 @@ const Project = ({ project }) => {
 
             <Column
               start={[1, 1, 8, 8]}
-              width={[6, 8, 3, 3]}
+              width={[6, 7, 3, 3]}
               sx={{ mt: [3, 5, 5, 5], mb: 7 }}
             >
               <Box sx={sx.sectionLabel}>Timeline</Box>

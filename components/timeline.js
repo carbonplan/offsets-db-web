@@ -24,7 +24,7 @@ const Timeline = ({ project, color }) => {
   )
 
   return (
-    <Row columns={[6, 8, 3, 3]} sx={{ mt: 4 }}>
+    <Row columns={[6, 7, 3, 3]} sx={{ mt: 4 }}>
       {sortedEntries.length === 0 && (
         <Column start={1} width={[4, 4, 2, 2]}>
           <Box
