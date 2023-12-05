@@ -2,7 +2,7 @@ import { Badge, FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 
-import { Loading, TableFoot, TableHead, TableRow } from './table'
+import { ErrorState, Loading, TableFoot, TableHead, TableRow } from './table'
 import { useQueries } from './queries'
 import { formatValue, projectSorters } from './utils'
 import ProjectCharts from './charts/project-charts'
@@ -84,6 +84,11 @@ const Projects = () => {
                 },
               ]}
             />
+          </FadeIn>
+        )}
+        {error && (
+          <FadeIn as='tbody'>
+            <ErrorState error={error} width={[6, 8, 8, 8]} />
           </FadeIn>
         )}
         <TableFoot
