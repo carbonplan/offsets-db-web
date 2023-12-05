@@ -2,7 +2,13 @@ import { Badge, FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 
-import { ErrorState, Loading, TableFoot, TableHead, TableRow } from './table'
+import {
+  ErrorState,
+  LoadingState,
+  TableFoot,
+  TableHead,
+  TableRow,
+} from './table'
 import { useQueries } from './queries'
 import { formatValue, projectSorters } from './utils'
 import ProjectCharts from './charts/project-charts'
@@ -71,7 +77,7 @@ const Projects = () => {
 
         {isLoading && (
           <FadeIn as='tbody'>
-            <Loading
+            <LoadingState
               values={[
                 { key: 'project_id', width: [2, 1, 1, 1] },
                 { key: 'name', width: 3 },
