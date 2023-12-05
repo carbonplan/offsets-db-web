@@ -113,11 +113,8 @@ const Clips = ({ clips }) => {
 
               <Flex sx={{ gap: 2 }}>
                 {projects?.map(({ project_id, category }) => (
-                  <a href={`/projects/${project_id}`}>
-                    <Badge
-                      key={project_id}
-                      sx={{ color: COLORS[category[0]], mt: 3 }}
-                    >
+                  <a href={`/projects/${project_id}`} key={project_id}>
+                    <Badge sx={{ color: COLORS[category[0]], mt: 3 }}>
                       {project_id}
                     </Badge>
                   </a>
