@@ -1,11 +1,4 @@
-import {
-  Badge,
-  Button,
-  Column,
-  Expander,
-  formatDate,
-  Row,
-} from '@carbonplan/components'
+import { Badge, Button, Column, Expander, Row } from '@carbonplan/components'
 import { RotatingArrow, XCircle } from '@carbonplan/icons'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
@@ -14,7 +7,7 @@ import { Box, IconButton } from 'theme-ui'
 
 import { COLORS } from './constants'
 import { TableRow } from './table'
-import { formatValue } from './utils'
+import { formatDate, formatValue } from './utils'
 import ProjectOverview from './project-overview'
 
 const fade = keyframes({

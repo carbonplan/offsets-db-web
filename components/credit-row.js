@@ -1,9 +1,9 @@
-import { Badge, Button, formatDate } from '@carbonplan/components'
+import { Badge, Button } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex, Text } from 'theme-ui'
 
 import { TableRow } from './table'
-import { formatValue } from './utils'
+import { formatDate, formatValue } from './utils'
 
 const CreditRow = ({ color, event, projectView, ...props }) => {
   const { project_id, transaction_date, transaction_type, quantity, vintage } =
