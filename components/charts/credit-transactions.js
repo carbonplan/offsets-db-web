@@ -18,7 +18,7 @@ const getLines = (data) => {
   return data
     .reduce((accum, { start, end, value }) => {
       if (start != null && end != null) {
-        const year = new Date(`${start}T00:00:00`).getFullYear()
+        const year = new Date(start).getFullYear()
         const existingEntry = accum.find((d) => d[0] === year)
         if (existingEntry) {
           existingEntry[1] += value
