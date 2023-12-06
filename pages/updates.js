@@ -16,7 +16,7 @@ const Project = () => {
 
   return (
     <PageLayout
-      title='Offsets DB – CarbonPlan'
+      title='OffsetsDB – CarbonPlan'
       description='TK'
       card='TK'
       dimmer='top'
@@ -35,7 +35,7 @@ const Project = () => {
           </Column>
           <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
             <Box as='h1' variant='styles.h1' sx={{ my: [0, 0, 0, 0] }}>
-              Offsets DB — Updates
+              OffsetsDB — Updates
             </Box>
           </Column>
           <Column start={[1, 2, 8, 8]} width={[5, 6, 5, 4]}>

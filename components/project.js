@@ -55,7 +55,7 @@ const Project = ({ project }) => {
         </Column>
         <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
           <Box as='h1' variant='styles.h1' sx={{ my: [0, 0, 0, 0] }}>
-            Offsets DB — Project{' '}
+            OffsetsDB — Project{' '}
             <Box as='span' sx={{ color }}>
               {project_id}
             </Box>

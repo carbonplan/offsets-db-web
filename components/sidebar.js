@@ -36,7 +36,7 @@ const Sidebar = ({ children }) => {
         }}
       >
         <Box as='h1' sx={{ variant: 'styles.h1', mt: 4 }}>
-          Offsets DB
+          OffsetsDB
         </Box>
         <Box as='p' sx={{ mb: 5 }}>
           These are all the carbon offset projects listed globally by the six

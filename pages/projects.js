@@ -9,7 +9,7 @@ import Sidebar from '../components/sidebar'
 const Index = () => {
   return (
     <PageLayout
-      title='Offsets DB – CarbonPlan'
+      title='OffsetsDB – CarbonPlan'
       description='TK'
       card='TK'
       dimmer='top'
