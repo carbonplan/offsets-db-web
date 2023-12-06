@@ -1,7 +1,7 @@
 export const LABELS = {
   registry: {
     verra: 'VCS',
-    'gold-standard': 'GOLD',
+    'gold-standard': 'GLD',
     'global-carbon-council': 'GCC',
     'american-carbon-registry': 'ACR',
     'climate-action-reserve': 'CAR',

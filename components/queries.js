@@ -120,7 +120,7 @@ const Queries = () => {
           <Box sx={sx.label}>Registry</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by registry: Verra (VCS), Gold Standard (GOLD), Global Carbon Council (GCC), American Carbon Registry (ACR), Climate Action Reserve (CAR), and ART TREES (ART).'>
+          <TooltipWrapper tooltip='Filter projects by registry: Verra (VCS), Gold Standard (GLD), Global Carbon Council (GCC), American Carbon Registry (ACR), Climate Action Reserve (CAR), and ART TREES (ART).'>
             <Filter
               values={registry}
               setValues={setRegistry}
