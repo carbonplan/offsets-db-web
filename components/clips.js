@@ -1,15 +1,9 @@
-import {
-  Column,
-  Row,
-  formatDate,
-  Button,
-  Badge,
-  Tag,
-} from '@carbonplan/components'
+import { Column, Row, Button, Badge, Tag } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo } from 'react'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import { COLORS } from './constants'
+import { formatDate } from './utils'
 
 // 10px less than column gutter widths
 const CIRCLE_WIDTHS = [24 - 10, 32 - 10, 32 - 10, 48 - 10]

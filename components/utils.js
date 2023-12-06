@@ -1,5 +1,6 @@
 import { format } from 'd3-format'
 import { useEffect, useState } from 'react'
+import { formatDate as formatDateBase } from '@carbonplan/components'
 
 export const formatValue = (value) => {
   if (value < 1000) {
@@ -11,6 +12,11 @@ export const formatValue = (value) => {
     }
     return result.toUpperCase(0)
   }
+}
+
+export const formatDate = (date, options) => {
+  const [filtered] = date.match(/\d{4}-\d{2}-\d{2}/)
+  return formatDateBase(filtered, options)
 }
 
 export const projectSorters = {

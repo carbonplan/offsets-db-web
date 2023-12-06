@@ -1,7 +1,8 @@
-import { Column, Row, formatDate, Button } from '@carbonplan/components'
+import { Column, Row, Button } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo } from 'react'
 import { Box, Divider, useThemeUI } from 'theme-ui'
+import { formatDate } from './utils'
 
 const Timeline = ({ project, color }) => {
   const { theme } = useThemeUI()
