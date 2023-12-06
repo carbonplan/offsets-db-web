@@ -1,7 +1,7 @@
 import { Button } from '@carbonplan/components'
 import { Left } from '@carbonplan/icons'
 
-const BackButton = ({ href = '/projects', sx }) => {
+const BackButton = ({ href = '/', sx }) => {
   return (
     <Button
       inverted
