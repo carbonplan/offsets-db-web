@@ -45,7 +45,10 @@ const Sidebar = ({ children }) => {
           Reserve (CAR), and ART TREES (ART). Read the latest{' '}
           <Link href='/updates'>updates</Link>, view the{' '}
           <Link href='#'>documentation</Link> or download the{' '}
-          <Link href='#'>data</Link>.
+          <Link href='https://github.com/carbonplan/offsets-db-data/blob/main/docs/data-access.md'>
+            data
+          </Link>
+          .
         </Box>
         <Divider sx={{ mr: [-4, -5, -5, -6], ml: [-4, -5, 0, 0] }} />
         {children}
