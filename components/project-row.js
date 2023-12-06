@@ -124,7 +124,7 @@ const ProjectRow = ({ project }) => {
                   href={`/projects/${project_id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <RotatingArrow sx={{ mt: 1, width: 13, height: 13 }} />
+                  <RotatingArrow sx={{ mt: '4px', width: 14, height: 14 }} />
                 </Button>
               </Badge>
             ),
