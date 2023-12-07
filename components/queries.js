@@ -34,6 +34,8 @@ export const QueryProvider = ({ children }) => {
   const [issuedBounds, setIssuedBounds] = useState(null)
   const [transactionBounds, setTransactionBounds] = useState(null)
   const [countries, setCountries] = useState(null)
+  const [page, setPage] = useState(1)
+  const [sort, setSort] = useState('-issued')
 
   useEffect(() => {
     if (router.query.project_id) {
@@ -61,6 +63,10 @@ export const QueryProvider = ({ children }) => {
         setTransactionBounds,
         countries,
         setCountries,
+        page,
+        setPage,
+        sort,
+        setSort,
       }}
     >
       {children}
