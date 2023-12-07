@@ -27,14 +27,13 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
       fontFamily: 'mono',
       letterSpacing: 'mono',
       textTransform: 'uppercase',
-      mt: 3,
+      mt: 5,
       mb: 2,
     },
     value: {
       fontFamily: 'faux',
       letterSpacing: 'faux',
       fontSize: 1,
-      mb: 3,
     },
   }
 
@@ -71,20 +70,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         </Box>
       </Column>
 
-      <Column start={[4, 7, 7, 7]} width={[2]}>
-        <Box sx={sx.label}>Full details</Box>
-        <Box sx={sx.value}>
-          <Button
-            href={`/projects/${project.project_id}`}
-            suffix={<RotatingArrow sx={{ mt: -1 }} />}
-            sx={sx.value}
-          >
-            View
-          </Button>
-        </Box>
-      </Column>
-
-      <Column start={[1]} width={[3, 2, minWidth, minWidth]}>
+      <Column start={[4, 1, 1, 1]} width={[3, 2, minWidth, minWidth]}>
         <Box sx={sx.label}>Protocol</Box>
         <Box sx={{ ...sx.value, textTransform: 'uppercase' }}>
           {protocol.length > 0 ? (
@@ -99,21 +85,21 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         </Box>
       </Column>
       <Column
-        start={[4, 3, minWidth + 1, minWidth + 1]}
+        start={[1, 3, minWidth + 1, minWidth + 1]}
         width={[3, 2, minWidth, minWidth]}
       >
         <Box sx={sx.label}>Proponent</Box>
         <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
       </Column>
       <Column
-        start={[1, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
+        start={[4, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
         width={[3, 2, minWidth, minWidth]}
       >
         <Box sx={sx.label}>Compliance</Box>
         <Box sx={sx.value}>{is_compliance ? 'Yes' : 'No'}</Box>
       </Column>
 
-      <Column start={[4, 7, 7, 7]} width={[3, 2, minWidth * 3, minWidth * 3]}>
+      <Column start={[1]} width={[3, 2, minWidth * 3, minWidth * 3]}>
         <Box sx={sx.label}>Registry</Box>
         <Box sx={sx.value}>
           <Button
