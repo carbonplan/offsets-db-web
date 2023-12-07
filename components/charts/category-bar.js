@@ -1,14 +1,12 @@
 import { Badge, Expander } from '@carbonplan/components'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Box, Flex } from 'theme-ui'
 import AnimateHeight from 'react-animate-height'
 
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
 
-const CategoryBar = ({ label, total, mapping }) => {
-  const [expanded, setExpanded] = useState(false)
-
+const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
   const background = useMemo(() => {
     if (Object.keys(mapping).length === 0) {
       return 'muted'
@@ -61,17 +59,19 @@ const CategoryBar = ({ label, total, mapping }) => {
       </Flex>
 
       <Box sx={{ mt: [4, '38px', '38px', '38px'], position: 'relative' }}>
-        <Expander
-          value={expanded}
-          onClick={() => setExpanded(!expanded)}
-          sx={{
-            position: 'absolute',
-            left: '-22px',
-            top: '3px',
-            width: '18px',
-            height: '18px',
-          }}
-        />
+        {showExpander && (
+          <Expander
+            value={expanded}
+            sx={{
+              position: 'absolute',
+              left: '-22px',
+              top: '3px',
+              width: '18px',
+              height: '18px',
+            }}
+          />
+        )}
+
         <Box
           sx={{
             width: '100%',
