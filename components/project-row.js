@@ -35,11 +35,11 @@ const ProjectRow = ({ project }) => {
     expanded: {
       background: alpha(color, 0.2),
       py: 1,
-      mb: 3,
       ml: [-4, -5, -5, -6],
       pl: [4, 5, 5, 6],
-      mr: [-4, -5, 0, 0],
+      mr: [-4, 0, 0, 0],
       pr: [4, 5, 0, 0],
+      mb: 1,
       animationDuration: 300 + 'ms',
       animationDelay: 0 + 'ms',
       animationName: fade.toString(),
@@ -71,6 +71,7 @@ const ProjectRow = ({ project }) => {
                   sx={{
                     position: 'absolute',
                     left: -4,
+                    top: '2px', // centering, not ideal.
                     width: '18px',
                     height: '18px',
                   }}
@@ -91,18 +92,36 @@ const ProjectRow = ({ project }) => {
           { key: 'name', label: name ?? '?', width: [4, 3, 3, 3] },
           {
             key: 'issued',
-            label: <Badge>{formatValue(issued)}</Badge>,
+            label: (
+              <Badge
+                sx={{
+                  color: expanded ? color : null,
+                }}
+              >
+                {formatValue(issued)}
+              </Badge>
+            ),
             width: [0, 1, 1, 1],
           },
           {
             key: 'retired',
-            label: <Badge>{formatValue(retired)}</Badge>,
+            label: (
+              <Badge
+                sx={{
+                  color: expanded ? color : null,
+                }}
+              >
+                {formatValue(retired)}
+              </Badge>
+            ),
             width: [0, 1, 1, 1],
           },
           {
             key: 'listed_at',
             label: (
-              <Badge sx={{ whiteSpace: 'nowrap' }}>
+              <Badge
+                sx={{ whiteSpace: 'nowrap', color: expanded ? color : null }}
+              >
                 {listed_at
                   ? formatDate(listed_at, {
                       day: 'numeric',
@@ -119,12 +138,23 @@ const ProjectRow = ({ project }) => {
           {
             key: 'details',
             label: (
-              <Badge>
+              <Badge
+                sx={{
+                  color: expanded ? color : null,
+                }}
+              >
                 <Button
                   href={`/projects/${project_id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <RotatingArrow sx={{ mt: '4px', width: 14, height: 14 }} />
+                  <RotatingArrow
+                    sx={{
+                      mt: '4px',
+                      width: 14,
+                      height: 14,
+                      color: expanded ? color : null,
+                    }}
+                  />
                 </Button>
               </Badge>
             ),
@@ -138,6 +168,17 @@ const ProjectRow = ({ project }) => {
             },
           },
           cursor: 'pointer',
+          ml: [-4, -5, -5, -6],
+          pl: [4, 5, 5, 6],
+          mr: [-4, 0, 0, 0],
+          pr: [4, 5, 0, 0],
+          '&:hover': {
+            backgroundColor: alpha(color, expanded ? 0.2 : 0.1),
+            transition: 'background-color 0.3s ease',
+          },
+          transform: 'none',
+          transition: 'transform 0.3s ease',
+          backgroundColor: expanded ? alpha(color, 0.2) : 'none',
         }}
         onClick={() => setExpanded((prev) => !prev)}
       />
