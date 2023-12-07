@@ -1,6 +1,7 @@
 import { Badge, FadeIn } from '@carbonplan/components'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
+import { useRouter } from 'next/router'
 
 import {
   ErrorState,
@@ -20,7 +21,14 @@ const Projects = () => {
   const { registry, category, complianceOnly, search, listingBounds } =
     useQueries()
   const [sort, setSort] = useState('-issued')
-  const [page, setPage] = useState(1)
+  const router = useRouter()
+  const initialized = useRef(false)
+
+  const page = router.query.page ?? 1
+  const setPage = useCallback((p) => {
+    router.push({ pathname: '/', query: { page: p } })
+  }, [])
+
   const { data, error, isLoading } = useFetcher('projects/', {
     page,
     sort,
@@ -32,7 +40,10 @@ const Projects = () => {
   })
 
   useEffect(() => {
-    setPage(1)
+    if (initialized.current) {
+      setPage(1)
+    }
+    initialized.current = true
   }, [registry, category, complianceOnly, search, sort, listingBounds])
 
   return (
