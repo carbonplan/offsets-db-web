@@ -62,6 +62,8 @@ const ProjectCharts = () => {
           transform: 'translateY(-1px)',
           transition: 'transform 0.3s ease',
         },
+        transform: 'none',
+        transition: 'transform 0.3s ease',
       }}
     >
       <Column start={1} width={[6, 4, 4, 4]}>
