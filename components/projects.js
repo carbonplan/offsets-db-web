@@ -1,5 +1,5 @@
 import { Badge, FadeIn } from '@carbonplan/components'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Box, Flex } from 'theme-ui'
 
 import {
@@ -17,10 +17,19 @@ import ProjectRow from './project-row'
 import useFetcher from './use-fetcher'
 
 const Projects = () => {
-  const { registry, category, complianceOnly, search, listingBounds } =
-    useQueries()
-  const [sort, setSort] = useState('-issued')
-  const [page, setPage] = useState(1)
+  const {
+    registry,
+    category,
+    complianceOnly,
+    search,
+    listingBounds,
+    page,
+    setPage,
+    sort,
+    setSort,
+  } = useQueries()
+  const initialized = useRef(false)
+
   const { data, error, isLoading } = useFetcher('projects/', {
     page,
     sort,
@@ -32,7 +41,10 @@ const Projects = () => {
   })
 
   useEffect(() => {
-    setPage(1)
+    if (initialized.current) {
+      setPage(1)
+    }
+    initialized.current = true
   }, [registry, category, complianceOnly, search, sort, listingBounds])
 
   return (
