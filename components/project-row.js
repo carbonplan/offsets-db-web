@@ -198,37 +198,6 @@ const ProjectRow = ({ project }) => {
                     height: 'fit-content',
                   }}
                 >
-                  <Column
-                    start={1}
-                    width={[6, 7, 7, 7]}
-                    sx={{ position: 'relative' }}
-                  >
-                    <IconButton
-                      aria-label='Collapse'
-                      onClick={() => setExpanded(false)}
-                      sx={{
-                        position: 'absolute',
-                        display: ['none', 'inherit', 'inherit', 'inherit'],
-                        p: 0,
-                        right: (theme) =>
-                          [4, 5, 5, 6].map(
-                            (i) => `calc(-${theme.space[i]}px - 32px)`
-                          ),
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <XCircle
-                        sx={{
-                          transition: '0.15s',
-                          stroke: color,
-                          '&:hover': {
-                            stroke: 'primary',
-                          },
-                        }}
-                      />
-                    </IconButton>
-                  </Column>
-
                   <ProjectOverview project={project} minWidth={2} />
                 </Row>
               ),
