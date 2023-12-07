@@ -151,6 +151,7 @@ const Projects = () => {
               label: (
                 <Flex
                   sx={{
+                    minHeight: 40,
                     justifyContent: [
                       'flex-start',
                       'flex-end',
