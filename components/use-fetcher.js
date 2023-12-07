@@ -39,7 +39,7 @@ const fetcher = ([
 
   if (page) {
     params.append('current_page', page)
-    params.append('per_page', 25)
+    params.append('per_page', 100)
   }
 
   if (binWidth) {
