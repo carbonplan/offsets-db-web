@@ -1,5 +1,5 @@
 import { Badge, FadeIn } from '@carbonplan/components'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Box, Flex } from 'theme-ui'
 
 import {
