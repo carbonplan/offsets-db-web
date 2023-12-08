@@ -206,6 +206,7 @@ const ProjectRow = ({ project }) => {
                       sx={{
                         fontSize: 1,
                       }}
+                      inverted
                       suffix={
                         <RotatingArrow
                           sx={{
