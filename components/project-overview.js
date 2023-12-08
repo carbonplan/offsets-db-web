@@ -8,7 +8,7 @@ const Empty = ({ label = 'N/A' }) => {
   return <Box>{label}</Box>
 }
 
-const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
+const ProjectOverview = ({ project, minWidth = 1 }) => {
   const {
     category,
     country,
@@ -18,7 +18,6 @@ const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
     proponent,
     project_url,
     registry,
-    project_id,
   } = project
   const color = COLORS[category[0]] ?? COLORS.other
 
@@ -28,13 +27,12 @@ const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
       fontFamily: 'mono',
       letterSpacing: 'mono',
       textTransform: 'uppercase',
-      mt: 5,
-      mb: 2,
     },
     value: {
       fontFamily: 'faux',
       letterSpacing: 'faux',
       fontSize: 1,
+      mb: 5,
     },
   }
 
@@ -44,6 +42,7 @@ const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
         <Box sx={sx.label}>Country</Box>
         <Box sx={sx.value}>{country}</Box>
       </Column>
+
       <Column
         start={[4, 3, minWidth + 1, minWidth + 1]}
         width={[3, 2, minWidth, minWidth]}
@@ -51,6 +50,7 @@ const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
         <Box sx={sx.label}>Status</Box>
         <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>{status}</Box>
       </Column>
+
       <Column
         start={[1, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
         width={[3, 2, minWidth, minWidth]}
@@ -85,6 +85,7 @@ const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
           )}
         </Box>
       </Column>
+
       <Column
         start={[1, 3, minWidth + 1, minWidth + 1]}
         width={[3, 2, minWidth, minWidth]}
@@ -92,6 +93,7 @@ const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
         <Box sx={sx.label}>Proponent</Box>
         <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
       </Column>
+
       <Column
         start={[4, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
         width={[3, 2, minWidth, minWidth]}
@@ -112,28 +114,6 @@ const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
           </Button>
         </Box>
       </Column>
-      {inTable && (
-        <Column start={[4, 7, 7, 7]} width={[4, 2, 2, 2]}>
-          <Button
-            href={`/projects/${project_id}`}
-            onClick={(e) => e.stopPropagation()}
-            sx={{
-              mt: 6,
-            }}
-            suffix={
-              <RotatingArrow
-                sx={{
-                  width: 16,
-                  height: 16,
-                  mt: -1,
-                }}
-              />
-            }
-          >
-            Details
-          </Button>
-        </Column>
-      )}
     </>
   )
 }

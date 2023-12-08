@@ -189,19 +189,37 @@ const ProjectRow = ({ project }) => {
               width: [6, 8, 8, 8],
               start: 1,
               label: (
-                <Row
-                  columns={[6, 8, 8, 8]}
-                  sx={{
-                    color: 'primary',
-                    height: 'fit-content',
-                  }}
-                >
-                  <ProjectOverview
-                    project={project}
-                    minWidth={2}
-                    inTable={true}
-                  />
-                </Row>
+                <>
+                  <Row
+                    columns={[6, 8, 8, 8]}
+                    sx={{
+                      color: 'primary',
+                      height: 'fit-content',
+                    }}
+                  >
+                    <ProjectOverview project={project} minWidth={2} />
+                  </Row>
+                  <Row columns={1}>
+                    <Button
+                      href={`/projects/${project_id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      sx={{
+                        fontSize: 1,
+                      }}
+                      suffix={
+                        <RotatingArrow
+                          sx={{
+                            width: 14,
+                            height: 14,
+                            mt: -1,
+                          }}
+                        />
+                      }
+                    >
+                      View full details
+                    </Button>
+                  </Row>
+                </>
               ),
             },
           ]}
