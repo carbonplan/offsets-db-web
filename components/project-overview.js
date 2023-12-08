@@ -27,13 +27,12 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
       fontFamily: 'mono',
       letterSpacing: 'mono',
       textTransform: 'uppercase',
-      mt: 5,
-      mb: 2,
     },
     value: {
       fontFamily: 'faux',
       letterSpacing: 'faux',
       fontSize: 1,
+      mb: 5,
     },
   }
 
@@ -43,6 +42,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         <Box sx={sx.label}>Country</Box>
         <Box sx={sx.value}>{country}</Box>
       </Column>
+
       <Column
         start={[4, 3, minWidth + 1, minWidth + 1]}
         width={[3, 2, minWidth, minWidth]}
@@ -50,6 +50,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         <Box sx={sx.label}>Status</Box>
         <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>{status}</Box>
       </Column>
+
       <Column
         start={[1, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
         width={[3, 2, minWidth, minWidth]}
@@ -84,6 +85,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
           )}
         </Box>
       </Column>
+
       <Column
         start={[1, 3, minWidth + 1, minWidth + 1]}
         width={[3, 2, minWidth, minWidth]}
@@ -91,6 +93,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         <Box sx={sx.label}>Proponent</Box>
         <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
       </Column>
+
       <Column
         start={[4, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
         width={[3, 2, minWidth, minWidth]}

@@ -37,11 +37,12 @@ const TableRow = ({
             textAlign: 'left',
             color: 'secondary',
             fontFamily: 'body',
-            mb: 4,
-            mt: 2,
+            mb: 3,
+            mt: 3,
             display: value?.width?.map
               ? value.width.map((w) => (w === 0 ? 'none' : 'inherit'))
               : 'inherit',
+            alignItems: 'center',
           }}
         >
           {Button && <Button value={value} />}
