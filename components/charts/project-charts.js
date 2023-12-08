@@ -1,11 +1,12 @@
 import { Column, Row } from '@carbonplan/components'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { LABELS } from '../constants'
 import useFetcher from '../use-fetcher'
 import CategoryBar from './category-bar'
 
 const ProjectCharts = () => {
+  const [expanded, setExpanded] = useState(false)
   const { data, error, isLoading } = useFetcher(
     'charts/credits_by_category',
     {}
@@ -49,19 +50,29 @@ const ProjectCharts = () => {
 
   return (
     <Row
+      onClick={() => setExpanded(!expanded)}
       columns={[6, 8, 8, 8]}
       sx={{
         color: 'primary',
         fontFamily: 'mono',
         letterSpacing: 'mono',
         textTransform: 'uppercase',
+        cursor: 'pointer',
+        '&:hover #expander': {
+          stroke: 'primary',
+        },
       }}
     >
       <Column start={1} width={[6, 4, 4, 4]}>
-        <CategoryBar label='Credits issued' {...issued} />
+        <CategoryBar
+          label='Credits issued'
+          {...issued}
+          expanded={expanded}
+          showExpander={true}
+        />
       </Column>
       <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
-        <CategoryBar label='Credits retired' {...retired} />
+        <CategoryBar label='Credits retired' {...retired} expanded={expanded} />
       </Column>
     </Row>
   )
