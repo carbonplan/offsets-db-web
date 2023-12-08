@@ -58,12 +58,9 @@ const ProjectCharts = () => {
         letterSpacing: 'mono',
         textTransform: 'uppercase',
         cursor: 'pointer',
-        '&:hover': {
-          transform: 'translateY(-1px)',
-          transition: 'transform 0.3s ease',
+        '&:hover #expander': {
+          stroke: 'primary',
         },
-        transform: 'none',
-        transition: 'transform 0.3s ease',
       }}
     >
       <Column start={1} width={[6, 4, 4, 4]}>

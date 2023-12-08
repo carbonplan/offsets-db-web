@@ -61,6 +61,7 @@ const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
       <Box sx={{ mt: [4, '38px', '38px', '38px'], position: 'relative' }}>
         {showExpander && (
           <Expander
+            id='expander'
             value={expanded}
             sx={{
               position: 'absolute',
