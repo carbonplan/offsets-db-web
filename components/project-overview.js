@@ -8,7 +8,7 @@ const Empty = ({ label = 'N/A' }) => {
   return <Box>{label}</Box>
 }
 
-const ProjectOverview = ({ project, minWidth = 1 }) => {
+const ProjectOverview = ({ project, minWidth = 1, inTable = false }) => {
   const {
     category,
     country,
@@ -18,6 +18,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
     proponent,
     project_url,
     registry,
+    project_id,
   } = project
   const color = COLORS[category[0]] ?? COLORS.other
 
@@ -111,6 +112,28 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
           </Button>
         </Box>
       </Column>
+      {inTable && (
+        <Column start={[4, 7, 7, 7]} width={[4, 2, 2, 2]}>
+          <Button
+            href={`/projects/${project_id}`}
+            onClick={(e) => e.stopPropagation()}
+            sx={{
+              mt: 6,
+            }}
+            suffix={
+              <RotatingArrow
+                sx={{
+                  width: 16,
+                  height: 16,
+                  mt: -1,
+                }}
+              />
+            }
+          >
+            Details
+          </Button>
+        </Column>
+      )}
     </>
   )
 }

@@ -37,7 +37,7 @@ const ProjectRow = ({ project }) => {
       py: 1,
       ml: [-4, -5, -5, -6],
       pl: [4, 5, 5, 6],
-      mr: [-4, 0, 0, 0],
+      mr: [-4, -5, 0, 0],
       pr: [4, 5, 0, 0],
       mb: 1,
       animationDuration: 300 + 'ms',
@@ -158,7 +158,7 @@ const ProjectRow = ({ project }) => {
                 </Button>
               </Badge>
             ),
-            width: [0, 1, 1, 1],
+            width: [1, 1, 1, 1],
           },
         ]}
         sx={{
@@ -170,14 +170,12 @@ const ProjectRow = ({ project }) => {
           cursor: 'pointer',
           ml: [-4, -5, -5, -6],
           pl: [4, 5, 5, 6],
-          mr: [-4, 0, 0, 0],
+          mr: [-4, -5, 0, 0],
           pr: [4, 5, 0, 0],
           '&:hover': {
             backgroundColor: alpha(color, expanded ? 0.2 : 0.1),
             transition: 'background-color 0.3s ease',
           },
-          transform: 'none',
-          transition: 'transform 0.3s ease',
           backgroundColor: expanded ? alpha(color, 0.2) : 'none',
         }}
         onClick={() => setExpanded((prev) => !prev)}
@@ -198,7 +196,11 @@ const ProjectRow = ({ project }) => {
                     height: 'fit-content',
                   }}
                 >
-                  <ProjectOverview project={project} minWidth={2} />
+                  <ProjectOverview
+                    project={project}
+                    minWidth={2}
+                    inTable={true}
+                  />
                 </Row>
               ),
             },
