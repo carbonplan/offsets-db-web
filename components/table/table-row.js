@@ -1,4 +1,5 @@
 import { Column, Row } from '@carbonplan/components'
+import { Flex } from 'theme-ui'
 
 const TableRow = ({
   values,
@@ -45,8 +46,10 @@ const TableRow = ({
             alignItems: 'center',
           }}
         >
-          {Button && <Button value={value} />}
-          {value?.label ?? value}
+          <Flex sx={{ flexDirection: 'column', height: '100%' }}>
+            {Button && <Button value={value} />}
+            {value?.label ?? value}
+          </Flex>
         </Column>
       ))}
     </Row>
