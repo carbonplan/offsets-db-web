@@ -61,8 +61,8 @@ const Projects = () => {
             { value: 'name', label: 'Name', width: 3 },
             { value: 'issued', label: 'Issued', width: [0, 1, 1, 1] },
             { value: 'retired', label: 'Retired', width: [0, 1, 1, 1] },
-            { value: 'listed_at', label: 'Listed', width: [2, 1, 1, 1] },
-            { value: 'details', label: 'Details', width: [2, 1, 1, 1] },
+            { value: 'listed_at', label: 'Listed', width: [0, 1, 1, 1] },
+            { value: 'details', label: 'Details', width: [0, 1, 1, 1] },
           ]}
           borderTop
         />
@@ -95,7 +95,7 @@ const Projects = () => {
                 { key: 'name', width: 3 },
                 { key: 'issued', width: [0, 1, 1, 1] },
                 { key: 'retired', width: [0, 1, 1, 1] },
-                { key: 'listed_at', width: [2, 1, 1, 1] },
+                { key: 'listed_at', width: [0, 1, 1, 1] },
                 {
                   key: 'details',
                   width: [0, 1, 1, 1],

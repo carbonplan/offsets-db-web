@@ -1,16 +1,15 @@
 import {
   Badge,
   Button,
-  Column,
   Expander,
   formatDate,
   Row,
 } from '@carbonplan/components'
-import { RotatingArrow, XCircle } from '@carbonplan/icons'
+import { RotatingArrow } from '@carbonplan/icons'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
-import { Box, IconButton } from 'theme-ui'
+import { Box, Flex } from 'theme-ui'
 
 import { COLORS } from './constants'
 import { TableRow } from './table'
@@ -53,38 +52,40 @@ const ProjectRow = ({ project }) => {
         values={[
           {
             label: (
-              <Box
-                sx={{
-                  transition: 'color 0.15s',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  '@media (hover: hover) and (pointer: fine)': {
-                    '&:hover #expander': {
-                      stroke: color,
+              <Flex sx={{ flexDirection: 'column', height: '100%' }}>
+                <Box
+                  sx={{
+                    transition: 'color 0.15s',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    '@media (hover: hover) and (pointer: fine)': {
+                      '&:hover #expander': {
+                        stroke: color,
+                      },
                     },
-                  },
-                }}
-              >
-                <Expander
-                  id='expander'
-                  value={expanded}
-                  sx={{
-                    position: 'absolute',
-                    left: -4,
-                    top: '2px', // centering, not ideal.
-                    width: '18px',
-                    height: '18px',
-                  }}
-                />
-                <Badge
-                  sx={{
-                    color: color,
-                    userSelect: 'all',
                   }}
                 >
-                  {project_id}
-                </Badge>
-              </Box>
+                  <Expander
+                    id='expander'
+                    value={expanded}
+                    sx={{
+                      position: 'absolute',
+                      left: ['-17px'],
+                      top: '2px', // centering, not ideal.
+                      width: '18px',
+                      height: '18px',
+                    }}
+                  />
+                  <Badge
+                    sx={{
+                      color: color,
+                      userSelect: 'all',
+                    }}
+                  >
+                    {project_id}
+                  </Badge>
+                </Box>
+              </Flex>
             ),
             key: 'project_id',
             width: [2, 1, 1, 1],
@@ -132,7 +133,7 @@ const ProjectRow = ({ project }) => {
                   : '?'}
               </Badge>
             ),
-            width: [2, 1, 1, 1],
+            width: [0, 1, 1, 1],
           },
 
           {
@@ -158,7 +159,7 @@ const ProjectRow = ({ project }) => {
                 </Button>
               </Badge>
             ),
-            width: [1, 1, 1, 1],
+            width: [0, 1, 1, 1],
           },
         ]}
         sx={{
