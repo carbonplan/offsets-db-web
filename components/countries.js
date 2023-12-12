@@ -132,13 +132,11 @@ const Countries = () => {
             </IconButton>
           </Box>
           {countries.length > 0 && (
-            <Flex sx={{ flexWrap: 'wrap', mt: 3 }}>
+            <Flex sx={{ flexWrap: 'wrap', gap: 1, mt: 3 }}>
               {countries.map((c) => (
                 <Badge
                   sx={{
                     color: 'primary',
-                    mb: 1,
-                    mr: 1,
                     height: 'fit-content',
                   }}
                   key={c}
