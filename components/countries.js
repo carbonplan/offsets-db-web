@@ -91,7 +91,7 @@ const Countries = () => {
       />
       {countrySelection && (
         <>
-          <Box sx={{ position: 'relative', width: '100%' }}>
+          <Box sx={{ position: 'relative' }}>
             <Input
               ref={ref}
               sx={{
@@ -137,15 +137,18 @@ const Countries = () => {
                 <Badge
                   sx={{
                     color: 'primary',
-                    width: 'fit-content',
-                    whiteSpace: 'nowrap',
                     mb: 1,
                     mr: 1,
+                    height: 'fit-content',
                   }}
                   key={c}
                 >
                   <Button
-                    sx={{ fontFamily: 'mono', fontSize: 1, mt: 1 }}
+                    sx={{
+                      fontFamily: 'mono',
+                      fontSize: 1,
+                      py: '3px',
+                    }}
                     suffix={<X sx={{ height: 10, width: 10 }} />}
                     onClick={() => removeCountry(c)}
                   >
