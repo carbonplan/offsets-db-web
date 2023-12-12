@@ -124,7 +124,11 @@ const Countries = () => {
                 '&:hover': { color: 'primary' },
               }}
             >
-              <X />
+              {query.length ? (
+                <Box sx={{ fontSize: 20, fontWeight: 1, mb: 17 }}>_</Box>
+              ) : (
+                <X />
+              )}
             </IconButton>
           </Box>
           {countries.length > 0 && (
