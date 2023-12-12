@@ -33,6 +33,8 @@ const Countries = () => {
 
   const addCountry = useCallback(
     (country) => {
+      setFocusedIndex(-1)
+      setQuery('')
       setCountries([...countries, country].sort())
     },
     [countries, setCountries]
@@ -50,8 +52,28 @@ const Countries = () => {
     }
   }, [countrySelection])
 
+  // handle keyboard navigation of filtered countries
+  const [focusedIndex, setFocusedIndex] = useState(-1)
+  const filteredCountriesRefs = useRef([])
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setFocusedIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : prev))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0))
+    }
+  }
+
+  useEffect(() => {
+    if (focusedIndex >= 0 && filteredCountriesRefs.current[focusedIndex]) {
+      filteredCountriesRefs.current[focusedIndex].focus()
+    }
+  }, [focusedIndex])
+
   return (
-    <Box>
+    <Box onKeyDown={handleKeyDown}>
       <Filter
         values={{
           All: !countrySelection,
@@ -130,13 +152,15 @@ const Countries = () => {
               mr: [-4, -5, -5, -6],
             }}
           >
-            {filtered.map((c) => (
+            {filtered.map((c, i) => (
               <Button
                 inverted
                 key={c}
                 size='xs'
                 sx={{ fontFamily: 'mono', fontSize: 1 }}
                 onClick={() => addCountry(c)}
+                ref={(el) => (filteredCountriesRefs.current[i] = el)}
+                onKeyDown={(e) => e.key === 'Enter' && addCountry(c)}
               >
                 {c}
               </Button>
