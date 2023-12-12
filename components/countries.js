@@ -91,7 +91,7 @@ const Countries = () => {
       />
       {countrySelection && (
         <>
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: 'relative', width: '100%' }}>
             <Input
               ref={ref}
               sx={{
@@ -121,15 +121,25 @@ const Countries = () => {
                 width: 22,
                 color: 'secondary',
                 cursor: 'pointer',
+                '&:hover': { color: 'primary' },
               }}
             >
               <X />
             </IconButton>
           </Box>
           {countries.length > 0 && (
-            <Flex sx={{ flexWrap: 'wrap', gap: 2, mt: 3 }}>
+            <Flex sx={{ flexWrap: 'wrap', mt: 3 }}>
               {countries.map((c) => (
-                <Badge sx={{ color: 'primary' }} key={c}>
+                <Badge
+                  sx={{
+                    color: 'primary',
+                    width: 'fit-content',
+                    whiteSpace: 'nowrap',
+                    mb: 1,
+                    mr: 1,
+                  }}
+                  key={c}
+                >
                   <Button
                     sx={{ fontFamily: 'mono', fontSize: 1, mt: 1 }}
                     suffix={<X sx={{ height: 10, width: 10 }} />}
