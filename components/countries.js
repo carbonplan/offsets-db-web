@@ -176,6 +176,7 @@ const Countries = () => {
                 onClick={() => addCountry(c)}
                 ref={(el) => (filteredCountriesRefs.current[i] = el)}
                 onKeyDown={(e) => e.key === 'Enter' && addCountry(c)}
+                tabIndex={0}
               >
                 {c}
               </Button>
