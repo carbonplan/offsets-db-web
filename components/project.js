@@ -47,31 +47,24 @@ const Project = ({ project }) => {
 
   return (
     <Box>
-      <Row sx={{ my: [4, 6, 6, 6] }}>
+      <Row sx={{ mt: [4, 6, 6, 6], mb: 3 }}>
         <Column start={[1]} width={[6, 1, 1, 1]}>
           <Flex sx={{ height: '100%', alignItems: 'flex-end' }}>
             <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
           </Flex>
         </Column>
         <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
-          <Box as='h1' variant='styles.h1' sx={{ my: [0, 0, 0, 0] }}>
-            OffsetsDB — Project{' '}
-            <Box as='span' sx={{ color }}>
-              {project_id}
-            </Box>
+          <Box as='h1' variant='styles.h1' sx={{ color, my: [0, 0, 0, 0] }}>
+            {project_id}
           </Box>
         </Column>
-        <Column start={[1, 2, 9, 9]} width={[5, 6, 4, 4]}>
+        <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]} sx={{ mt: 3 }}>
           <Box
-            sx={{
-              fontSize: [2, 2, 2, 3],
-              mt: '42px',
-            }}
+            as='h2'
+            variant='styles.h2'
+            sx={{ fontSize: [3, 3, 3, 4], my: [0, 0, 0, 0] }}
           >
-            Details on{' '}
-            <Box as='span' sx={{ color }}>
-              {name}
-            </Box>
+            {name}
           </Box>
         </Column>
       </Row>
