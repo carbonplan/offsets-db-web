@@ -85,7 +85,14 @@ const Project = ({ project }) => {
           <Row columns={[6, 7, 11, 11]}>
             <Column start={[1]} width={[6, 6, 4, 4]}>
               <Row columns={[6, 6, 4, 4]}>
-                <Box sx={sx.sectionLabel}>Overview</Box>
+                <Box
+                  sx={{
+                    ...sx.sectionLabel,
+                    mb: 40, // mb: 5 + mb: 2
+                  }}
+                >
+                  Overview
+                </Box>
                 <ProjectOverview project={project} />
               </Row>
             </Column>
