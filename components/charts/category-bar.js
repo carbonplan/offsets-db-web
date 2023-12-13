@@ -1,6 +1,6 @@
-import { Badge, Expander } from '@carbonplan/components'
+import { Badge, Row, Column } from '@carbonplan/components'
 import { useMemo } from 'react'
-import { Box, Flex } from 'theme-ui'
+import { Box } from 'theme-ui'
 
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
@@ -44,32 +44,50 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
   const isEmpty = Object.keys(mapping).length === 0
 
   return (
-    <Box sx={{ mb: 6 }}>
-      <Flex sx={{ gap: 3, alignItems: 'center' }}>
-        <Box
+    <Row columns={[6, 8, 8, 8]} sx={{ mb: 6 }}>
+      <Column
+        start={1}
+        width={1}
+        sx={{
+          fontSize: 1,
+          fontFamily: 'mono',
+          letterSpacing: 'mono',
+          color: 'secondary',
+          width: 'fit-content',
+        }}
+      >
+        {label}
+      </Column>
+      <Column
+        start={2}
+        width={1}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          width: 'fit-content',
+        }}
+      >
+        <Badge
           sx={{
-            fontSize: 1,
-            fontFamily: 'mono',
-            letterSpacing: 'mono',
-            color: 'secondary',
+            fontSize: [3, 4, 4, 4],
+            height: ['34px'],
+            width: 'fit-content',
+            height: 'fit-content',
+            px: 1,
+            mr: 4,
           }}
         >
-          {label}
-        </Box>
-        <Box>
-          <Badge
-            sx={{
-              fontSize: 4,
-              height: ['34px'],
-              width: 'fit-content',
-              px: 1,
-              mr: 4,
-            }}
-          >
-            {isEmpty ? '-' : formatValue(total)}
-          </Badge>
-        </Box>
-
+          {isEmpty ? '-' : formatValue(total)}
+        </Badge>
+      </Column>
+      <Column
+        start={[4, 3, 3, 3]}
+        width={[3, 6, 6, 6]}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
         <Box
           sx={{
             width: '100%',
@@ -78,8 +96,8 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
             background,
           }}
         />
-      </Flex>
-    </Box>
+      </Column>
+    </Row>
   )
 }
 

@@ -49,7 +49,7 @@ const Projects = () => {
 
   return (
     <>
-      <Box sx={{ display: ['none', 'block', 'block', 'block'] }}>
+      <Box sx={{ display: ['block', 'block', 'block', 'block'] }}>
         <ProjectCharts />
       </Box>
       <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>
