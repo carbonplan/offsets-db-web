@@ -33,6 +33,8 @@ const Countries = () => {
 
   const addCountry = useCallback(
     (country) => {
+      setFocusedIndex(-1)
+      setQuery('')
       setCountries([...countries, country].sort())
     },
     [countries, setCountries]
@@ -50,8 +52,32 @@ const Countries = () => {
     }
   }, [countrySelection])
 
+  // handle keyboard navigation of filtered countries
+  const [focusedIndex, setFocusedIndex] = useState(-1)
+  const filteredCountriesRefs = useRef([])
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setFocusedIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : prev))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0))
+    }
+  }
+
+  useEffect(() => {
+    if (focusedIndex >= 0 && filteredCountriesRefs.current[focusedIndex]) {
+      filteredCountriesRefs.current[focusedIndex].focus()
+    }
+  }, [focusedIndex])
+
+  useEffect(() => {
+    setFocusedIndex(-1)
+  }, [query, countrySelection])
+
   return (
-    <Box>
+    <Box onKeyDown={handleKeyDown}>
       <Filter
         values={{
           All: !countrySelection,
@@ -85,12 +111,9 @@ const Countries = () => {
             />
             <IconButton
               onClick={() => {
-                if (query) {
-                  setQuery('')
-                } else {
-                  setCountrySelection(false)
-                  setCountries(null)
-                }
+                setCountrySelection(false)
+                setCountries(null)
+                setQuery('')
               }}
               sx={{
                 position: 'absolute',
@@ -99,17 +122,28 @@ const Countries = () => {
                 width: 22,
                 color: 'secondary',
                 cursor: 'pointer',
+                '&:hover': { color: 'primary' },
               }}
             >
               <X />
             </IconButton>
           </Box>
           {countries.length > 0 && (
-            <Flex sx={{ flexWrap: 'wrap', gap: 2, mt: 3 }}>
+            <Flex sx={{ flexWrap: 'wrap', gap: 1, mt: 3 }}>
               {countries.map((c) => (
-                <Badge sx={{ color: 'primary' }} key={c}>
+                <Badge
+                  sx={{
+                    color: 'primary',
+                    height: 'fit-content',
+                  }}
+                  key={c}
+                >
                   <Button
-                    sx={{ fontFamily: 'mono', fontSize: 1, mt: 1 }}
+                    sx={{
+                      fontFamily: 'mono',
+                      fontSize: 1,
+                      py: '3px',
+                    }}
                     suffix={<X sx={{ height: 10, width: 10 }} />}
                     onClick={() => removeCountry(c)}
                   >
@@ -125,18 +159,28 @@ const Countries = () => {
               gap: 2,
               mt: countries.length > 0 ? 2 : 3,
               maxHeight: '300px',
-              overflowY: 'scroll',
+              overflowY: 'auto',
               pr: [4, 5, 5, 6],
               mr: [-4, -5, -5, -6],
             }}
           >
-            {filtered.map((c) => (
+            {filtered.map((c, i) => (
               <Button
                 inverted
                 key={c}
                 size='xs'
-                sx={{ fontFamily: 'mono', fontSize: 1 }}
+                sx={{
+                  fontFamily: 'mono',
+                  fontSize: 1,
+                  '&:focus': {
+                    color: 'primary',
+                    backgroundColor: 'transparent !important',
+                    outline: 'none !important',
+                  },
+                }}
                 onClick={() => addCountry(c)}
+                ref={(el) => (filteredCountriesRefs.current[i] = el)}
+                onKeyDown={(e) => e.key === 'Enter' && addCountry(c)}
               >
                 {c}
               </Button>
