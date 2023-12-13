@@ -25,6 +25,14 @@ Assuming you already have `Node.js` installed, you can install the build depende
 npm install .
 ```
 
+If you haven't already configured your target API URL and corresponding API key, you can configure via environment variables by first running
+
+```shell
+cp .env.test .env.local
+```
+
+and then editing values in your new `.env.local` file.
+
 To start a development version of the site, simply run:
 
 ```shell

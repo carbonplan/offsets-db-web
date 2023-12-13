@@ -60,7 +60,14 @@ export async function getServerSideProps({ params }) {
   try {
     const res = await withTimeout(
       fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/projects/${params.id.toUpperCase()}`
+        `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/projects/${params.id.toUpperCase()}`,
+        {
+          headers: {
+            'X-API-KEY': process.env.API_KEY,
+          },
+        }
       ),
       maxDuration * 1000 - 1
     )
