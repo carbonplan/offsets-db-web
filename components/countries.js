@@ -159,7 +159,7 @@ const Countries = () => {
               gap: 2,
               mt: countries.length > 0 ? 2 : 3,
               maxHeight: '300px',
-              overflowY: 'scroll',
+              overflowY: 'auto',
               pr: [4, 5, 5, 6],
               mr: [-4, -5, -5, -6],
             }}
@@ -169,11 +169,18 @@ const Countries = () => {
                 inverted
                 key={c}
                 size='xs'
-                sx={{ fontFamily: 'mono', fontSize: 1 }}
+                sx={{
+                  fontFamily: 'mono',
+                  fontSize: 1,
+                  '&:focus': {
+                    color: 'primary',
+                    backgroundColor: 'transparent !important',
+                    outline: 'none !important',
+                  },
+                }}
                 onClick={() => addCountry(c)}
                 ref={(el) => (filteredCountriesRefs.current[i] = el)}
                 onKeyDown={(e) => e.key === 'Enter' && addCountry(c)}
-                tabIndex={0}
               >
                 {c}
               </Button>
