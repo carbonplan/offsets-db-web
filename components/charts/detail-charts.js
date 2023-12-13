@@ -5,7 +5,7 @@ import { formatValue } from '../utils'
 
 const DetailCharts = ({ issued, retired, isLoading, error }) => {
   return (
-    <Box sx={{ my: 3 }}>
+    <Box sx={{ mb: 4 }}>
       {Object.keys(LABELS.category).map((l) => (
         <Box key={l} sx={{ mb: 2 }}>
           <Flex
