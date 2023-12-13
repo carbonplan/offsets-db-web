@@ -5,9 +5,22 @@ import CreditTransactions from './credit-transactions'
 
 const CreditCharts = ({ color, project_id }) => {
   const [domain, setDomain] = useState(null)
+  const [range, setRange] = useState(null)
 
   const handleDomain = useCallback((value) => {
     setDomain((prev) => {
+      if (!prev) {
+        return value
+      } else if (prev[0] === value[0] && prev[1] === value[1]) {
+        return prev
+      } else {
+        return [Math.min(value[0], prev[0]), Math.max(value[1], prev[1])]
+      }
+    })
+  }, [])
+
+  const handleRange = useCallback((value) => {
+    setRange((prev) => {
       if (!prev) {
         return value
       } else if (prev[0] === value[0] && prev[1] === value[1]) {
@@ -35,6 +48,8 @@ const CreditCharts = ({ color, project_id }) => {
           color={color}
           domain={domain}
           setDomain={handleDomain}
+          range={range}
+          setRange={handleRange}
         />
       </Column>
       <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
@@ -44,6 +59,9 @@ const CreditCharts = ({ color, project_id }) => {
           color={color}
           domain={domain}
           setDomain={handleDomain}
+          range={range}
+          setRange={handleRange}
+          hideLeftTickLabels
         />
       </Column>
     </Row>

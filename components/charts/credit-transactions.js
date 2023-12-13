@@ -9,6 +9,7 @@ import {
 } from '@carbonplan/charts'
 import { Box } from 'theme-ui'
 import { alpha } from '@theme-ui/color'
+import { useBreakpointIndex } from '@theme-ui/match-media'
 import { useEffect, useMemo } from 'react'
 import { format } from 'd3-format'
 
@@ -50,6 +51,9 @@ const CreditTransactions = ({
   transactionType,
   domain: domainProp,
   setDomain,
+  range: rangeProp,
+  setRange,
+  hideLeftTickLabels = false,
 }) => {
   const url = `charts/credits_by_transaction_date${
     project_id ? '/' + project_id : ''
@@ -58,41 +62,44 @@ const CreditTransactions = ({
     transactionType,
     filters: false,
   })
-
-  const { lines, range } = useMemo(() => {
+  const index = useBreakpointIndex({ defaultIndex: 2 })
+  const lines = useMemo(() => {
     if (!data) {
-      return {
-        lines: [],
-        range: [0, 0],
-      }
+      return []
     } else {
-      const lines = getLines(data.data)
-
-      const range = lines.reduce(
-        ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
-        [0, -Infinity]
-      )
-      return { lines, range }
+      return getLines(data.data)
     }
   }, [data])
 
-  const domain = useMemo(() => {
-    const d = lines.reduce(
+  const { domain, range } = useMemo(() => {
+    let d = lines.reduce(
       ([min, max], d) => [Math.min(min, d[0]), Math.max(max, d[0])],
       domainProp ?? [Infinity, -Infinity]
     )
+
     if (d[0] === d[1]) {
-      return [d[0] - 1, d[1]]
+      d = [d[0] - 1, d[1]]
     }
 
-    return d
-  }, [lines, domainProp])
+    const r = lines.reduce(
+      ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
+      rangeProp ?? [0, -Infinity]
+    )
+
+    return { domain: d, range: r }
+  }, [lines, domainProp, rangeProp])
 
   useEffect(() => {
     if (setDomain) {
       setDomain(domain)
     }
   }, [setDomain, domain])
+
+  useEffect(() => {
+    if (setRange) {
+      setRange(range)
+    }
+  }, [setRange, range])
 
   const { ticks, labels, step } = useMemo(() => {
     if (!Number.isFinite(domain[0]) || !Number.isFinite(domain[1])) {
@@ -145,13 +152,16 @@ const CreditTransactions = ({
             key={`${domain[0]},${domain[1]}`}
             x={[domain[0] - step / 2, domain[1] + step / 2]}
             y={range}
-            padding={{ left: 32 }}
+            padding={{ left: index < 1 ? 32 : 0 }}
           >
             <Axis bottom sx={{ borderColor: color }} />
             <Grid vertical values={ticks} />
+            <Grid horizontal count={3} />
             <Ticks bottom values={ticks} sx={{ borderColor: color }} />
             <TickLabels bottom values={labels} sx={{ color }} />
-            <TickLabels left count={3} format={format('~s')} />
+            {(!hideLeftTickLabels || index < 1) && (
+              <TickLabels left count={3} format={format('~s')} />
+            )}
             <Plot>
               <Bar data={bars} color={color} />
             </Plot>
