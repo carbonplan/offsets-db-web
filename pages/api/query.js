@@ -23,6 +23,6 @@ export default async function handler(req, res) {
     const result = await serverRes.json()
     res.status(200).send(result)
   } catch (e) {
-    res.status(400).send({ error: 'testing' })
+    res.status(400).send({ error: `Error processing query: ${e.message}` })
   }
 }
