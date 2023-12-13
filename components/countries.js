@@ -107,12 +107,9 @@ const Countries = () => {
             />
             <IconButton
               onClick={() => {
-                if (query) {
-                  setQuery('')
-                } else {
-                  setCountrySelection(false)
-                  setCountries(null)
-                }
+                setCountrySelection(false)
+                setCountries(null)
+                setQuery('')
               }}
               sx={{
                 position: 'absolute',
@@ -124,11 +121,7 @@ const Countries = () => {
                 '&:hover': { color: 'primary' },
               }}
             >
-              {query.length ? (
-                <Box sx={{ fontSize: 20, fontWeight: 1, mb: 17 }}>_</Box>
-              ) : (
-                <X />
-              )}
+              <X />
             </IconButton>
           </Box>
           {countries.length > 0 && (
