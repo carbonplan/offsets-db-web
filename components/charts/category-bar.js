@@ -1,12 +1,11 @@
 import { Badge, Expander } from '@carbonplan/components'
 import { useMemo } from 'react'
 import { Box, Flex } from 'theme-ui'
-import AnimateHeight from 'react-animate-height'
 
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
 
-const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
+const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
   const background = useMemo(() => {
     if (Object.keys(mapping).length === 0) {
       return 'muted'
@@ -18,7 +17,7 @@ const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
           if (typeof mapValue !== 'number') {
             mapValue = 0
           }
-          let value = (mapValue / total) * 100
+          let value = (mapValue / (issuedTotal ?? total)) * 100
           if (accum[i - 1]) {
             value = value + accum[i - 1]
           }
@@ -27,6 +26,10 @@ const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
         },
         []
       )
+      if (issuedTotal) {
+        colors.push('muted')
+        percentages.push((issuedTotal / total) * 100)
+      }
 
       return (theme) =>
         `linear-gradient(to right, ${percentages
@@ -36,13 +39,13 @@ const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
           })
           .join(', ')})`
     }
-  }, [total, mapping])
+  }, [total, issuedTotal, mapping])
 
   const isEmpty = Object.keys(mapping).length === 0
 
   return (
-    <Box sx={{ mt: [3, 3, '56px', '56px'], mb: 6 }}>
-      <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
+    <Box sx={{ mb: 6 }}>
+      <Flex sx={{ gap: 3, alignItems: 'center' }}>
         <Box
           sx={{
             fontSize: 1,
@@ -53,25 +56,19 @@ const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
         >
           {label}
         </Box>
-        <Badge sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}>
-          {isEmpty ? '-' : formatValue(total)}
-        </Badge>
-      </Flex>
-
-      <Box sx={{ mt: [4, '38px', '38px', '38px'], position: 'relative' }}>
-        {showExpander && (
-          <Expander
-            id='expander'
-            value={expanded}
+        <Box>
+          <Badge
             sx={{
-              position: 'absolute',
-              left: '-22px',
-              top: '3px',
-              width: '18px',
-              height: '18px',
+              fontSize: 4,
+              height: ['34px'],
+              width: 'fit-content',
+              px: 1,
+              mr: 4,
             }}
-          />
-        )}
+          >
+            {isEmpty ? '-' : formatValue(total)}
+          </Badge>
+        </Box>
 
         <Box
           sx={{
@@ -81,55 +78,7 @@ const CategoryBar = ({ label, total, mapping, expanded, showExpander }) => {
             background,
           }}
         />
-      </Box>
-
-      <AnimateHeight
-        duration={100}
-        height={expanded ? 'auto' : 0}
-        easing={'linear'}
-      >
-        <Box sx={{ mt: 3 }}>
-          {Object.keys(LABELS.category).map((l) => (
-            <Box key={l} sx={{ mb: 2 }}>
-              <Flex
-                sx={{
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  fontSize: 1,
-                  mb: 2,
-                }}
-              >
-                <Flex sx={{ gap: 2, alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: '8px',
-                      height: '8px',
-                      backgroundColor: COLORS[l],
-                    }}
-                  />
-                  {LABELS.category[l]}
-                </Flex>
-                <Badge>{isEmpty ? '-' : formatValue(mapping[l] ?? 0)}</Badge>
-              </Flex>
-              <Box
-                sx={{
-                  height: '5px',
-                  width: '100%',
-                  transition: 'background 0.2s',
-                  background: isEmpty
-                    ? 'muted'
-                    : (theme) =>
-                        `linear-gradient(to right, ${
-                          theme.colors[COLORS[l]]
-                        } 0% ${((mapping[l] ?? 0) / total) * 100}%, ${
-                          theme.colors.muted
-                        } ${((mapping[l] ?? 0) / total) * 100}% 100%)`,
-                }}
-              />
-            </Box>
-          ))}
-        </Box>
-      </AnimateHeight>
+      </Flex>
     </Box>
   )
 }
