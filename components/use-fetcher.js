@@ -4,7 +4,7 @@ import { useQueries } from './queries'
 import { useDebounce } from './utils'
 
 const fetcher = ([
-  url,
+  path,
   creditType,
   transactionType,
   project_id,
@@ -21,6 +21,7 @@ const fetcher = ([
   countries,
 ]) => {
   const params = new URLSearchParams()
+  params.append('path', path)
   if (creditType) {
     params.append('credit_type', creditType)
   }
@@ -92,7 +93,7 @@ const fetcher = ([
     countries.forEach((country) => params.append('country', country))
   }
 
-  const reqUrl = new URL(url)
+  const reqUrl = new URL('/api/query', window.location.origin)
   reqUrl.search = params.toString()
 
   return fetch(reqUrl)
@@ -146,7 +147,7 @@ const useFetcher = (
 
   return useSWR(
     [
-      `${process.env.NEXT_PUBLIC_API_URL}/${path}`,
+      path,
       creditType,
       transactionType,
       project_id,
