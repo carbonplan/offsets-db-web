@@ -15,14 +15,19 @@ function constructSearch(search = {}) {
 export default async function handler(req, res) {
   try {
     const { path, ...search } = req.query
-    const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${path}`)
+    const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${'projects'}`)
     reqUrl.search = constructSearch(search)
     const serverRes = await fetch(reqUrl, {
       headers: { 'X-API-KEY': process.env.API_KEY },
     })
+    if (!serverRes.ok) {
+      throw new Error(
+        `API request failed: ${serverRes.status} ${serverRes.statusText}`
+      )
+    }
     const result = await serverRes.json()
     res.status(200).send(result)
   } catch (e) {
-    res.status(400).send({ error: `Error processing query: ${e.message}` })
+    res.status(400).send({ error: e.message })
   }
 }
