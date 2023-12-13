@@ -57,10 +57,10 @@ const Countries = () => {
   const filteredCountriesRefs = useRef([])
 
   const handleKeyDown = (e) => {
-    if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+    if (e.key === 'ArrowDown') {
       e.preventDefault()
       setFocusedIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : prev))
-    } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0))
     }
