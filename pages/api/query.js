@@ -17,7 +17,9 @@ export default async function handler(req, res) {
     const { path, ...search } = req.query
     const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${path}`)
     reqUrl.search = constructSearch(search)
-    const serverRes = await fetch(reqUrl)
+    const serverRes = await fetch(reqUrl, {
+      headers: { 'X-API-KEY': process.env.API_KEY },
+    })
     const result = await serverRes.json()
     res.status(200).send(result)
   } catch (e) {
