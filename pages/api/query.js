@@ -15,7 +15,7 @@ function constructSearch(search = {}) {
 export default async function handler(req, res) {
   try {
     const { path, ...search } = req.query
-    const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${'projects'}`)
+    const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${path}`)
     reqUrl.search = constructSearch(search)
     const serverRes = await fetch(reqUrl, {
       headers: { 'X-API-KEY': process.env.API_KEY },
