@@ -72,6 +72,10 @@ const Countries = () => {
     }
   }, [focusedIndex])
 
+  useEffect(() => {
+    setFocusedIndex(-1)
+  }, [query, countrySelection])
+
   return (
     <Box onKeyDown={handleKeyDown}>
       <Filter
