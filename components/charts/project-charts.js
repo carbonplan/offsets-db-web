@@ -96,7 +96,12 @@ const ProjectCharts = () => {
               height={expanded ? 'auto' : 0}
               easing={'linear'}
             >
-              <DetailCharts retired={retired} issued={issued} />
+              <DetailCharts
+                retired={retired}
+                issued={issued}
+                isLoading={isLoading}
+                error={error}
+              />
             </AnimateHeight>
           </Column>
         </Row>

@@ -3,7 +3,7 @@ import { alpha } from '@theme-ui/color'
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
 
-const DetailCharts = ({ issued, retired }) => {
+const DetailCharts = ({ issued, retired, isLoading, error }) => {
   return (
     <Box sx={{ my: 3 }}>
       {Object.keys(LABELS.category).map((l) => (
@@ -28,7 +28,7 @@ const DetailCharts = ({ issued, retired }) => {
             </Flex>
             <Badge sx={{ color: 'primary', background: 'muted', fontSize: 2 }}>
               {formatValue(retired.mapping[l] ?? 0)}/
-              {formatValue(issued.mapping[l])}
+              {formatValue(issued.mapping[l] ?? 0)}
             </Badge>
           </Flex>
           <Box
@@ -37,7 +37,7 @@ const DetailCharts = ({ issued, retired }) => {
               width: '100%',
               transition: 'background 0.2s',
               background:
-                Object.keys(issued.mapping).length === 0
+                isLoading || error
                   ? 'muted'
                   : (theme) => {
                       const issuedPercent =
