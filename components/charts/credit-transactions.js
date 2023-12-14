@@ -108,7 +108,7 @@ const CreditTransactions = ({
 
     const width = domain[1] - domain[0]
     if (width >= 8) {
-      return { step: 0 }
+      return { step: 2 }
     }
 
     const step = 1
