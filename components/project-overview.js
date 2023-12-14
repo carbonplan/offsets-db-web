@@ -32,6 +32,7 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
       fontFamily: 'faux',
       letterSpacing: 'faux',
       fontSize: 1,
+      mt: 2,
       mb: 5,
     },
   }
