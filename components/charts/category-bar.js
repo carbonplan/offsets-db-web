@@ -1,6 +1,6 @@
 import { Badge, Row, Column } from '@carbonplan/components'
 import { useMemo } from 'react'
-import { Box } from 'theme-ui'
+import { Box, Flex } from 'theme-ui'
 
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
@@ -44,45 +44,47 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
   const isEmpty = Object.keys(mapping).length === 0
 
   return (
-    <Row columns={[6, 8, 8, 8]} sx={{ mb: 6 }}>
+    <Row columns={[6, 8, 8, 8]} sx={{ mb: 5 }}>
       <Column
-        start={1}
-        width={1}
+        start={[1, 2, 2, 2]}
+        width={2}
         sx={{
           fontSize: 1,
           fontFamily: 'mono',
           letterSpacing: 'mono',
           color: 'secondary',
-          width: 'fit-content',
         }}
       >
-        {label}
-      </Column>
-      <Column
-        start={2}
-        width={1}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          width: 'fit-content',
-        }}
-      >
-        <Badge
+        <Flex
           sx={{
-            fontSize: [3, 4, 4, 4],
-            height: ['34px'],
-            width: 'fit-content',
-            height: 'fit-content',
-            px: 1,
-            mr: 4,
+            justifyContent: '',
+            alignItems: 'center',
+            flexWrap: 'wrap',
           }}
         >
-          {isEmpty ? '-' : formatValue(total)}
-        </Badge>
+          <Box>
+            <Badge
+              sx={{
+                fontSize: [3, 4, 4, 4],
+                height: ['34px'],
+                width: 'fit-content',
+                height: 'fit-content',
+                px: 1,
+                mr: 4,
+              }}
+            >
+              {isEmpty ? '-' : formatValue(total)}
+            </Badge>
+          </Box>
+          <Box sx={{ my: 1, width: '145px', fontSize: [0, 1, 1, 1] }}>
+            {label}
+          </Box>
+        </Flex>
       </Column>
+
       <Column
-        start={[4, 3, 3, 3]}
-        width={[3, 6, 6, 6]}
+        start={[3, 4, 4, 4]}
+        width={4}
         sx={{
           display: 'flex',
           alignItems: 'center',
