@@ -28,7 +28,7 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
       )
       if (issuedTotal) {
         colors.push('muted')
-        percentages.push(((issuedTotal - total) / issuedTotal) * 100)
+        percentages.push(100)
       }
 
       return (theme) =>
