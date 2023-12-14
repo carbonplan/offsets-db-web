@@ -4,12 +4,18 @@ import AnimateHeight from 'react-animate-height'
 
 import Tooltip from './tooltip'
 
-const TooltipWrapper = ({ children, tooltip, mt = '8px' }) => {
+const TooltipWrapper = ({ children, tooltip, mt = '8px', color, sx }) => {
   const [expanded, setExpanded] = useState(false)
 
   return (
     <>
-      <Flex sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <Flex
+        sx={{
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          ...sx,
+        }}
+      >
         {children}
         <Tooltip
           expanded={expanded}
@@ -22,7 +28,7 @@ const TooltipWrapper = ({ children, tooltip, mt = '8px' }) => {
         height={expanded ? 'auto' : 0}
         easing={'linear'}
       >
-        <Box sx={{ my: 1, fontSize: [1, 1, 1, 2] }}>{tooltip}</Box>
+        <Box sx={{ my: 1, fontSize: [1, 1, 1, 2], color }}>{tooltip}</Box>
       </AnimateHeight>
     </>
   )

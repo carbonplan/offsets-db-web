@@ -196,7 +196,7 @@ const ProjectRow = ({ project }) => {
                       height: 'fit-content',
                     }}
                   >
-                    <ProjectOverview project={project} minWidth={2} />
+                    <ProjectOverview project={project} columns={6} />
                   </Row>
                   <Row columns={1}>
                     <Button

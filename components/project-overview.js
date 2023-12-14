@@ -3,12 +3,13 @@ import { RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS, LABELS } from './constants'
+import TooltipWrapper from './tooltip-wrapper'
 
 const Empty = ({ label = 'N/A' }) => {
   return <Box>{label}</Box>
 }
 
-const ProjectOverview = ({ project, minWidth = 1 }) => {
+const ProjectOverview = ({ project, columns = 4 }) => {
   const {
     category,
     country,
@@ -35,28 +36,50 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
       mt: 2,
       mb: 5,
     },
+    tooltipWrapper: {
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      gap: 1,
+      width: 'fit-content',
+      '& svg': { stroke: color },
+    },
   }
 
   return (
     <>
-      <Column start={[1]} width={[3, 2, minWidth, minWidth]}>
-        <Box sx={sx.label}>Country</Box>
+      <Column start={[1]} width={[3, 2, 2, 2]}>
+        <TooltipWrapper
+          color={color}
+          tooltip='Project country of origin'
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Country</Box>
+        </TooltipWrapper>
         <Box sx={sx.value}>{country}</Box>
       </Column>
 
-      <Column
-        start={[4, 3, minWidth + 1, minWidth + 1]}
-        width={[3, 2, minWidth, minWidth]}
-      >
-        <Box sx={sx.label}>Status</Box>
+      <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
+        <TooltipWrapper
+          color={color}
+          tooltip='Project status inferred from credit activity'
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Status</Box>
+        </TooltipWrapper>
         <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>{status}</Box>
       </Column>
 
       <Column
-        start={[1, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
-        width={[3, 2, minWidth, minWidth]}
+        start={[1, 5, columns === 4 ? 1 : 5, columns === 4 ? 1 : 5]}
+        width={[3, 2, 2, 2]}
       >
-        <Box sx={sx.label}>Category</Box>
+        <TooltipWrapper
+          color={color}
+          tooltip='Project category inferred from protocol(s)'
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Category</Box>
+        </TooltipWrapper>
         <Box sx={sx.value}>
           {category.map((c) => (
             <Box
@@ -72,8 +95,17 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
         </Box>
       </Column>
 
-      <Column start={[4, 1, 1, 1]} width={[3, 2, minWidth, minWidth]}>
-        <Box sx={sx.label}>Protocol</Box>
+      <Column
+        start={[4, 1, columns === 4 ? 3 : 1, columns === 4 ? 3 : 1]}
+        width={[3, 2, 2, 2]}
+      >
+        <TooltipWrapper
+          color={color}
+          tooltip='Project protocol(s) listed with registry'
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Protocol</Box>
+        </TooltipWrapper>
         <Box sx={{ ...sx.value, textTransform: 'uppercase' }}>
           {protocol.length > 0 ? (
             <Flex sx={{ flexDirection: 'column', gap: 2 }}>
@@ -88,23 +120,41 @@ const ProjectOverview = ({ project, minWidth = 1 }) => {
       </Column>
 
       <Column
-        start={[1, 3, minWidth + 1, minWidth + 1]}
-        width={[3, 2, minWidth, minWidth]}
+        start={[1, 3, columns === 4 ? 1 : 3, columns === 4 ? 1 : 3]}
+        width={[3, 2, 2, 2]}
       >
-        <Box sx={sx.label}>Proponent</Box>
+        <TooltipWrapper
+          color={color}
+          tooltip='Project proponent listed on registry'
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Proponent</Box>
+        </TooltipWrapper>
         <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
       </Column>
 
       <Column
-        start={[4, 5, minWidth * 2 + 1, minWidth * 2 + 1]}
-        width={[3, 2, minWidth, minWidth]}
+        start={[4, 5, columns === 4 ? 3 : 5, columns === 4 ? 3 : 5]}
+        width={[3, 2, 2, 2]}
       >
-        <Box sx={sx.label}>Compliance</Box>
+        <TooltipWrapper
+          color={color}
+          tooltip='Whether project is enrolled in the ARB compliance program.'
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Compliance</Box>
+        </TooltipWrapper>
         <Box sx={sx.value}>{is_compliance ? 'Yes' : 'No'}</Box>
       </Column>
 
-      <Column start={[1]} width={[3, 2, minWidth * 3, minWidth * 3]}>
-        <Box sx={sx.label}>Registry</Box>
+      <Column start={[1]} width={[3, 2, 2, 2]}>
+        <TooltipWrapper
+          color={color}
+          tooltip='Link to project listing on registry'
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Registry</Box>
+        </TooltipWrapper>
         <Box sx={sx.value}>
           <Button
             href={project_url}
