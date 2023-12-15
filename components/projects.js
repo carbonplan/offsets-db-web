@@ -49,9 +49,7 @@ const Projects = () => {
 
   return (
     <>
-      <Box sx={{ display: ['block', 'block', 'block', 'block'] }}>
-        <ProjectCharts />
-      </Box>
+      <ProjectCharts />
       <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>
         <TableHead
           sort={sort}
