@@ -1,5 +1,5 @@
+import { Row, Column } from '@carbonplan/components'
 import { Triangle } from '@carbonplan/icons'
-import { Box } from 'theme-ui'
 import { useMemo, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 
@@ -53,7 +53,8 @@ const ProjectCharts = () => {
   }, [data])
 
   return (
-    <Box
+    <Row
+      columns={1}
       onClick={() => setExpanded(!expanded)}
       sx={{
         '&:hover #expander': {
@@ -70,33 +71,35 @@ const ProjectCharts = () => {
         textTransform: 'uppercase',
       }}
     >
-      <Triangle
-        id='expander'
-        sx={{
-          position: 'absolute',
-          ml: ['-8px', 50, 50, 100],
-          mt: 55,
-          width: 15,
-          stroke: 'secondary',
-          transform: `rotate(${expanded ? '-180deg' : '0deg'})`,
-          transition: '0.3s ease',
-        }}
-      />
-      <CategoryBar label='Credits issued' {...issued} expanded={expanded} />
-      <CategoryBar label='Credits retired' {...retired} expanded={expanded} />
-      <AnimateHeight
-        duration={100}
-        height={expanded ? 'auto' : 0}
-        easing={'linear'}
-      >
-        <DetailCharts
-          retired={retired}
-          issued={issued}
-          isLoading={isLoading}
-          error={error}
+      <Column start={1}>
+        <Triangle
+          id='expander'
+          sx={{
+            position: 'absolute',
+            ml: ['-8px', 50, 50, 100],
+            mt: 55,
+            width: 15,
+            stroke: 'secondary',
+            transform: `rotate(${expanded ? '-180deg' : '0deg'})`,
+            transition: '0.3s ease',
+          }}
         />
-      </AnimateHeight>
-    </Box>
+        <CategoryBar label='Credits issued' {...issued} expanded={expanded} />
+        <CategoryBar label='Credits retired' {...retired} expanded={expanded} />
+        <AnimateHeight
+          duration={100}
+          height={expanded ? 'auto' : 0}
+          easing={'linear'}
+        >
+          <DetailCharts
+            retired={retired}
+            issued={issued}
+            isLoading={isLoading}
+            error={error}
+          />
+        </AnimateHeight>
+      </Column>
+    </Row>
   )
 }
 
