@@ -32,7 +32,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
           },
           {
             key: 'vintage',
-            label: <Badge sx={{ color }}>{vintage ?? '?'}</Badge>,
+            label: vintage ?? '?',
             width: [projectView ? 1 : 0, 1, 1, 1],
           },
           {
