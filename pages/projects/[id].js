@@ -56,6 +56,10 @@ function withTimeout(promise, ms) {
   })
 }
 
+export const config = {
+  runtime: 'edge',
+}
+
 export async function getServerSideProps({ params }) {
   try {
     const res = await withTimeout(
