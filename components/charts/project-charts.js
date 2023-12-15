@@ -1,4 +1,3 @@
-import { Column, Row } from '@carbonplan/components'
 import { Triangle } from '@carbonplan/icons'
 import { Box } from 'theme-ui'
 import { useMemo, useState } from 'react'
@@ -54,9 +53,8 @@ const ProjectCharts = () => {
   }, [data])
 
   return (
-    <Row
+    <Box
       onClick={() => setExpanded(!expanded)}
-      columns={1}
       sx={{
         '&:hover #expander': {
           stroke: 'primary',
@@ -65,7 +63,7 @@ const ProjectCharts = () => {
           })`,
         },
         cursor: 'pointer',
-        mt: 4,
+        mt: 5,
         color: 'primary',
         fontFamily: 'mono',
         letterSpacing: 'mono',
@@ -98,7 +96,7 @@ const ProjectCharts = () => {
           error={error}
         />
       </AnimateHeight>
-    </Row>
+    </Box>
   )
 }
 
