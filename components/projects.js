@@ -14,7 +14,25 @@ import { formatValue, projectSorters } from './utils'
 import ProjectCharts from './charts/project-charts'
 import Pagination from './pagination'
 import ProjectRow from './project-row'
+import TooltipWrapper from './tooltip-wrapper'
 import useFetcher from './use-fetcher'
+
+const sx = {
+  footerLabel: {
+    gap: 3,
+    alignItems: 'baseline',
+    color: 'secondary',
+    textTransform: 'uppercase',
+    fontFamily: 'mono',
+    letterSpacing: 'mono',
+    whiteSpace: 'nowrap',
+  },
+  tooltip: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 2,
+  },
+}
 
 const Projects = () => {
   const {
@@ -59,8 +77,32 @@ const Projects = () => {
           values={[
             { value: 'project_id', label: 'Project ID', width: [2, 1, 1, 1] },
             { value: 'name', label: 'Name', width: 3 },
-            { value: 'issued', label: 'Issued', width: [0, 1, 1, 1] },
-            { value: 'retired', label: 'Retired', width: [0, 1, 1, 1] },
+            {
+              value: 'issued',
+              key: 'issued',
+              label: (
+                <TooltipWrapper
+                  tooltip='Total number of credits issued'
+                  sx={sx.tooltip}
+                >
+                  Issued
+                </TooltipWrapper>
+              ),
+              width: [0, 1, 1, 1],
+            },
+            {
+              value: 'retired',
+              key: 'retired',
+              label: (
+                <TooltipWrapper
+                  tooltip='Total number of credits retired'
+                  sx={sx.tooltip}
+                >
+                  Retired
+                </TooltipWrapper>
+              ),
+              width: [0, 1, 1, 1],
+            },
             { value: 'listed_at', label: 'Listed', width: [0, 1, 1, 1] },
             { value: 'details', label: 'Details', width: [0, 1, 1, 1] },
           ]}
@@ -113,17 +155,7 @@ const Projects = () => {
           values={[
             {
               label: (
-                <Flex
-                  sx={{
-                    gap: 3,
-                    alignItems: 'baseline',
-                    color: 'secondary',
-                    textTransform: 'uppercase',
-                    fontFamily: 'mono',
-                    letterSpacing: 'mono',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
+                <Flex sx={sx.footerLabel}>
                   Total
                   <Badge sx={{ whiteSpace: 'nowrap' }}>
                     {unfilteredData
@@ -138,17 +170,7 @@ const Projects = () => {
             },
             {
               label: (
-                <Flex
-                  sx={{
-                    gap: 3,
-                    alignItems: 'baseline',
-                    color: 'secondary',
-                    textTransform: 'uppercase',
-                    fontFamily: 'mono',
-                    letterSpacing: 'mono',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
+                <Flex sx={sx.footerLabel}>
                   Selected
                   <Badge sx={{ flexShrink: 0 }}>
                     {data ? formatValue(data.pagination.total_entries) : '-'}
