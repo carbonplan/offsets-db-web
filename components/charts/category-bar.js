@@ -46,17 +46,7 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
   return (
     <>
       <Row columns={[6, 8, 8, 8]}>
-        <Column
-          start={[1, 2, 2, 2]}
-          width={2}
-          sx={{
-            fontSize: 1,
-            fontFamily: 'mono',
-            letterSpacing: 'mono',
-            color: 'secondary',
-            ml: [3, 0, 0, 0],
-          }}
-        >
+        <Column start={[1, 2, 2, 2]} width={2}>
           <Badge
             sx={{
               fontSize: [3, 4, 4, 4],
@@ -97,7 +87,16 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
         }}
       >
         <Column start={[1, 2, 2, 2]} width={1}>
-          <Box sx={{ my: 1, width: '145px', fontSize: [0, 1, 1, 1] }}>
+          <Box
+            sx={{
+              mt: 1,
+              width: '145px',
+              fontSize: 1,
+              fontFamily: 'mono',
+              letterSpacing: 'mono',
+              color: 'secondary',
+            }}
+          >
             {label}
           </Box>
         </Column>
