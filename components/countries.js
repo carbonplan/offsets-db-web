@@ -17,7 +17,7 @@ const Countries = () => {
       return { filtered: [], hidden }
     }
 
-    const filtered = COUNTRIES.filter(
+    let filtered = COUNTRIES.filter(
       (c) =>
         !countries?.includes(c) &&
         c.toLocaleLowerCase().includes(query.toLocaleLowerCase())

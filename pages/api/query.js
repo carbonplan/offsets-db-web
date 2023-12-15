@@ -1,25 +1,20 @@
-function constructSearch(search = {}) {
-  const params = new URLSearchParams()
+import { NextResponse } from 'next/server'
 
-  Object.keys(search).forEach((key) => {
-    const value = search[key]
-    if (Array.isArray(value)) {
-      value.forEach((entry) => params.append(key, entry))
-    } else {
-      params.append(key, value)
-    }
-  })
+function constructUrl(req) {
+  const { searchParams } = new URL(req.url)
+  const path = searchParams.get('path')
+  const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${path}`)
+  searchParams.delete('path')
+  reqUrl.search = searchParams.toString()
 
-  return params.toString()
+  return reqUrl
 }
 
-export const runtime = 'edge' // 'nodejs' is the default
+export const runtime = 'experimental-edge' // 'nodejs' is the default
 
-export default async function handler(req, res) {
+export default async function handler(req) {
   try {
-    const { path, ...search } = req.query
-    const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${path}`)
-    reqUrl.search = constructSearch(search)
+    const reqUrl = constructUrl(req)
     const serverRes = await fetch(reqUrl, {
       headers: { 'X-API-KEY': process.env.API_KEY },
     })
@@ -29,9 +24,12 @@ export default async function handler(req, res) {
       )
     }
     const result = await serverRes.json()
-    res.setHeader('Cache-Control', 'public, s-maxage=604800') // 7 days
-    res.status(200).send(result)
+    const res = NextResponse.json(result, {
+      headers: new Headers([['Cache-Control', 'public, s-maxage=604800']]), // 7 days
+    })
+    return res
   } catch (e) {
-    res.status(400).send({ error: e.message })
+    console.log('ERR', e.message)
+    NextResponse.status(400).send({ error: e.message })
   }
 }
