@@ -14,6 +14,24 @@ import { formatValue } from './utils'
 import useFetcher from './use-fetcher'
 import CreditRow from './credit-row'
 import Pagination from './pagination'
+import TooltipWrapper from './tooltip-wrapper'
+
+const sx = {
+  footerLabel: {
+    gap: 3,
+    alignItems: 'baseline',
+    color: 'secondary',
+    textTransform: 'uppercase',
+    fontFamily: 'mono',
+    letterSpacing: 'mono',
+    whiteSpace: 'nowrap',
+  },
+  tooltip: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 2,
+  },
+}
 
 const Credits = ({ project_id, color, borderTop = true }) => {
   const { registry, category, complianceOnly, search, transactionBounds } =
@@ -43,10 +61,27 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         sort={sort}
         setSort={setSort}
         values={[
-          { value: 'transaction_date', label: 'Date', width: 2 },
+          {
+            value: 'transaction_date',
+            key: 'transaction_date',
+            label: (
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip='Recorded transaction date'
+              >
+                Date
+              </TooltipWrapper>
+            ),
+            width: 2,
+          },
           {
             value: 'vintage',
-            label: 'Vintage',
+            key: 'vintage',
+            label: (
+              <TooltipWrapper sx={sx.tooltip} tooltip='Recorded credit vintage'>
+                Vintage
+              </TooltipWrapper>
+            ),
             width: [project_id ? 1 : 0, 1, 1, 1],
           },
           {
@@ -117,17 +152,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         values={[
           {
             label: (
-              <Flex
-                sx={{
-                  gap: 3,
-                  alignItems: 'baseline',
-                  color: 'secondary',
-                  textTransform: 'uppercase',
-                  fontFamily: 'mono',
-                  letterSpacing: 'mono',
-                  whiteSpace: 'nowrap',
-                }}
-              >
+              <Flex sx={sx.footerLabel}>
                 Total
                 <Badge sx={{ color, whiteSpace: 'nowrap', flexShrink: 0 }}>
                   {unfilteredData
