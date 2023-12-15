@@ -1,4 +1,6 @@
-import { Column, Row, Expander } from '@carbonplan/components'
+import { Column, Row } from '@carbonplan/components'
+import { Triangle } from '@carbonplan/icons'
+import { Box } from 'theme-ui'
 import { useMemo, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 
@@ -58,9 +60,12 @@ const ProjectCharts = () => {
         sx={{
           '&:hover #expander': {
             stroke: 'primary',
+            transform: `translateY(${expanded ? '-2px' : '2px'}) rotate(${
+              expanded ? '-60deg' : '0deg'
+            })`,
           },
           cursor: 'pointer',
-          mt: 6,
+          mt: 5,
           color: 'primary',
           fontFamily: 'mono',
           letterSpacing: 'mono',
@@ -69,11 +74,23 @@ const ProjectCharts = () => {
       >
         <Row onClick={() => setExpanded(!expanded)} columns={[6, 8, 8, 8]}>
           <Column start={1}>
-            <Expander
-              id='expander'
-              sx={{ position: 'absolute', ml: [-20, -20, -40, -40], mt: 50 }}
-              value={expanded}
-            />
+            <Box
+              sx={{
+                position: 'absolute',
+                ml: ['-8px', 40, 40, 40],
+                mt: 55,
+              }}
+            >
+              <Triangle
+                id='expander'
+                sx={{
+                  width: 15,
+                  stroke: 'secondary',
+                  transform: `rotate(${expanded ? '-60deg' : '0deg'})`,
+                  transition: '0.3s ease',
+                }}
+              />
+            </Box>
           </Column>
 
           <Column start={1} width={[6, 8, 8, 8]}>
