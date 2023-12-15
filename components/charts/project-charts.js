@@ -54,76 +54,51 @@ const ProjectCharts = () => {
   }, [data])
 
   return (
-    <>
-      <Row
-        columns={1}
+    <Row
+      onClick={() => setExpanded(!expanded)}
+      columns={1}
+      sx={{
+        '&:hover #expander': {
+          stroke: 'primary',
+          transform: `translateY(${expanded ? '-2px' : '2px'}) rotate(${
+            expanded ? '-60deg' : '0deg'
+          })`,
+        },
+        cursor: 'pointer',
+        mt: 4,
+        color: 'primary',
+        fontFamily: 'mono',
+        letterSpacing: 'mono',
+        textTransform: 'uppercase',
+      }}
+    >
+      <Triangle
+        id='expander'
         sx={{
-          '&:hover #expander': {
-            stroke: 'primary',
-            transform: `translateY(${expanded ? '-2px' : '2px'}) rotate(${
-              expanded ? '-60deg' : '0deg'
-            })`,
-          },
-          cursor: 'pointer',
-          mt: 5,
-          color: 'primary',
-          fontFamily: 'mono',
-          letterSpacing: 'mono',
-          textTransform: 'uppercase',
+          position: 'absolute',
+          ml: ['-8px', 50, 50, 100],
+          mt: 55,
+          width: 15,
+          stroke: 'secondary',
+          transform: `rotate(${expanded ? '-60deg' : '0deg'})`,
+          transition: '0.3s ease',
         }}
+      />
+      <CategoryBar label='Credits issued' {...issued} expanded={expanded} />
+      <CategoryBar label='Credits retired' {...retired} expanded={expanded} />
+      <AnimateHeight
+        duration={100}
+        height={expanded ? 'auto' : 0}
+        easing={'linear'}
       >
-        <Row onClick={() => setExpanded(!expanded)} columns={[6, 8, 8, 8]}>
-          <Column start={1}>
-            <Box
-              sx={{
-                position: 'absolute',
-                ml: ['-8px', 40, 40, 40],
-                mt: 55,
-              }}
-            >
-              <Triangle
-                id='expander'
-                sx={{
-                  width: 15,
-                  stroke: 'secondary',
-                  transform: `rotate(${expanded ? '-60deg' : '0deg'})`,
-                  transition: '0.3s ease',
-                }}
-              />
-            </Box>
-          </Column>
-
-          <Column start={1} width={[6, 8, 8, 8]}>
-            <CategoryBar
-              label='Credits issued'
-              {...issued}
-              expanded={expanded}
-            />
-          </Column>
-        </Row>
-        <Row onClick={() => setExpanded(!expanded)} columns={[6, 8, 8, 8]}>
-          <Column start={1} width={[6, 8, 8, 8]}>
-            <CategoryBar
-              label='Credits retired'
-              {...retired}
-              expanded={expanded}
-            />
-            <AnimateHeight
-              duration={100}
-              height={expanded ? 'auto' : 0}
-              easing={'linear'}
-            >
-              <DetailCharts
-                retired={retired}
-                issued={issued}
-                isLoading={isLoading}
-                error={error}
-              />
-            </AnimateHeight>
-          </Column>
-        </Row>
-      </Row>
-    </>
+        <DetailCharts
+          retired={retired}
+          issued={issued}
+          isLoading={isLoading}
+          error={error}
+        />
+      </AnimateHeight>
+    </Row>
   )
 }
 
