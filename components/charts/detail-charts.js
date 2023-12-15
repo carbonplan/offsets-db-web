@@ -42,7 +42,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
           </Badge>
         </Column>
         <Column
-          start={[5, 6, 6, 6]}
+          start={[5, 7, 7, 7]}
           width={2}
           sx={{ justifyContent: 'end', display: 'flex', mb: 1 }}
         >
@@ -58,7 +58,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
         </Column>
       </Row>
       <Row columns={[6, 8, 8, 8]} sx={{ mb: 4 }}>
-        <Column start={[1, 2, 2, 2]} width={3}>
+        <Column start={[1, 1, 1, 1]} width={[3, 4, 4, 4]}>
           {Object.keys(LABELS.category)
             .filter((l) => Boolean(issued.mapping[l]))
             .map((l) => (
@@ -104,7 +104,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
               </Box>
             ))}
         </Column>
-        <Column start={[4, 5, 5, 5]} width={3}>
+        <Column start={[4, 5, 5, 5]} width={[3, 4, 4, 4]}>
           {Object.keys(LABELS.category)
             .filter((l) => Boolean(issued.mapping[l]))
             .map((l) => (
@@ -131,9 +131,12 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                       color: COLORS[l],
                       backgroundColor: alpha(COLORS[l], 0.3),
                       fontSize: 0,
+                      display: 'flex',
+                      flexWrap: 'wrap',
                     }}
                   >
-                    {formatValue(retired.mapping[l] ?? 0)}/
+                    {formatValue(retired.mapping[l] ?? 0)}
+                    <span>/</span>
                     {formatValue(issued.mapping[l] ?? 0)}
                   </Badge>
                 </Flex>
