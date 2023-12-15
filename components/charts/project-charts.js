@@ -1,5 +1,4 @@
-import { Row, Column } from '@carbonplan/components'
-import { Triangle } from '@carbonplan/icons'
+import { Row, Column, Expander } from '@carbonplan/components'
 import { useMemo, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 
@@ -59,9 +58,6 @@ const ProjectCharts = () => {
       sx={{
         '&:hover #expander': {
           stroke: 'primary',
-          transform: `translateY(${expanded ? '-2px' : '2px'}) rotate(${
-            expanded ? '-180deg' : '0deg'
-          })`,
         },
         cursor: 'pointer',
         mt: 5,
@@ -72,19 +68,12 @@ const ProjectCharts = () => {
       }}
     >
       <Column start={1}>
-        <Triangle
-          id='expander'
-          sx={{
-            position: 'absolute',
-            ml: ['-8px', 50, 50, 100],
-            mt: 55,
-            width: 15,
-            stroke: 'secondary',
-            transform: `rotate(${expanded ? '-180deg' : '0deg'})`,
-            transition: '0.3s ease',
-          }}
+        <CategoryBar
+          label='Credits issued'
+          {...issued}
+          expanded={expanded}
+          showExpander
         />
-        <CategoryBar label='Credits issued' {...issued} expanded={expanded} />
         <CategoryBar label='Credits retired' {...retired} expanded={expanded} />
         <AnimateHeight
           duration={100}

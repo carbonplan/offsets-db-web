@@ -1,13 +1,20 @@
-import { Badge, Row, Column } from '@carbonplan/components'
+import { Badge, Row, Column, Expander } from '@carbonplan/components'
 import { useMemo } from 'react'
 import { Box } from 'theme-ui'
 
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
 
-const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
+const CategoryBar = ({
+  label,
+  total,
+  mapping,
+  issuedTotal,
+  expanded,
+  showExpander,
+}) => {
   const background = useMemo(() => {
-    if (Object.keys(mapping).length === 0) {
+    if (Object.keys(mapping).length === 0 || total === 0) {
       return 'muted'
     } else {
       const colors = Object.keys(LABELS.category).map((key) => COLORS[key])
@@ -47,6 +54,18 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
     <>
       <Row columns={[6, 8, 8, 8]}>
         <Column start={[1, 2, 2, 2]} width={2}>
+          <Expander
+            value={expanded}
+            id='expander'
+            sx={{
+              ml: [-3, -5, -5, -5],
+              width: [18, 22, 22, 22],
+              position: 'absolute',
+              mt: [0, 1, 1, 1],
+              display: !showExpander ? 'none' : null,
+            }}
+          />
+
           <Badge
             sx={{
               fontSize: [3, 4, 4, 4],
@@ -83,7 +102,6 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
         columns={[6, 8, 8, 8]}
         sx={{
           mb: 3,
-          ml: [3, 0, 0, 0],
         }}
       >
         <Column start={[1, 2, 2, 2]} width={1}>
