@@ -59,7 +59,7 @@ const ProjectCharts = () => {
         '&:hover #expander': {
           stroke: 'primary',
           transform: `translateY(${expanded ? '-2px' : '2px'}) rotate(${
-            expanded ? '-60deg' : '0deg'
+            expanded ? '-180deg' : '0deg'
           })`,
         },
         cursor: 'pointer',
@@ -78,7 +78,7 @@ const ProjectCharts = () => {
           mt: 55,
           width: 15,
           stroke: 'secondary',
-          transform: `rotate(${expanded ? '-60deg' : '0deg'})`,
+          transform: `rotate(${expanded ? '-180deg' : '0deg'})`,
           transition: '0.3s ease',
         }}
       />
