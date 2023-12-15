@@ -1,6 +1,6 @@
 import { Badge, Row, Column } from '@carbonplan/components'
 import { useMemo } from 'react'
-import { Box, Flex } from 'theme-ui'
+import { Box } from 'theme-ui'
 
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
@@ -44,62 +44,65 @@ const CategoryBar = ({ label, total, mapping, issuedTotal }) => {
   const isEmpty = Object.keys(mapping).length === 0
 
   return (
-    <Row columns={[6, 8, 8, 8]} sx={{ mb: 5 }}>
-      <Column
-        start={[1, 2, 2, 2]}
-        width={2}
-        sx={{
-          fontSize: 1,
-          fontFamily: 'mono',
-          letterSpacing: 'mono',
-          color: 'secondary',
-        }}
-      >
-        <Flex
+    <>
+      <Row columns={[6, 8, 8, 8]}>
+        <Column
+          start={[1, 2, 2, 2]}
+          width={2}
           sx={{
-            justifyContent: '',
-            alignItems: 'center',
-            flexWrap: 'wrap',
+            fontSize: 1,
+            fontFamily: 'mono',
+            letterSpacing: 'mono',
+            color: 'secondary',
+            ml: [3, 0, 0, 0],
           }}
         >
-          <Box>
-            <Badge
-              sx={{
-                fontSize: [3, 4, 4, 4],
-                height: ['34px'],
-                width: 'fit-content',
-                height: 'fit-content',
-                px: 1,
-                mr: 4,
-              }}
-            >
-              {isEmpty ? '-' : formatValue(total)}
-            </Badge>
-          </Box>
+          <Badge
+            sx={{
+              fontSize: [3, 4, 4, 4],
+              height: ['34px'],
+              width: 'fit-content',
+              height: 'fit-content',
+              px: 1,
+              mr: 4,
+            }}
+          >
+            {isEmpty ? '-' : formatValue(total)}
+          </Badge>
+        </Column>
+
+        <Column
+          start={[3, 4, 4, 4]}
+          width={4}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              width: '100%',
+              height: '28px',
+              transition: 'background 0.2s',
+              background,
+            }}
+          />
+        </Column>
+      </Row>
+      <Row
+        columns={[6, 8, 8, 8]}
+        sx={{
+          mb: 3,
+          ml: [3, 0, 0, 0],
+        }}
+      >
+        <Column start={[1, 2, 2, 2]} width={1}>
           <Box sx={{ my: 1, width: '145px', fontSize: [0, 1, 1, 1] }}>
             {label}
           </Box>
-        </Flex>
-      </Column>
-
-      <Column
-        start={[3, 4, 4, 4]}
-        width={4}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <Box
-          sx={{
-            width: '100%',
-            height: '28px',
-            transition: 'background 0.2s',
-            background,
-          }}
-        />
-      </Column>
-    </Row>
+        </Column>
+      </Row>
+    </>
   )
 }
 
