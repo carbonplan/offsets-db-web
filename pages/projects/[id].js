@@ -60,7 +60,12 @@ export const config = {
   runtime: 'edge',
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, res: response }) {
+  response.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10,  s-maxage=604800' // 7 days
+  )
+
   try {
     const res = await withTimeout(
       fetch(

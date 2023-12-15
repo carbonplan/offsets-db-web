@@ -29,6 +29,7 @@ export default async function handler(req, res) {
       )
     }
     const result = await serverRes.json()
+    res.setHeader('Cache-Control', 'public, s-maxage=604800') // 7 days
     res.status(200).send(result)
   } catch (e) {
     res.status(400).send({ error: e.message })
