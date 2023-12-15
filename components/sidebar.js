@@ -1,5 +1,5 @@
 import { Column, Link } from '@carbonplan/components'
-import { Box, Divider } from 'theme-ui'
+import { Link as ThemedLink, Box, Divider } from 'theme-ui'
 
 const Sidebar = ({ children }) => {
   return (
@@ -43,7 +43,7 @@ const Sidebar = ({ children }) => {
           largest offset registries: Verra (VCS), Gold Standard (GLD), Global
           Carbon Council (GCC), American Carbon Registry (ACR), Climate Action
           Reserve (CAR), and ART TREES (ART). Read the latest{' '}
-          <Link href='/updates'>updates</Link>, view the{' '}
+          <ThemedLink href='/updates'>updates</ThemedLink>, view the{' '}
           <Link href='#'>documentation</Link> or download the{' '}
           <Link href='https://github.com/carbonplan/offsets-db-data/blob/main/docs/data-access.md'>
             data
