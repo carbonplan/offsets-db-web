@@ -54,17 +54,18 @@ const CategoryBar = ({
     <>
       <Row columns={[6, 8, 8, 8]}>
         <Column start={[1, 2, 2, 2]} width={2}>
-          <Expander
-            value={expanded}
-            id='expander'
-            sx={{
-              ml: [-3, -5, -5, -5],
-              width: [18, 22, 22, 22],
-              position: 'absolute',
-              mt: [0, 1, 1, 1],
-              display: !showExpander ? 'none' : null,
-            }}
-          />
+          {showExpander && (
+            <Expander
+              value={expanded}
+              id='expander'
+              sx={{
+                ml: [-3, -5, -5, -5],
+                width: [18, 22, 22, 22],
+                position: 'absolute',
+                mt: [0, 1, 1, 1],
+              }}
+            />
+          )}
 
           <Badge
             sx={{
