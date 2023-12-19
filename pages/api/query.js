@@ -10,7 +10,7 @@ function constructUrl(req) {
   return reqUrl
 }
 
-export const runtime = 'experimental-edge' // 'nodejs' is the default
+export const runtime = 'edge' // 'nodejs' is the default
 
 export default async function handler(req) {
   try {
