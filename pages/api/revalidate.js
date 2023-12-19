@@ -35,6 +35,7 @@ const limiter = rateLimit({
   uniqueTokenPerInterval: 10, // Max 10 users per second
 })
 
+// TODO: allow CORS
 export default async function handler(req, res) {
   try {
     await limiter.check(res, 10, 'CACHE_TOKEN')
