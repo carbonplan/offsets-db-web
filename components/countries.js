@@ -17,18 +17,18 @@ const Countries = () => {
       return { filtered: [], hidden }
     }
 
-    const f = COUNTRIES.filter(
+    let filtered = COUNTRIES.filter(
       (c) =>
         !countries?.includes(c) &&
         c.toLocaleLowerCase().includes(query.toLocaleLowerCase())
     )
 
-    if (f.length > 5) {
-      hidden = f.length - 5
-      f = f.slice(0, 5)
+    if (filtered.length > 5) {
+      hidden = filtered.length - 5
+      filtered = filtered.slice(0, 5)
     }
 
-    return { filtered: f, hidden }
+    return { filtered, hidden }
   }, [countries, query])
 
   const addCountry = useCallback(
