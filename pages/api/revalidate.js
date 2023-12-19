@@ -1,4 +1,3 @@
-import { revalidatePath } from 'next/cache'
 import { LRUCache } from 'lru-cache'
 
 // Based on https://github.com/vercel/next.js/tree/canary/examples/api-routes-rate-limit
