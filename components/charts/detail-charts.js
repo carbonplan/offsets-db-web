@@ -6,13 +6,15 @@ import { formatValue } from '../utils'
 
 const DetailCharts = ({ issued, retired, isLoading, error }) => {
   const createRetIssGraph = (theme, l) => {
-    const retiredPercent =
-      ((retired.mapping[l] ?? 0) / (issued.mapping[l] ?? 1)) * 100
+    const issuedPercent = ((issued.mapping[l] ?? 0) / issued.total) * 100
+    const retiredPercent = ((retired.mapping[l] ?? 0) / issued.total) * 100
     return `linear-gradient(to right, 
         ${theme.rawColors[COLORS[l]]} 0%, 
-        ${theme.rawColors[COLORS[l]]} ${retiredPercent}%, 
-        ${alpha(theme.rawColors[COLORS[l]], 0.5)(theme)} ${retiredPercent}%, 
-        ${alpha(theme.rawColors[COLORS[l]], 0.5)(theme)}100%)`
+        ${theme.rawColors[COLORS[l]]} ${retiredPercent}%,
+        ${alpha(theme.rawColors[COLORS[l]], 0.3)(theme)} ${retiredPercent}%, 
+        ${alpha(theme.rawColors[COLORS[l]], 0.3)(theme)} ${issuedPercent}%,
+        ${theme.colors.muted} ${issuedPercent}%, 
+        ${theme.colors.muted} 100%)`
   }
 
   const createIssuedGraph = (theme, l) => {
@@ -25,39 +27,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
 
   return (
     <>
-      <Row columns={[6, 8, 8, 8]}>
-        <Column
-          start={[2, 3, 3, 3]}
-          width={2}
-          sx={{ justifyContent: 'end', display: 'flex', mb: 1 }}
-        >
-          <Badge
-            sx={{
-              color: 'secondary',
-              background: 'muted',
-              fontSize: 0,
-            }}
-          >
-            issued
-          </Badge>
-        </Column>
-        <Column
-          start={[5, 7, 7, 7]}
-          width={2}
-          sx={{ justifyContent: 'end', display: 'flex', mb: 1 }}
-        >
-          <Badge
-            sx={{
-              color: 'secondary',
-              background: 'muted',
-              fontSize: 0,
-            }}
-          >
-            ret/iss
-          </Badge>
-        </Column>
-      </Row>
-      <Row columns={[6, 8, 8, 8]} sx={{ mb: 4 }}>
+      <Row columns={[6, 8, 8, 8]} sx={{ mb: 5, mt: -5 }}>
         <Column start={[1, 1, 1, 1]} width={[3, 4, 4, 4]}>
           {Object.keys(LABELS.category)
             .filter((l) => Boolean(issued.mapping[l]))
@@ -66,7 +36,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                 <Flex
                   sx={{
                     justifyContent: 'space-between',
-                    fontSize: 1,
+                    fontSize: 2,
                     mb: 1,
                   }}
                 >
@@ -78,13 +48,14 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                         backgroundColor: COLORS[l],
                       }}
                     />
-                    <Box sx={{ fontSize: 0 }}>{LABELS.category[l]}</Box>
+                    <Box sx={{ fontSize: 1 }}>{LABELS.category[l]}</Box>
                   </Flex>
                   <Badge
                     sx={{
                       color: COLORS[l],
                       backgroundColor: alpha(COLORS[l], 0.3),
-                      fontSize: 0,
+                      fontSize: 2,
+                      mb: '3px',
                     }}
                   >
                     {formatValue(issued.mapping[l] ?? 0)}
@@ -124,20 +95,19 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                         backgroundColor: COLORS[l],
                       }}
                     />
-                    <Box sx={{ fontSize: 0 }}>{LABELS.category[l]}</Box>
+                    <Box sx={{ fontSize: 1 }}>{LABELS.category[l]}</Box>
                   </Flex>
                   <Badge
                     sx={{
                       color: COLORS[l],
                       backgroundColor: alpha(COLORS[l], 0.3),
-                      fontSize: 0,
+                      fontSize: 2,
                       display: 'flex',
                       flexWrap: 'wrap',
+                      mb: '3px',
                     }}
                   >
                     {formatValue(retired.mapping[l] ?? 0)}
-                    <span>/</span>
-                    {formatValue(issued.mapping[l] ?? 0)}
                   </Badge>
                 </Flex>
                 <Box

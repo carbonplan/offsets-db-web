@@ -92,7 +92,6 @@ const ProjectCharts = () => {
             stroke: 'primary',
           },
           cursor: 'pointer',
-          mt: 3,
           color: 'primary',
           fontFamily: 'mono',
           letterSpacing: 'mono',

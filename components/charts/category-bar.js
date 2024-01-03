@@ -75,7 +75,7 @@ const CategoryBar = ({
         columns={1}
         sx={{
           mt: 5,
-          mb: showExpander ? 3 : 0,
+          mb: 6,
         }}
       >
         <Column
@@ -91,6 +91,7 @@ const CategoryBar = ({
               value={expanded}
               id='expander'
               sx={{
+                display: ['none', 'block', 'block', 'block'],
                 ml: [-3, -4, -5, -5],
                 width: [18, 22, 22, 22],
                 position: 'absolute',
