@@ -36,6 +36,7 @@ const TableRow = ({
           sx={{
             fontSize: 1,
             textAlign: 'left',
+            alignSelf: 'center',
             color: 'secondary',
             fontFamily: 'body',
             mb: 3,
