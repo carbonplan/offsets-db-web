@@ -52,29 +52,53 @@ const ProjectCharts = () => {
   }, [data])
 
   return (
-    <Row
-      columns={1}
-      onClick={() => setExpanded(!expanded)}
-      sx={{
-        '&:hover #expander': {
-          stroke: 'primary',
-        },
-        cursor: 'pointer',
-        mt: 5,
-        color: 'primary',
-        fontFamily: 'mono',
-        letterSpacing: 'mono',
-        textTransform: 'uppercase',
-      }}
-    >
-      <Column start={1}>
-        <CategoryBar
-          label='Credits issued'
-          {...issued}
-          expanded={expanded}
-          showExpander
-        />
-        <CategoryBar label='Credits retired' {...retired} expanded={expanded} />
+    <>
+      <Row
+        columns={[6, 8, 8, 8]}
+        onClick={() => setExpanded(!expanded)}
+        sx={{
+          '&:hover #expander': {
+            stroke: 'primary',
+          },
+          cursor: 'pointer',
+          color: 'primary',
+          fontFamily: 'mono',
+          letterSpacing: 'mono',
+          textTransform: 'uppercase',
+          mt: 7,
+        }}
+      >
+        <Column start={1} width={[6, 4, 4, 4]}>
+          <CategoryBar
+            label='Credits issued'
+            {...issued}
+            expanded={expanded}
+            showExpander
+          />
+        </Column>
+        <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
+          <CategoryBar
+            label='Credits retired'
+            {...retired}
+            expanded={expanded}
+          />
+        </Column>
+      </Row>
+      <Row
+        columns={1}
+        sx={{
+          display: ['none', 'block', 'block', 'block'],
+          '&:hover #expander': {
+            stroke: 'primary',
+          },
+          cursor: 'pointer',
+          mt: 3,
+          color: 'primary',
+          fontFamily: 'mono',
+          letterSpacing: 'mono',
+          textTransform: 'uppercase',
+        }}
+      >
         <AnimateHeight
           duration={100}
           height={expanded ? 'auto' : 0}
@@ -87,8 +111,8 @@ const ProjectCharts = () => {
             error={error}
           />
         </AnimateHeight>
-      </Column>
-    </Row>
+      </Row>
+    </>
   )
 }
 
