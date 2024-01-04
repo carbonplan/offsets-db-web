@@ -65,7 +65,7 @@ const ProjectCharts = () => {
           fontFamily: 'mono',
           letterSpacing: 'mono',
           textTransform: 'uppercase',
-          mt: 7,
+          mt: [5, 5, 7, 7],
         }}
       >
         <Column start={1} width={[6, 4, 4, 4]}>
