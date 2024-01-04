@@ -105,7 +105,7 @@ const Queries = () => {
           <Box sx={sx.label}>Search</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Search all projects by ID or name.'>
+          <TooltipWrapper tooltip='Search projects by ID or name.'>
             <Input
               placeholder='enter search term'
               size='xs'
@@ -126,7 +126,7 @@ const Queries = () => {
           <Box sx={sx.label}>Registry</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by registry: Verra (VCS), Gold Standard (GLD), Global Carbon Council (GCC), American Carbon Registry (ACR), Climate Action Reserve (CAR), and ART TREES (ART).'>
+          <TooltipWrapper tooltip='Filter projects by registry.'>
             <Filter
               values={registry}
               setValues={setRegistry}
@@ -142,7 +142,7 @@ const Queries = () => {
           <Box sx={sx.label}>Category</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by category inferred from protocol.'>
+          <TooltipWrapper tooltip='Filter projects by category.'>
             <Category />
           </TooltipWrapper>
         </Column>
@@ -162,7 +162,7 @@ const Queries = () => {
           <Box sx={sx.label}>Program</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects based on whether they are enrolled in a compliance program (ARB) or voluntary programs.'>
+          <TooltipWrapper tooltip='Filter projects by market.'>
             <Filter
               values={{
                 all: typeof complianceOnly !== 'boolean',
