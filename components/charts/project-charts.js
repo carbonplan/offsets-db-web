@@ -55,7 +55,11 @@ const ProjectCharts = () => {
     <>
       <Row
         columns={[6, 8, 8, 8]}
-        onClick={() => setExpanded(!expanded)}
+        onClick={() => {
+          if (Object.keys(issued.mapping).length > 0) {
+            setExpanded(!expanded)
+          }
+        }}
         sx={{
           '&:hover #expander': {
             stroke: 'primary',
@@ -73,7 +77,7 @@ const ProjectCharts = () => {
             label='Credits issued'
             {...issued}
             expanded={expanded}
-            showExpander
+            showExpander={Object.keys(issued.mapping).length > 0}
           />
         </Column>
         <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
