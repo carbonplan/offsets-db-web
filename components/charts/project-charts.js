@@ -51,12 +51,14 @@ const ProjectCharts = () => {
     )
   }, [data])
 
+  const issuedKeys = Object.keys(issued.mapping)
+
   return (
     <>
       <Row
         columns={[6, 8, 8, 8]}
         onClick={() => {
-          if (Object.keys(issued.mapping).length > 0) {
+          if (issuedKeys.length) {
             setExpanded(!expanded)
           }
         }}
@@ -64,7 +66,7 @@ const ProjectCharts = () => {
           '&:hover #expander': {
             stroke: 'primary',
           },
-          cursor: 'pointer',
+          cursor: issuedKeys.length ? 'pointer' : null,
           color: 'primary',
           fontFamily: 'mono',
           letterSpacing: 'mono',
@@ -77,7 +79,7 @@ const ProjectCharts = () => {
             label='Credits issued'
             {...issued}
             expanded={expanded}
-            showExpander={Object.keys(issued.mapping).length > 0}
+            showExpander={issuedKeys.length > 0}
           />
         </Column>
         <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
