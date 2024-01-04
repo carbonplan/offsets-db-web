@@ -50,7 +50,7 @@ const Projects = () => {
   return (
     <>
       <ProjectCharts />
-      <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>
+      <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse', mt: 5 }}>
         <TableHead
           sort={sort}
           setSort={setSort}

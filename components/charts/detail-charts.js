@@ -121,7 +121,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
 
   return (
     <>
-      <Row columns={[6, 8, 8, 8]} sx={{ mb: 5, mt: -5 }}>
+      <Row columns={[6, 8, 8, 8]} sx={{ mb: 5 }}>
         {chartColumn(false)}
         {chartColumn(true)}
       </Row>

@@ -75,7 +75,6 @@ const CategoryBar = ({
         columns={1}
         sx={{
           mt: 5,
-          mb: 6,
         }}
       >
         <Column
