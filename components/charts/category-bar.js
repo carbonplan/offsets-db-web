@@ -53,7 +53,11 @@ const CategoryBar = ({
   return (
     <>
       <Row columns={[6, 8, 8, 8]}>
-        <Column start={1} width={8}>
+        <Column
+          start={1}
+          width={8}
+          sx={{ mt: [!showExpander ? 5 : 0, 0, 0, 0] }} //add space when stacked
+        >
           <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
             <Box
               sx={{
