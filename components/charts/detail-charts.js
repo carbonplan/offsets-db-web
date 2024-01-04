@@ -87,15 +87,17 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
 
               <Badge
                 sx={{
-                  color: isLoading ? 'muted' : COLORS[l],
+                  color: isLoading ? 'primary' : COLORS[l],
                   backgroundColor: isLoading ? 'muted' : alpha(COLORS[l], 0.3),
                   fontSize: 2,
                   mb: '3px',
                 }}
               >
-                {formatValue(
-                  (isRetired ? retired.mapping[l] : issued.mapping[l]) ?? 0
-                )}
+                {isLoading
+                  ? '-'
+                  : formatValue(
+                      isRetired ? retired.mapping[l] : issued.mapping[l]
+                    ) ?? 0}
               </Badge>
             </Flex>
             <Box
