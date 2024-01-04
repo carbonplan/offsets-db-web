@@ -1,4 +1,4 @@
-import { Row, Column, Expander } from '@carbonplan/components'
+import { Row, Column } from '@carbonplan/components'
 import { useMemo, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 
