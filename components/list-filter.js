@@ -2,13 +2,10 @@ import { Badge, Button, Filter, Input } from '@carbonplan/components'
 import { X } from '@carbonplan/icons'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Box, Flex, IconButton } from 'theme-ui'
-import { COUNTRIES } from './constants'
-import { useQueries } from './queries'
 
-const Countries = () => {
-  const [countrySelection, setCountrySelection] = useState(false)
+const ListFilter = ({ items, selectedItems, title, placeholder, setter }) => {
+  const [selection, setSelection] = useState(false)
   const [query, setQuery] = useState('')
-  const { countries, setCountries } = useQueries()
   const ref = useRef()
 
   const { filtered, hidden } = useMemo(() => {
@@ -17,10 +14,10 @@ const Countries = () => {
       return { filtered: [], hidden }
     }
 
-    const filtered = COUNTRIES.filter(
-      (c) =>
-        !countries?.includes(c) &&
-        c.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+    const filtered = items.filter(
+      (item) =>
+        !selectedItems?.includes(item) &&
+        item.toLocaleLowerCase().includes(query.toLocaleLowerCase())
     )
 
     if (filtered.length > 5) {
@@ -29,32 +26,33 @@ const Countries = () => {
     }
 
     return { filtered, hidden }
-  }, [countries, query])
+  }, [selectedItems, query])
 
-  const addCountry = useCallback(
-    (country) => {
+  const addItem = useCallback(
+    (item) => {
       setFocusedIndex(-1)
       setQuery('')
-      setCountries([...countries, country].sort())
+      setter([...selectedItems, item].sort())
     },
-    [countries, setCountries]
+    [selectedItems, setter]
   )
-  const removeCountry = useCallback(
-    (country) => {
-      setCountries(countries.filter((c) => country !== c))
+
+  const removeItem = useCallback(
+    (item) => {
+      setter(selectedItems.filter((i) => item !== i))
     },
-    [countries, setCountries]
+    [selectedItems]
   )
 
   useEffect(() => {
-    if (countrySelection) {
+    if (selection) {
       ref.current.focus()
     }
-  }, [countrySelection])
+  }, [selection])
 
   // handle keyboard navigation of filtered countries
   const [focusedIndex, setFocusedIndex] = useState(-1)
-  const filteredCountriesRefs = useRef([])
+  const filteredItemsRefs = useRef([])
 
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
@@ -67,33 +65,33 @@ const Countries = () => {
   }
 
   useEffect(() => {
-    if (focusedIndex >= 0 && filteredCountriesRefs.current[focusedIndex]) {
-      filteredCountriesRefs.current[focusedIndex].focus()
+    if (focusedIndex >= 0 && filteredItemsRefs.current[focusedIndex]) {
+      filteredItemsRefs.current[focusedIndex].focus()
     }
   }, [focusedIndex])
 
   useEffect(() => {
     setFocusedIndex(-1)
-  }, [query, countrySelection])
+  }, [query, selection])
 
   return (
     <Box onKeyDown={handleKeyDown}>
       <Filter
         values={{
-          All: !countrySelection,
-          'Select countries': countrySelection,
+          All: !selection,
+          [title]: selection,
         }}
         setValues={(obj) => {
           if (obj['All']) {
-            setCountrySelection(false)
-            setCountries(null)
+            setSelection(false)
+            setter([])
           } else {
-            setCountrySelection(true)
-            setCountries([])
+            setSelection(true)
+            setter([])
           }
         }}
       />
-      {countrySelection && (
+      {selection && (
         <>
           <Box sx={{ position: 'relative' }}>
             <Input
@@ -105,14 +103,14 @@ const Countries = () => {
                 mb: 2,
                 width: '100%',
               }}
-              placeholder='enter country'
+              placeholder={placeholder}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
             <IconButton
               onClick={() => {
-                setCountrySelection(false)
-                setCountries(null)
+                setSelection(false)
+                setter([])
                 setQuery('')
               }}
               sx={{
@@ -128,15 +126,15 @@ const Countries = () => {
               <X />
             </IconButton>
           </Box>
-          {countries.length > 0 && (
+          {selectedItems.length > 0 && (
             <Flex sx={{ flexWrap: 'wrap', gap: 1, mt: 3 }}>
-              {countries.map((c) => (
+              {selectedItems.map((item) => (
                 <Badge
                   sx={{
                     color: 'primary',
                     height: 'fit-content',
                   }}
-                  key={c}
+                  key={item}
                 >
                   <Button
                     sx={{
@@ -145,9 +143,9 @@ const Countries = () => {
                       py: '3px',
                     }}
                     suffix={<X sx={{ height: 10, width: 10 }} />}
-                    onClick={() => removeCountry(c)}
+                    onClick={() => removeItem(item)}
                   >
-                    {c}
+                    {item}
                   </Button>
                 </Badge>
               ))}
@@ -157,17 +155,17 @@ const Countries = () => {
             sx={{
               flexDirection: 'column',
               gap: 2,
-              mt: countries.length > 0 ? 2 : 3,
+              mt: selectedItems.length > 0 ? 2 : 3,
               maxHeight: '300px',
               overflowY: 'auto',
               pr: [4, 5, 5, 6],
               mr: [-4, -5, -5, -6],
             }}
           >
-            {filtered.map((c, i) => (
+            {filtered.map((item, i) => (
               <Button
                 inverted
-                key={c}
+                key={item}
                 size='xs'
                 sx={{
                   fontFamily: 'mono',
@@ -178,11 +176,11 @@ const Countries = () => {
                     outline: 'none !important',
                   },
                 }}
-                onClick={() => addCountry(c)}
-                ref={(el) => (filteredCountriesRefs.current[i] = el)}
-                onKeyDown={(e) => e.key === 'Enter' && addCountry(c)}
+                onClick={() => addItem(item)}
+                ref={(el) => (filteredItemsRefs.current[i] = el)}
+                onKeyDown={(e) => e.key === 'Enter' && addItem(item)}
               >
-                {c}
+                {item}
               </Button>
             ))}
             {hidden > 0 && (
@@ -204,4 +202,4 @@ const Countries = () => {
   )
 }
 
-export default Countries
+export default ListFilter
