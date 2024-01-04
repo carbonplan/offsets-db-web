@@ -38,9 +38,10 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
     }
   }
   const chartColumn = (isRetired) => {
-    const categoryKeys = isLoading
-      ? previousCategories
-      : Object.keys(LABELS.category).filter((l) => Boolean(issued.mapping[l]))
+    const categoryKeys =
+      isLoading || error
+        ? previousCategories
+        : Object.keys(LABELS.category).filter((l) => Boolean(issued.mapping[l]))
 
     return (
       <Column
@@ -61,7 +62,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                 mb: 1,
               }}
             >
-              {isLoading ? (
+              {isLoading || error ? (
                 <Flex sx={{ gap: 2, alignItems: 'center' }}>
                   <Box
                     sx={{
@@ -87,13 +88,14 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
 
               <Badge
                 sx={{
-                  color: isLoading ? 'primary' : COLORS[l],
-                  backgroundColor: isLoading ? 'muted' : alpha(COLORS[l], 0.3),
+                  color: isLoading || error ? 'primary' : COLORS[l],
+                  backgroundColor:
+                    isLoading || error ? 'muted' : alpha(COLORS[l], 0.3),
                   fontSize: 2,
                   mb: '3px',
                 }}
               >
-                {isLoading
+                {isLoading || error
                   ? '-'
                   : formatValue(
                       isRetired ? retired.mapping[l] : issued.mapping[l]
