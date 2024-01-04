@@ -152,7 +152,8 @@ const ProjectRow = ({ project }) => {
                 >
                   <RotatingArrow
                     sx={{
-                      mb: '1px',
+                      mt: [1, 1, 1, 0],
+                      mb: [0, 0, 0, '1px'],
                       width: 14,
                       height: 14,
                       color: expanded ? color : null,
