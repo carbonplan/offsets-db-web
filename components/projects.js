@@ -103,8 +103,12 @@ const Projects = () => {
               ),
               width: [0, 1, 1, 1],
             },
-            { value: 'listed_at', label: 'Listed', width: [0, 1, 1, 1] },
-            { value: 'details', label: 'Details', width: [0, 1, 1, 1] },
+            {
+              value: 'details',
+              label: 'Details',
+              start: [1, 8, 8, 8],
+              width: [0, 1, 1, 1],
+            },
           ]}
           borderTop
         />

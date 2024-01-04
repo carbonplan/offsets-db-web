@@ -1,10 +1,4 @@
-import {
-  Badge,
-  Button,
-  Expander,
-  formatDate,
-  Row,
-} from '@carbonplan/components'
+import { Badge, Button, Expander, Row } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
@@ -116,25 +110,6 @@ const ProjectRow = ({ project }) => {
             width: [0, 1, 1, 1],
           },
           {
-            key: 'listed_at',
-            label: (
-              <Badge
-                sx={{ whiteSpace: 'nowrap', color: expanded ? color : null }}
-              >
-                {listed_at
-                  ? formatDate(listed_at, {
-                      day: 'numeric',
-                      month: 'numeric',
-                      year: 'numeric',
-                      separator: '-',
-                    })
-                  : '?'}
-              </Badge>
-            ),
-            width: [0, 1, 1, 1],
-          },
-
-          {
             key: 'details',
             label: (
               <Badge
@@ -157,6 +132,7 @@ const ProjectRow = ({ project }) => {
                 </Button>
               </Badge>
             ),
+            start: [1, 8, 8, 8],
             width: [0, 1, 1, 1],
           },
         ]}
