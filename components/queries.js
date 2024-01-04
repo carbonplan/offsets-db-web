@@ -33,8 +33,8 @@ export const QueryProvider = ({ children }) => {
   const [listingBounds, setlistingBounds] = useState(null)
   const [issuedBounds, setIssuedBounds] = useState(null)
   const [transactionBounds, setTransactionBounds] = useState(null)
-  const [countries, setCountries] = useState(null)
-  const [protocols, setProtocols] = useState(null)
+  const [countries, setCountries] = useState([])
+  const [protocols, setProtocols] = useState([])
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState('-issued')
 

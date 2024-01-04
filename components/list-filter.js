@@ -110,7 +110,7 @@ const ListFilter = ({ items, selectedItems, title, placeholder, setter }) => {
             <IconButton
               onClick={() => {
                 setSelection(false)
-                setter(null)
+                setter([])
                 setQuery('')
               }}
               sx={{
