@@ -20,7 +20,7 @@ const fade = keyframes({
 })
 
 const ProjectRow = ({ project }) => {
-  const { project_id, category, name, issued, retired, listed_at } = project
+  const { project_id, category, name, issued, retired } = project
   const [expanded, setExpanded] = useState(false)
   const color = COLORS[category[0]] ?? COLORS.other
 
