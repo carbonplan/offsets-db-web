@@ -91,7 +91,6 @@ const ProjectCharts = () => {
           '&:hover #expander': {
             stroke: 'primary',
           },
-          cursor: 'pointer',
           color: 'primary',
           fontFamily: 'mono',
           letterSpacing: 'mono',
