@@ -82,7 +82,11 @@ const ProjectRow = ({ project }) => {
             key: 'project_id',
             width: [2, 1, 1, 1],
           },
-          { key: 'name', label: name ?? '?', width: [4, 3, 3, 3] },
+          {
+            key: 'name',
+            label: <Box sx={{ mt: 1 }}>{name ?? '?'}</Box>,
+            width: [4, 3, 3, 3],
+          },
           {
             key: 'issued',
             label: (
@@ -123,7 +127,8 @@ const ProjectRow = ({ project }) => {
                 >
                   <RotatingArrow
                     sx={{
-                      mt: '4px',
+                      mt: [1, 1, 1, 0],
+                      mb: [0, 0, 0, '1px'],
                       width: 14,
                       height: 14,
                       color: expanded ? color : null,
