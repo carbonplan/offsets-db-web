@@ -141,6 +141,17 @@ const Timeline = ({ project, color }) => {
             </Column>
           ))}
         </Row>
+        {sortedEntries.length > 0 && (
+          <Button
+            inverted
+            size='xs'
+            suffix={<RotatingArrow />}
+            href='/updates'
+            sx={{ mt: 4 }}
+          >
+            All project updates
+          </Button>
+        )}
       </Column>
     </Row>
   )
