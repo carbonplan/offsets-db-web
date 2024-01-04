@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 import Category from './category'
-import { ALL_CATEGORIES, LABELS } from './constants'
-import Countries from './countries'
+import { ALL_CATEGORIES, COUNTRIES, PROTOCOLS, LABELS } from './constants'
+import ListFilter from './list-filter'
 import TooltipWrapper from './tooltip-wrapper'
 
 const QueryContext = createContext({
@@ -34,6 +34,7 @@ export const QueryProvider = ({ children }) => {
   const [issuedBounds, setIssuedBounds] = useState(null)
   const [transactionBounds, setTransactionBounds] = useState(null)
   const [countries, setCountries] = useState(null)
+  const [protocols, setProtocols] = useState(null)
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState('-issued')
 
@@ -63,6 +64,8 @@ export const QueryProvider = ({ children }) => {
         setTransactionBounds,
         countries,
         setCountries,
+        protocols,
+        setProtocols,
         page,
         setPage,
         sort,
@@ -96,6 +99,10 @@ const Queries = () => {
     setComplianceOnly,
     search,
     setSearch,
+    countries,
+    setCountries,
+    protocols,
+    setProtocols,
   } = useQueries()
 
   return (
@@ -153,7 +160,29 @@ const Queries = () => {
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
           <TooltipWrapper tooltip='Filter projects by country.'>
-            <Countries />
+            <ListFilter
+              items={COUNTRIES}
+              selectedItems={countries}
+              title={'select countries'}
+              placeholder={'enter country'}
+              setter={setCountries}
+            />
+          </TooltipWrapper>
+        </Column>
+      </Row>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
+          <Box sx={sx.label}>Protocol</Box>
+        </Column>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+          <TooltipWrapper tooltip='Filter projects by protocol.'>
+            <ListFilter
+              items={PROTOCOLS}
+              selectedItems={protocols}
+              title={'select protocols'}
+              placeholder={'enter protocol'}
+              setter={setProtocols}
+            />
           </TooltipWrapper>
         </Column>
       </Row>

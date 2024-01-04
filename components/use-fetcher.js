@@ -19,6 +19,7 @@ const fetcher = ([
   transactionBounds,
   issuedBounds,
   countries,
+  protocols,
 ]) => {
   const params = new URLSearchParams()
   params.append('path', path)
@@ -93,6 +94,10 @@ const fetcher = ([
     countries.forEach((country) => params.append('country', country))
   }
 
+  if (protocols) {
+    protocols.forEach((protocol) => params.append('protocol', protocol))
+  }
+
   const reqUrl = new URL('/api/query', window.location.origin)
   reqUrl.search = params.toString()
 
@@ -127,6 +132,7 @@ const useFetcher = (
     transactionBounds,
     issuedBounds,
     countries,
+    protocols,
   } = useQueries()
 
   const filterArgs = [
@@ -138,6 +144,7 @@ const useFetcher = (
     useDebounce(transactionBounds),
     useDebounce(issuedBounds),
     countries,
+    protocols,
   ]
 
   return useSWR(
