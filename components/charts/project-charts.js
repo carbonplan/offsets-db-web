@@ -1,9 +1,11 @@
-import { Column, Row } from '@carbonplan/components'
+import { Row, Column } from '@carbonplan/components'
 import { useMemo, useState } from 'react'
+import AnimateHeight from 'react-animate-height'
 
 import { LABELS } from '../constants'
 import useFetcher from '../use-fetcher'
 import CategoryBar from './category-bar'
+import DetailCharts from './detail-charts'
 
 const ProjectCharts = () => {
   const [expanded, setExpanded] = useState(false)
@@ -41,6 +43,7 @@ const ProjectCharts = () => {
           retired: {
             total: prevRetired.total + retired,
             mapping: prevRetired.mapping,
+            issuedTotal: prevIssued.total + issued,
           },
         }
       },
@@ -48,33 +51,73 @@ const ProjectCharts = () => {
     )
   }, [data])
 
+  const issuedKeys = Object.keys(issued.mapping)
+
   return (
-    <Row
-      onClick={() => setExpanded(!expanded)}
-      columns={[6, 8, 8, 8]}
-      sx={{
-        color: 'primary',
-        fontFamily: 'mono',
-        letterSpacing: 'mono',
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        '&:hover #expander': {
-          stroke: 'primary',
-        },
-      }}
-    >
-      <Column start={1} width={[6, 4, 4, 4]}>
-        <CategoryBar
-          label='Credits issued'
-          {...issued}
-          expanded={expanded}
-          showExpander={true}
-        />
-      </Column>
-      <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
-        <CategoryBar label='Credits retired' {...retired} expanded={expanded} />
-      </Column>
-    </Row>
+    <>
+      <Row
+        columns={[6, 8, 8, 8]}
+        onClick={() => {
+          if (issuedKeys.length) {
+            setExpanded(!expanded)
+          }
+        }}
+        sx={{
+          '&:hover #expander': {
+            stroke: 'primary',
+          },
+          cursor: issuedKeys.length ? 'pointer' : null,
+          color: 'primary',
+          fontFamily: 'mono',
+          letterSpacing: 'mono',
+          textTransform: 'uppercase',
+          mt: [5, 5, 7, 7],
+          mb: 3,
+        }}
+      >
+        <Column start={1} width={[6, 4, 4, 4]}>
+          <CategoryBar
+            label='Credits issued'
+            {...issued}
+            expanded={expanded}
+            showExpander={issuedKeys.length > 0}
+          />
+        </Column>
+        <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>
+          <CategoryBar
+            label='Credits retired'
+            {...retired}
+            expanded={expanded}
+          />
+        </Column>
+      </Row>
+      <Row
+        columns={1}
+        sx={{
+          display: ['none', 'block', 'block', 'block'],
+          '&:hover #expander': {
+            stroke: 'primary',
+          },
+          color: 'primary',
+          fontFamily: 'mono',
+          letterSpacing: 'mono',
+          textTransform: 'uppercase',
+        }}
+      >
+        <AnimateHeight
+          duration={100}
+          height={expanded ? 'auto' : 0}
+          easing={'linear'}
+        >
+          <DetailCharts
+            retired={retired}
+            issued={issued}
+            isLoading={isLoading}
+            error={error}
+          />
+        </AnimateHeight>
+      </Row>
+    </>
   )
 }
 
