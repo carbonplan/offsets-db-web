@@ -63,6 +63,7 @@ export async function getServerSideProps({ params, res: response }) {
   )
 
   try {
+    console.log('Fetching data for project', params.id.toUpperCase())
     const res = await withTimeout(
       fetch(
         `${
