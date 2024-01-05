@@ -56,10 +56,6 @@ function withTimeout(promise, ms) {
   })
 }
 
-export const config = {
-  runtime: 'experimental-edge',
-}
-
 export async function getServerSideProps({ params, res: response }) {
   response.setHeader(
     'Cache-Control',

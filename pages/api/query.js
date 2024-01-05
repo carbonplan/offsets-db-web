@@ -13,8 +13,6 @@ function constructSearch(search = {}) {
   return params.toString()
 }
 
-export const runtime = 'experimental-edge' // 'nodejs' is the default
-
 export default async function handler(req, res) {
   try {
     const { path, ...search } = req.query
