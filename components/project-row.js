@@ -84,7 +84,11 @@ const ProjectRow = ({ project }) => {
           },
           {
             key: 'name',
-            label: <Box sx={{ mt: 1 }}>{name ?? '?'}</Box>,
+            label: (
+              <Box sx={{ mt: 1, color: expanded ? 'primary' : 'secondary' }}>
+                {name ?? '?'}
+              </Box>
+            ),
             width: [4, 3, 3, 3],
           },
           {
@@ -184,9 +188,12 @@ const ProjectRow = ({ project }) => {
                       href={`/projects/${project_id}`}
                       onClick={(e) => e.stopPropagation()}
                       sx={{
+                        color,
+                        fontFamily: 'mono',
+                        letterSpacing: 'mono',
+                        textTransform: 'uppercase',
                         fontSize: 1,
                       }}
-                      inverted
                       suffix={
                         <RotatingArrow
                           sx={{
