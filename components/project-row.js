@@ -84,7 +84,11 @@ const ProjectRow = ({ project }) => {
           },
           {
             key: 'name',
-            label: <Box sx={{ mt: 1 }}>{name ?? '?'}</Box>,
+            label: (
+              <Box sx={{ mt: 1, color: expanded ? 'primary' : 'secondary' }}>
+                {name ?? '?'}
+              </Box>
+            ),
             width: [4, 3, 3, 3],
           },
           {
