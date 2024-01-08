@@ -188,9 +188,12 @@ const ProjectRow = ({ project }) => {
                       href={`/projects/${project_id}`}
                       onClick={(e) => e.stopPropagation()}
                       sx={{
+                        color,
+                        fontFamily: 'mono',
+                        letterSpacing: 'mono',
+                        textTransform: 'uppercase',
                         fontSize: 1,
                       }}
-                      inverted
                       suffix={
                         <RotatingArrow
                           sx={{
