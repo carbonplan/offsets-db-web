@@ -56,7 +56,7 @@ export default async function handler(req, res) {
 
   try {
     res.revalidate('/api/query')
-    res.revalidate('/projects/[id]')
+    // res.revalidate('/projects/[id]')
     res.status(200).send({ revalidated: true })
   } catch (e) {
     res.status(400).send({ error: e.message })

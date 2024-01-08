@@ -60,11 +60,11 @@ export const config = {
   runtime: 'experimental-edge',
 }
 
-export async function getServerSideProps({ params, res: response }) {
-  response.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10,  s-maxage=604800' // 7 days
-  )
+export async function getServerSideProps({ params, res }) {
+  // res.setHeader(
+  //   'Cache-Control',
+  //   'public, s-maxage=10,  s-maxage=604800' // 7 days
+  // )
 
   try {
     console.log('Fetching data for project', params.id.toUpperCase())
