@@ -141,7 +141,7 @@ const Clip = ({ date, label, url, projects, source, index }) => {
               width: CIRCLE_WIDTHS,
               [left ? 'mr' : 'ml']: [0, -32 + 5, -32 + 5, -48 + 5],
               mt: CIRCLE_WIDTHS.map((d, i) =>
-                index === 0 ? '-10px' : `${(d * -1) / 2}px`
+                i === 0 ? '-10px' : `${(d * -1) / 2}px`
               ),
             }}
           >
