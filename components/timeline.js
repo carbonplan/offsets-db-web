@@ -9,11 +9,15 @@ const Timeline = ({ project, color }) => {
   const sortedEntries = useMemo(
     () =>
       [
-        ...project.clips.map(({ date, title, url }) => ({
-          date: date.match(/\d{4}-\d{2}-\d{2}/)[0],
-          label: title,
-          url,
-        })),
+        ...project.clips
+          .filter(
+            (d) => !['weekly-project-summary', 'offsets-DB'].includes(d.source)
+          )
+          .map(({ date, title, url }) => ({
+            date: date.match(/\d{4}-\d{2}-\d{2}/)[0],
+            label: title,
+            url,
+          })),
         { date: project.first_retirement_at, label: 'First credits retired' },
         { date: project.first_issuance_at, label: 'First credits issued' },
         { date: project.listed_at, label: 'Project listed' },
