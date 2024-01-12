@@ -104,6 +104,7 @@ const Clip = ({ date, label, url, projects, source, index }) => {
                   <Badge
                     sx={{
                       color: COLORS[category[0]] ?? COLORS.other,
+                      userSelect: 'text',
                     }}
                   >
                     {project_id}
