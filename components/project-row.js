@@ -1,5 +1,5 @@
 import { Badge, Button, Expander, Row } from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
+import { RotatingArrow, Arrow } from '@carbonplan/icons'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
@@ -123,19 +123,25 @@ const ProjectRow = ({ project }) => {
               <Badge
                 sx={{
                   color: expanded ? color : null,
+                  '&:hover #arrow': {
+                    transform: 'rotate(45deg)',
+                    color,
+                  },
                 }}
               >
                 <Button
                   href={`/projects/${project_id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <RotatingArrow
+                  <Arrow
+                    id='arrow'
                     sx={{
                       mt: [1, 1, 1, 0],
                       mb: [0, 0, 0, '1px'],
                       width: 14,
                       height: 14,
                       color: expanded ? color : null,
+                      transition: 'transform 0.15s',
                     }}
                   />
                 </Button>
