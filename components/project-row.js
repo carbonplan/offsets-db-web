@@ -67,6 +67,7 @@ const ProjectRow = ({ project }) => {
                     top: '2px', // centering, not ideal.
                     width: '18px',
                     height: '18px',
+                    stroke: expanded ? alpha(color, 0.8) : 'secondary',
                   }}
                 />
                 <Badge
