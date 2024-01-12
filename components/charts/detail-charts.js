@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Box, Flex, Badge } from 'theme-ui'
-import { Row, Column } from '@carbonplan/components'
+import { Box, Flex } from 'theme-ui'
+import { Row, Column, Badge } from '@carbonplan/components'
 import { alpha } from '@theme-ui/color'
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
