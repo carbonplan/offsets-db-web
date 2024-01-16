@@ -59,7 +59,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
               sx={{
                 justifyContent: 'space-between',
                 fontSize: 2,
-                mb: 1,
+                mb: [1, 1, 1, 2],
               }}
             >
               {isLoading || error ? (
