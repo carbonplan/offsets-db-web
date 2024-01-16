@@ -61,7 +61,7 @@ const CategoryBar = ({
           <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
             <Box
               sx={{
-                fontSize: 1,
+                fontSize: [1, 1, 1, 2],
                 fontFamily: 'mono',
                 letterSpacing: 'mono',
                 color: 'secondary',

@@ -6,6 +6,7 @@ import {
   Badge,
   Tag,
   Expander,
+  Link,
 } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo, useState } from 'react'
@@ -100,15 +101,16 @@ const Clip = ({ date, label, url, projects, source, index }) => {
           {(projects.length <= 5 || expanded) && (
             <Flex sx={{ gap: 2, flexWrap: 'wrap', mt: 3 }}>
               {projects?.map(({ project_id, category }) => (
-                <a href={`/projects/${project_id}`} key={project_id}>
+                <Link href={`/projects/${project_id}`} key={project_id}>
                   <Badge
                     sx={{
                       color: COLORS[category[0]] ?? COLORS.other,
+                      userSelect: 'text',
                     }}
                   >
                     {project_id}
                   </Badge>
-                </a>
+                </Link>
               ))}
             </Flex>
           )}

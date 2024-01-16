@@ -1,5 +1,5 @@
 import { Badge, Button, Expander, Row } from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
+import { RotatingArrow, Arrow } from '@carbonplan/icons'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
 import { useState } from 'react'
@@ -22,6 +22,7 @@ const fade = keyframes({
 const ProjectRow = ({ project }) => {
   const { project_id, category, name, issued, retired } = project
   const [expanded, setExpanded] = useState(false)
+  const [hoveredDetails, setHoveredDetails] = useState(false)
   const color = COLORS[category[0]] ?? COLORS.other
 
   const sx = {
@@ -67,6 +68,7 @@ const ProjectRow = ({ project }) => {
                     top: '2px', // centering, not ideal.
                     width: '18px',
                     height: '18px',
+                    stroke: expanded ? alpha(color, 0.8) : 'secondary',
                   }}
                 />
                 <Badge
@@ -121,21 +123,28 @@ const ProjectRow = ({ project }) => {
             key: 'details',
             label: (
               <Badge
+                onMouseOver={() => setHoveredDetails(true)} // css hover selectors not working
+                onMouseOut={() => setHoveredDetails(false)} // for this context
                 sx={{
-                  color: expanded ? color : null,
+                  color: expanded || hoveredDetails ? color : null,
+                  '&:hover #arrow': {
+                    transform: 'rotate(45deg)',
+                  },
                 }}
               >
                 <Button
                   href={`/projects/${project_id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <RotatingArrow
+                  <Arrow
+                    id='arrow'
                     sx={{
                       mt: [1, 1, 1, 0],
                       mb: [0, 0, 0, '1px'],
                       width: 14,
                       height: 14,
-                      color: expanded ? color : null,
+                      color: expanded || hoveredDetails ? color : null,
+                      transition: 'transform 0.15s',
                     }}
                   />
                 </Button>

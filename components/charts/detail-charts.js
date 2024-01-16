@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Box, Flex, Badge } from 'theme-ui'
-import { Row, Column } from '@carbonplan/components'
+import { Box, Flex } from 'theme-ui'
+import { Row, Column, Badge } from '@carbonplan/components'
 import { alpha } from '@theme-ui/color'
 import { COLORS, LABELS } from '../constants'
 import { formatValue } from '../utils'
@@ -59,7 +59,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
               sx={{
                 justifyContent: 'space-between',
                 fontSize: 2,
-                mb: 1,
+                mb: [1, 1, 1, 2],
               }}
             >
               {isLoading || error ? (
@@ -82,7 +82,9 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                       backgroundColor: COLORS[l],
                     }}
                   />
-                  <Box sx={{ fontSize: 1 }}>{LABELS.category[l]}</Box>
+                  <Box sx={{ fontSize: [1, 1, 1, 2] }}>
+                    {LABELS.category[l]}
+                  </Box>
                 </Flex>
               )}
 
@@ -91,8 +93,6 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                   color: isLoading || error ? 'primary' : COLORS[l],
                   backgroundColor:
                     isLoading || error ? 'muted' : alpha(COLORS[l], 0.3),
-                  fontSize: 2,
-                  mb: '3px',
                 }}
               >
                 {isLoading || error
