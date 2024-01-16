@@ -22,6 +22,7 @@ const fade = keyframes({
 const ProjectRow = ({ project }) => {
   const { project_id, category, name, issued, retired } = project
   const [expanded, setExpanded] = useState(false)
+  const [hovered, setHovered] = useState(false)
   const color = COLORS[category[0]] ?? COLORS.other
 
   const sx = {
@@ -122,11 +123,12 @@ const ProjectRow = ({ project }) => {
             key: 'details',
             label: (
               <Badge
+                onMouseOver={() => setHovered(true)}
+                onMouseOut={() => setHovered(false)}
                 sx={{
-                  color: expanded ? color : null,
+                  color: expanded || hovered ? color : null,
                   '&:hover #arrow': {
                     transform: 'rotate(45deg)',
-                    color,
                   },
                 }}
               >
@@ -141,7 +143,7 @@ const ProjectRow = ({ project }) => {
                       mb: [0, 0, 0, '1px'],
                       width: 14,
                       height: 14,
-                      color: expanded ? color : null,
+                      color: expanded || hovered ? color : null,
                       transition: 'transform 0.15s',
                     }}
                   />
