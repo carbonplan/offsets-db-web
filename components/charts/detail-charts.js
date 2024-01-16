@@ -82,7 +82,9 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                       backgroundColor: COLORS[l],
                     }}
                   />
-                  <Box sx={{ fontSize: 1 }}>{LABELS.category[l]}</Box>
+                  <Box sx={{ fontSize: [1, 1, 1, 2] }}>
+                    {LABELS.category[l]}
+                  </Box>
                 </Flex>
               )}
 
@@ -91,8 +93,6 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                   color: isLoading || error ? 'primary' : COLORS[l],
                   backgroundColor:
                     isLoading || error ? 'muted' : alpha(COLORS[l], 0.3),
-                  fontSize: 2,
-                  mb: '3px',
                 }}
               >
                 {isLoading || error
