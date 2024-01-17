@@ -17,6 +17,41 @@ import { COLORS } from './constants'
 // 10px less than column gutter widths
 const CIRCLE_WIDTHS = [24 - 10, 32 - 10, 32 - 10, 48 - 10]
 
+const ClipText = ({ projects, children }) => {
+  const content = useMemo(() => {
+    if (typeof children === 'string') {
+      const ids = projects.map((p) => p.project_id)
+      const categories = projects.reduce((a, p) => {
+        a[p.project_id] = p.category[0]
+        return a
+      }, {})
+
+      const regex = new RegExp(`(${ids.join('|')})`, 'gi')
+
+      return children.split(regex).map((part) =>
+        ids.includes(part) ? (
+          <Link href={`/projects/${part}`} key={part}>
+            <Badge
+              sx={{
+                color: COLORS[categories[part]] ?? COLORS.other,
+                userSelect: 'text',
+              }}
+            >
+              {part}
+            </Badge>
+          </Link>
+        ) : (
+          part
+        )
+      )
+    }
+
+    return children
+  }, [children, projects])
+
+  return <>{content}</>
+}
+
 const Clip = ({ date, label, url, projects, source, index }) => {
   const { theme } = useThemeUI()
   const [expanded, setExpanded] = useState(false)
@@ -60,7 +95,7 @@ const Clip = ({ date, label, url, projects, source, index }) => {
               {label}
             </Button>
           ) : (
-            label
+            <ClipText projects={projects}>{label}</ClipText>
           )}
         </Box>
 
