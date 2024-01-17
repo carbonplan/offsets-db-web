@@ -51,10 +51,7 @@ const Clip = ({ date, label, url, projects, source, index }) => {
           >
             {date && formatDate(date)}
           </Box>
-          {source &&
-            !['weekly-project-summary', 'offsets-DB'].includes(source) && (
-              <Tag>{source}</Tag>
-            )}
+          {source && 'offsets-db' !== source && <Tag>{source}</Tag>}
         </Flex>
 
         <Box sx={{ mb: 4 }}>

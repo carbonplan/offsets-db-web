@@ -10,9 +10,7 @@ const Timeline = ({ project, color }) => {
     () =>
       [
         ...project.clips
-          .filter(
-            (d) => !['weekly-project-summary', 'offsets-DB'].includes(d.source)
-          )
+          .filter((d) => 'offsets-db' !== d.source)
           .map(({ date, title, url }) => ({
             date: date.match(/\d{4}-\d{2}-\d{2}/)[0],
             label: title,
