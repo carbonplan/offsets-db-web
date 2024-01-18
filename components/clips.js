@@ -49,7 +49,11 @@ const ClipText = ({ projects, children }) => {
     return children
   }, [children, projects])
 
-  return <>{content}</>
+  return (
+    <Box as='span' sx={{ fontSize: [2, 2, 2, 3] }}>
+      {content}
+    </Box>
+  )
 }
 
 const Clip = ({ date, label, url, projects, source, index }) => {
