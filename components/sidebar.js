@@ -1,5 +1,6 @@
 import { Column, Link } from '@carbonplan/components'
 import { Box, Divider } from 'theme-ui'
+import LastUpdated from './last-updated'
 
 const Sidebar = ({ children }) => {
   return (
@@ -49,6 +50,9 @@ const Sidebar = ({ children }) => {
             data
           </Link>
           .
+          <br />
+          <br />
+          <LastUpdated />
         </Box>
         <Divider sx={{ mr: [-4, -5, -5, -6], ml: [-4, -5, 0, 0] }} />
         {children}
