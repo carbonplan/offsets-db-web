@@ -1,25 +1,51 @@
 import { Layout } from '@carbonplan/components'
 import { useRouter } from 'next/router'
+import { Container } from 'theme-ui'
+import useSWR from 'swr'
 import { useEffect } from 'react'
-import { Container, Flex } from 'theme-ui'
 
 import Project from '../../components/project'
-import CustomTimeout from '../../components/custom-timeout'
 
-const ProjectPage = ({ project, error }) => {
+const fetcher = ([id]) => {
+  if (!id) {
+    return
+  }
+
+  const params = new URLSearchParams()
+  params.append('path', `projects/${id?.toUpperCase()}`)
+
+  const reqUrl = new URL('/api/query', window.location.origin)
+  reqUrl.search = params.toString()
+
+  return fetch(reqUrl)
+    .then((r) => r.json())
+    .then((r) => {
+      if (r.error) {
+        throw new Error(r.error)
+      }
+      return r
+    })
+}
+
+const ProjectPage = () => {
   const router = useRouter()
+  const { data, error, isFetching } = useSWR(
+    [router.query.id?.toUpperCase()],
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  )
 
   useEffect(() => {
-    if (!error && !project?.project_id) {
+    if (error) {
       router.push('/404')
     }
-  }, [error, project?.project_id])
+  }, [error])
 
   let content
-  if (error) {
-    content = <CustomTimeout />
-  } else if (project?.project_id) {
-    content = <Project project={project} />
+  if (data?.project_id) {
+    content = <Project project={data} />
   }
   return (
     <Layout
@@ -39,42 +65,3 @@ const ProjectPage = ({ project, error }) => {
 }
 
 export default ProjectPage
-
-export const maxDuration = 15 // This function can run for a maximum of 15 seconds
-
-function withTimeout(promise, ms) {
-  let timeoutId
-  const timeoutPromise = new Promise((_, reject) => {
-    timeoutId = setTimeout(() => {
-      reject(new Error('Request timed out'))
-    }, ms)
-  })
-
-  return Promise.race([promise, timeoutPromise]).then((result) => {
-    clearTimeout(timeoutId)
-    return result
-  })
-}
-
-export async function getServerSideProps({ params }) {
-  try {
-    const res = await withTimeout(
-      fetch(
-        `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/projects/${params.id.toUpperCase()}`,
-        {
-          headers: {
-            'X-API-KEY': process.env.API_KEY,
-          },
-        }
-      ),
-      maxDuration * 1000 - 1
-    )
-    const project = await res.json()
-
-    return { props: { project } }
-  } catch (error) {
-    return { props: { error: error.message } }
-  }
-}
