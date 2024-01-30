@@ -8,12 +8,11 @@ export const LABELS = {
     'art-trees': 'ART',
   },
   category: {
-    agriculture: 'Agriculture',
     forest: 'Forest',
-    cookstove: 'Cookstove',
-    'ghg-management': 'GHG management',
-    'land-use': 'Land use',
     'renewable-energy': 'Renewable energy',
+    'ghg-management': 'GHG management',
+    cookstove: 'Cookstove',
+    agriculture: 'Agriculture',
     other: 'Other',
   },
 }
@@ -23,7 +22,6 @@ export const COLORS = {
   forest: 'green',
   cookstove: 'pink',
   'ghg-management': 'blue',
-  'land-use': 'yellow',
   'renewable-energy': 'purple',
   other: 'grey',
 }
