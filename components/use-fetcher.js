@@ -159,7 +159,7 @@ const useFetcher = (
       ...(filters ? filterArgs : []),
     ],
     fetcher,
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false, revalidateIfStale: false }
   )
 }
 
