@@ -40,12 +40,12 @@ const Sidebar = ({ children }) => {
           OffsetsDB
         </Box>
         <Box as='p' sx={{ mb: 5 }}>
-          These are all the carbon offset projects listed globally by the six
-          largest offset registries: Verra (VCS), Gold Standard (GLD), Global
-          Carbon Council (GCC), American Carbon Registry (ACR), Climate Action
-          Reserve (CAR), and ART TREES (ART). Read the latest{' '}
-          <Link href='/updates'>updates</Link>, view the{' '}
-          <Link href='#'>documentation</Link> or download the{' '}
+          This database collects and standardizes all the carbon offset projects
+          and credits listed by the six largest offset registries: Verra (VCS),
+          Gold Standard (GLD), Global Carbon Council (GCC), American Carbon
+          Registry (ACR), Climate Action Reserve (CAR), and ART TREES (ART). For
+          more information: read the latest <Link href='/updates'>updates</Link>
+          , view the <Link href='#'>documentation</Link> or download the{' '}
           <Link href='https://github.com/carbonplan/offsets-db-data/blob/main/docs/data-access.md'>
             data
           </Link>
