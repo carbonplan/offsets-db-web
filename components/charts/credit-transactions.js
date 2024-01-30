@@ -34,12 +34,15 @@ const getLines = (data) => {
     .sort((a, b) => a[0] - b[0])
 }
 
-const fillBars = (lines, domain) => {
+const fillBars = (lines, domain, range) => {
   const xMap = new Map(lines)
   const result = []
   for (let year = domain[0]; year <= domain[1]; year++) {
     const value = xMap.has(year) ? xMap.get(year) : 0
-    result.push([year, value])
+
+    // ensure that a sliver of bar is visible for values that are low relative to range
+    const perceivedValue = value > 0 ? Math.max(range[1] * 0.01, value) : value
+    result.push([year, perceivedValue])
   }
 
   return result
@@ -127,7 +130,10 @@ const CreditTransactions = ({
     return { ticks, labels, step }
   }, [domain])
 
-  const bars = useMemo(() => fillBars(lines, domain), [lines, domain])
+  const bars = useMemo(
+    () => fillBars(lines, domain, range),
+    [lines, domain, range]
+  )
 
   return (
     <>
