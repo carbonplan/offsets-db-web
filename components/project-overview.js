@@ -50,7 +50,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       <Column start={[1]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
           color={color}
-          tooltip='Project country of origin'
+          tooltip='Location of project'
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Country</Box>
@@ -61,7 +61,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
           color={color}
-          tooltip='Project status inferred from credit activity'
+          tooltip='Stage in project lifecycle'
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Status</Box>
@@ -101,7 +101,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       >
         <TooltipWrapper
           color={color}
-          tooltip='Project protocol(s) listed with registry'
+          tooltip='Methodology used to issue credits'
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Protocol</Box>
@@ -139,7 +139,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       >
         <TooltipWrapper
           color={color}
-          tooltip='Whether project is enrolled in the ARB compliance program.'
+          tooltip='Whether project is enrolled in a compliance program'
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Compliance</Box>
@@ -150,7 +150,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       <Column start={[1]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
           color={color}
-          tooltip='Link to project listing on registry'
+          tooltip='Link to project registry page'
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Registry</Box>
