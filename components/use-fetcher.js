@@ -153,7 +153,7 @@ const useFetcher = (
       creditType,
       transactionType,
       project_id,
-      useDebounce(sort, 10),
+      sort,
       page,
       binWidth,
       ...(filters ? filterArgs : []),
