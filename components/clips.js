@@ -90,7 +90,21 @@ const Clip = ({ date, label, url, projects, source, index }) => {
           >
             {date && formatDate(date)}
           </Box>
-          {source && 'offsets-db' !== source && <Tag>{source}</Tag>}
+          {source && 'offsets-db' !== source && (
+            <Box
+              sx={{ textAlign: 'right', mt: ['-8px', '-8px', '-4px', '-3px'] }}
+            >
+              <Tag
+                sx={{
+                  lineHeight: 1.8,
+                  display: 'initial',
+                  width: 'fit-content',
+                }}
+              >
+                {source}
+              </Tag>
+            </Box>
+          )}
         </Flex>
 
         <Box sx={{ mb: 4 }}>
