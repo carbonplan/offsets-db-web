@@ -81,7 +81,7 @@ const Projects = () => {
               key: 'issued',
               label: (
                 <TooltipWrapper
-                  tooltip='Number of credits issued'
+                  tooltip='Number of credits generated'
                   sx={sx.tooltip}
                 >
                   Issued
@@ -94,7 +94,7 @@ const Projects = () => {
               key: 'retired',
               label: (
                 <TooltipWrapper
-                  tooltip='Number of credits retired'
+                  tooltip='Number of credits used'
                   sx={sx.tooltip}
                 >
                   Retired
