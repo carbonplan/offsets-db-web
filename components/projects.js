@@ -1,4 +1,4 @@
-import { Badge, FadeIn } from '@carbonplan/components'
+import { FadeIn } from '@carbonplan/components'
 import { useEffect, useRef } from 'react'
 import { Box, Flex } from 'theme-ui'
 
@@ -10,11 +10,12 @@ import {
   TableRow,
 } from './table'
 import { useQueries } from './queries'
-import { formatValue, projectSorters } from './utils'
+import { projectSorters } from './utils'
 import ProjectCharts from './charts/project-charts'
 import Pagination from './pagination'
 import ProjectRow from './project-row'
 import TooltipWrapper from './tooltip-wrapper'
+import Quantity from './quantity'
 import useFetcher from './use-fetcher'
 
 const sx = {
@@ -159,11 +160,14 @@ const Projects = () => {
               label: (
                 <Flex sx={sx.footerLabel}>
                   Total
-                  <Badge sx={{ whiteSpace: 'nowrap' }}>
-                    {unfilteredData
-                      ? formatValue(unfilteredData.pagination.total_entries)
-                      : '-'}
-                  </Badge>
+                  <Quantity
+                    sx={{ whiteSpace: 'nowrap' }}
+                    value={
+                      unfilteredData
+                        ? unfilteredData.pagination.total_entries
+                        : '-'
+                    }
+                  />
                 </Flex>
               ),
               key: 'total',
@@ -174,9 +178,10 @@ const Projects = () => {
               label: (
                 <Flex sx={sx.footerLabel}>
                   Selected
-                  <Badge sx={{ flexShrink: 0 }}>
-                    {data ? formatValue(data.pagination.total_entries) : '-'}
-                  </Badge>
+                  <Quantity
+                    sx={{ flexShrink: 0 }}
+                    value={data ? data.pagination.total_entries : '-'}
+                  />
                 </Flex>
               ),
               key: 'selected',

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Box, Flex } from 'theme-ui'
-import { Row, Column, Badge } from '@carbonplan/components'
+import { Row, Column } from '@carbonplan/components'
 import { alpha } from '@theme-ui/color'
+
 import { COLORS, LABELS } from '../constants'
-import { formatValue } from '../utils'
+import Quantity from '../quantity'
 
 const DetailCharts = ({ issued, retired, isLoading, error }) => {
   const [previousCategories, setPreviousCategories] = useState([])
@@ -88,19 +89,14 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
                 </Flex>
               )}
 
-              <Badge
-                sx={{
-                  color: isLoading || error ? 'primary' : COLORS[l],
-                  backgroundColor:
-                    isLoading || error ? 'muted' : alpha(COLORS[l], 0.3),
-                }}
-              >
-                {isLoading || error
-                  ? '-'
-                  : formatValue(
-                      isRetired ? retired.mapping[l] : issued.mapping[l]
-                    ) ?? 0}
-              </Badge>
+              <Quantity
+                color={isLoading || error ? null : COLORS[l]}
+                value={
+                  isLoading || error
+                    ? '-'
+                    : (isRetired ? retired.mapping[l] : issued.mapping[l]) ?? 0
+                }
+              />
             </Flex>
             <Box
               sx={{

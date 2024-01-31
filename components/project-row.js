@@ -7,8 +7,8 @@ import { Box } from 'theme-ui'
 
 import { COLORS } from './constants'
 import { TableRow } from './table'
-import { formatValue } from './utils'
 import ProjectOverview from './project-overview'
+import Quantity from './quantity'
 
 const fade = keyframes({
   from: {
@@ -95,28 +95,12 @@ const ProjectRow = ({ project }) => {
           },
           {
             key: 'issued',
-            label: (
-              <Badge
-                sx={{
-                  color: expanded ? color : null,
-                }}
-              >
-                {formatValue(issued)}
-              </Badge>
-            ),
+            label: <Quantity color={expanded ? color : null} value={issued} />,
             width: [0, 1, 1, 1],
           },
           {
             key: 'retired',
-            label: (
-              <Badge
-                sx={{
-                  color: expanded ? color : null,
-                }}
-              >
-                {formatValue(retired)}
-              </Badge>
-            ),
+            label: <Quantity color={expanded ? color : null} value={retired} />,
             width: [0, 1, 1, 1],
           },
           {

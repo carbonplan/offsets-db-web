@@ -8,6 +8,7 @@ import Credits from './credits'
 import ProjectOverview from './project-overview'
 import Timeline from './timeline'
 import BackButton from './back-button'
+import Quantity from './quantity'
 
 const Project = ({ project }) => {
   const { project_id, name, category, issued, retired } = project
@@ -97,11 +98,15 @@ const Project = ({ project }) => {
                 </Column>
                 <Column start={[1]} width={[6, 3, 3, 3]}>
                   <Box sx={sx.creditsLabel}>Credits issued</Box>
-                  <Box sx={sx.creditsAmount}>{formatValue(issued)}</Box>
+                  <Box sx={sx.creditsAmount}>
+                    <Quantity badge={false} value={issued} />
+                  </Box>
                 </Column>
                 <Column start={[1, 4, 4, 4]} width={[6, 3, 3, 3]}>
                   <Box sx={sx.creditsLabel}>Credits retired</Box>
-                  <Box sx={sx.creditsAmount}>{formatValue(retired)}</Box>
+                  <Box sx={sx.creditsAmount}>
+                    <Quantity badge={false} value={retired} />
+                  </Box>
                 </Column>
 
                 <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: 5 }}>

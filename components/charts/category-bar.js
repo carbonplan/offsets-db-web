@@ -1,9 +1,9 @@
-import { Badge, Row, Column, Expander } from '@carbonplan/components'
+import { Row, Column, Expander } from '@carbonplan/components'
 import { useMemo } from 'react'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS, LABELS } from '../constants'
-import { formatValue } from '../utils'
+import Quantity from '../quantity'
 
 const CategoryBar = ({
   label,
@@ -69,9 +69,10 @@ const CategoryBar = ({
             >
               {label}
             </Box>
-            <Badge sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}>
-              {isEmpty ? '-' : formatValue(total)}
-            </Badge>
+            <Quantity
+              sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}
+              value={isEmpty ? '-' : total}
+            />
           </Flex>
         </Column>
       </Row>
