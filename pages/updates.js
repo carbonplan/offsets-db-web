@@ -11,6 +11,7 @@ const Project = () => {
   const [page, setPage] = useState(1)
   const { data, error, isLoading } = useFetcher('clips/', {
     filters: false,
+    sort: '-date',
     page,
   })
 
