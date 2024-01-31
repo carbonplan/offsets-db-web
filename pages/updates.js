@@ -80,16 +80,6 @@ const Project = () => {
         {data && <Clips clips={data.data} />}
 
         <Row sx={{ my: 4 }}>
-          <Column start={[1, 1, 3, 3]} width={[6, 5, 4, 4]}>
-            <Box sx={{ mt: '2px', mb: [4, 0] }}>
-              This page was heavily inspired by Molly White’s outstanding
-              resource,{' '}
-              <Link href='https://web3isgoinggreat.com/'>
-                Web3 is Going Just Great
-              </Link>
-              .
-            </Box>
-          </Column>
           <Column
             start={[1, 6, 7, 7]}
             width={[6, 3, 4, 4]}
