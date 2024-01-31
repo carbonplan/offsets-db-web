@@ -1,4 +1,4 @@
-import { Column, Layout as PageLayout, Row } from '@carbonplan/components'
+import { Column, Layout, Link, Row } from '@carbonplan/components'
 import { useState } from 'react'
 import { Box, Container, Flex, Spinner } from 'theme-ui'
 import BackButton from '../components/back-button'
@@ -15,9 +15,9 @@ const Project = () => {
   })
 
   return (
-    <PageLayout
+    <Layout
       title='OffsetsDB – CarbonPlan'
-      description='TK'
+      description='A regularly updating list of stories and noteworthy events related to offset projects in the database.'
       card='TK'
       dimmer='top'
       footer={false}
@@ -38,15 +38,15 @@ const Project = () => {
               OffsetsDB — Updates
             </Box>
           </Column>
-          <Column start={[1, 2, 8, 8]} width={[5, 6, 5, 4]}>
+          <Column start={[1, 2, 8, 8]} width={[5, 6, 4, 4]}>
             <Box
               sx={{
                 mt: [4, 5, '20px', '31px'],
                 fontSize: [2, 2, 2, 3],
               }}
             >
-              A regularly updating list of stories and press events related to
-              offset projects in the database.
+              A regularly updating list of stories and noteworthy events related
+              to offset projects in the database.
             </Box>
           </Column>
         </Row>
@@ -78,9 +78,23 @@ const Project = () => {
 
         {data && <Clips clips={data.data} />}
 
-        <Row>
-          <Column start={1} width={[6, 8, 10, 10]} sx={{ mr: [0, 0, -5, -6] }}>
-            <Flex sx={{ my: 4, justifyContent: 'flex-end' }}>
+        <Row sx={{ my: 4 }}>
+          <Column start={[1, 1, 3, 3]} width={[6, 5, 4, 4]}>
+            <Box sx={{ mt: '2px', mb: [4, 0] }}>
+              This page was heavily inspired by Molly White’s outstanding
+              resource,{' '}
+              <Link href='https://web3isgoinggreat.com/'>
+                Web3 is Going Just Great
+              </Link>
+              .
+            </Box>
+          </Column>
+          <Column
+            start={[1, 6, 7, 7]}
+            width={[6, 3, 4, 4]}
+            sx={{ mr: [0, 0, -5, -6] }}
+          >
+            <Flex sx={{ justifyContent: ['flex-start', 'flex-end'] }}>
               {data && data.pagination.total_pages > 1 && (
                 <Pagination pagination={data.pagination} setPage={setPage} />
               )}
@@ -88,7 +102,7 @@ const Project = () => {
           </Column>
         </Row>
       </Container>
-    </PageLayout>
+    </Layout>
   )
 }
 
