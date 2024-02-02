@@ -1,11 +1,11 @@
 export const LABELS = {
   registry: {
-    verra: 'VCS',
-    'gold-standard': 'GLD',
-    'global-carbon-council': 'GCC',
     'american-carbon-registry': 'ACR',
-    'climate-action-reserve': 'CAR',
     'art-trees': 'ART',
+    'climate-action-reserve': 'CAR',
+    'global-carbon-council': 'GCC',
+    'gold-standard': 'GLD',
+    verra: 'VCS',
   },
   category: {
     forest: 'Forest',

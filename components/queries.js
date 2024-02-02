@@ -15,12 +15,12 @@ const QueryContext = createContext({
 export const QueryProvider = ({ children }) => {
   const router = useRouter()
   const [registry, setRegistry] = useState({
-    verra: true,
-    'gold-standard': true,
-    'global-carbon-council': true,
     'american-carbon-registry': true,
-    'climate-action-reserve': true,
     'art-trees': true,
+    'climate-action-reserve': true,
+    'global-carbon-council': true,
+    'gold-standard': true,
+    verra: true,
   })
   const [category, setCategory] = useState(() =>
     ALL_CATEGORIES.reduce((a, k) => {
