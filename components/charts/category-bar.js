@@ -109,6 +109,7 @@ const CategoryBar = ({
               height: '28px',
               transition: 'background 0.2s',
               background,
+              ml: '2px',
             }}
           />
         </Column>
