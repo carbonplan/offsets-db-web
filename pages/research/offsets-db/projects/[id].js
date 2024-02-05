@@ -4,7 +4,7 @@ import { Container } from 'theme-ui'
 import useSWR from 'swr'
 import { useEffect } from 'react'
 
-import Project from '../../components/project'
+import Project from '../../../../components/project'
 
 const fetcher = ([id]) => {
   if (!id) {

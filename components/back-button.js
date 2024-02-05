@@ -2,7 +2,7 @@ import { Button } from '@carbonplan/components'
 import { Left } from '@carbonplan/icons'
 import { useRouter } from 'next/router'
 
-const BackButton = ({ href = '/', sx }) => {
+const BackButton = ({ href = '/research/offsets-db', sx }) => {
   const router = useRouter()
 
   return (

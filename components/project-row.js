@@ -117,7 +117,7 @@ const ProjectRow = ({ project }) => {
                 }}
               >
                 <Button
-                  href={`/projects/${project_id}`}
+                  href={`/research/offsets-db/projects/${project_id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Arrow
@@ -178,7 +178,7 @@ const ProjectRow = ({ project }) => {
                   </Row>
                   <Row columns={1}>
                     <Button
-                      href={`/projects/${project_id}`}
+                      href={`/research/offsets-db/projects/${project_id}`}
                       onClick={(e) => e.stopPropagation()}
                       sx={{
                         color,
