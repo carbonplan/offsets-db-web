@@ -53,6 +53,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
           isRetired ? 5 : 1,
         ]}
         width={[3, 4, 4, 4]}
+        sx={{ ml: '2px' }}
       >
         {categoryKeys.map((l) => (
           <Box key={l} sx={{ mb: 2 }}>
