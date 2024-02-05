@@ -29,13 +29,10 @@ const fetcher = ([id]) => {
 
 const ProjectPage = () => {
   const router = useRouter()
-  const { data, error, isFetching } = useSWR(
-    [router.query.id?.toUpperCase()],
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  )
+  const id = router.query.id?.toUpperCase()
+  const { data, error, isFetching } = useSWR([id], fetcher, {
+    revalidateOnFocus: false,
+  })
 
   useEffect(() => {
     if (error) {
@@ -44,14 +41,16 @@ const ProjectPage = () => {
   }, [error])
 
   let content
+  let description = `Project details page for ${id}`
   if (data?.project_id) {
+    description = `Project details page for ${id}: ${data.name}`
     content = <Project project={data} />
   }
   return (
     <Layout
       title='OffsetsDB – CarbonPlan'
-      description='TK'
-      card='TK'
+      description={description}
+      card='https://images.carbonplan.org/social/offsets-db.png'
       dimmer='top'
       footer={false}
       metadata={false}
