@@ -10,14 +10,13 @@ const Index = () => {
   return (
     <PageLayout
       title='OffsetsDB – CarbonPlan'
-      description='TK'
-      card='TK'
+      description='A database of carbon offset projects and credits harmonized across several offset registries.'
+      card='https://images.carbonplan.org/social/offsets-db.png'
       dimmer='top'
       footer={false}
       metadata={false}
       container={false}
       nav={'research'}
-      url={'https://carbonplan.org/research/offsets-db'}
     >
       <Container>
         <Layout
