@@ -96,10 +96,10 @@ const CategoryBar = ({
               id='expander'
               sx={{
                 display: ['none', 'block', 'block', 'block'],
-                ml: [-3, -4, -5, -5],
-                width: [18, 22, 22, 22],
+                ml: -4,
+                width: 18,
                 position: 'absolute',
-                mt: 1,
+                mt: '3px',
               }}
             />
           )}

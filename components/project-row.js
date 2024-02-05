@@ -64,10 +64,9 @@ const ProjectRow = ({ project }) => {
                   value={expanded}
                   sx={{
                     position: 'absolute',
-                    left: ['-17px', -4, -4, -4],
+                    ml: ['-17px', '-25px', '-25px', '-25px'],
                     top: '2px', // centering, not ideal.
-                    width: '18px',
-                    height: '18px',
+                    width: 18,
                     stroke: expanded ? alpha(color, 0.8) : 'secondary',
                   }}
                 />
