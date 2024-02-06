@@ -4,7 +4,7 @@ import { Container } from 'theme-ui'
 import useSWR from 'swr'
 import { useEffect } from 'react'
 
-import Project from '../../../../components/project'
+import Project from '../../components/project'
 
 const fetcher = ([id]) => {
   if (!id) {
@@ -14,7 +14,10 @@ const fetcher = ([id]) => {
   const params = new URLSearchParams()
   params.append('path', `projects/${id?.toUpperCase()}`)
 
-  const reqUrl = new URL('/api/query', window.location.origin)
+  const reqUrl = new URL(
+    '/research/offsets-db/api/query',
+    window.location.origin
+  )
   reqUrl.search = params.toString()
 
   return fetch(reqUrl)

@@ -13,15 +13,5 @@ const withMDX = require('@next/mdx')({
 
 module.exports = withMDX({
   pageExtensions: ['jsx', 'js', 'md', 'mdx'],
-  assetPrefix: isDev ? '' : 'https://offsets-db.carbonplan.org',
-  async redirects() {
-    return [
-      // Basic redirect
-      {
-        source: '/',
-        destination: '/research/offsets-db',
-        permanent: true,
-      },
-    ]
-  },
+  basePath: '/research/offsets-db',
 })
