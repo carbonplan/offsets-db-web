@@ -51,9 +51,14 @@ const Sidebar = ({ children }) => {
             data
           </Link>
           . Read the{' '}
-          <Link href='/research/offsets-db-explainer'>explainer article</Link>{' '}
-          or <Link href='/research/offsets-db-methods'>methods</Link> for more
-          detail.
+          <Link href='https://carbonplan.org/research/offsets-db-explainer'>
+            explainer article
+          </Link>{' '}
+          or{' '}
+          <Link href='https://carbonplan.org/research/offsets-db-methods'>
+            methods
+          </Link>{' '}
+          for more detail.
           <br />
           <br />
           <LastUpdated />
