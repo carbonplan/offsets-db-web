@@ -1,10 +1,10 @@
 import { Layout as PageLayout } from '@carbonplan/components'
 import { Container } from 'theme-ui'
 
-import Layout from '../../../components/layout'
-import Projects from '../../../components/projects'
-import Queries from '../../../components/queries'
-import Sidebar from '../../../components/sidebar'
+import Layout from '../components/layout'
+import Projects from '../components/projects'
+import Queries from '../components/queries'
+import Sidebar from '../components/sidebar'
 
 const Index = () => {
   return (
@@ -17,6 +17,7 @@ const Index = () => {
       metadata={false}
       container={false}
       nav={'research'}
+      url={'https://carbonplan.org/research/offsets-db'}
     >
       <Container>
         <Layout

@@ -6,7 +6,10 @@ const fetcher = (path) => {
   const params = new URLSearchParams()
   params.append('path', path)
 
-  const reqUrl = new URL('/api/query', window.location.origin)
+  const reqUrl = new URL(
+    '/research/offsets-db/api/query',
+    window.location.origin
+  )
   reqUrl.search = params.toString()
 
   return fetch(reqUrl)

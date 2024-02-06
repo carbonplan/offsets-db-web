@@ -2,10 +2,10 @@ import { Column, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
 import { Box, Container, Flex, Spinner } from 'theme-ui'
 
-import BackButton from '../../../components/back-button'
-import Clips from '../../../components/clips'
-import Pagination from '../../../components/pagination'
-import useFetcher from '../../../components/use-fetcher'
+import BackButton from '../components/back-button'
+import Clips from '../components/clips'
+import Pagination from '../components/pagination'
+import useFetcher from '../components/use-fetcher'
 
 const Project = () => {
   const [page, setPage] = useState(1)
@@ -25,6 +25,7 @@ const Project = () => {
       metadata={false}
       container={false}
       nav={'research'}
+      url={'https://carbonplan.org/research/offsets-db/updates'}
     >
       <Container>
         <Row sx={{ mt: [5, 6, 7, 8], mb: [5, 6, 7, 8] }}>

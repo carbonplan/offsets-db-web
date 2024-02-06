@@ -30,7 +30,7 @@ const ClipText = ({ projects, children }) => {
 
       return children.split(regex).map((part) =>
         ids.includes(part) ? (
-          <Link href={`/research/offsets-db/projects/${part}`} key={part}>
+          <Link href={`/projects/${part}`} key={part}>
             <Badge
               sx={{
                 color: COLORS[categories[part]] ?? COLORS.other,
@@ -151,10 +151,7 @@ const Clip = ({ date, label, url, projects, source, index }) => {
           {(projects.length <= 5 || expanded) && (
             <Flex sx={{ gap: 2, flexWrap: 'wrap', mt: 3 }}>
               {projects?.map(({ project_id, category }) => (
-                <Link
-                  href={`/research/offsets-db/projects/${project_id}`}
-                  key={project_id}
-                >
+                <Link href={`/projects/${project_id}`} key={project_id}>
                   <Badge
                     sx={{
                       color: COLORS[category[0]] ?? COLORS.other,

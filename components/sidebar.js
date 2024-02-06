@@ -46,16 +46,19 @@ const Sidebar = ({ children }) => {
           Global Carbon Council (GCC), Gold Standard (GLD), and Verra (VCS).
           <br />
           <br />
-          View the latest{' '}
-          <Link href='/research/offsets-db/updates'>updates</Link> or download
-          the{' '}
+          View the latest <Link href='/updates'>updates</Link> or download the{' '}
           <Link href='https://offsets-db-data.readthedocs.io/en/latest/data-access.html'>
             data
           </Link>
           . Read the{' '}
-          <Link href='/research/offsets-db-explainer'>explainer article</Link>{' '}
-          or <Link href='/research/offsets-db-methods'>methods</Link> for more
-          detail.
+          <Link href='https://carbonplan.org/research/offsets-db-explainer'>
+            explainer article
+          </Link>{' '}
+          or{' '}
+          <Link href='https://carbonplan.org/research/offsets-db-methods'>
+            methods
+          </Link>{' '}
+          for more detail.
           <br />
           <br />
           <LastUpdated />

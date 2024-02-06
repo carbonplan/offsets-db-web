@@ -98,7 +98,10 @@ const fetcher = ([
     protocols.forEach((protocol) => params.append('protocol', protocol))
   }
 
-  const reqUrl = new URL('/api/query', window.location.origin)
+  const reqUrl = new URL(
+    '/research/offsets-db/api/query',
+    window.location.origin
+  )
   reqUrl.search = params.toString()
 
   return fetch(reqUrl)
