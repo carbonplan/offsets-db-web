@@ -17,6 +17,7 @@ const Index = () => {
       metadata={false}
       container={false}
       nav={'research'}
+      url={'https://carbonplan.org/research/offsets-db'}
     >
       <Container>
         <Layout

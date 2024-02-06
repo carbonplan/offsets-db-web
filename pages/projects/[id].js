@@ -59,7 +59,7 @@ const ProjectPage = () => {
       metadata={false}
       container={false}
       nav={'research'}
-      url={'https://carbonplan.org/research/offsets-db'}
+      url={`https://carbonplan.org/research/offsets-db/${id}`}
     >
       <Container>{content}</Container>
     </Layout>

@@ -25,6 +25,7 @@ const Project = () => {
       metadata={false}
       container={false}
       nav={'research'}
+      url={'https://carbonplan.org/research/offsets-db/updates'}
     >
       <Container>
         <Row sx={{ mt: [5, 6, 7, 8], mb: [5, 6, 7, 8] }}>
