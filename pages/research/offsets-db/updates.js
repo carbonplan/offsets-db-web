@@ -18,7 +18,7 @@ const Project = () => {
   return (
     <Layout
       title='OffsetsDB – CarbonPlan'
-      description='A regularly updating list of stories and noteworthy events related to offset projects in the database.'
+      description='A regularly-updating list of stories and noteworthy events related to offset projects in the database.'
       card='https://images.carbonplan.org/social/offsets-db.png'
       dimmer='top'
       footer={false}
@@ -45,7 +45,7 @@ const Project = () => {
                 fontSize: [2, 2, 2, 3],
               }}
             >
-              A regularly updating list of stories and noteworthy events related
+              A regularly-updating list of stories and noteworthy events related
               to offset projects in the database.
             </Box>
           </Column>
