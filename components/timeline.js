@@ -148,7 +148,7 @@ const Timeline = ({ project, color }) => {
             inverted
             size='xs'
             suffix={<RotatingArrow />}
-            href='/updates'
+            href='/research/offsets-db/updates'
             sx={{ mt: 4 }}
           >
             All project updates

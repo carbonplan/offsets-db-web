@@ -55,7 +55,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                           sx={{ mt: '-3px', width: 13, height: 13 }}
                         />
                       }
-                      href={`/projects/${project_id}`}
+                      href={`/research/offsets-db/projects/${project_id}`}
                       sx={{ fontSize: 2 }}
                     >
                       {project_id}

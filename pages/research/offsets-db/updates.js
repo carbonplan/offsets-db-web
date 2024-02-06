@@ -1,11 +1,11 @@
-import { Column, Layout, Link, Row } from '@carbonplan/components'
+import { Column, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
 import { Box, Container, Flex, Spinner } from 'theme-ui'
-import BackButton from '../components/back-button'
 
-import Clips from '../components/clips'
-import Pagination from '../components/pagination'
-import useFetcher from '../components/use-fetcher'
+import BackButton from '../../../components/back-button'
+import Clips from '../../../components/clips'
+import Pagination from '../../../components/pagination'
+import useFetcher from '../../../components/use-fetcher'
 
 const Project = () => {
   const [page, setPage] = useState(1)
@@ -19,13 +19,12 @@ const Project = () => {
     <Layout
       title='OffsetsDB – CarbonPlan'
       description='A regularly updating list of stories and noteworthy events related to offset projects in the database.'
-      card='TK'
+      card='https://images.carbonplan.org/social/offsets-db.png'
       dimmer='top'
       footer={false}
       metadata={false}
       container={false}
       nav={'research'}
-      url={'https://carbonplan.org/research/offsets-db'}
     >
       <Container>
         <Row sx={{ mt: [5, 6, 7, 8], mb: [5, 6, 7, 8] }}>

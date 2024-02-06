@@ -10,4 +10,14 @@ const withMDX = require('@next/mdx')({
 
 module.exports = withMDX({
   pageExtensions: ['jsx', 'js', 'md', 'mdx'],
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: '/',
+        destination: '/research/offsets-db',
+        permanent: true,
+      },
+    ]
+  },
 })
