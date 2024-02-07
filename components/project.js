@@ -2,7 +2,6 @@ import { Column, Row } from '@carbonplan/components'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS } from './constants'
-import { formatValue } from './utils'
 import CreditCharts from './charts/credit-charts'
 import Credits from './credits'
 import ProjectOverview from './project-overview'
@@ -54,12 +53,12 @@ const Project = ({ project }) => {
             <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
           </Flex>
         </Column>
-        <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
+        <Column start={[1, 2, 2, 2]} width={[6, 6, 6, 6]}>
           <Box as='h1' variant='styles.h1' sx={{ color, my: [0, 0, 0, 0] }}>
             {project_id}
           </Box>
         </Column>
-        <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]} sx={{ mt: 3 }}>
+        <Column start={[1, 2, 2, 2]} width={[6, 6, 6, 6]} sx={{ mt: 3 }}>
           <Box
             as='h2'
             variant='styles.h2'
