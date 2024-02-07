@@ -158,7 +158,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <Box sx={sx.value}>
           <Button
             href={project_url}
-            suffix={<RotatingArrow sx={{ mt: -1 }} />}
+            suffix={<RotatingArrow sx={{ mt: -1, height: 13, width: 13 }} />}
             sx={sx.value}
           >
             {LABELS.registry[registry]}
