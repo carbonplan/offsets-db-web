@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       )
     }
     const result = await serverRes.json()
-    res.status(200).send(result)
+    res.status(200).send({ terms: 'https://carbonplan.org/terms', ...result })
   } catch (e) {
     res.status(400).send({ error: e.message })
   }
