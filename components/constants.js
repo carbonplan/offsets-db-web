@@ -3,7 +3,6 @@ export const LABELS = {
     'american-carbon-registry': 'ACR',
     'art-trees': 'ART',
     'climate-action-reserve': 'CAR',
-    'global-carbon-council': 'GCC',
     'gold-standard': 'GLD',
     verra: 'VCS',
   },

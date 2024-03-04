@@ -18,7 +18,6 @@ export const QueryProvider = ({ children }) => {
     'american-carbon-registry': true,
     'art-trees': true,
     'climate-action-reserve': true,
-    'global-carbon-council': true,
     'gold-standard': true,
     verra: true,
   })
