@@ -44,6 +44,8 @@ and then visit `http://localhost:5001` in your browser.
 ## license
 
 All the code in this repository is [MIT](https://choosealicense.com/licenses/mit/) licensed, but we request that you please provide attribution if reusing any of our digital content (graphics, logo, articles, etc.).
+> [!IMPORTANT]
+> Data associated with this repository are subject to additional [terms of data access](https://offsets-db-data.readthedocs.io/en/latest/TERMS-OF-DATA-ACCESS.html).
 
 ## about us
 
