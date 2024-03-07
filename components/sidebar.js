@@ -40,10 +40,10 @@ const Sidebar = ({ children }) => {
           OffsetsDB
         </Box>
         <Box as='p' sx={{ mb: 5 }}>
-          This database collects and standardizes all the carbon offset projects
-          and credits listed by the five largest offset registries: American
-          Carbon Registry (ACR), ART TREES (ART), Climate Action Reserve (CAR),
-          Gold Standard (GLD), and Verra (VCS).
+          This database collects and standardizes data about offset projects and
+          offset credits issued by five of the largest offset registries:
+          American Carbon Registry (ACR), ART TREES (ART), Climate Action
+          Reserve (CAR), Gold Standard (GLD), and Verra (VCS).
           <br />
           <br />
           View the latest <Link href='/updates'>updates</Link> or download the{' '}
