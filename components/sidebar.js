@@ -46,7 +46,11 @@ const Sidebar = ({ children }) => {
           Reserve (CAR), Gold Standard (GLD), and Verra (VCS).
           <br />
           <br />
-          View the latest <Link href='/updates'>updates</Link> or download the{' '}
+          View the latest{' '}
+          <Link href='https://carbonplan.org/research/offsets-db/updates'>
+            updates
+          </Link>{' '}
+          or download the{' '}
           <Link href='https://offsets-db-data.readthedocs.io/en/latest/data-access.html'>
             data
           </Link>
