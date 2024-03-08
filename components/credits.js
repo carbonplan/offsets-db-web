@@ -109,6 +109,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           {data.data.length === 0 ? (
             <TableRow
               columns={[6, 6, 6, 6]}
+              sx={{ minHeight: [0, 200, 200, 200] }}
               values={[
                 {
                   label: 'No results found',
@@ -148,6 +149,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         </FadeIn>
       )}
       <TableFoot
+        sx={{ minHeight: 42 }}
         columns={[6, 6, 6, 6]}
         values={[
           {
