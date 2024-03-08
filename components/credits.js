@@ -149,7 +149,6 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         </FadeIn>
       )}
       <TableFoot
-        sx={{ minHeight: 42 }}
         columns={[6, 6, 6, 6]}
         values={[
           {
