@@ -22,7 +22,7 @@
   "homepage": "https://github.com/carbonplan/offsets-db-web#readme",
   "dependencies": {
     "@carbonplan/charts": "^3.0.0",
-    "@carbonplan/components": "^12.3.0",
+    "@carbonplan/components": "^12.6.3",
     "@carbonplan/emoji": "^2.0.0",
     "@carbonplan/icons": "^2.0.0",
     "@carbonplan/layouts": "^4.0.0",
