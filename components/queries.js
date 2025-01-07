@@ -29,7 +29,7 @@ export const QueryProvider = ({ children }) => {
   )
   const [complianceOnly, setComplianceOnly] = useState(null)
   const [search, setSearch] = useState('')
-  const [listingBounds, setlistingBounds] = useState(null)
+  const [listingBounds, setListingBounds] = useState(null)
   const [issuedBounds, setIssuedBounds] = useState(null)
   const [transactionBounds, setTransactionBounds] = useState(null)
   const [countries, setCountries] = useState([])
@@ -56,7 +56,7 @@ export const QueryProvider = ({ children }) => {
         search,
         setSearch,
         listingBounds,
-        setlistingBounds,
+        setListingBounds,
         issuedBounds,
         setIssuedBounds,
         transactionBounds,
