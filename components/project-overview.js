@@ -19,9 +19,12 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     proponent,
     project_url,
     registry,
+    project_type,
+    project_type_source,
   } = project
   const color = COLORS[category[0]] ?? COLORS.other
 
+  console.log(project)
   const sx = {
     label: {
       color,
@@ -101,6 +104,20 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       >
         <TooltipWrapper
           color={color}
+          tooltip={project_type_source ?? 'Project type'}
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Project type</Box>
+        </TooltipWrapper>
+        <Box sx={sx.value}>{project_type ?? <Empty />}</Box>
+      </Column>
+
+      <Column
+        start={[1, 3, columns === 4 ? 1 : 3, columns === 4 ? 1 : 3]}
+        width={[3, 2, 2, 2]}
+      >
+        <TooltipWrapper
+          color={color}
           tooltip='Methodology used to issue credits'
           sx={sx.tooltipWrapper}
         >
@@ -120,7 +137,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       </Column>
 
       <Column
-        start={[1, 3, columns === 4 ? 1 : 3, columns === 4 ? 1 : 3]}
+        start={[4, 5, columns === 4 ? 3 : 5, columns === 4 ? 3 : 5]}
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
@@ -133,10 +150,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
       </Column>
 
-      <Column
-        start={[4, 5, columns === 4 ? 3 : 5, columns === 4 ? 3 : 5]}
-        width={[3, 2, 2, 2]}
-      >
+      <Column start={[1, 1, 1, 1]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
           color={color}
           tooltip='Whether project is enrolled in a compliance program'
@@ -147,7 +161,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <Box sx={sx.value}>{is_compliance ? 'Yes' : 'No'}</Box>
       </Column>
 
-      <Column start={[1]} width={[3, 2, 2, 2]}>
+      <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
           color={color}
           tooltip='Link to project registry page'
