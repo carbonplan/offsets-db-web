@@ -1,8 +1,17 @@
 import { Box, Flex, IconButton } from 'theme-ui'
 import { useState } from 'react'
 import AnimateHeight from 'react-animate-height'
+import { X } from '@carbonplan/icons'
 
-const IconWrapper = ({ children, Icon, content, mt = '8px', sx }) => {
+const IconWrapper = ({
+  children,
+  Icon,
+  content,
+  onClose,
+  color = 'primary',
+  mt = '8px',
+  sx,
+}) => {
   const [expanded, setExpanded] = useState(false)
 
   return (
@@ -26,7 +35,7 @@ const IconWrapper = ({ children, Icon, content, mt = '8px', sx }) => {
             width: '16px',
             '@media (hover: hover) and (pointer: fine)': {
               '&:hover > #icon': {
-                stroke: 'primary',
+                stroke: color,
               },
             },
             p: [0],
@@ -40,7 +49,7 @@ const IconWrapper = ({ children, Icon, content, mt = '8px', sx }) => {
             height='16px'
             width='16px'
             sx={{
-              stroke: expanded ? 'primary' : 'secondary',
+              stroke: expanded ? color : 'secondary',
               transition: '0.1s',
             }}
           />
@@ -51,7 +60,28 @@ const IconWrapper = ({ children, Icon, content, mt = '8px', sx }) => {
         height={expanded ? 'auto' : 0}
         easing={'linear'}
       >
-        <Box sx={{ my: 1 }}>{content}</Box>
+        <Box sx={{ my: 1, position: 'relative' }}>
+          {content}
+          {onClose && (
+            <IconButton
+              onClick={() => {
+                setExpanded(false)
+                onClose()
+              }}
+              sx={{
+                position: 'absolute',
+                right: 0,
+                bottom: -1,
+                width: 22,
+                color: 'secondary',
+                cursor: 'pointer',
+                '&:hover': { color: 'primary' },
+              }}
+            >
+              <X />
+            </IconButton>
+          )}
+        </Box>
       </AnimateHeight>
     </>
   )

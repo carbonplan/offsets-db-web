@@ -46,6 +46,8 @@ const BeneficiaryHeading = ({ sx, color }) => {
     <IconWrapper
       sx={sx}
       Icon={SearchCircle}
+      color={color}
+      onClose={() => setValue('')}
       content={
         <Input
           value={value}
