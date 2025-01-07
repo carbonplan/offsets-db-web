@@ -15,6 +15,7 @@ import useFetcher from './use-fetcher'
 import CreditRow from './credit-row'
 import Pagination from './pagination'
 import TooltipWrapper from './tooltip-wrapper'
+import BeneficiaryHeading from './beneficiary-heading'
 
 const sx = {
   footerLabel: {
@@ -34,8 +35,14 @@ const sx = {
 }
 
 const Credits = ({ project_id, color, borderTop = true }) => {
-  const { registry, category, complianceOnly, search, transactionBounds } =
-    useQueries()
+  const {
+    registry,
+    category,
+    complianceOnly,
+    search,
+    beneficiarySearch,
+    transactionBounds,
+  } = useQueries()
   const [sort, setSort] = useState('-transaction_date')
   const [page, setPage] = useState(1)
   const { data, error, isLoading } = useFetcher('credits/', {
@@ -51,7 +58,15 @@ const Credits = ({ project_id, color, borderTop = true }) => {
 
   useEffect(() => {
     setPage(1)
-  }, [sort, transactionBounds, registry, category, complianceOnly, search])
+  }, [
+    sort,
+    transactionBounds,
+    registry,
+    category,
+    complianceOnly,
+    search,
+    beneficiarySearch,
+  ])
 
   return (
     <Box as='table' sx={{ width: '100%' }}>
@@ -72,7 +87,12 @@ const Credits = ({ project_id, color, borderTop = true }) => {
                 Date
               </TooltipWrapper>
             ),
-            width: 2,
+            width: 1,
+          },
+          {
+            value: 'quantity',
+            label: 'Quantity',
+            width: 1,
           },
           {
             value: 'vintage',
@@ -87,12 +107,16 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           {
             value: 'transaction_type',
             label: 'Type',
-            width: [0, 2, 2, 2],
+            width: [0, 1, 1, 1],
           },
           ...(project_id
             ? []
             : [{ value: 'project_id', label: 'Project ID', width: 2 }]),
-          { value: 'quantity', label: 'Quantity', width: 1 },
+          {
+            value: 'beneficiary',
+            label: <BeneficiaryHeading sx={sx.tooltip} color={color} />,
+            width: 2,
+          },
         ]}
         borderTop={borderTop}
       />
@@ -127,18 +151,18 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           <LoadingState
             columns={[6, 6, 6, 6]}
             values={[
-              { key: 'transaction_date', width: 2 },
+              { key: 'transaction_date', width: 1 },
+              { key: 'quantity', width: 1 },
               {
                 value: 'vintage',
                 width: [project_id ? 1 : 0, 1, 1, 1],
               },
-
               {
                 key: 'transaction_type',
-                width: [0, 2, 2, 2],
+                width: [0, 1, 1, 1],
               },
+              { key: 'beneficiary', width: 2 },
               ...(project_id ? [] : [{ key: 'project_id', width: 2 }]),
-              { key: 'quantity', width: 1 },
             ]}
           />
         </FadeIn>
@@ -154,11 +178,9 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           {
             label: (
               <Flex sx={sx.footerLabel}>
-                Total
+                Count
                 <Badge sx={{ color, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                  {unfilteredData
-                    ? formatValue(unfilteredData.pagination.total_entries)
-                    : '-'}
+                  {data ? formatValue(data.pagination.total_entries) : '-'}
                 </Badge>
               </Flex>
             ),
