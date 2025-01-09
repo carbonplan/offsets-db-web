@@ -45,6 +45,7 @@ const BeneficiaryHeading = ({ sx, color }) => {
   return (
     <IconWrapper
       sx={sx}
+      buttonBehavior
       Icon={SearchCircle}
       color={color}
       onClose={() => setValue('')}

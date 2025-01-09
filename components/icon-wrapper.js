@@ -8,6 +8,7 @@ const IconWrapper = ({
   Icon,
   content,
   onClose,
+  buttonBehavior = false,
   color = 'primary',
   mt = '8px',
   sx,
@@ -17,9 +18,22 @@ const IconWrapper = ({
   return (
     <>
       <Flex
+        {...(buttonBehavior
+          ? { role: 'button', onClick: () => setExpanded(!expanded) }
+          : {})}
         sx={{
           justifyContent: 'space-between',
           alignItems: 'flex-start',
+          ...(buttonBehavior
+            ? {
+                cursor: 'pointer',
+                '@media (hover: hover) and (pointer: fine)': {
+                  '&:hover  #icon': {
+                    stroke: color,
+                  },
+                },
+              }
+            : {}),
           ...sx,
         }}
       >
@@ -34,7 +48,7 @@ const IconWrapper = ({
             height: '16px',
             width: '16px',
             '@media (hover: hover) and (pointer: fine)': {
-              '&:hover > #icon': {
+              '&:hover #icon': {
                 stroke: color,
               },
             },
