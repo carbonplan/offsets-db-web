@@ -8,12 +8,13 @@ const IconWrapper = ({
   Icon,
   content,
   onClose,
+  initiallyExpanded = false,
   buttonBehavior = false,
   color = 'primary',
   mt = '8px',
   sx,
 }) => {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(initiallyExpanded)
 
   const handleToggleExpanded = useCallback(() => {
     if (expanded && onClose) {
