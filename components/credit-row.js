@@ -94,7 +94,9 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                   retirement_beneficiary ??
                   retirement_note ??
                   retirement_reason ?? (
-                    <Text sx={{ opacity: 0.5 }}>None listed</Text>
+                    <Text sx={{ opacity: 0.5 }}>
+                      {transaction_type === 'issuance' ? 'N/A' : 'None listed'}
+                    </Text>
                   )}
               </Text>
             ),
