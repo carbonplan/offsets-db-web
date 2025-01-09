@@ -1,5 +1,5 @@
 import { Box, Flex, IconButton } from 'theme-ui'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { X } from '@carbonplan/icons'
 
@@ -15,11 +15,18 @@ const IconWrapper = ({
 }) => {
   const [expanded, setExpanded] = useState(false)
 
+  const handleToggleExpanded = useCallback(() => {
+    if (expanded && onClose) {
+      onClose()
+    }
+    setExpanded(!expanded)
+  }, [expanded, onClose])
+
   return (
     <>
       <Flex
         {...(buttonBehavior
-          ? { role: 'button', onClick: () => setExpanded(!expanded) }
+          ? { role: 'button', onClick: handleToggleExpanded }
           : {})}
         sx={{
           justifyContent: 'space-between',
@@ -39,7 +46,7 @@ const IconWrapper = ({
       >
         {children}
         <IconButton
-          onClick={() => setExpanded(!expanded)}
+          onClick={handleToggleExpanded}
           role='checkbox'
           aria-checked={expanded}
           aria-label='Information'
