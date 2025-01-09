@@ -21,7 +21,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
   return (
     <>
       <TableRow
-        columns={[6, 6, 6, 6]}
+        columns={[6, 6, 7, 7]}
         values={[
           {
             key: 'transaction_date',
@@ -37,12 +37,12 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             ) : (
               '?'
             ),
-            width: 1,
+            width: [1, 1, 2, 2],
           },
           {
             key: 'quantity',
             label: (
-              <Flex sx={{ gap: 3 }}>
+              <Flex sx={{ gap: 2 }}>
                 <Quantity color={color} value={quantity} />
                 <Box sx={{ display: ['inherit', 'none', 'none', 'none'] }}>
                   {transaction_type === 'retirement' ? 'retired' : 'issued'}

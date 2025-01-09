@@ -72,7 +72,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
     <Box as='table' sx={{ width: '100%' }}>
       <TableHead
         color={color}
-        columns={[6, 6, 6, 6]}
+        columns={[6, 6, 7, 7]}
         sort={sort}
         setSort={setSort}
         values={[
@@ -87,12 +87,12 @@ const Credits = ({ project_id, color, borderTop = true }) => {
                 Date
               </TooltipWrapper>
             ),
-            width: 1,
+            width: [1, 1, 2, 2],
           },
           {
             value: 'quantity',
             label: 'Quantity',
-            width: 1,
+            width: [2, 1, 1, 1],
           },
           {
             value: 'vintage',
@@ -132,13 +132,13 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           ))}
           {data.data.length === 0 ? (
             <TableRow
-              columns={[6, 6, 6, 6]}
+              columns={[6, 6, 7, 7]}
               sx={{ minHeight: [0, 200, 200, 200] }}
               values={[
                 {
                   label: 'No results found',
                   key: 'empty',
-                  width: [6, 6, 6, 6],
+                  width: [6, 6, 7, 7],
                 },
               ]}
             />
@@ -149,9 +149,9 @@ const Credits = ({ project_id, color, borderTop = true }) => {
       {isLoading && (
         <FadeIn as='tbody'>
           <LoadingState
-            columns={[6, 6, 6, 6]}
+            columns={[6, 6, 7, 7]}
             values={[
-              { key: 'transaction_date', width: 1 },
+              { key: 'transaction_date', width: [1, 1, 2, 2] },
               { key: 'quantity', width: 1 },
               {
                 value: 'vintage',
@@ -173,7 +173,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         </FadeIn>
       )}
       <TableFoot
-        columns={[6, 6, 6, 6]}
+        columns={[6, 6, 7, 7]}
         values={[
           {
             label: (
