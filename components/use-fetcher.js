@@ -73,8 +73,7 @@ const fetcher = ([
   }
 
   if (beneficiarySearch?.trim()) {
-    // TODO: update param name once finalized in API
-    params.append('search', beneficiarySearch.trim())
+    params.append('beneficiary_search', beneficiarySearch.trim())
   }
 
   if (typeof complianceOnly === 'boolean') {

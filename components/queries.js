@@ -101,6 +101,8 @@ const Queries = () => {
     setComplianceOnly,
     search,
     setSearch,
+    beneficiarySearch,
+    setBeneficiarySearch,
     countries,
     setCountries,
     protocols,
@@ -126,6 +128,27 @@ const Queries = () => {
               }}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+            />
+          </TooltipWrapper>
+        </Column>
+      </Row>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
+          <Box sx={sx.label}>Beneficiary</Box>
+        </Column>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+          <TooltipWrapper tooltip='Search projects by retirement beneficiary.'>
+            <Input
+              placeholder='enter search term'
+              size='xs'
+              sx={{
+                fontSize: 1,
+                fontFamily: 'mono',
+                width: '100%',
+                borderBottom: 0,
+              }}
+              value={beneficiarySearch}
+              onChange={(e) => setBeneficiarySearch(e.target.value)}
             />
           </TooltipWrapper>
         </Column>
