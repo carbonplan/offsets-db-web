@@ -1,4 +1,4 @@
-import { Column, Row } from '@carbonplan/components'
+import { Column, Filter, Row } from '@carbonplan/components'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS } from './constants'
@@ -8,9 +8,15 @@ import ProjectOverview from './project-overview'
 import Timeline from './timeline'
 import BackButton from './back-button'
 import Quantity from './quantity'
+import { useState } from 'react'
 
 const Project = ({ project }) => {
   const { project_id, name, category, issued, retired } = project
+  const [creditFilter, setCreditFilter] = useState({
+    All: false,
+    Issuance: false,
+    Retirement: true,
+  })
   const color = COLORS[category[0]] ?? COLORS.other
 
   const sx = {
@@ -117,7 +123,17 @@ const Project = ({ project }) => {
             <Column start={[1]} width={[6, 6, 7, 7]} sx={{ mt: [3, 5, 5, 5] }}>
               <Box sx={sx.sectionLabel}>Transactions</Box>
 
+              <Filter
+                colors={{ Issuance: color, Retirement: color, All: color }}
+                values={creditFilter}
+                setValues={setCreditFilter}
+              />
               <Credits
+                transactionType={
+                  creditFilter.All
+                    ? null
+                    : Object.keys(creditFilter).find((k) => creditFilter[k])
+                }
                 color={color}
                 project_id={project_id}
                 borderTop={false}
