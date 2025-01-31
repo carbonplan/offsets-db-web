@@ -64,25 +64,62 @@ const ProjectType = () => {
   }, [values])
 
   const setValues = useCallback(
-    ({ All, Other, 'Select other types': selectOthersValue, ...values }) => {
-      setSelectOthers(selectOthersValue)
-      setProjectType((prev) => {
-        // If selecting all after having previously filtered, clear filters
-        if (
-          All &&
-          prev &&
-          prev.length !== projectTypes.Top.length + projectTypes.Other.length
-        ) {
-          return null
-        } else {
-          return [
-            ...Object.keys(values).filter((key) => values[key]),
-            ...(Other ? projectTypes.Other : []),
-          ]
-        }
-      })
+    ({ All, Other, 'Select other types': updatedSelectOthers, ...values }) => {
+      if (!selectOthers && updatedSelectOthers) {
+        setSelectOthers(true)
+        setProjectType([])
+      } else {
+        setSelectOthers(Other ? false : updatedSelectOthers)
+        setProjectType((prev) => {
+          // If selecting all after having previously filtered, clear filters
+          if (
+            All &&
+            prev &&
+            prev.length !== projectTypes.Top.length + projectTypes.Other.length
+          ) {
+            setSelectOthers(false)
+            return null
+          } else {
+            const topValues = Object.keys(values).filter((key) => values[key])
+            let otherValues = []
+            if (Other) {
+              otherValues = projectTypes.Other
+            } else if (updatedSelectOthers) {
+              otherValues = prev.filter((type) =>
+                projectTypes.Other.includes(type)
+              )
+            }
+            return [...topValues, ...otherValues]
+          }
+        })
+      }
     },
-    [projectTypes, setProjectType]
+    [projectTypes, setProjectType, selectOthers]
+  )
+
+  const selectedOthers = useMemo(() => {
+    if (!projectType || !projectTypes) {
+      return []
+    } else {
+      const alreadySelected = projectType.filter((type) =>
+        projectTypes.Other.includes(type)
+      )
+      if (alreadySelected.length === projectTypes.Other.length) {
+        return []
+      } else {
+        return alreadySelected
+      }
+    }
+  }, [projectType, projectTypes])
+
+  const handleSetOthers = useCallback(
+    (otherValues) => {
+      setProjectType((prev) => [
+        ...prev.filter((type) => projectTypes.Top.includes(type)),
+        ...otherValues,
+      ])
+    },
+    [setProjectType, projectTypes]
   )
 
   return !projectTypes ? (
@@ -98,10 +135,10 @@ const ProjectType = () => {
       {selectOthers && (
         <ListSelection
           items={projectTypes.Other}
-          selectedItems={[]}
+          selectedItems={selectedOthers}
           setSelection={() => setSelectOthers(false)}
           placeholder={'enter type'}
-          setter={() => {}}
+          setter={handleSetOthers}
         />
       )}
     </Box>
