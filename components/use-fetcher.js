@@ -13,6 +13,7 @@ const fetcher = ([
   binWidth,
   registry,
   category,
+  projectType,
   complianceOnly,
   search,
   listingBounds,
@@ -64,6 +65,16 @@ const fetcher = ([
       params.append('category', 'none')
     } else {
       categories.forEach((c) => params.append('category', c))
+    }
+  }
+
+  if (projectType) {
+    const projectTypes = Object.keys(projectType).filter((t) => projectType[t])
+
+    if (projectTypes.length === 0) {
+      params.append('project_type', 'none')
+    } else {
+      projectTypes.forEach((t) => params.append('project_type', t))
     }
   }
 
@@ -129,6 +140,7 @@ const useFetcher = (
   const {
     registry,
     category,
+    projectType,
     complianceOnly,
     search,
     listingBounds,
@@ -141,6 +153,7 @@ const useFetcher = (
   const filterArgs = [
     useDebounce(registry),
     useDebounce(category),
+    useDebounce(projectType),
     complianceOnly,
     useDebounce(search),
     useDebounce(listingBounds),

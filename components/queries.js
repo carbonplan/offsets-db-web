@@ -6,6 +6,7 @@ import Category from './category'
 import { ALL_CATEGORIES, COUNTRIES, PROTOCOLS, LABELS } from './constants'
 import ListFilter from './list-filter'
 import TooltipWrapper from './tooltip-wrapper'
+import ProjectType from './project-type'
 
 const QueryContext = createContext({
   registry: {},
@@ -27,6 +28,7 @@ export const QueryProvider = ({ children }) => {
       return a
     }, {})
   )
+  const [projectType, setProjectType] = useState(null)
   const [complianceOnly, setComplianceOnly] = useState(null)
   const [search, setSearch] = useState('')
   const [listingBounds, setlistingBounds] = useState(null)
@@ -51,6 +53,8 @@ export const QueryProvider = ({ children }) => {
         setRegistry,
         category,
         setCategory,
+        projectType,
+        setProjectType,
         complianceOnly,
         setComplianceOnly,
         search,
@@ -150,6 +154,16 @@ const Queries = () => {
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
           <TooltipWrapper tooltip='Filter projects by category.'>
             <Category />
+          </TooltipWrapper>
+        </Column>
+      </Row>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
+          <Box sx={sx.label}>Type</Box>
+        </Column>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+          <TooltipWrapper tooltip='Filter projects by type.'>
+            <ProjectType />
           </TooltipWrapper>
         </Column>
       </Row>
