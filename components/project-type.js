@@ -39,18 +39,18 @@ const ProjectType = () => {
     }
     const topTypes = projectTypes.Top.reduce((accum, key) => {
       // if projectType is not defined, select all projectTypes
-      accum[key] = projectType ? projectType[key] : true
+      accum[key] = projectType ? projectType.includes(key) : true
       return accum
     }, {})
 
     return {
       All: projectType
-        ? projectTypes.Top.every((type) => projectType[type]) &&
-          projectTypes.Other.every((type) => projectType[type])
+        ? projectType.length ===
+          projectTypes.Top.length + projectTypes.Other.length
         : true,
       ...topTypes,
       Other: projectType
-        ? projectTypes.Other.some((type) => projectType[type])
+        ? projectTypes.Other.every((type) => projectType.includes(type))
         : true,
       'Select other types': selectOthers,
     }
@@ -66,19 +66,21 @@ const ProjectType = () => {
   const setValues = useCallback(
     ({ All, Other, 'Select other types': selectOthersValue, ...values }) => {
       setSelectOthers(selectOthersValue)
-      setProjectType((prev) =>
-        All && prev && Object.keys(prev).some((k) => !prev[k])
-          ? null
-          : {
-              ...values,
-              ...(Other && projectTypes
-                ? projectTypes.Other.reduce((accum, key) => {
-                    accum[key] = true
-                    return accum
-                  }, {})
-                : {}),
-            }
-      )
+      setProjectType((prev) => {
+        // If selecting all after having previously filtered, clear filters
+        if (
+          All &&
+          prev &&
+          prev.length !== projectTypes.Top.length + projectTypes.Other.length
+        ) {
+          return null
+        } else {
+          return [
+            ...Object.keys(values).filter((key) => values[key]),
+            ...(Other ? projectTypes.Other : []),
+          ]
+        }
+      })
     },
     [projectTypes, setProjectType]
   )

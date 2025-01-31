@@ -69,12 +69,10 @@ const fetcher = ([
   }
 
   if (projectType) {
-    const projectTypes = Object.keys(projectType).filter((t) => projectType[t])
-
-    if (projectTypes.length === 0) {
+    if (projectType.length === 0) {
       params.append('project_type', 'none')
     } else {
-      projectTypes.forEach((t) => params.append('project_type', t))
+      projectType.forEach((t) => params.append('project_type', t))
     }
   }
 
