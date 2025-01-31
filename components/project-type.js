@@ -2,6 +2,8 @@ import { Filter } from '@carbonplan/components'
 import { useCallback, useMemo, useState } from 'react'
 import useSWR from 'swr'
 import { useQueries } from './queries'
+import { Box } from 'theme-ui'
+import { ListSelection } from './list-filter'
 
 const fetcher = (path) => {
   const params = new URLSearchParams()
@@ -29,7 +31,7 @@ const ProjectType = () => {
   } = useSWR('projects/types', fetcher, {
     revalidateOnFocus: false,
   })
-  // const [selectOthers, setSelectOthers] = useState(false)
+  const [selectOthers, setSelectOthers] = useState(false)
 
   const values = useMemo(() => {
     if (!projectTypes) {
@@ -42,13 +44,17 @@ const ProjectType = () => {
     }, {})
 
     return {
+      All: projectType
+        ? projectTypes.Top.every((type) => projectType[type]) &&
+          projectTypes.Other.every((type) => projectType[type])
+        : true,
       ...topTypes,
       Other: projectType
         ? projectTypes.Other.some((type) => projectType[type])
         : true,
-      // 'Select others': selectOthers,
+      'Select other types': selectOthers,
     }
-  }, [projectTypes, projectType /* , selectOthers */])
+  }, [projectTypes, projectType, selectOthers])
 
   const labels = useMemo(() => {
     return Object.keys(values).reduce((a, key) => {
@@ -58,17 +64,21 @@ const ProjectType = () => {
   }, [values])
 
   const setValues = useCallback(
-    ({ Other, 'Select others': selectOthersValue, ...values }) => {
-      // setSelectOthers(selectOthersValue)
-      setProjectType({
-        ...values,
-        ...(Other && projectTypes
-          ? projectTypes.Other.reduce((accum, key) => {
-              accum[key] = true
-              return accum
-            }, {})
-          : {}),
-      })
+    ({ All, Other, 'Select other types': selectOthersValue, ...values }) => {
+      setSelectOthers(selectOthersValue)
+      setProjectType((prev) =>
+        All && prev && Object.keys(prev).some((k) => !prev[k])
+          ? null
+          : {
+              ...values,
+              ...(Other && projectTypes
+                ? projectTypes.Other.reduce((accum, key) => {
+                    accum[key] = true
+                    return accum
+                  }, {})
+                : {}),
+            }
+      )
     },
     [projectTypes, setProjectType]
   )
@@ -76,13 +86,23 @@ const ProjectType = () => {
   return !projectTypes ? (
     'Loading...'
   ) : (
-    <Filter
-      values={values}
-      setValues={setValues}
-      labels={labels}
-      showAll
-      multiSelect
-    />
+    <Box>
+      <Filter
+        values={values}
+        setValues={setValues}
+        labels={labels}
+        multiSelect
+      />
+      {selectOthers && (
+        <ListSelection
+          items={projectTypes.Other}
+          selectedItems={[]}
+          setSelection={() => setSelectOthers(false)}
+          placeholder={'enter type'}
+          setter={() => {}}
+        />
+      )}
+    </Box>
   )
 }
 
