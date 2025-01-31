@@ -123,7 +123,7 @@ const ProjectType = () => {
   )
 
   return !projectTypes ? (
-    'Loading...'
+    <Filter values={{ All: true, 'Loading...': false }} setValues={() => {}} />
   ) : (
     <Box>
       <Filter
