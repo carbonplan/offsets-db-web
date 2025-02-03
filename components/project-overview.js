@@ -24,7 +24,6 @@ const ProjectOverview = ({ project, columns = 4 }) => {
   } = project
   const color = COLORS[category[0]] ?? COLORS.other
 
-  console.log(project)
   const sx = {
     label: {
       color,
