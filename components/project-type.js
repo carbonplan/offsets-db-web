@@ -67,14 +67,25 @@ const ProjectType = () => {
       } else {
         setSelectOthers(Other ? false : updatedSelectOthers)
         setProjectType((prev) => {
-          // If selecting all after having previously filtered, clear filters
           if (
             All &&
             prev &&
             prev.length !== projectTypes.Top.length + projectTypes.Other.length
           ) {
+            // Handle selecting All:
+            // - Clear filters by setting projectType to null
+            // - Ensure Other-filtering is hidden
             setSelectOthers(false)
             return null
+          } else if (
+            !All &&
+            (!prev ||
+              prev.length ===
+                projectTypes.Top.length + projectTypes.Other.length)
+          ) {
+            // Handle deselecting All:
+            // - Clear all selections
+            return []
           } else {
             const topValues = Object.keys(values).filter((key) => values[key])
             let otherValues = []
