@@ -103,7 +103,10 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       >
         <TooltipWrapper
           color={color}
-          tooltip={project_type_source ?? 'Project type'}
+          tooltip={
+            project_type_source ??
+            'Project type label (data source not recorded)'
+          }
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Project type</Box>
