@@ -24,11 +24,7 @@ const SHORT_LABELS = {
 
 const ProjectType = () => {
   const { projectType, setProjectType } = useQueries()
-  const {
-    data: projectTypes,
-    error,
-    isFetching,
-  } = useSWR('projects/types', fetcher, {
+  const { data: projectTypes } = useSWR('projects/types', fetcher, {
     revalidateOnFocus: false,
   })
   const [selectOthers, setSelectOthers] = useState(false)
