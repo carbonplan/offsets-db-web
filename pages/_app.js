@@ -1,3 +1,5 @@
+import React from 'react'
+import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'theme-ui'
 import { MDXProvider } from '@mdx-js/react'
 import '@carbonplan/components/fonts.css'
@@ -7,13 +9,15 @@ import { QueryProvider } from '../components/queries'
 
 const App = ({ Component, pageProps }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <MDXProvider>
-        <QueryProvider>
-          <Component {...pageProps} />
-        </QueryProvider>
-      </MDXProvider>
-    </ThemeProvider>
+    <PlausibleProvider domain='carbonplan.org' trackOutboundLinks>
+      <ThemeProvider theme={theme}>
+        <MDXProvider>
+          <QueryProvider>
+            <Component {...pageProps} />
+          </QueryProvider>
+        </MDXProvider>
+      </ThemeProvider>
+    </PlausibleProvider>
   )
 }
 
