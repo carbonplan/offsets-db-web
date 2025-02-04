@@ -14,7 +14,7 @@ const ListFilter = ({ items, selectedItems, title, placeholder, setter }) => {
       return { filtered: [], hidden }
     }
 
-    const filtered = items.filter(
+    let filtered = items.filter(
       (item) =>
         !selectedItems?.includes(item) &&
         item.toLocaleLowerCase().includes(query.toLocaleLowerCase())
