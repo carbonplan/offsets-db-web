@@ -1,10 +1,18 @@
-import { Chart, Bar, Grid, Plot, Ticks, TickLabels } from '@carbonplan/charts'
-import { Box, Flex } from 'theme-ui'
-import { useCallback, useEffect, useMemo } from 'react'
+import {
+  Chart,
+  Bar,
+  Grid,
+  Plot,
+  Ticks,
+  TickLabels,
+  Axis,
+} from '@carbonplan/charts'
+import { Box } from 'theme-ui'
+import { alpha } from '@theme-ui/color'
+import { useBreakpointIndex } from '@theme-ui/match-media'
+import { useEffect, useMemo } from 'react'
 import { format } from 'd3-format'
 
-import Brush from './brush'
-import { useQueries } from '../queries'
 import useFetcher from '../use-fetcher'
 
 const getLines = (data) => {
@@ -26,12 +34,15 @@ const getLines = (data) => {
     .sort((a, b) => a[0] - b[0])
 }
 
-const fillBars = (lines, domain) => {
+const fillBars = (lines, domain, range) => {
   const xMap = new Map(lines)
   const result = []
   for (let year = domain[0]; year <= domain[1]; year++) {
     const value = xMap.has(year) ? xMap.get(year) : 0
-    result.push([year, value])
+
+    // ensure that a sliver of bar is visible for values that are low relative to range
+    const perceivedValue = value > 0 ? Math.max(range[1] * 0.01, value) : value
+    result.push([year, perceivedValue])
   }
 
   return result
@@ -39,12 +50,14 @@ const fillBars = (lines, domain) => {
 
 const CreditTransactions = ({
   project_id,
+  color,
   transactionType,
-  setTransactionType,
   domain: domainProp,
   setDomain,
+  range: rangeProp,
+  setRange,
+  hideLeftTickLabels = false,
 }) => {
-  const { transactionBounds, setTransactionBounds } = useQueries()
   const url = `charts/credits_by_transaction_date${
     project_id ? '/' + project_id : ''
   }`
@@ -52,45 +65,32 @@ const CreditTransactions = ({
     transactionType,
     filters: false,
   })
-  const {
-    data: filteredData,
-    error: filteredError,
-    isLoading: filteredLoading,
-  } = useFetcher(url, { transactionType })
-
-  const handleBoundsChange = useCallback(
-    (bounds) => {
-      setTransactionBounds(bounds)
-      setTransactionType(bounds ? transactionType : null)
-    },
-    [transactionType, setTransactionBounds]
-  )
-
-  const { lines, range } = useMemo(() => {
+  const index = useBreakpointIndex({ defaultIndex: 2 })
+  const lines = useMemo(() => {
     if (!data) {
-      return { lines: [], range: [0, 0], domain: [1999, 2023] }
+      return []
     } else {
-      const lines = getLines(data.data)
-
-      const range = lines.reduce(
-        ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
-        [0, -Infinity]
-      )
-      return { lines, range }
+      return getLines(data.data)
     }
   }, [data])
 
-  const domain = useMemo(() => {
-    const d = lines.reduce(
+  const { domain, range } = useMemo(() => {
+    let d = lines.reduce(
       ([min, max], d) => [Math.min(min, d[0]), Math.max(max, d[0])],
       domainProp ?? [Infinity, -Infinity]
     )
+
     if (d[0] === d[1]) {
-      return [d[0] - 1, d[1]]
+      d = [d[0] - 1, d[1]]
     }
 
-    return d
-  }, [lines, domainProp])
+    const r = lines.reduce(
+      ([min, max], d) => [Math.min(min, d[1]), Math.max(max, d[1])],
+      rangeProp ?? [0, -Infinity]
+    )
+
+    return { domain: d, range: r }
+  }, [lines, domainProp, rangeProp])
 
   useEffect(() => {
     if (setDomain) {
@@ -98,15 +98,11 @@ const CreditTransactions = ({
     }
   }, [setDomain, domain])
 
-  const { lines: filteredLines } = useMemo(() => {
-    if (!filteredData) {
-      return { lines: [], range: [0, 0] }
-    } else {
-      const lines = getLines(filteredData.data)
-
-      return { lines }
+  useEffect(() => {
+    if (setRange) {
+      setRange(range)
     }
-  }, [filteredData])
+  }, [setRange, range])
 
   const { ticks, labels, step } = useMemo(() => {
     if (!Number.isFinite(domain[0]) || !Number.isFinite(domain[1])) {
@@ -115,7 +111,7 @@ const CreditTransactions = ({
 
     const width = domain[1] - domain[0]
     if (width >= 8) {
-      return { step: 0 }
+      return { step: 2 }
     }
 
     const step = 1
@@ -134,38 +130,49 @@ const CreditTransactions = ({
     return { ticks, labels, step }
   }, [domain])
 
-  const { bars, filteredBars } = useMemo(() => {
-    return {
-      bars: fillBars(lines, domain),
-      filteredBars: fillBars(filteredLines, domain),
-    }
-  }, [lines, filteredLines, domain])
+  const bars = useMemo(
+    () => fillBars(lines, domain, range),
+    [lines, domain, range]
+  )
 
   return (
     <>
-      <Flex sx={{ gap: 3 }}>
-        Credits {transactionType === 'issuance' ? 'issued' : 'retired'} / year
-        <Box sx={{ fontSize: 0, mt: 1, color: 'secondary' }}>
-          {transactionBounds ? transactionBounds.join(' - ') : 'Drag to filter'}
-        </Box>
-      </Flex>
-      <Box sx={{ height: '200px', mt: 3 }}>
-        <Chart
-          key={`${domain[0]},${domain[1]}`}
-          x={[domain[0] - step / 2, domain[1] + step / 2]}
-          y={range}
-          padding={{ left: 32 }}
-        >
-          <Grid vertical values={ticks} />
-          <Ticks bottom values={ticks} />
-          <TickLabels bottom values={labels} />
-          <TickLabels left count={3} format={format('~s')} />
-          <Plot>
-            <Brush setBounds={handleBoundsChange} />
-            <Bar data={bars} color='secondary' />
-            <Bar data={filteredBars} />
-          </Plot>
-        </Chart>
+      <Box sx={{ color }}>
+        {transactionType === 'issuance' ? 'Issuances' : 'Retirements'} over time
+      </Box>
+      <Box sx={{ height: ['120px', '150px', '170px', '170px'], mt: 3 }}>
+        {isLoading ? (
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              pb: 50,
+            }}
+          >
+            <Box
+              sx={{ width: '100%', height: '100%', bg: alpha('muted', 0.4) }}
+            />
+          </Box>
+        ) : (
+          <Chart
+            key={`${domain[0]},${domain[1]}`}
+            x={[domain[0] - step / 2, domain[1] + step / 2]}
+            y={range}
+            padding={{ left: index < 1 ? 32 : 0 }}
+          >
+            <Axis bottom sx={{ borderColor: color }} />
+            <Grid vertical values={ticks} />
+            <Grid horizontal count={3} />
+            <Ticks bottom values={ticks} sx={{ borderColor: color }} />
+            <TickLabels bottom values={labels} sx={{ color }} />
+            {(!hideLeftTickLabels || index < 1) && (
+              <TickLabels left count={3} format={format('~s')} />
+            )}
+            <Plot>
+              <Bar data={bars} color={color} />
+            </Plot>
+          </Chart>
+        )}
       </Box>
     </>
   )

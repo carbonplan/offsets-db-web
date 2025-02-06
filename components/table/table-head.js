@@ -36,14 +36,22 @@ const SORTS = {
   quantity: { primary: '-quantity', inverted: 'quantity' },
 }
 
-const TableHead = ({ values, sort, setSort, borderTop }) => {
+const TableHead = ({
+  color,
+  values,
+  sort,
+  setSort,
+  borderTop,
+  sx,
+  columns,
+}) => {
   const Sort = useCallback(
     ({ value }) => {
       if (!SORTS[value.value]) {
         return <Box sx={{ height: '16px', mb: 1 }} />
       }
       const { primary, inverted } = SORTS[value.value]
-
+      const activeColor = color ?? 'primary'
       return (
         <Box
           as='button'
@@ -59,7 +67,7 @@ const TableHead = ({ values, sort, setSort, borderTop }) => {
             cursor: 'pointer',
             '@media (hover: hover) and (pointer: fine)': {
               [`&:hover #${value.value}-triangle`]: {
-                stroke: 'primary',
+                stroke: activeColor,
               },
             },
           }}
@@ -71,7 +79,7 @@ const TableHead = ({ values, sort, setSort, borderTop }) => {
             id={`${value.value}-triangle`}
             sx={{
               transition: 'stroke 0.15s',
-              stroke: sort.includes(value.value) ? 'primary' : 'muted',
+              stroke: sort.includes(value.value) ? activeColor : 'muted',
               fill: 'none',
               width: 10,
               height: 10,
@@ -81,18 +89,28 @@ const TableHead = ({ values, sort, setSort, borderTop }) => {
         </Box>
       )
     },
-    [sort]
+    [sort, color]
   )
 
   return (
-    <Box as='thead'>
+    <Box
+      as='thead'
+      sx={{
+        position: 'sticky',
+        top: 55,
+        zIndex: 1,
+        ...sx,
+      }}
+    >
       <TableRow
         as='th'
         values={values}
+        columns={columns}
         Button={Sort}
         sx={{
           border: 0,
           borderTop: borderTop ? '1px' : 0,
+          background: 'background',
           borderBottom: '1px',
           borderColor: 'muted',
           borderStyle: 'solid',

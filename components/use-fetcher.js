@@ -4,7 +4,7 @@ import { useQueries } from './queries'
 import { useDebounce } from './utils'
 
 const fetcher = ([
-  url,
+  path,
   creditType,
   transactionType,
   project_id,
@@ -19,8 +19,10 @@ const fetcher = ([
   transactionBounds,
   issuedBounds,
   countries,
+  protocols,
 ]) => {
   const params = new URLSearchParams()
+  params.append('path', path)
   if (creditType) {
     params.append('credit_type', creditType)
   }
@@ -39,7 +41,7 @@ const fetcher = ([
 
   if (page) {
     params.append('current_page', page)
-    params.append('per_page', 25)
+    params.append('per_page', 100)
   }
 
   if (binWidth) {
@@ -92,10 +94,24 @@ const fetcher = ([
     countries.forEach((country) => params.append('country', country))
   }
 
-  const reqUrl = new URL(url)
+  if (protocols) {
+    protocols.forEach((protocol) => params.append('protocol', protocol))
+  }
+
+  const reqUrl = new URL(
+    '/research/offsets-db/api/query',
+    window.location.origin
+  )
   reqUrl.search = params.toString()
 
-  return fetch(reqUrl).then((r) => r.json())
+  return fetch(reqUrl)
+    .then((r) => r.json())
+    .then((r) => {
+      if (!r || !r.data) {
+        throw new Error(r?.error ?? r?.detail ?? 'Not found')
+      }
+      return r
+    })
 }
 
 const useFetcher = (
@@ -119,6 +135,7 @@ const useFetcher = (
     transactionBounds,
     issuedBounds,
     countries,
+    protocols,
   } = useQueries()
 
   const filterArgs = [
@@ -130,21 +147,22 @@ const useFetcher = (
     useDebounce(transactionBounds),
     useDebounce(issuedBounds),
     countries,
+    protocols,
   ]
 
   return useSWR(
     [
-      `${process.env.NEXT_PUBLIC_API_URL}/${path}`,
+      path,
       creditType,
       transactionType,
       project_id,
-      useDebounce(sort, 10),
+      sort,
       page,
       binWidth,
       ...(filters ? filterArgs : []),
     ],
     fetcher,
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false, revalidateIfStale: false }
   )
 }
 

@@ -3,19 +3,22 @@ import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo } from 'react'
 import { Box, Divider, useThemeUI } from 'theme-ui'
 
-const Timeline = ({ project }) => {
+const Timeline = ({ project, color }) => {
   const { theme } = useThemeUI()
 
   const sortedEntries = useMemo(
     () =>
       [
-        ...project.clips.map(({ date, title, url }) => ({
-          date: date.match(/\d{4}-\d{2}-\d{2}/)[0],
-          label: title,
-          url,
-        })),
-        { date: project.listed_at, label: 'Project registered' },
-        { date: project.started_at, label: 'Project listed' },
+        ...project.clips
+          .filter((d) => 'offsets-db' !== d.source)
+          .map(({ date, title, url }) => ({
+            date: date.match(/\d{4}-\d{2}-\d{2}/)[0],
+            label: title,
+            url,
+          })),
+        { date: project.first_retirement_at, label: 'First credits retired' },
+        { date: project.first_issuance_at, label: 'First credits issued' },
+        { date: project.listed_at, label: 'Project listed' },
       ]
         .filter((d) => d.date)
         .sort((a, b) => b.date.localeCompare(a.date)),
@@ -23,7 +26,7 @@ const Timeline = ({ project }) => {
   )
 
   return (
-    <Row columns={[6, 8, 3, 3]} sx={{ mt: 4 }}>
+    <Row columns={[6, 7, 3, 3]} sx={{ mt: 4 }}>
       {sortedEntries.length === 0 && (
         <Column start={1} width={[4, 4, 2, 2]}>
           <Box
@@ -45,7 +48,7 @@ const Timeline = ({ project }) => {
           sx={{
             borderWidth: 0,
             borderLeft: '1px',
-            borderColor: 'secondary',
+            borderColor: color,
             borderStyle: 'solid',
             ml: [
               `calc(-1 * (24px + (100vw - 7 * 24px) / 6 / 2))`,
@@ -63,16 +66,15 @@ const Timeline = ({ project }) => {
         >
           {sortedEntries.map(({ date, label, url }) => (
             <Column
-              key={date}
+              key={label}
               start={1}
               width={[4, 4, 2, 2]}
               sx={{ mt: 3, mb: 2 }}
             >
-              <Divider sx={{ my: 0 }} />
               <Row
                 columns={[4, 4, 2, 2]}
                 sx={{
-                  color: 'secondary',
+                  color,
                   fontFamily: 'mono',
                   letterSpacing: '0.05em',
                   fontSize: [1, 1, 1, 2],
@@ -83,6 +85,19 @@ const Timeline = ({ project }) => {
                   mb: 3,
                 }}
               >
+                <Column start={1} width={1} sx={{ position: 'relative' }}>
+                  <Divider
+                    sx={{
+                      top: 2,
+                      position: 'absolute',
+                      my: 0,
+                      borderColor: color,
+                      width: '50%',
+                      left: '-50%',
+                      ml: [-4, -5, -5, -6],
+                    }}
+                  />
+                </Column>
                 <Column
                   start={1}
                   width={[4, 4, 2, 2]}
@@ -110,7 +125,8 @@ const Timeline = ({ project }) => {
                       cy='6.5'
                       r='6'
                       fill={theme.colors.background}
-                      stroke={theme.colors.secondary}
+                      stroke={theme.colors[color]}
+                      style={{ vectorEffect: 'non-scaling-stroke' }}
                     />
                   </Box>
 
@@ -127,6 +143,17 @@ const Timeline = ({ project }) => {
             </Column>
           ))}
         </Row>
+        {sortedEntries.length > 0 && (
+          <Button
+            inverted
+            size='xs'
+            suffix={<RotatingArrow />}
+            href='/updates'
+            sx={{ mt: 4 }}
+          >
+            All project updates
+          </Button>
+        )}
       </Column>
     </Row>
   )

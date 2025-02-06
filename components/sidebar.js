@@ -1,5 +1,6 @@
 import { Column, Link } from '@carbonplan/components'
 import { Box, Divider } from 'theme-ui'
+import LastUpdated from './last-updated'
 
 const Sidebar = ({ children }) => {
   return (
@@ -32,18 +33,39 @@ const Sidebar = ({ children }) => {
             `calc(-1 * (32px + (100vw - 13 * 32px) / 12 / 2))`,
             `calc(-1 * (48px + (100vw - 13 * 48px) / 12 / 2))`,
           ],
+          pb: [4, 3, 5, 5],
         }}
       >
-        <Box as='h1' sx={{ variant: 'styles.h1', mt: 4 }}>
-          Offsets DB
+        <Box as='h1' sx={{ variant: 'styles.h1', mt: 4, mb: 3 }}>
+          OffsetsDB
         </Box>
         <Box as='p' sx={{ mb: 5 }}>
-          These are all the carbon offset projects listed globally by the six
-          largest offset registries: Verra (VCS), Gold Standard (GOLD), Global
-          Carbon Council (GCC), American Carbon Registry (ACR), Climate Action
-          Reserve (CAR), and ART TREES (ART). Read the{' '}
-          <Link href='#'>documentation</Link> or download the{' '}
-          <Link href='#'>data</Link>.
+          This database collects and standardizes data about offset projects and
+          offset credits issued by five of the largest offset registries:
+          American Carbon Registry (ACR), ART TREES (ART), Climate Action
+          Reserve (CAR), Gold Standard (GLD), and Verra (VCS).
+          <br />
+          <br />
+          View the latest{' '}
+          <Link href='https://carbonplan.org/research/offsets-db/updates'>
+            updates
+          </Link>{' '}
+          or download the{' '}
+          <Link href='https://offsets-db-data.readthedocs.io/en/latest/data-access.html'>
+            data
+          </Link>
+          . Read the{' '}
+          <Link href='https://carbonplan.org/research/offsets-db-explainer'>
+            explainer article
+          </Link>{' '}
+          or{' '}
+          <Link href='https://carbonplan.org/research/offsets-db-methods'>
+            methods
+          </Link>{' '}
+          for more detail.
+          <br />
+          <br />
+          <LastUpdated />
         </Box>
         <Divider sx={{ mr: [-4, -5, -5, -6], ml: [-4, -5, 0, 0] }} />
         {children}

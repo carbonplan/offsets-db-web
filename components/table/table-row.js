@@ -1,6 +1,14 @@
 import { Column, Row } from '@carbonplan/components'
+import { Flex } from 'theme-ui'
 
-const TableRow = ({ values, as, sx, Button, ...props }) => {
+const TableRow = ({
+  values,
+  as,
+  sx,
+  Button,
+  columns = [6, 8, 8, 8],
+  ...props
+}) => {
   const starts = values.reduce((accum, v, i) => {
     if (accum.length === 0) {
       accum.push([1, 1, 1, 1])
@@ -18,7 +26,7 @@ const TableRow = ({ values, as, sx, Button, ...props }) => {
   }, [])
 
   return (
-    <Row as='tr' columns={[6, 8, 8, 8]} sx={sx} {...props}>
+    <Row as='tr' columns={columns} sx={sx} {...props}>
       {values.map((value, i) => (
         <Column
           as={value?.as ?? as ?? 'td'}
@@ -30,15 +38,18 @@ const TableRow = ({ values, as, sx, Button, ...props }) => {
             textAlign: 'left',
             color: 'secondary',
             fontFamily: 'body',
-            mb: 4,
-            mt: 2,
+            mb: 3,
+            mt: 3,
             display: value?.width?.map
               ? value.width.map((w) => (w === 0 ? 'none' : 'inherit'))
               : 'inherit',
+            alignItems: 'center',
           }}
         >
-          {Button && <Button value={value} />}
-          {value?.label ?? value}
+          <Flex sx={{ flexDirection: 'column', height: '100%' }}>
+            {Button && <Button value={value} />}
+            {value?.label ?? value}
+          </Flex>
         </Column>
       ))}
     </Row>

@@ -1,16 +1,20 @@
-import { Badge, Expander } from '@carbonplan/components'
-import { useMemo, useState } from 'react'
+import { Row, Column, Expander } from '@carbonplan/components'
+import { useMemo } from 'react'
 import { Box, Flex } from 'theme-ui'
-import AnimateHeight from 'react-animate-height'
 
 import { COLORS, LABELS } from '../constants'
-import { formatValue } from '../utils'
+import Quantity from '../quantity'
 
-const CategoryBar = ({ label, total, mapping }) => {
-  const [expanded, setExpanded] = useState(false)
-
+const CategoryBar = ({
+  label,
+  total,
+  mapping,
+  issuedTotal,
+  expanded,
+  showExpander,
+}) => {
   const background = useMemo(() => {
-    if (Object.keys(mapping).length === 0) {
+    if (Object.keys(mapping).length === 0 || total === 0) {
       return 'muted'
     } else {
       const colors = Object.keys(LABELS.category).map((key) => COLORS[key])
@@ -20,7 +24,7 @@ const CategoryBar = ({ label, total, mapping }) => {
           if (typeof mapValue !== 'number') {
             mapValue = 0
           }
-          let value = (mapValue / total) * 100
+          let value = (mapValue / (issuedTotal ?? total)) * 100
           if (accum[i - 1]) {
             value = value + accum[i - 1]
           }
@@ -29,6 +33,10 @@ const CategoryBar = ({ label, total, mapping }) => {
         },
         []
       )
+      if (issuedTotal) {
+        colors.push('muted')
+        percentages.push(100)
+      }
 
       return (theme) =>
         `linear-gradient(to right, ${percentages
@@ -38,92 +46,75 @@ const CategoryBar = ({ label, total, mapping }) => {
           })
           .join(', ')})`
     }
-  }, [total, mapping])
+  }, [total, issuedTotal, mapping])
 
   const isEmpty = Object.keys(mapping).length === 0
 
   return (
-    <Box sx={{ mt: [3, 3, '56px', '56px'], mb: 6 }}>
-      <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
-        <Box
-          sx={{ fontFamily: 'mono', letterSpacing: 'mono', color: 'secondary' }}
+    <>
+      <Row columns={[6, 8, 8, 8]}>
+        <Column
+          start={1}
+          width={8}
+          sx={{ mt: [!showExpander ? 5 : 0, 0, 0, 0] }} //add space when stacked
         >
-          {label}
-        </Box>
-        <Badge sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}>
-          {isEmpty ? '-' : formatValue(total)}
-        </Badge>
-      </Flex>
-
-      <Box sx={{ mt: [4, '38px', '38px', '38px'], position: 'relative' }}>
-        <Expander
-          value={expanded}
-          onClick={() => setExpanded(!expanded)}
-          sx={{
-            position: 'absolute',
-            left: '-22px',
-            width: '18px',
-            height: '18px',
-          }}
-        />
-        <Box
-          sx={{
-            width: '100%',
-            height: '28px',
-            transition: 'background 0.2s',
-            background,
-          }}
-        />
-      </Box>
-
-      <AnimateHeight
-        duration={100}
-        height={expanded ? 'auto' : 0}
-        easing={'linear'}
-      >
-        <Box sx={{ mt: 3 }}>
-          {Object.keys(LABELS.category).map((l) => (
-            <Box key={l} sx={{ mb: 2 }}>
-              <Flex
-                sx={{
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  fontSize: 1,
-                  mb: 2,
-                }}
-              >
-                <Flex sx={{ gap: 2, alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: '8px',
-                      height: '8px',
-                      backgroundColor: COLORS[l],
-                    }}
-                  />
-                  {LABELS.category[l]}
-                </Flex>
-                <Badge>{isEmpty ? '-' : formatValue(mapping[l] ?? 0)}</Badge>
-              </Flex>
-              <Box
-                sx={{
-                  height: '5px',
-                  width: '100%',
-                  transition: 'background 0.2s',
-                  background: isEmpty
-                    ? 'muted'
-                    : (theme) =>
-                        `linear-gradient(to right, ${
-                          theme.colors[COLORS[l]]
-                        } 0% ${((mapping[l] ?? 0) / total) * 100}%, ${
-                          theme.colors.muted
-                        } ${((mapping[l] ?? 0) / total) * 100}% 100%)`,
-                }}
-              />
+          <Flex sx={{ gap: 3, alignItems: 'flex-end' }}>
+            <Box
+              sx={{
+                fontSize: [1, 1, 1, 2],
+                fontFamily: 'mono',
+                letterSpacing: 'mono',
+                color: 'secondary',
+              }}
+            >
+              {label}
             </Box>
-          ))}
-        </Box>
-      </AnimateHeight>
-    </Box>
+            <Quantity
+              sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}
+              value={isEmpty ? '-' : total}
+            />
+          </Flex>
+        </Column>
+      </Row>
+      <Row
+        columns={1}
+        sx={{
+          mt: 5,
+        }}
+      >
+        <Column
+          start={1}
+          width={8}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          {showExpander && (
+            <Expander
+              value={expanded}
+              id='expander'
+              sx={{
+                display: ['none', 'block', 'block', 'block'],
+                ml: -4,
+                width: 18,
+                position: 'absolute',
+                mt: '3px',
+              }}
+            />
+          )}
+          <Box
+            sx={{
+              width: '100%',
+              height: '28px',
+              transition: 'background 0.2s',
+              background,
+              ml: '2px',
+            }}
+          />
+        </Column>
+      </Row>
+    </>
   )
 }
 

@@ -25,6 +25,14 @@ Assuming you already have `Node.js` installed, you can install the build depende
 npm install .
 ```
 
+If you haven't already configured your target API URL and corresponding API key, you can configure via environment variables by first running
+
+```shell
+cp .env.test .env.local
+```
+
+and then editing values in your new `.env.local` file.
+
 To start a development version of the site, simply run:
 
 ```shell
@@ -36,6 +44,9 @@ and then visit `http://localhost:5001` in your browser.
 ## license
 
 All the code in this repository is [MIT](https://choosealicense.com/licenses/mit/) licensed, but we request that you please provide attribution if reusing any of our digital content (graphics, logo, articles, etc.).
+
+> [!IMPORTANT]
+> Data associated with this repository are subject to additional [terms of data access](https://github.com/carbonplan/offsets-db-data/blob/main/TERMS_OF_DATA_ACCESS).
 
 ## about us
 

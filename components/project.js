@@ -1,42 +1,38 @@
-import { Badge, Button, Column, Row } from '@carbonplan/components'
-import { useState } from 'react'
-import { Box, Divider, Flex } from 'theme-ui'
-import { Left } from '@carbonplan/icons'
+import { Column, Row } from '@carbonplan/components'
+import { Box, Flex } from 'theme-ui'
 
 import { COLORS } from './constants'
-import { formatValue } from './utils'
 import CreditCharts from './charts/credit-charts'
 import Credits from './credits'
-import Layout from './layout'
 import ProjectOverview from './project-overview'
-import Sidebar from './sidebar'
 import Timeline from './timeline'
+import BackButton from './back-button'
+import Quantity from './quantity'
 
 const Project = ({ project }) => {
-  const [transactionType, setTransactionType] = useState(null)
   const { project_id, name, category, issued, retired } = project
   const color = COLORS[category[0]] ?? COLORS.other
 
   const sx = {
     sectionLabel: {
-      fontFamily: 'mono',
-      letterSpacing: 'mono',
       textTransform: 'uppercase',
-      color,
+      letterSpacing: 'smallcaps',
       fontSize: 4,
       mt: 5,
       mb: 2,
     },
     creditsLabel: {
+      color,
       fontFamily: 'mono',
       letterSpacing: 'mono',
       textTransform: 'uppercase',
-      mt: [4, 2, 2, 2],
+      mt: 5,
+      mb: 2,
     },
     creditsAmount: {
-      mt: 3,
-      fontSize: 4,
-      height: ['34px'],
+      fontFamily: 'faux',
+      letterSpacing: 'faux',
+      fontSize: 1,
     },
     badge: {
       transition: 'color 0.15s',
@@ -50,101 +46,97 @@ const Project = ({ project }) => {
   }
 
   return (
-    <Layout
-      sidebar={
-        <Sidebar>
-          <Button
-            inverted
-            size='xs'
-            onClick={() => {
-              if (window.history.state?.idx) {
-                window.history.back()
-              } else {
-                window.location.href = '/projects'
-              }
-            }}
-            prefix={<Left />}
-            sx={{ mt: 3, mb: [0, 0, 3, 3] }}
+    <Box>
+      <Row sx={{ mt: [4, 6, 6, 6], mb: 3 }}>
+        <Column start={[1]} width={[6, 1, 1, 1]}>
+          <Flex sx={{ height: '100%', alignItems: 'flex-end' }}>
+            <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
+          </Flex>
+        </Column>
+        <Column start={[1, 2, 2, 2]} width={[6, 6, 6, 6]}>
+          <Box as='h1' variant='styles.h1' sx={{ color, my: [0, 0, 0, 0] }}>
+            {project_id}
+          </Box>
+        </Column>
+        <Column start={[1, 2, 2, 2]} width={[6, 6, 6, 6]} sx={{ mt: 3 }}>
+          <Box
+            as='h2'
+            variant='styles.h2'
+            sx={{ fontSize: [3, 3, 3, 4], my: [0, 0, 0, 0] }}
           >
-            Back
-          </Button>
-        </Sidebar>
-      }
-    >
-      <Flex sx={{ gap: 3, my: 3, alignItems: 'flex-end' }}>
-        <Badge
-          sx={{
-            color,
-            fontSize: 5,
-            height: ['46px'],
-            flexShrink: 0,
-            px: 2,
-            userSelect: 'all',
-          }}
-        >
-          {project_id}
-        </Badge>
-        <Box sx={{ fontFamily: 'mono', letterSpacing: 'mono', mb: 1 }}>
-          {name}
-        </Box>
-      </Flex>
-      <Divider
-        sx={{
-          ml: [-4, -5, -5, -6],
-          mr: [-4, -5, 0, 0],
-          my: 3,
-        }}
-      />
-      <Row columns={[6, 8, 8, 8]}>
-        <Column start={[1]} width={[6, 6, 4, 4]}>
-          <Box sx={sx.sectionLabel}>Overview</Box>
+            {name}
+          </Box>
+        </Column>
+      </Row>
 
-          <Row columns={[6, 6, 4, 4]}>
-            <ProjectOverview project={project} />
+      <Row>
+        <Column
+          start={[1, 2, 2, 2]}
+          width={[6, 7, 11, 11]}
+          sx={{ mt: [2, 0, 4, 4] }}
+        >
+          <Row columns={[6, 7, 11, 11]}>
+            <Column start={[1]} width={[6, 6, 4, 4]}>
+              <Row columns={[6, 6, 4, 4]}>
+                <Box
+                  sx={{
+                    ...sx.sectionLabel,
+                    mb: 40, // mb: 5 + mb: 2
+                  }}
+                >
+                  Overview
+                </Box>
+                <ProjectOverview project={project} />
+              </Row>
+            </Column>
+
+            <Column start={[1, 1, 5, 5]} width={[6, 6, 6, 6]}>
+              <Row columns={[6, 6, 6, 6]} sx={{ mt: [3, 5, 0, 0] }}>
+                <Column start={[1]} width={[6, 6, 6, 6]}>
+                  <Box sx={sx.sectionLabel}>Credits</Box>
+                </Column>
+                <Column start={[1]} width={[6, 3, 3, 3]}>
+                  <Box sx={sx.creditsLabel}>Credits issued</Box>
+                  <Box sx={sx.creditsAmount}>
+                    <Quantity badge={false} value={issued} />
+                  </Box>
+                </Column>
+                <Column start={[1, 4, 4, 4]} width={[6, 3, 3, 3]}>
+                  <Box sx={sx.creditsLabel}>Credits retired</Box>
+                  <Box sx={sx.creditsAmount}>
+                    <Quantity badge={false} value={retired} />
+                  </Box>
+                </Column>
+
+                <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: 5 }}>
+                  <CreditCharts color={color} project_id={project_id} />
+                </Column>
+              </Row>
+            </Column>
+
+            <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: [3, 5, 5, 5] }}>
+              <Box sx={sx.sectionLabel}>Transactions</Box>
+
+              <Credits
+                color={color}
+                project_id={project_id}
+                borderTop={false}
+              />
+            </Column>
+
+            <Column
+              start={[1, 1, 8, 8]}
+              width={[6, 7, 3, 3]}
+              sx={{ mt: [3, 5, 5, 5], mb: 7 }}
+            >
+              <Box sx={sx.sectionLabel}>Timeline</Box>
+
+              <Timeline project={project} color={color} />
+            </Column>
           </Row>
         </Column>
-
-        <Column start={[1, 1, 5, 5]} width={[6, 8, 3, 3]}>
-          <Box sx={sx.sectionLabel}>Timeline</Box>
-
-          <Timeline project={project} />
-        </Column>
       </Row>
-
-      <Row columns={[6, 8, 8, 8]} sx={{ mt: 6 }}>
-        <Column start={[1]} width={[6, 6, 4, 4]}>
-          <Box sx={sx.sectionLabel}>Credits</Box>
-        </Column>
-        <Column start={[1]} width={[6, 2, 2, 2]}>
-          <Box sx={sx.creditsLabel}>Credits issued</Box>
-          <Badge sx={sx.creditsAmount}>{formatValue(issued)}</Badge>
-        </Column>
-        <Column start={[1, 3, 3, 3]} width={[6, 2, 2, 2]}>
-          <Box sx={sx.creditsLabel}>Credits retired</Box>
-          <Badge sx={sx.creditsAmount}>{formatValue(retired)}</Badge>
-        </Column>
-
-        <Column start={[1]} width={[6, 8, 8, 8]} sx={{ mt: 5 }}>
-          <CreditCharts
-            project_id={project_id}
-            setTransactionType={setTransactionType}
-          />
-        </Column>
-      </Row>
-
-      <Row columns={[6, 8, 8, 8]} sx={{ mt: 6 }}>
-        <Column start={[1]} width={[6, 6, 4, 4]}>
-          <Box sx={sx.sectionLabel}>Transactions</Box>
-        </Column>
-      </Row>
-
-      <Credits
-        project_id={project_id}
-        transactionType={transactionType}
-        charts={false}
-        borderTop={false}
-      />
-    </Layout>
+    </Box>
   )
 }
 

@@ -1,131 +1,98 @@
-import {
-  Badge,
-  Button,
-  Column,
-  formatDate,
-  Link,
-  Row,
-  Tag,
-} from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
-import { format } from 'd3-format'
+import { Column, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
-import { Box, Divider, Flex } from 'theme-ui'
+import { Box, Container, Flex, Spinner } from 'theme-ui'
 
-import Credits from '../components/credits'
-import Layout from '../components/layout'
-import Sidebar from '../components/sidebar'
-import Timeline from '../components/timeline'
+import BackButton from '../components/back-button'
+import Clips from '../components/clips'
+import Pagination from '../components/pagination'
 import useFetcher from '../components/use-fetcher'
 
-const sx = {
-  sectionLabel: {
-    fontFamily: 'mono',
-    letterSpacing: 'mono',
-    textTransform: 'uppercase',
-    color: 'primary',
-    fontSize: 4,
-    mt: 5,
-    mb: 2,
-  },
-  fieldLabel: {
-    color: 'primary',
-    mt: 5,
-    mb: 2,
-  },
-  fieldValue: {
-    fontFamily: 'mono',
-    letterSpacing: 'mono',
-    fontSize: 1,
-  },
-  creditsLabel: {
-    fontFamily: 'mono',
-    letterSpacing: 'mono',
-    textTransform: 'uppercase',
-    color: 'secondary',
-    mt: [4, 2, 2, 2],
-  },
-  creditsAmount: {
-    mt: 3,
-    fontSize: 4,
-    height: ['34px'],
-  },
-  badge: {
-    transition: 'color 0.15s',
-    '& div': {
-      color: 'secondary',
-    },
-    '&:hover div': {
-      color: 'primary',
-    },
-  },
-}
-
 const Project = () => {
-  const { data } = useFetcher('clips/', {
+  const [page, setPage] = useState(1)
+  const { data, error, isLoading } = useFetcher('clips/', {
     filters: false,
+    sort: '-date',
+    page,
   })
 
   return (
     <Layout
-      sidebar={
-        <Sidebar>
-          <Flex
-            sx={{
-              gap: 3,
-              fontFamily: 'mono',
-              letterSpacing: 'mono',
-              textTransform: 'uppercase',
-              mt: 3,
-              mb: [0, 0, 3, 3],
-            }}
-          >
-            <Box sx={{ color: 'secondary' }}>Back to</Box>
-            <Link sx={sx.badge} href='/projects'>
-              <Badge>Projects</Badge>
-            </Link>
-            <Link sx={sx.badge} href='/credits'>
-              <Badge>Credits</Badge>
-            </Link>
-          </Flex>
-
-          <Divider
-            sx={{
-              mr: [-4, -5, -5, -6],
-              ml: [-4, -5, 0, 0],
-              display: ['none', 'none', 'inherit', 'inherit'],
-            }}
-          />
-        </Sidebar>
-      }
+      title='OffsetsDB – CarbonPlan'
+      description='A regularly-updating list of stories and noteworthy events related to offset projects in the database.'
+      card='https://images.carbonplan.org/social/offsets-db.png'
+      dimmer='top'
+      footer={false}
+      metadata={false}
+      container={false}
+      nav={'research'}
+      url={'https://carbonplan.org/research/offsets-db/updates'}
     >
-      <Divider
-        sx={{
-          ml: [-4, -5, -5, -6],
-          mr: [-4, -5, 0, 0],
-          my: 3,
-        }}
-      />
-      <Row columns={[6, 8, 8, 8]}>
-        <Column start={[1]} width={[6, 8, 6, 6]}>
-          <Box sx={sx.sectionLabel}>Articles</Box>
-          {data && <Timeline project={{ clips: data.data }} />}
-        </Column>
-      </Row>
+      <Container>
+        <Row sx={{ mt: [5, 6, 7, 8], mb: [5, 6, 7, 8] }}>
+          <Column start={1} width={[6, 1, 1, 1]}>
+            <Flex sx={{ height: '100%', alignItems: 'flex-end' }}>
+              <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
+            </Flex>
+          </Column>
+          <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
+            <Box as='h1' variant='styles.h1' sx={{ my: [0, 0, 0, 0] }}>
+              OffsetsDB — Updates
+            </Box>
+          </Column>
+          <Column start={[1, 2, 8, 8]} width={[5, 6, 4, 4]}>
+            <Box
+              sx={{
+                mt: [4, 5, '20px', '31px'],
+                fontSize: [2, 2, 2, 3],
+              }}
+            >
+              A regularly-updating list of stories and noteworthy events related
+              to offset projects in the database.
+            </Box>
+          </Column>
+        </Row>
 
-      <Row columns={[6, 8, 8, 8]} sx={{ mt: 6 }}>
-        <Column start={[1]} width={[6, 6, 4, 4]}>
-          <Box sx={sx.sectionLabel}>Credits</Box>
-        </Column>
-      </Row>
+        {isLoading && (
+          <Flex sx={{ width: '100%', justifyContent: 'center' }}>
+            <Spinner size={32} />
+          </Flex>
+        )}
 
-      <Row columns={[6, 8, 8, 8]} sx={{ mt: 6 }}>
-        <Column start={[1]} width={[6, 6, 4, 4]}>
-          <Box sx={sx.sectionLabel}>Transactions</Box>
-        </Column>
-      </Row>
+        {error && (
+          <Row>
+            <Column start={[1, 2, 2, 2]} width={[6, 7, 10, 10]}>
+              <Box
+                sx={{
+                  color: 'secondary',
+                  fontFamily: 'mono',
+                  letterSpacing: 'mono',
+                  textTransform: 'uppercase',
+                  mb: 4,
+                  mt: 2,
+                }}
+              >
+                Error loading data{error?.message ? `: ${error?.message}` : ''}
+              </Box>
+            </Column>
+          </Row>
+        )}
 
-      <Credits charts={false} borderTop={false} />
+        {data && <Clips clips={data.data} />}
+
+        <Row sx={{ my: 4 }}>
+          <Column
+            start={[1, 6, 7, 7]}
+            width={[6, 3, 4, 4]}
+            sx={{ mr: [0, 0, -5, -6] }}
+          >
+            <Flex sx={{ justifyContent: ['flex-start', 'flex-end'] }}>
+              {data && data.pagination.total_pages > 1 && (
+                <Pagination pagination={data.pagination} setPage={setPage} />
+              )}
+            </Flex>
+          </Column>
+        </Row>
+      </Container>
     </Layout>
   )
 }

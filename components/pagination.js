@@ -1,6 +1,7 @@
 import { Box, Flex, IconButton } from 'theme-ui'
 import { Tag } from '@carbonplan/components'
 import { Left, Right } from '@carbonplan/icons'
+import { useRef } from 'react'
 
 const sx = {
   arrow: {
@@ -21,8 +22,19 @@ const sx = {
   },
 }
 
-const Pagination = ({ pagination, setPage }) => {
-  const { total_entries, current_page, total_pages } = pagination
+const Pagination = ({
+  color = 'primary',
+  pagination: paginationProp,
+  isLoading,
+  setPage,
+}) => {
+  const pagination = useRef({})
+  pagination.current = paginationProp ?? pagination.current
+  const {
+    total_entries = 0,
+    current_page = 1,
+    total_pages = 1,
+  } = pagination.current
 
   if (total_entries === 0) {
     return null
@@ -68,7 +80,13 @@ const Pagination = ({ pagination, setPage }) => {
       <Flex sx={{ alignItems: 'flex-start', gap: 3 }}>
         {tags.map((t, i) =>
           typeof t === 'number' ? (
-            <Tag key={t} value={current_page === t} onClick={() => setPage(t)}>
+            <Tag
+              key={t}
+              value={current_page === t}
+              onClick={() => setPage(t)}
+              disabled={isLoading}
+              sx={{ color }}
+            >
               {t}
             </Tag>
           ) : (
