@@ -4,10 +4,11 @@ import { Box, Flex, Text } from 'theme-ui'
 
 import Quantity from './quantity'
 import { TableRow } from './table'
+import ProjectBadge from './project-badge'
 
 const CreditRow = ({ color, event, projectView, ...props }) => {
   const {
-    project_id,
+    projects,
     transaction_date,
     transaction_type,
     quantity,
@@ -21,8 +22,18 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
   return (
     <>
       <TableRow
-        columns={[6, 6, 7, 7]}
+        columns={projectView ? [6, 6, 7, 7] : [6, 8, 8, 8]}
         values={[
+          ...(projectView
+            ? []
+            : [
+                {
+                  label: <ProjectBadge project={projects[0]} link />,
+                  key: 'project_id',
+                  width: [2, 1, 1, 1],
+                },
+              ]),
+
           {
             key: 'transaction_date',
             label: transaction_date ? (
@@ -65,27 +76,6 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             ),
             width: [0, 1, 1, 1],
           },
-          ...(projectView
-            ? []
-            : [
-                {
-                  label: (
-                    <Button
-                      suffix={
-                        <RotatingArrow
-                          sx={{ mt: '-3px', width: 13, height: 13 }}
-                        />
-                      }
-                      href={`/projects/${project_id}`}
-                      sx={{ fontSize: 2 }}
-                    >
-                      {project_id}
-                    </Button>
-                  ),
-                  key: 'project_id',
-                  width: 2,
-                },
-              ]),
           {
             key: 'beneficiary',
             label: (

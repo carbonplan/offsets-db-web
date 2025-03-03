@@ -74,10 +74,19 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
     <Box as='table' sx={{ width: '100%' }}>
       <TableHead
         color={color}
-        columns={[6, 6, 7, 7]}
+        columns={project_id ? [6, 6, 7, 7] : [6, 8, 8, 8]}
         sort={sort}
         setSort={setSort}
         values={[
+          ...(project_id
+            ? []
+            : [
+                {
+                  value: 'project_id',
+                  label: 'Project ID',
+                  width: [2, 1, 1, 1],
+                },
+              ]),
           {
             value: 'transaction_date',
             key: 'transaction_date',
@@ -111,9 +120,6 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
             label: 'Type',
             width: [0, 1, 1, 1],
           },
-          ...(project_id
-            ? []
-            : [{ value: 'project_id', label: 'Project ID', width: 2 }]),
           {
             value: 'beneficiary',
             label: <BeneficiaryHeading sx={sx.tooltip} color={color} />,
@@ -175,14 +181,16 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
         </FadeIn>
       )}
       <TableFoot
-        columns={[6, 6, 7, 7]}
+        columns={project_id ? [6, 6, 7, 7] : [6, 8, 8, 8]}
         values={[
           {
             label: (
               <Flex sx={sx.footerLabel}>
-                Count
+                Total
                 <Badge sx={{ color, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                  {data ? formatValue(data.pagination.total_entries) : '-'}
+                  {unfilteredData
+                    ? formatValue(unfilteredData.pagination.total_entries)
+                    : '-'}
                 </Badge>
               </Flex>
             ),

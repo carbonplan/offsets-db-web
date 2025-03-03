@@ -3,10 +3,14 @@ import { Container } from 'theme-ui'
 
 import Layout from '../components/layout'
 import Projects from '../components/projects'
-import Queries from '../components/queries'
+import Queries, { useQueries } from '../components/queries'
 import Sidebar from '../components/sidebar'
+import Credits from '../components/credits'
+import ProjectCharts from '../components/charts/project-charts'
 
 const Index = () => {
+  const { view } = useQueries()
+
   return (
     <PageLayout
       title='OffsetsDB – CarbonPlan'
@@ -27,7 +31,8 @@ const Index = () => {
             </Sidebar>
           }
         >
-          <Projects />
+          <ProjectCharts />
+          {view === 'projects' ? <Projects /> : <Credits />}
         </Layout>
       </Container>
     </PageLayout>
