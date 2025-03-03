@@ -6,13 +6,22 @@ import Quantity from './quantity'
 import { TableRow } from './table'
 
 const CreditRow = ({ color, event, projectView, ...props }) => {
-  const { project_id, transaction_date, transaction_type, quantity, vintage } =
-    event
+  const {
+    project_id,
+    transaction_date,
+    transaction_type,
+    quantity,
+    vintage,
+    retirement_account,
+    retirement_beneficiary,
+    retirement_note,
+    retirement_reason,
+  } = event
 
   return (
     <>
       <TableRow
-        columns={[6, 6, 6, 6]}
+        columns={[6, 6, 7, 7]}
         values={[
           {
             key: 'transaction_date',
@@ -28,7 +37,19 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             ) : (
               '?'
             ),
-            width: 2,
+            width: [1, 1, 2, 2],
+          },
+          {
+            key: 'quantity',
+            label: (
+              <Flex sx={{ gap: 2 }}>
+                <Quantity color={color} value={quantity} />
+                <Box sx={{ display: ['inherit', 'none', 'none', 'none'] }}>
+                  {transaction_type === 'retirement' ? 'retired' : 'issued'}
+                </Box>
+              </Flex>
+            ),
+            width: [2, 1, 1, 1],
           },
           {
             key: 'vintage',
@@ -42,7 +63,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                 {transaction_type}
               </Text>
             ),
-            width: [0, 2, 2, 2],
+            width: [0, 1, 1, 1],
           },
           ...(projectView
             ? []
@@ -66,16 +87,20 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                 },
               ]),
           {
-            key: 'quantity',
+            key: 'beneficiary',
             label: (
-              <Flex sx={{ gap: 3 }}>
-                <Quantity color={color} value={quantity} />
-                <Box sx={{ display: ['inherit', 'none', 'none', 'none'] }}>
-                  {transaction_type === 'retirement' ? 'retired' : 'issued'}
-                </Box>
-              </Flex>
+              <Text>
+                {retirement_account ??
+                  retirement_beneficiary ??
+                  retirement_note ??
+                  retirement_reason ?? (
+                    <Text sx={{ opacity: 0.5 }}>
+                      {transaction_type === 'issuance' ? 'N/A' : 'None listed'}
+                    </Text>
+                  )}
+              </Text>
             ),
-            width: [2, 1, 1, 1],
+            width: 2,
           },
         ]}
         {...props}
