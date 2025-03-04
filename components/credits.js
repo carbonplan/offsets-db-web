@@ -165,18 +165,29 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           <LoadingState
             columns={columns}
             values={[
-              { key: 'transaction_date', width: [1, 1, 2, 2] },
-              { key: 'quantity', width: 1 },
+              ...(project_id
+                ? []
+                : [
+                    {
+                      key: 'project_id',
+                      width: [2, 1, 1, 1],
+                    },
+                  ]),
+
+              { key: 'transaction_date', width: [2, 1, 1, 1] },
+              {
+                key: 'transaction_type',
+                width: [0, 1, 1, 1],
+              },
+              { key: 'quantity', width: [2, 1, 1, 1] },
               {
                 value: 'vintage',
                 width: [project_id ? 1 : 0, 1, 1, 1],
               },
               {
-                key: 'transaction_type',
-                width: [0, 1, 1, 1],
+                key: 'beneficiary',
+                width: project_id ? [0, 2, 2, 2] : [0, 3, 3, 3],
               },
-              { key: 'beneficiary', width: 2 },
-              ...(project_id ? [] : [{ key: 'project_id', width: 2 }]),
             ]}
           />
         </FadeIn>
