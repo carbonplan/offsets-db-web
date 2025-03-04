@@ -34,7 +34,7 @@ const sx = {
   },
 }
 
-const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
+const Credits = ({ project_id, color, borderTop = true }) => {
   const {
     registry,
     category,
@@ -49,13 +49,11 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
     page,
     sort,
     project_id,
-    transactionType,
   })
   const { data: unfilteredData } = useFetcher('credits/', {
     filters: false,
     page: 1,
     project_id,
-    transactionType,
   })
 
   useEffect(() => {
