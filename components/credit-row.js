@@ -1,11 +1,28 @@
-import { formatDate } from '@carbonplan/components'
-import { Box, Flex, Text } from 'theme-ui'
+import { useState } from 'react'
+import { formatDate, Button, Row, Column } from '@carbonplan/components'
+import { Box, Flex, IconButton, Text } from 'theme-ui'
+import { keyframes } from '@emotion/react'
+import { alpha } from '@theme-ui/color'
+import { RotatingArrow, Info, X } from '@carbonplan/icons'
 
 import Quantity from './quantity'
 import { TableRow } from './table'
 import ProjectBadge from './project-badge'
+import { COLORS } from './constants'
+import BeneficiaryOverview from './beneficiary-overview'
+import IconLabel from './icon-label'
+
+const fade = keyframes({
+  from: {
+    opacity: 0,
+  },
+  to: {
+    opacity: 1,
+  },
+})
 
 const CreditRow = ({ color, event, projectView, ...props }) => {
+  const [expanded, setExpanded] = useState(false)
   const {
     projects,
     transaction_date,
@@ -17,6 +34,29 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
     retirement_note,
     retirement_reason,
   } = event
+
+  const eventColor = color ?? COLORS[projects[0].category[0]] ?? COLORS.other
+  const sx = {
+    expanded: {
+      background: alpha(eventColor, 0.2),
+      py: 1,
+      ml: [-4, -5, -5, -6],
+      pl: [4, 5, 5, 6],
+      mr: [-4, -5, 0, 0],
+      pr: [4, 5, 0, 0],
+      mb: 1,
+      animationDuration: 300 + 'ms',
+      animationDelay: 0 + 'ms',
+      animationName: fade.toString(),
+      animationFillMode: 'backwards',
+    },
+  }
+
+  const beneficiaryInfo =
+    retirement_account ??
+    retirement_beneficiary ??
+    retirement_note ??
+    retirement_reason
 
   return (
     <>
@@ -79,14 +119,21 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             key: 'beneficiary',
             label: (
               <Text>
-                {retirement_account ??
-                  retirement_beneficiary ??
-                  retirement_note ??
-                  retirement_reason ?? (
-                    <Text sx={{ opacity: 0.5 }}>
-                      {transaction_type === 'issuance' ? 'N/A' : 'None listed'}
-                    </Text>
-                  )}
+                {beneficiaryInfo ? (
+                  <IconLabel
+                    Icon={Info}
+                    onClick={() => setExpanded(!expanded)}
+                    activated={expanded}
+                    color={eventColor}
+                    sx={sx.tooltipWrapper}
+                  >
+                    {beneficiaryInfo}
+                  </IconLabel>
+                ) : (
+                  <Text sx={{ opacity: 0.5 }}>
+                    {transaction_type === 'issuance' ? 'N/A' : 'None listed'}
+                  </Text>
+                )}
               </Text>
             ),
             width: 3,
@@ -94,6 +141,73 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
         ]}
         {...props}
       />
+
+      {expanded && (
+        <TableRow
+          sx={sx.expanded}
+          values={[
+            {
+              key: 'description',
+              width: [6, 8, 8, 8],
+              start: 1,
+              label: (
+                <>
+                  <Row
+                    columns={[6, 8, 8, 8]}
+                    sx={{
+                      color: 'primary',
+                      height: 'fit-content',
+                    }}
+                  >
+                    <IconButton
+                      onClick={() => setExpanded(false)}
+                      sx={{
+                        p: 0,
+                        width: 20,
+                        color: eventColor,
+                        cursor: 'pointer',
+                        '&:hover': { color: 'primary' },
+                      }}
+                    >
+                      <X />
+                    </IconButton>
+
+                    <BeneficiaryOverview
+                      event={event}
+                      color={eventColor}
+                      columns={6}
+                    />
+                    <Column start={[1, 3, 3, 3]} width={6}>
+                      <Button
+                        href={`/projects/${projects[0].project_id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        sx={{
+                          color: eventColor,
+                          fontFamily: 'mono',
+                          letterSpacing: 'mono',
+                          textTransform: 'uppercase',
+                          fontSize: 1,
+                        }}
+                        suffix={
+                          <RotatingArrow
+                            sx={{
+                              width: 14,
+                              height: 14,
+                              mt: -1,
+                            }}
+                          />
+                        }
+                      >
+                        View project
+                      </Button>
+                    </Column>
+                  </Row>
+                </>
+              ),
+            },
+          ]}
+        />
+      )}
     </>
   )
 }

@@ -10,7 +10,6 @@ import {
   TableRow,
 } from './table'
 import { useQueries } from './queries'
-import { formatValue } from './utils'
 import useFetcher from './use-fetcher'
 import CreditRow from './credit-row'
 import Pagination from './pagination'
