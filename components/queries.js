@@ -94,6 +94,17 @@ const sx = {
     fontSize: 1,
     mb: [2, 0, 0, 0],
   },
+  description: {
+    mt: 2,
+    fontSize: [1, 1, 1, 2],
+  },
+  input: {
+    fontSize: 1,
+    fontFamily: 'mono',
+    width: '100%',
+    borderBottom: 0,
+    // borderColor: 'muted',
+  },
 }
 
 const Queries = () => {
@@ -122,35 +133,25 @@ const Queries = () => {
             <Box sx={sx.label}>Search</Box>
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-            <TooltipWrapper
-              tooltip={
-                <>
-                  Search projects by ID or name. Or,{' '}
-                  <Link
-                    onClick={() => {
-                      setSearch('')
-                      setView('credits')
-                    }}
-                  >
-                    search by transaction
-                  </Link>
-                  .
-                </>
-              }
-            >
-              <Input
-                placeholder='search projects'
-                size='xs'
-                sx={{
-                  fontSize: 1,
-                  fontFamily: 'mono',
-                  width: '100%',
-                  borderBottom: 0,
+            <Input
+              placeholder='enter search term'
+              size='xs'
+              sx={sx.input}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Box sx={sx.description}>
+              Search projects by ID or name. Or,{' '}
+              <Link
+                onClick={() => {
+                  setSearch('')
+                  setView('credits')
                 }}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </TooltipWrapper>
+              >
+                search by transaction
+              </Link>
+              .
+            </Box>
           </Column>
         </Row>
       )}
@@ -160,35 +161,25 @@ const Queries = () => {
             <Box sx={sx.label}>Search</Box>
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-            <TooltipWrapper
-              tooltip={
-                <>
-                  Search credits by retirement beneficiary. Or,{' '}
-                  <Link
-                    onClick={() => {
-                      setBeneficiarySearch('')
-                      setView('projects')
-                    }}
-                  >
-                    search by project
-                  </Link>
-                  .
-                </>
-              }
-            >
-              <Input
-                placeholder='search beneficiaries'
-                size='xs'
-                sx={{
-                  fontSize: 1,
-                  fontFamily: 'mono',
-                  width: '100%',
-                  borderBottom: 0,
+            <Input
+              placeholder='enter search term'
+              size='xs'
+              sx={sx.input}
+              value={beneficiarySearch}
+              onChange={(e) => setBeneficiarySearch(e.target.value)}
+            />
+            <Box sx={sx.description}>
+              Search credits by retirement beneficiary. Or,{' '}
+              <Link
+                onClick={() => {
+                  setBeneficiarySearch('')
+                  setView('projects')
                 }}
-                value={beneficiarySearch}
-                onChange={(e) => setBeneficiarySearch(e.target.value)}
-              />
-            </TooltipWrapper>
+              >
+                search by project
+              </Link>
+              .
+            </Box>
           </Column>
         </Row>
       )}
