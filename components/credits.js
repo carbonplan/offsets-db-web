@@ -1,4 +1,4 @@
-import { Badge, FadeIn } from '@carbonplan/components'
+import { FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 
@@ -16,6 +16,7 @@ import CreditRow from './credit-row'
 import Pagination from './pagination'
 import TooltipWrapper from './tooltip-wrapper'
 import BeneficiaryHeading from './beneficiary-heading'
+import Quantity from './quantity'
 
 const sx = {
   footerLabel: {
@@ -191,16 +192,33 @@ const Credits = ({ project_id, color, borderTop = true }) => {
             label: (
               <Flex sx={sx.footerLabel}>
                 Total
-                <Badge sx={{ color, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                  {unfilteredData
-                    ? formatValue(unfilteredData.pagination.total_entries)
-                    : '-'}
-                </Badge>
+                <Quantity
+                  sx={{ whiteSpace: 'nowrap' }}
+                  value={
+                    unfilteredData
+                      ? unfilteredData.pagination.total_entries
+                      : '-'
+                  }
+                />
               </Flex>
             ),
             key: 'total',
             start: 1,
-            width: [2, 2, 2, 2],
+            width: [3, 2, 2, 2],
+          },
+          {
+            label: (
+              <Flex sx={sx.footerLabel}>
+                Selected
+                <Quantity
+                  sx={{ flexShrink: 0 }}
+                  value={data ? data.pagination.total_entries : '-'}
+                />
+              </Flex>
+            ),
+            key: 'selected',
+            start: [4, 3, 3, 3],
+            width: [3, 2, 2, 2],
           },
           {
             label: (
