@@ -122,7 +122,13 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
           },
           {
             value: 'beneficiary',
-            label: <BeneficiaryHeading sx={sx.tooltip} color={color} />,
+            label: project_id ? (
+              <BeneficiaryHeading sx={sx.tooltip} color={color} />
+            ) : (
+              <TooltipWrapper sx={sx.tooltip} tooltip='Retirement beneficiary'>
+                Beneficiary
+              </TooltipWrapper>
+            ),
             width: 2,
           },
         ]}
