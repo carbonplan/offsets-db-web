@@ -88,7 +88,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             ) : (
               '?'
             ),
-            width: [1, 1, 1, 1],
+            width: [2, 1, 1, 1],
           },
           {
             key: 'transaction_type',
@@ -137,7 +137,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                 )}
               </Text>
             ),
-            width: 3,
+            width: projectView ? [0, 2, 2, 2] : [0, 3, 3, 3],
           },
         ]}
         {...props}

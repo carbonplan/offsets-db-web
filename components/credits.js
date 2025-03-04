@@ -68,11 +68,13 @@ const Credits = ({ project_id, color, borderTop = true }) => {
     beneficiarySearch,
   ])
 
+  const columns = project_id ? [6, 6, 7, 7] : [6, 8, 8, 8]
+
   return (
     <Box as='table' sx={{ width: '100%' }}>
       <TableHead
         color={color}
-        columns={project_id ? [6, 6, 7, 7] : [6, 8, 8, 8]}
+        columns={columns}
         sort={sort}
         setSort={setSort}
         values={[
@@ -96,7 +98,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
                 Date
               </TooltipWrapper>
             ),
-            width: [1, 1, 1, 1],
+            width: [2, 1, 1, 1],
           },
           {
             value: 'transaction_type',
@@ -127,7 +129,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
                 Beneficiary
               </TooltipWrapper>
             ),
-            width: 3,
+            width: project_id ? [0, 2, 2, 2] : [0, 3, 3, 3],
           },
         ]}
         borderTop={borderTop}
@@ -144,13 +146,13 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           ))}
           {data.data.length === 0 ? (
             <TableRow
-              columns={[6, 6, 7, 7]}
+              columns={columns}
               sx={{ minHeight: [0, 200, 200, 200] }}
               values={[
                 {
                   label: 'No results found',
                   key: 'empty',
-                  width: [6, 6, 7, 7],
+                  width: columns,
                 },
               ]}
             />
@@ -161,7 +163,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
       {isLoading && (
         <FadeIn as='tbody'>
           <LoadingState
-            columns={[6, 6, 7, 7]}
+            columns={columns}
             values={[
               { key: 'transaction_date', width: [1, 1, 2, 2] },
               { key: 'quantity', width: 1 },
@@ -185,7 +187,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         </FadeIn>
       )}
       <TableFoot
-        columns={project_id ? [6, 6, 7, 7] : [6, 8, 8, 8]}
+        columns={columns}
         values={[
           {
             label: (
@@ -240,7 +242,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
               </Flex>
             ),
             key: 'pagination',
-            start: [3, 5, 5, 5],
+            start: [1, 5, 5, 5],
             width: [4, 4, 4, 4],
           },
         ]}
