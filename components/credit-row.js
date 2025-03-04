@@ -1,5 +1,4 @@
-import { Button, formatDate } from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
+import { formatDate } from '@carbonplan/components'
 import { Box, Flex, Text } from 'theme-ui'
 
 import Quantity from './quantity'
@@ -48,7 +47,16 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             ) : (
               '?'
             ),
-            width: [1, 1, 2, 2],
+            width: [1, 1, 1, 1],
+          },
+          {
+            key: 'transaction_type',
+            label: (
+              <Text sx={{ textTransform: 'capitalize' }}>
+                {transaction_type}
+              </Text>
+            ),
+            width: [0, 1, 1, 1],
           },
           {
             key: 'quantity',
@@ -68,15 +76,6 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             width: [projectView ? 1 : 0, 1, 1, 1],
           },
           {
-            key: 'transaction_type',
-            label: (
-              <Text sx={{ textTransform: 'capitalize' }}>
-                {transaction_type}
-              </Text>
-            ),
-            width: [0, 1, 1, 1],
-          },
-          {
             key: 'beneficiary',
             label: (
               <Text>
@@ -90,7 +89,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                   )}
               </Text>
             ),
-            width: 2,
+            width: 3,
           },
         ]}
         {...props}

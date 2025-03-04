@@ -98,7 +98,12 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
                 Date
               </TooltipWrapper>
             ),
-            width: [1, 1, 2, 2],
+            width: [1, 1, 1, 1],
+          },
+          {
+            value: 'transaction_type',
+            label: 'Type',
+            width: [0, 1, 1, 1],
           },
           {
             value: 'quantity',
@@ -116,11 +121,6 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
             width: [project_id ? 1 : 0, 1, 1, 1],
           },
           {
-            value: 'transaction_type',
-            label: 'Type',
-            width: [0, 1, 1, 1],
-          },
-          {
             value: 'beneficiary',
             label: project_id ? (
               <BeneficiaryHeading sx={sx.tooltip} color={color} />
@@ -129,7 +129,7 @@ const Credits = ({ project_id, transactionType, color, borderTop = true }) => {
                 Beneficiary
               </TooltipWrapper>
             ),
-            width: 2,
+            width: 3,
           },
         ]}
         borderTop={borderTop}
