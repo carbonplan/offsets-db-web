@@ -35,6 +35,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
     retirement_reason,
   } = event
 
+  const columns = projectView ? [6, 6, 7, 7] : [6, 8, 8, 8]
   const eventColor = color ?? COLORS[projects[0].category[0]] ?? COLORS.other
   const sx = {
     expanded: {
@@ -61,7 +62,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
   return (
     <>
       <TableRow
-        columns={projectView ? [6, 6, 7, 7] : [6, 8, 8, 8]}
+        columns={columns}
         values={[
           ...(projectView
             ? []
@@ -145,15 +146,16 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
       {expanded && (
         <TableRow
           sx={sx.expanded}
+          columns={columns}
           values={[
             {
               key: 'description',
-              width: [6, 8, 8, 8],
+              width: columns,
               start: 1,
               label: (
                 <>
                   <Row
-                    columns={[6, 8, 8, 8]}
+                    columns={columns}
                     sx={{
                       color: 'primary',
                       height: 'fit-content',
@@ -175,32 +177,34 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                     <BeneficiaryOverview
                       event={event}
                       color={eventColor}
-                      columns={6}
+                      columns={projectView ? 4 : 6}
                     />
-                    <Column start={[1, 3, 3, 3]} width={6}>
-                      <Button
-                        href={`/projects/${projects[0].project_id}`}
-                        onClick={(e) => e.stopPropagation()}
-                        sx={{
-                          color: eventColor,
-                          fontFamily: 'mono',
-                          letterSpacing: 'mono',
-                          textTransform: 'uppercase',
-                          fontSize: 1,
-                        }}
-                        suffix={
-                          <RotatingArrow
-                            sx={{
-                              width: 14,
-                              height: 14,
-                              mt: -1,
-                            }}
-                          />
-                        }
-                      >
-                        View project
-                      </Button>
-                    </Column>
+                    {!projectView && (
+                      <Column start={[1, 3, 3, 3]} width={3}>
+                        <Button
+                          href={`/projects/${projects[0].project_id}`}
+                          onClick={(e) => e.stopPropagation()}
+                          sx={{
+                            color: eventColor,
+                            fontFamily: 'mono',
+                            letterSpacing: 'mono',
+                            textTransform: 'uppercase',
+                            fontSize: 1,
+                          }}
+                          suffix={
+                            <RotatingArrow
+                              sx={{
+                                width: 14,
+                                height: 14,
+                                mt: -1,
+                              }}
+                            />
+                          }
+                        >
+                          View project
+                        </Button>
+                      </Column>
+                    )}
                   </Row>
                 </>
               ),
