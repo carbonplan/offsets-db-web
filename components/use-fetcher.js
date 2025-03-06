@@ -74,6 +74,14 @@ const fetcher = ([
 
   if (beneficiarySearch?.trim()) {
     params.append('beneficiary_search', beneficiarySearch.trim())
+    params.append(
+      'beneficiary_search_fields',
+      'retirement_beneficiary_harmonized'
+    )
+    params.append('beneficiary_search_fields', 'retirement_account')
+    params.append('beneficiary_search_fields', 'retirement_beneficiary')
+    params.append('beneficiary_search_fields', 'retirement_note')
+    params.append('beneficiary_search_fields', 'retirement_reason')
   }
 
   if (typeof complianceOnly === 'boolean') {

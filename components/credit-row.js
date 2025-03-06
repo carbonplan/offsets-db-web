@@ -29,6 +29,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
     transaction_type,
     quantity,
     vintage,
+    retirement_beneficiary_harmonized,
     retirement_account,
     retirement_beneficiary,
     retirement_note,
@@ -54,6 +55,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
   }
 
   const beneficiaryInfo =
+    retirement_beneficiary_harmonized ??
     retirement_account ??
     retirement_beneficiary ??
     retirement_note ??
