@@ -130,7 +130,16 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                     color={eventColor}
                     sx={sx.tooltipWrapper}
                   >
-                    {beneficiaryInfo}
+                    <Box
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {beneficiaryInfo}
+                    </Box>
                   </IconLabel>
                 ) : (
                   <Text sx={{ opacity: 0.5 }}>
