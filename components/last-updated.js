@@ -36,7 +36,11 @@ const LastUpdated = () => {
     revalidateOnFocus: false,
   })
 
-  return (
+  return error ? (
+    <Box as='span' sx={{ fontSize: 1, color: 'red' }}>
+      Unable to load database.
+    </Box>
+  ) : (
     <Box as='span' sx={{ fontSize: 1, color: 'secondary' }}>
       {timestamp ? `Last updated ${timestamp}.` : '—'}
     </Box>
