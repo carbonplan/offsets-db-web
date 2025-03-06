@@ -2,9 +2,9 @@ import { Layout as PageLayout } from '@carbonplan/components'
 import { Container } from 'theme-ui'
 
 import Layout from '../components/layout'
-import Projects from '../components/projects'
 import Queries from '../components/queries'
 import Sidebar from '../components/sidebar'
+import Credits from '../components/credits'
 import ProjectCharts from '../components/charts/project-charts'
 
 const Index = () => {
@@ -29,7 +29,7 @@ const Index = () => {
           }
         >
           <ProjectCharts />
-          <Projects />
+          <Credits />
         </Layout>
       </Container>
     </PageLayout>

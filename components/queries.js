@@ -35,7 +35,6 @@ export const QueryProvider = ({ children }) => {
   const [transactionBounds, setTransactionBounds] = useState(null)
   const [countries, setCountries] = useState([])
   const [protocols, setProtocols] = useState([])
-  const [view, setView] = useState('projects')
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState('-issued')
 
@@ -69,8 +68,6 @@ export const QueryProvider = ({ children }) => {
         setCountries,
         protocols,
         setProtocols,
-        view,
-        setView,
         page,
         setPage,
         sort,
@@ -108,9 +105,10 @@ const sx = {
 }
 
 const Queries = () => {
+  const router = useRouter()
+  const view = router.pathname === '/credits' ? 'credits' : 'projects'
+
   const {
-    view,
-    setView,
     registry,
     setRegistry,
     complianceOnly,
@@ -143,9 +141,9 @@ const Queries = () => {
             <Box sx={sx.description}>
               Search projects by ID or name. Or,{' '}
               <Link
+                href='/credits'
                 onClick={() => {
                   setSearch('')
-                  setView('credits')
                 }}
               >
                 search by transaction
@@ -171,9 +169,9 @@ const Queries = () => {
             <Box sx={sx.description}>
               Search credits by retirement beneficiary. Or,{' '}
               <Link
+                href='/'
                 onClick={() => {
                   setBeneficiarySearch('')
-                  setView('projects')
                 }}
               >
                 search by project
