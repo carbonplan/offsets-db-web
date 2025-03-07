@@ -1,10 +1,12 @@
+'use client'
+
 import { Layout } from '@carbonplan/components'
-import { useRouter } from 'next/router'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Container } from 'theme-ui'
 import useSWR from 'swr'
 import { useEffect } from 'react'
 
-import Project from '../../components/project'
+import Project from '../../../components/project'
 
 const fetcher = ([id]) => {
   if (!id) {
@@ -32,7 +34,8 @@ const fetcher = ([id]) => {
 
 const ProjectPage = () => {
   const router = useRouter()
-  const id = router.query.id?.toUpperCase()
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')?.toUpperCase()
   const { data, error, isFetching } = useSWR([id], fetcher, {
     revalidateOnFocus: false,
   })

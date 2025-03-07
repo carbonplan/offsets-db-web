@@ -1,11 +1,13 @@
+'use client'
+
 import { Column, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
 import { Box, Container, Flex, Spinner } from 'theme-ui'
 
-import BackButton from '../components/back-button'
-import Clips from '../components/clips'
-import Pagination from '../components/pagination'
-import useFetcher from '../components/use-fetcher'
+import BackButton from '../../components/back-button'
+import Clips from '../../components/clips'
+import Pagination from '../../components/pagination'
+import useFetcher from '../../components/use-fetcher'
 
 const Project = () => {
   const [page, setPage] = useState(1)

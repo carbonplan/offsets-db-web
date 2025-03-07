@@ -1,13 +1,15 @@
+'use client'
+
+import React from 'react'
 import { Layout as PageLayout } from '@carbonplan/components'
 import { Container } from 'theme-ui'
 
-import Layout from '../components/layout'
-import Queries from '../components/queries'
-import Sidebar from '../components/sidebar'
-import Credits from '../components/credits'
-import ProjectCharts from '../components/charts/project-charts'
+import Layout from '../../components/layout'
+import Queries from '../../components/queries'
+import Sidebar from '../../components/sidebar'
+import ProjectCharts from '../../components/charts/project-charts'
 
-const Index = () => {
+const App = ({ children }) => {
   return (
     <PageLayout
       title='OffsetsDB – CarbonPlan'
@@ -29,11 +31,11 @@ const Index = () => {
           }
         >
           <ProjectCharts />
-          <Credits />
+          {children}
         </Layout>
       </Container>
     </PageLayout>
   )
 }
 
-export default Index
+export default App
