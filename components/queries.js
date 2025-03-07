@@ -1,5 +1,5 @@
 import { Column, Filter, Input, Link, Row } from '@carbonplan/components'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 import Category from './category'
@@ -14,6 +14,8 @@ const QueryContext = createContext({
 
 export const QueryProvider = ({ children }) => {
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [registry, setRegistry] = useState({
     'american-carbon-registry': true,
     'art-trees': true,
@@ -39,11 +41,11 @@ export const QueryProvider = ({ children }) => {
   const [sort, setSort] = useState('-issued')
 
   useEffect(() => {
-    if (router.query.project_id) {
-      setSearch(router.query.project_id)
-      router.replace({ pathname: router.pathname, query: {} })
+    if (searchParams.get('project_id')) {
+      setSearch(searchParams.get('project_id'))
+      router.replace({ pathname: pathname, query: {} })
     }
-  }, [router.query.project_id])
+  }, [pathname, searchParams.get('project_id')])
 
   return (
     <QueryContext.Provider
@@ -105,8 +107,8 @@ const sx = {
 }
 
 const Queries = () => {
-  const router = useRouter()
-  const view = router.pathname === '/credits' ? 'credits' : 'projects'
+  const pathname = usePathname()
+  const view = pathname === '/credits' ? 'credits' : 'projects'
 
   const {
     registry,
