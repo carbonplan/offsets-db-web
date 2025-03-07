@@ -24,7 +24,7 @@ const CategoryBar = ({
           if (typeof mapValue !== 'number') {
             mapValue = 0
           }
-          let value = (mapValue / (issuedTotal ?? total)) * 100
+          let value = (mapValue / (issuedTotal || total)) * 100
           if (accum[i - 1]) {
             value = value + accum[i - 1]
           }

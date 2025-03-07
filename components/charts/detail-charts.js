@@ -6,31 +6,24 @@ import { alpha } from '@theme-ui/color'
 import { COLORS, LABELS } from '../constants'
 import Quantity from '../quantity'
 
-const DetailCharts = ({ issued, retired, isLoading, error }) => {
-  const [previousCategories, setPreviousCategories] = useState([])
-
-  useEffect(() => {
-    if (!isLoading && !error) {
-      setPreviousCategories(Object.keys(issued.mapping))
-    }
-  }, [isLoading, error])
-
-  const createGradient = (theme, l, isRetired) => {
-    const percent = ((issued.mapping[l] ?? 0) / issued.total) * 100
-    const retiredPercent = isRetired
-      ? ((retired.mapping[l] ?? 0) / issued.total) * 100
-      : percent
-
-    if (isRetired) {
+const ChartColumn = ({
+  categoryKeys,
+  mapping,
+  baseTotal,
+  baseMapping,
+  ready,
+  start,
+}) => {
+  const createGradient = (theme, l) => {
+    const percent = ((mapping[l] ?? 0) / baseTotal) * 100
+    if (baseMapping) {
+      const basePercent = ((baseMapping[l] ?? 0) / baseTotal) * 100
       return `linear-gradient(to right, 
             ${theme.rawColors[COLORS[l]]} 0%, 
-            ${theme.rawColors[COLORS[l]]} ${retiredPercent}%,
-            ${alpha(
-              theme.rawColors[COLORS[l]],
-              0.3
-            )(theme)} ${retiredPercent}%, 
-            ${alpha(theme.rawColors[COLORS[l]], 0.3)(theme)} ${percent}%,
-            ${theme.colors.muted} ${percent}%, 
+            ${theme.rawColors[COLORS[l]]} ${percent}%,
+            ${alpha(theme.rawColors[COLORS[l]], 0.3)(theme)} ${percent}%, 
+            ${alpha(theme.rawColors[COLORS[l]], 0.3)(theme)} ${basePercent}%,
+            ${theme.colors.muted} ${basePercent}%, 
             ${theme.colors.muted} 100%)`
     } else {
       return `linear-gradient(to right, ${
@@ -38,89 +31,99 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
       } 0% ${percent}%, ${theme.colors.muted} ${percent}% 100%)`
     }
   }
-  const chartColumn = (isRetired) => {
-    const categoryKeys =
-      isLoading || error
-        ? previousCategories
-        : Object.keys(LABELS.category).filter((l) => Boolean(issued.mapping[l]))
 
-    return (
-      <Column
-        start={[
-          isRetired ? 4 : 1,
-          isRetired ? 5 : 1,
-          isRetired ? 5 : 1,
-          isRetired ? 5 : 1,
-        ]}
-        width={[3, 4, 4, 4]}
-        sx={{ ml: '2px' }}
-      >
-        {categoryKeys.map((l) => (
-          <Box key={l} sx={{ mb: 2 }}>
-            <Flex
-              sx={{
-                justifyContent: 'space-between',
-                fontSize: 2,
-                mb: [1, 1, 1, 2],
-              }}
-            >
-              {isLoading || error ? (
-                <Flex sx={{ gap: 2, alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: '8px',
-                      height: '8px',
-                      backgroundColor: 'muted',
-                    }}
-                  />
-                  <Box sx={{ fontSize: 1, color: 'muted' }}>----</Box>
-                </Flex>
-              ) : (
-                <Flex sx={{ gap: 2, alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: '8px',
-                      height: '8px',
-                      backgroundColor: COLORS[l],
-                    }}
-                  />
-                  <Box sx={{ fontSize: [1, 1, 1, 2] }}>
-                    {LABELS.category[l]}
-                  </Box>
-                </Flex>
-              )}
+  return (
+    <Column start={start} width={[3, 4, 4, 4]} sx={{ ml: '2px' }}>
+      {categoryKeys.map((l) => (
+        <Box key={l} sx={{ mb: 2 }}>
+          <Flex
+            sx={{
+              justifyContent: 'space-between',
+              fontSize: 2,
+              mb: [1, 1, 1, 2],
+            }}
+          >
+            {!ready ? (
+              <Flex sx={{ gap: 2, alignItems: 'center' }}>
+                <Box
+                  sx={{
+                    width: '8px',
+                    height: '8px',
+                    backgroundColor: 'muted',
+                  }}
+                />
+                <Box sx={{ fontSize: 1, color: 'muted' }}>----</Box>
+              </Flex>
+            ) : (
+              <Flex sx={{ gap: 2, alignItems: 'center' }}>
+                <Box
+                  sx={{
+                    width: '8px',
+                    height: '8px',
+                    backgroundColor: COLORS[l],
+                  }}
+                />
+                <Box sx={{ fontSize: [1, 1, 1, 2] }}>{LABELS.category[l]}</Box>
+              </Flex>
+            )}
 
-              <Quantity
-                color={isLoading || error ? null : COLORS[l]}
-                value={
-                  isLoading || error
-                    ? '-'
-                    : (isRetired ? retired.mapping[l] : issued.mapping[l]) ?? 0
-                }
-              />
-            </Flex>
-            <Box
-              sx={{
-                height: '5px',
-                width: '100%',
-                transition: 'background 0.2s',
-                background:
-                  isLoading || error
-                    ? 'muted'
-                    : (theme) => createGradient(theme, l, isRetired),
-              }}
+            <Quantity
+              color={!ready ? null : COLORS[l]}
+              value={!ready ? '-' : mapping[l] ?? 0}
             />
-          </Box>
-        ))}
-      </Column>
-    )
+          </Flex>
+          <Box
+            sx={{
+              height: '5px',
+              width: '100%',
+              transition: 'background 0.2s',
+              background: !ready
+                ? 'muted'
+                : (theme) => createGradient(theme, l),
+            }}
+          />
+        </Box>
+      ))}
+    </Column>
+  )
+}
+
+const DetailCharts = ({ issued, retired, isLoading, error }) => {
+  const [previousCategories, setPreviousCategories] = useState([])
+
+  const base = Object.keys(issued.mapping).length === 0 ? retired : issued
+  let categoryKeys = Object.keys(LABELS.category).filter((l) =>
+    Boolean(base.mapping[l])
+  )
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setPreviousCategories(categoryKeys)
+    }
+  }, [isLoading, error])
+
+  if (isLoading || error) {
+    categoryKeys = previousCategories
   }
 
   return (
     <>
       <Row columns={[6, 8, 8, 8]} sx={{ mb: 5 }}>
-        {chartColumn(false)}
-        {chartColumn(true)}
+        <ChartColumn
+          categoryKeys={categoryKeys}
+          mapping={issued.mapping}
+          baseTotal={base.total}
+          ready={!isLoading && !error && Object.keys(issued.mapping).length > 0}
+          start={1}
+        />
+        <ChartColumn
+          categoryKeys={categoryKeys}
+          mapping={retired.mapping}
+          baseTotal={base.total}
+          baseMapping={base.mapping}
+          ready={!isLoading && !error}
+          start={[4, 5, 5, 5]}
+        />
       </Row>
     </>
   )
