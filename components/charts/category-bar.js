@@ -12,6 +12,7 @@ const CategoryBar = ({
   issuedTotal,
   expanded,
   showExpander,
+  forceEmpty,
 }) => {
   const background = useMemo(() => {
     if (Object.keys(mapping).length === 0 || total === 0) {
@@ -71,7 +72,7 @@ const CategoryBar = ({
             </Box>
             <Quantity
               sx={{ fontSize: 4, height: ['34px'], px: 1, mb: '-2px' }}
-              value={isEmpty ? '-' : total}
+              value={forceEmpty || isEmpty ? '-' : total}
             />
           </Flex>
         </Column>

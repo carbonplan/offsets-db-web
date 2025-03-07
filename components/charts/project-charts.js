@@ -19,9 +19,8 @@ const ProjectCharts = () => {
     'charts/credits_by_category',
     {}
   )
-  const { beneficiarySearch } = useQueries()
 
-  const { issued: initialIssued, retired } = useMemo(() => {
+  const { issued, retired } = useMemo(() => {
     if (!data) {
       return EMPTY
     }
@@ -58,8 +57,8 @@ const ProjectCharts = () => {
     )
   }, [data])
 
-  const issuedKeys = Object.keys(initialIssued.mapping)
-  const issued = beneficiarySearch ? EMPTY.issued : initialIssued
+  const issuedKeys = Object.keys(issued.mapping)
+
   return (
     <>
       <Row
@@ -88,6 +87,7 @@ const ProjectCharts = () => {
             {...issued}
             expanded={expanded}
             showExpander={issuedKeys.length > 0}
+            forceEmpty={!issued.total && retired.total}
           />
         </Column>
         <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>

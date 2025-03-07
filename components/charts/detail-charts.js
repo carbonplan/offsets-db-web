@@ -11,6 +11,7 @@ const ChartColumn = ({
   mapping,
   baseTotal,
   baseMapping,
+
   ready,
   start,
 }) => {
@@ -91,7 +92,8 @@ const ChartColumn = ({
 const DetailCharts = ({ issued, retired, isLoading, error }) => {
   const [previousCategories, setPreviousCategories] = useState([])
 
-  const base = Object.keys(issued.mapping).length === 0 ? retired : issued
+  const isIssuedEmpty = !issued.total && retired.total
+  const base = isIssuedEmpty ? retired : issued
   let categoryKeys = Object.keys(LABELS.category).filter((l) =>
     Boolean(base.mapping[l])
   )
@@ -113,7 +115,7 @@ const DetailCharts = ({ issued, retired, isLoading, error }) => {
           categoryKeys={categoryKeys}
           mapping={issued.mapping}
           baseTotal={base.total}
-          ready={!isLoading && !error && Object.keys(issued.mapping).length > 0}
+          ready={!isLoading && !error && !isIssuedEmpty}
           start={1}
         />
         <ChartColumn
