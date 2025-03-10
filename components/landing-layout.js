@@ -1,5 +1,5 @@
 import { Column, Layout, Row } from '@carbonplan/components'
-import { Container, Divider } from 'theme-ui'
+import { Box, Container, Divider } from 'theme-ui'
 import Sidebar from './sidebar'
 import Queries from './queries'
 import ProjectCharts from './charts/project-charts'
@@ -33,7 +33,7 @@ const LandingLayout = ({ children }) => {
               }}
             />
             <ProjectCharts />
-            {children}
+            <Box sx={{ mt: 5 }}>{children}</Box>
           </Column>
         </Row>
       </Container>

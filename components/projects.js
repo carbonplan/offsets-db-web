@@ -67,7 +67,7 @@ const Projects = () => {
 
   return (
     <>
-      <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse', mt: 5 }}>
+      <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>
         <TableHead
           sort={sort}
           setSort={setSort}

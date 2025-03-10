@@ -71,7 +71,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
   const columns = project_id ? [6, 6, 7, 7] : [6, 8, 8, 8]
 
   return (
-    <Box as='table' sx={{ width: '100%' }}>
+    <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>
       <TableHead
         color={color}
         columns={columns}
