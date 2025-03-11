@@ -43,14 +43,14 @@ const ViewHeading = ({ border = true, sticky = true }) => {
         <Filter
           values={{
             projects: router.pathname === '/',
-            transactions: router.pathname === '/credits',
+            transactions: router.pathname === '/transactions',
             updates: router.pathname === '/updates',
           }}
           setValues={(obj) => {
             if (obj.projects) {
               router.push('/')
             } else if (obj.transactions) {
-              router.push('/credits')
+              router.push('/transactions')
             } else {
               router.push('/updates')
             }

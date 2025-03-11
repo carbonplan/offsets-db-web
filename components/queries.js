@@ -102,7 +102,7 @@ const sx = {
 
 const Queries = () => {
   const router = useRouter()
-  const view = router.pathname === '/credits' ? 'credits' : 'projects'
+  const view = router.pathname === '/transactions' ? 'transactions' : 'projects'
 
   const {
     registry,
@@ -132,7 +132,7 @@ const Queries = () => {
                 <>
                   Search projects by ID or name. Or,{' '}
                   <Link
-                    href='/credits'
+                    href='/transactions'
                     onClick={() => {
                       setSearch('')
                     }}
@@ -154,7 +154,7 @@ const Queries = () => {
           </Column>
         </Row>
       )}
-      {view === 'credits' && (
+      {view === 'transactions' && (
         <Row columns={[6, 8, 3, 3]}>
           <Column start={1} width={[2, 2, 1, 1]}>
             <Box sx={sx.label}>Search</Box>
@@ -163,7 +163,7 @@ const Queries = () => {
             <TooltipWrapper
               tooltip={
                 <>
-                  Search credits by retirement beneficiary. Or,{' '}
+                  Search transactions by retirement beneficiary. Or,{' '}
                   <Link
                     href='/'
                     onClick={() => {
