@@ -2,13 +2,13 @@ import { Filter } from '@carbonplan/components'
 import { Box, Flex } from 'theme-ui'
 import { useRouter } from 'next/router'
 
-const ViewHeading = ({ border }) => {
+const ViewHeading = ({ border = true, sticky = true }) => {
   const router = useRouter()
 
   return (
     <Box
       sx={{
-        position: 'sticky',
+        position: sticky ? 'sticky' : 'inherit',
         top: 55,
         bg: 'background',
         mb: 2,
