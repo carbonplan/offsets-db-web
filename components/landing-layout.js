@@ -24,7 +24,6 @@ const LandingLayout = ({ children }) => {
             <Queries />
           </Sidebar>
           <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]}>
-            <ViewHeading border />
             <Divider
               sx={{
                 display: ['inherit', 'inherit', 'none', 'none'],
@@ -34,6 +33,7 @@ const LandingLayout = ({ children }) => {
                 mb: 2,
               }}
             />
+            <ViewHeading border />
             <ProjectCharts />
             <Box sx={{ mt: 5 }}>{children}</Box>
           </Column>

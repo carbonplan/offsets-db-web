@@ -9,7 +9,7 @@ const ViewHeading = ({ border }) => {
     <Box
       sx={{
         position: 'sticky',
-        top: 56,
+        top: 55,
         bg: 'background',
         mb: 2,
         borderWidth: 0,
@@ -17,6 +17,7 @@ const ViewHeading = ({ border }) => {
         borderColor: 'muted',
         borderStyle: 'solid',
         ml: [-4, -5, -5, -6],
+        mr: [-4, -5, 0, 0],
         pl: [4, 5, 5, 6],
         zIndex: 1,
       }}
