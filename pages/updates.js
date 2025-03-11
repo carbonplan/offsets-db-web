@@ -43,7 +43,7 @@ const Project = () => {
               OffsetsDB Updates
             </Box>
           </Column>
-          <Column start={[1, 5, 5, 4]} width={[5, 6, 6, 6]} sx={{ mb: 3 }}>
+          <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]} sx={{ mb: 3 }}>
             <ViewHeading border sticky={false} />
             <Box
               sx={{
