@@ -28,13 +28,16 @@ const LandingLayout = ({ children }) => {
           <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]}>
             <Box
               sx={{
-                width: '100%',
                 position: 'sticky',
                 top: 56,
                 bg: 'background',
                 mb: 2,
-                // ml: [-4, -5, -5, -6],
-                // pl: [4, 5, 5, 6],
+                borderWidth: 0,
+                borderBottom: '1px',
+                borderColor: 'muted',
+                borderStyle: 'solid',
+                ml: [-4, -5, -5, -6],
+                pl: [4, 5, 5, 6],
                 zIndex: 1,
               }}
             >
@@ -72,13 +75,6 @@ const LandingLayout = ({ children }) => {
                   }}
                 />
               </Flex>
-              <Divider
-                sx={{
-                  width: '100%',
-                  // mx: [-4, -5, -5, -6],
-                  my: 0,
-                }}
-              />
             </Box>
             <Divider
               sx={{
