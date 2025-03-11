@@ -62,15 +62,16 @@ const LandingLayout = ({ children }) => {
                 <Filter
                   values={{
                     projects: router.pathname === '/',
-                    credits: router.pathname === '/credits',
+                    transactions: router.pathname === '/credits',
                     updates: false,
                   }}
                   setValues={(obj) => {
-                    const key = Object.keys(obj).find((key) => obj[key])
-                    if (key === 'projects') {
+                    if (obj.projects) {
                       router.push('/')
+                    } else if (obj.transactions) {
+                      router.push('/credits')
                     } else {
-                      router.push(`/${key}`)
+                      router.push('/updates')
                     }
                   }}
                 />
