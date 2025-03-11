@@ -97,7 +97,7 @@ const TableHead = ({
       as='thead'
       sx={{
         position: 'sticky',
-        top: 55,
+        top: 55 + 61,
         zIndex: 1,
         ...sx,
       }}
