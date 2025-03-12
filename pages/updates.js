@@ -1,11 +1,11 @@
 import { Column, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
-import { Box, Container, Flex, Spinner } from 'theme-ui'
+import { Box, Container, Divider, Flex, Spinner } from 'theme-ui'
 
-import BackButton from '../components/back-button'
 import Clips from '../components/clips'
 import Pagination from '../components/pagination'
 import useFetcher from '../components/use-fetcher'
+import ViewHeading from '../components/view-heading'
 
 const Project = () => {
   const [page, setPage] = useState(1)
@@ -28,18 +28,19 @@ const Project = () => {
       url={'https://carbonplan.org/research/offsets-db/updates'}
     >
       <Container>
-        <Row sx={{ mt: [5, 6, 7, 8], mb: [5, 6, 7, 8] }}>
-          <Column start={1} width={[6, 1, 1, 1]}>
-            <Flex sx={{ height: '100%', alignItems: 'flex-end' }}>
-              <BackButton sx={{ mb: [3, '4px', '6px', '6px'] }} />
-            </Flex>
-          </Column>
-          <Column start={[1, 2, 2, 3]} width={[6, 6, 6, 5]}>
-            <Box as='h1' variant='styles.h1' sx={{ my: [0, 0, 0, 0] }}>
-              OffsetsDB — Updates
+        <Row sx={{ mb: [5, 6, 7, 8] }}>
+          <Column start={[1, 1, 1, 1]} width={[6, 8, 4, 4]} sx={{ mr: 4 }}>
+            <Box
+              as='h1'
+              sx={{
+                variant: 'styles.h1',
+                fontSize: [5, 6, 6, 7],
+                mt: 3,
+                mb: 3,
+              }}
+            >
+              OffsetsDB Updates
             </Box>
-          </Column>
-          <Column start={[1, 2, 8, 8]} width={[5, 6, 4, 4]}>
             <Box
               sx={{
                 mt: [4, 5, '20px', '31px'],
@@ -49,6 +50,18 @@ const Project = () => {
               A regularly-updating list of stories and noteworthy events related
               to offset projects in the database.
             </Box>
+          </Column>
+          <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]} sx={{ mb: 3 }}>
+            <Divider
+              sx={{
+                display: ['inherit', 'inherit', 'none', 'none'],
+                ml: [-4, -5, -5, -6],
+                mr: [-4, -5, 0, 0],
+                mt: 3,
+                mb: 1,
+              }}
+            />
+            <ViewHeading border sticky={false} />
           </Column>
         </Row>
 

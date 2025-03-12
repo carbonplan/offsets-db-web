@@ -36,7 +36,10 @@ const Sidebar = ({ children }) => {
           pb: [4, 3, 5, 5],
         }}
       >
-        <Box as='h1' sx={{ variant: 'styles.h1', mt: 4, mb: 3 }}>
+        <Box
+          as='h1'
+          sx={{ variant: 'styles.h1', fontSize: [5, 6, 6, 7], mt: 3, mb: 3 }}
+        >
           OffsetsDB
         </Box>
         <Box as='p' sx={{ mb: 5 }}>
