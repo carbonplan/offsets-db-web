@@ -61,7 +61,7 @@ const Project = () => {
                 mb: 1,
               }}
             />
-            <ViewHeading border sticky />
+            <ViewHeading border sticky={false} />
           </Column>
         </Row>
 
