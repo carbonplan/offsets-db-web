@@ -11,7 +11,6 @@ import {
 } from './table'
 import { useQueries } from './queries'
 import { projectSorters } from './utils'
-import ProjectCharts from './charts/project-charts'
 import Pagination from './pagination'
 import ProjectRow from './project-row'
 import TooltipWrapper from './tooltip-wrapper'
@@ -68,8 +67,7 @@ const Projects = () => {
 
   return (
     <>
-      <ProjectCharts />
-      <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse', mt: 5 }}>
+      <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>
         <TableHead
           sort={sort}
           setSort={setSort}

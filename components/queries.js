@@ -1,4 +1,4 @@
-import { Column, Filter, Input, Row } from '@carbonplan/components'
+import { Column, Filter, Input, Link, Row } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
@@ -91,9 +91,19 @@ const sx = {
     fontSize: 1,
     mb: [2, 0, 0, 0],
   },
+  input: {
+    fontSize: 1,
+    fontFamily: 'mono',
+    width: '100%',
+    borderBottom: 0,
+    // borderColor: 'muted',
+  },
 }
 
 const Queries = () => {
+  const router = useRouter()
+  const view = router.pathname === '/transactions' ? 'transactions' : 'projects'
+
   const {
     registry,
     setRegistry,
@@ -111,48 +121,72 @@ const Queries = () => {
 
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
-      <Row columns={[6, 8, 3, 3]}>
-        <Column start={1} width={[2, 2, 1, 1]}>
-          <Box sx={sx.label}>Search</Box>
-        </Column>
-        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Search projects by ID or name.'>
-            <Input
-              placeholder='enter search term'
-              size='xs'
-              sx={{
-                fontSize: 1,
-                fontFamily: 'mono',
-                width: '100%',
-                borderBottom: 0,
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </TooltipWrapper>
-        </Column>
-      </Row>
-      <Row columns={[6, 8, 3, 3]}>
-        <Column start={1} width={[2, 2, 1, 1]}>
-          <Box sx={sx.label}>Beneficiary</Box>
-        </Column>
-        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Search projects by retirement beneficiary.'>
-            <Input
-              placeholder='enter search term'
-              size='xs'
-              sx={{
-                fontSize: 1,
-                fontFamily: 'mono',
-                width: '100%',
-                borderBottom: 0,
-              }}
-              value={beneficiarySearch}
-              onChange={(e) => setBeneficiarySearch(e.target.value)}
-            />
-          </TooltipWrapper>
-        </Column>
-      </Row>
+      {view === 'projects' && (
+        <Row columns={[6, 8, 3, 3]}>
+          <Column start={1} width={[2, 2, 1, 1]}>
+            <Box sx={sx.label}>Search</Box>
+          </Column>
+          <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+            <TooltipWrapper
+              tooltip={
+                <>
+                  Search projects by ID or name. Or,{' '}
+                  <Link
+                    href='/transactions'
+                    onClick={() => {
+                      setSearch('')
+                    }}
+                  >
+                    search by transaction
+                  </Link>
+                  .
+                </>
+              }
+            >
+              <Input
+                placeholder='enter search term'
+                size='xs'
+                sx={sx.input}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </TooltipWrapper>
+          </Column>
+        </Row>
+      )}
+      {view === 'transactions' && (
+        <Row columns={[6, 8, 3, 3]}>
+          <Column start={1} width={[2, 2, 1, 1]}>
+            <Box sx={sx.label}>Search</Box>
+          </Column>
+          <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+            <TooltipWrapper
+              tooltip={
+                <>
+                  Search transactions by retirement beneficiary. Or,{' '}
+                  <Link
+                    href='/'
+                    onClick={() => {
+                      setBeneficiarySearch('')
+                    }}
+                  >
+                    search by project
+                  </Link>
+                  .
+                </>
+              }
+            >
+              <Input
+                placeholder='enter search term'
+                size='xs'
+                sx={sx.input}
+                value={beneficiarySearch}
+                onChange={(e) => setBeneficiarySearch(e.target.value)}
+              />
+            </TooltipWrapper>
+          </Column>
+        </Row>
+      )}
       <Row columns={[6, 8, 3, 3]}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Registry</Box>
