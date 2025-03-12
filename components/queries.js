@@ -119,6 +119,16 @@ const Queries = () => {
     setProtocols,
   } = useQueries()
 
+  useEffect(() => {
+    if (view === 'transactions' && search) {
+      setSearch('')
+    }
+
+    if (view === 'projects' && beneficiarySearch) {
+      setBeneficiarySearch('')
+    }
+  }, [router.pathname, search, beneficiarySearch])
+
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
       {view === 'projects' && (

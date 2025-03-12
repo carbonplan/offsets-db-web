@@ -1,4 +1,4 @@
-import { Column, Filter, Row } from '@carbonplan/components'
+import { Column, Row } from '@carbonplan/components'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS } from './constants'
