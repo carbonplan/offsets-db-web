@@ -77,6 +77,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         columns={columns}
         sort={sort}
         setSort={setSort}
+        sx={project_id ? { top: 55 } : undefined}
         values={[
           ...(project_id
             ? []
