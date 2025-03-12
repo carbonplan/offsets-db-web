@@ -61,18 +61,27 @@ const CreditTransactions = ({
   const url = `charts/credits_by_transaction_date${
     project_id ? '/' + project_id : ''
   }`
-  const { data, error, isLoading } = useFetcher(url, {
+  const { data: filteredData, isLoading: isFilteredDataLoading } = useFetcher(
+    url,
+    {
+      transactionType,
+    }
+  )
+  const { data, isLoading } = useFetcher(url, {
     transactionType,
     filters: false,
   })
   const index = useBreakpointIndex({ defaultIndex: 2 })
-  const lines = useMemo(() => {
-    if (!data) {
-      return []
+  const { lines, filteredLines } = useMemo(() => {
+    if (!data || !filteredData) {
+      return { lines: [], filteredLines: [] }
     } else {
-      return getLines(data.data)
+      return {
+        lines: getLines(data.data),
+        filteredLines: getLines(filteredData.data),
+      }
     }
-  }, [data])
+  }, [data, filteredData])
 
   const { domain, range } = useMemo(() => {
     let d = lines.reduce(
@@ -130,9 +139,12 @@ const CreditTransactions = ({
     return { ticks, labels, step }
   }, [domain])
 
-  const bars = useMemo(
-    () => fillBars(lines, domain, range),
-    [lines, domain, range]
+  const { bars, filteredBars } = useMemo(
+    () => ({
+      bars: fillBars(lines, domain, range),
+      filteredBars: fillBars(filteredLines, domain, range),
+    }),
+    [lines, filteredLines, domain, range]
   )
 
   return (
@@ -141,7 +153,7 @@ const CreditTransactions = ({
         {transactionType === 'issuance' ? 'Issuances' : 'Retirements'} over time
       </Box>
       <Box sx={{ height: ['120px', '150px', '170px', '170px'], mt: 3 }}>
-        {isLoading ? (
+        {isLoading || isFilteredDataLoading ? (
           <Box
             sx={{
               width: '100%',
@@ -169,7 +181,8 @@ const CreditTransactions = ({
               <TickLabels left count={3} format={format('~s')} />
             )}
             <Plot>
-              <Bar data={bars} color={color} />
+              <Bar data={bars} color={color} opacity={0.25} />
+              <Bar data={filteredBars} color={color} />
             </Plot>
           </Chart>
         )}
