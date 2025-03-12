@@ -91,10 +91,6 @@ const sx = {
     fontSize: 1,
     mb: [2, 0, 0, 0],
   },
-  description: {
-    mt: 2,
-    fontSize: [1, 1, 1, 2],
-  },
   input: {
     fontSize: 1,
     fontFamily: 'mono',
@@ -106,7 +102,7 @@ const sx = {
 
 const Queries = () => {
   const router = useRouter()
-  const view = router.pathname === '/credits' ? 'credits' : 'projects'
+  const view = router.pathname === '/transactions' ? 'transactions' : 'projects'
 
   const {
     registry,
@@ -131,53 +127,63 @@ const Queries = () => {
             <Box sx={sx.label}>Search</Box>
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-            <Input
-              placeholder='enter search term'
-              size='xs'
-              sx={sx.input}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Box sx={sx.description}>
-              Search projects by ID or name. Or,{' '}
-              <Link
-                href='/credits'
-                onClick={() => {
-                  setSearch('')
-                }}
-              >
-                search by transaction
-              </Link>
-              .
-            </Box>
+            <TooltipWrapper
+              tooltip={
+                <>
+                  Search projects by ID or name. Or,{' '}
+                  <Link
+                    href='/transactions'
+                    onClick={() => {
+                      setSearch('')
+                    }}
+                  >
+                    search by transaction
+                  </Link>
+                  .
+                </>
+              }
+            >
+              <Input
+                placeholder='enter search term'
+                size='xs'
+                sx={sx.input}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </TooltipWrapper>
           </Column>
         </Row>
       )}
-      {view === 'credits' && (
+      {view === 'transactions' && (
         <Row columns={[6, 8, 3, 3]}>
           <Column start={1} width={[2, 2, 1, 1]}>
             <Box sx={sx.label}>Search</Box>
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-            <Input
-              placeholder='enter search term'
-              size='xs'
-              sx={sx.input}
-              value={beneficiarySearch}
-              onChange={(e) => setBeneficiarySearch(e.target.value)}
-            />
-            <Box sx={sx.description}>
-              Search credits by retirement beneficiary. Or,{' '}
-              <Link
-                href='/'
-                onClick={() => {
-                  setBeneficiarySearch('')
-                }}
-              >
-                search by project
-              </Link>
-              .
-            </Box>
+            <TooltipWrapper
+              tooltip={
+                <>
+                  Search transactions by retirement beneficiary. Or,{' '}
+                  <Link
+                    href='/'
+                    onClick={() => {
+                      setBeneficiarySearch('')
+                    }}
+                  >
+                    search by project
+                  </Link>
+                  .
+                </>
+              }
+            >
+              <Input
+                placeholder='enter search term'
+                size='xs'
+                sx={sx.input}
+                value={beneficiarySearch}
+                onChange={(e) => setBeneficiarySearch(e.target.value)}
+              />
+            </TooltipWrapper>
           </Column>
         </Row>
       )}

@@ -3,6 +3,7 @@ import { Box, Container, Divider } from 'theme-ui'
 import Sidebar from './sidebar'
 import Queries from './queries'
 import ProjectCharts from './charts/project-charts'
+import ViewHeading from './view-heading'
 
 const LandingLayout = ({ children }) => {
   return (
@@ -29,9 +30,10 @@ const LandingLayout = ({ children }) => {
                 ml: [-4, -5, -5, -6],
                 mr: [-4, -5, 0, 0],
                 mt: 3,
-                mb: 2,
+                mb: 1,
               }}
             />
+            <ViewHeading border />
             <ProjectCharts />
             <Box sx={{ mt: 5 }}>{children}</Box>
           </Column>

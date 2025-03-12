@@ -255,6 +255,7 @@ const Clips = ({ clips }) => {
             position: 'absolute',
             width: [CIRCLE_WIDTHS[0] / 2, '50%', '50%', '50%'],
             height: '100%',
+            top: [0, 0, -100, -100],
             borderColor: 'secondary',
             borderWidth: 0,
             borderRightWidth: 1,

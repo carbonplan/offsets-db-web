@@ -77,7 +77,7 @@ const ProjectCharts = () => {
           fontFamily: 'mono',
           letterSpacing: 'mono',
           textTransform: 'uppercase',
-          mt: [5, 5, 7, 7],
+          mt: [5, 5, 5, 5],
           mb: 3,
         }}
       >
