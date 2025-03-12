@@ -30,7 +30,7 @@ const LandingLayout = ({ children }) => {
                 ml: [-4, -5, -5, -6],
                 mr: [-4, -5, 0, 0],
                 mt: 3,
-                mb: 2,
+                mb: 1,
               }}
             />
             <ViewHeading border />

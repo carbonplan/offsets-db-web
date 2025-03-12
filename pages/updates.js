@@ -1,8 +1,7 @@
 import { Column, Layout, Row } from '@carbonplan/components'
 import { useState } from 'react'
-import { Box, Container, Flex, Spinner } from 'theme-ui'
+import { Box, Container, Divider, Flex, Spinner } from 'theme-ui'
 
-import BackButton from '../components/back-button'
 import Clips from '../components/clips'
 import Pagination from '../components/pagination'
 import useFetcher from '../components/use-fetcher'
@@ -30,7 +29,7 @@ const Project = () => {
     >
       <Container>
         <Row sx={{ mb: [5, 6, 7, 8] }}>
-          <Column start={[1, 1, 2, 2]} width={[6, 8, 3, 3]}>
+          <Column start={[1, 1, 1, 1]} width={[6, 8, 4, 4]} sx={{ mr: 4 }}>
             <Box
               as='h1'
               sx={{
@@ -42,9 +41,6 @@ const Project = () => {
             >
               OffsetsDB Updates
             </Box>
-          </Column>
-          <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]} sx={{ mb: 3 }}>
-            <ViewHeading border sticky={false} />
             <Box
               sx={{
                 mt: [4, 5, '20px', '31px'],
@@ -54,6 +50,18 @@ const Project = () => {
               A regularly-updating list of stories and noteworthy events related
               to offset projects in the database.
             </Box>
+          </Column>
+          <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]} sx={{ mb: 3 }}>
+            <Divider
+              sx={{
+                display: ['inherit', 'inherit', 'none', 'none'],
+                ml: [-4, -5, -5, -6],
+                mr: [-4, -5, 0, 0],
+                mt: 3,
+                mb: 1,
+              }}
+            />
+            <ViewHeading border sticky />
           </Column>
         </Row>
 
