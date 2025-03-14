@@ -187,7 +187,7 @@ export const ListSelection = ({
 }
 
 const ListFilter = ({ items, selectedItems, title, placeholder, setter }) => {
-  const [selection, setSelection] = useState(false)
+  const [selection, setSelection] = useState(selectedItems.length > 0)
 
   return (
     <Box>
