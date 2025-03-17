@@ -15,6 +15,14 @@ export const LABELS = {
     agriculture: 'Agriculture',
     other: 'Other',
   },
+  project_type_source: {
+    'berkeley carbon trading project':
+      'Type of project reported by the Berkeley CarbonPlan Trading Project',
+    'offsets-db-automation':
+      'Type of project inferred by CarbonPlan based on project paperwork',
+    empty:
+      'Type of project reported by the Berkeley CarbonPlan Trading Project or inferred by CarbonPlan based on project paperwork',
+  },
 }
 
 export const COLORS = {
