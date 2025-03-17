@@ -82,14 +82,8 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         </TooltipWrapper>
         <Box sx={sx.value}>
           {category.map((c) => (
-            <Box
-              key={c}
-              sx={{
-                textTransform: 'capitalize',
-                width: 'fit-content',
-              }}
-            >
-              {c.replace(/-/g, ' ')}
+            <Box key={c} sx={{ width: 'fit-content' }}>
+              {LABELS.category[c]}
             </Box>
           ))}
         </Box>
