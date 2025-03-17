@@ -9,7 +9,7 @@ const ViewHeading = ({ border = true, sticky = true }) => {
     <Box
       sx={{
         position: sticky ? 'sticky' : 'inherit',
-        top: 55,
+        top: 56,
         bg: 'background',
         mb: 2,
         borderWidth: 0,
@@ -44,15 +44,12 @@ const ViewHeading = ({ border = true, sticky = true }) => {
           values={{
             projects: router.pathname === '/',
             transactions: router.pathname === '/transactions',
-            updates: router.pathname === '/updates',
           }}
           setValues={(obj) => {
             if (obj.projects) {
               router.push('/')
             } else if (obj.transactions) {
               router.push('/transactions')
-            } else {
-              router.push('/updates')
             }
           }}
         />
