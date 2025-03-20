@@ -124,6 +124,7 @@ const TableHead = ({
             fontFamily: 'body',
             letterSpacing: 'body',
             mb: 2,
+            pb: 1,
             mt: 2,
           },
         }}

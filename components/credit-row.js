@@ -129,6 +129,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                     activated={expanded}
                     color={eventColor}
                     sx={sx.tooltipWrapper}
+                    top='2px'
                   >
                     <Box
                       sx={{

@@ -13,6 +13,7 @@ const IconWrapper = ({
   buttonBehavior = false,
   color = 'primary',
   sx,
+  top,
 }) => {
   const [expanded, setExpanded] = useState(initiallyExpanded)
 
@@ -32,6 +33,7 @@ const IconWrapper = ({
         onClick={handleToggleExpanded}
         buttonBehavior={buttonBehavior}
         sx={sx}
+        top={top}
       >
         {children}
       </IconLabel>

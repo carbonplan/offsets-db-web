@@ -7,7 +7,7 @@ const IconLabel = ({
   activated = false,
   buttonBehavior = false,
   color = 'primary',
-  mt = '8px',
+  top = '0.75px',
   sx,
 }) => {
   return (
@@ -45,8 +45,7 @@ const IconLabel = ({
             },
           },
           p: [0],
-          transform: 'translate(0px, -3.75px)',
-          mt,
+          transform: `translate(0px, ${top})`,
           flexShrink: 0,
         }}
       >
