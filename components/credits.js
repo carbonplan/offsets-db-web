@@ -103,7 +103,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           },
           {
             value: 'transaction_type',
-            label: 'Type',
+            label: 'Event',
             width: [0, 1, 1, 1],
           },
           {

@@ -138,7 +138,7 @@ const Queries = () => {
       {view === 'projects' && (
         <Row columns={[6, 8, 3, 3]}>
           <Column start={1} width={[2, 2, 1, 1]}>
-            <Box sx={sx.label}>Search</Box>
+            <Box sx={sx.label}>Project</Box>
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
             <TooltipWrapper
@@ -172,7 +172,7 @@ const Queries = () => {
       {view === 'transactions' && (
         <Row columns={[6, 8, 3, 3]}>
           <Column start={1} width={[2, 2, 1, 1]}>
-            <Box sx={sx.label}>Search</Box>
+            <Box sx={sx.label}>Beneficiary</Box>
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
             <TooltipWrapper
