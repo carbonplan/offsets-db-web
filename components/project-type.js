@@ -77,16 +77,12 @@ const ProjectType = () => {
             // - Ensure Other-filtering is hidden
             setSelectOthers(false)
             return null
-          } else if (
-            !All &&
-            (!prev ||
-              prev.length ===
-                projectTypes.Top.length + projectTypes.Other.length)
-          ) {
-            // Handle deselecting All:
+          } else if (!All && !prev) {
+            // Handle deselecting All (specifically checking for projectType = null to accommodate double-clicks):
             // - Clear all selections
             return []
           } else {
+            // Otherwise, inspect selections.
             const topValues = Object.keys(values).filter((key) => values[key])
             let otherValues = []
             if (Other) {
@@ -96,7 +92,14 @@ const ProjectType = () => {
                 projectTypes.Other.includes(type)
               )
             }
-            return [...topValues, ...otherValues]
+
+            const array = [...topValues, ...otherValues]
+
+            // Return null if all types are manually selected.
+            return array.length ===
+              projectTypes.Top.length + projectTypes.Other.length
+              ? null
+              : array
           }
         })
       }
