@@ -51,6 +51,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     <>
       <Column start={[1]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Location of project'
           sx={sx.tooltipWrapper}
@@ -62,6 +63,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
 
       <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Stage in project lifecycle'
           sx={sx.tooltipWrapper}
@@ -76,6 +78,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Project category inferred from protocol(s)'
           sx={sx.tooltipWrapper}
@@ -96,6 +99,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip={
             LABELS.project_type_source[project_type_source] ??
@@ -113,6 +117,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Methodology used to issue credits'
           sx={sx.tooltipWrapper}
@@ -137,6 +142,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Project proponent listed on registry'
           sx={sx.tooltipWrapper}
@@ -148,6 +154,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
 
       <Column start={[1, 1, 1, 1]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Whether project is enrolled in a compliance program'
           sx={sx.tooltipWrapper}
@@ -159,6 +166,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
 
       <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Link to project registry page'
           sx={sx.tooltipWrapper}

@@ -142,6 +142,7 @@ const Queries = () => {
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
             <TooltipWrapper
+              top='4px'
               tooltip={
                 <>
                   Search projects by ID or name. Or,{' '}
@@ -175,6 +176,7 @@ const Queries = () => {
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
             <TooltipWrapper
+              top='4px'
               tooltip={
                 <>
                   Search transactions by retirement beneficiary. Or,{' '}
@@ -206,7 +208,7 @@ const Queries = () => {
           <Box sx={sx.label}>Registry</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by registry.'>
+          <TooltipWrapper top='4px' tooltip='Filter projects by registry.'>
             <Filter
               values={registry}
               setValues={setRegistry}
@@ -222,7 +224,7 @@ const Queries = () => {
           <Box sx={sx.label}>Category</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by category.'>
+          <TooltipWrapper top='4px' tooltip='Filter projects by category.'>
             <Category />
           </TooltipWrapper>
         </Column>
@@ -232,7 +234,7 @@ const Queries = () => {
           <Box sx={sx.label}>Type</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by type.'>
+          <TooltipWrapper top='4px' tooltip='Filter projects by type.'>
             <ProjectType />
           </TooltipWrapper>
         </Column>
@@ -242,7 +244,7 @@ const Queries = () => {
           <Box sx={sx.label}>Country</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by country.'>
+          <TooltipWrapper top='4px' tooltip='Filter projects by country.'>
             <ListFilter
               items={COUNTRIES}
               selectedItems={countries}
@@ -258,7 +260,7 @@ const Queries = () => {
           <Box sx={sx.label}>Protocol</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by protocol.'>
+          <TooltipWrapper top='4px' tooltip='Filter projects by protocol.'>
             <ListFilter
               items={PROTOCOLS}
               selectedItems={protocols}
@@ -274,7 +276,7 @@ const Queries = () => {
           <Box sx={sx.label}>Program</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper tooltip='Filter projects by market.'>
+          <TooltipWrapper top='4px' tooltip='Filter projects by market.'>
             <Filter
               values={{
                 all: typeof complianceOnly !== 'boolean',
