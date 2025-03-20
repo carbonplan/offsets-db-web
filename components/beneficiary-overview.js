@@ -46,9 +46,9 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
     <>
       <Column start={[1, 3, 3, 3]} width={[3, width, width, width]}>
         <TooltipWrapper color={color} tooltip='TK' sx={sx.tooltipWrapper}>
-          <Box sx={sx.label}>Retirement account</Box>
+          <Box sx={sx.label}>Retirement beneficiary</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{retirement_account ?? <Empty />}</Box>
+        <Box sx={sx.value}>{retirement_beneficiary ?? <Empty />}</Box>
       </Column>
 
       <Column
@@ -56,9 +56,9 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
         width={[3, width, width, width]}
       >
         <TooltipWrapper color={color} tooltip='TK' sx={sx.tooltipWrapper}>
-          <Box sx={sx.label}>Retirement beneficiary</Box>
+          <Box sx={sx.label}>Retirement account</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{retirement_beneficiary ?? <Empty />}</Box>
+        <Box sx={sx.value}>{retirement_account ?? <Empty />}</Box>
       </Column>
 
       <Column start={[1, 3, 3, 3]} width={[3, width, width, width]}>

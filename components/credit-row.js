@@ -56,8 +56,8 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
 
   const beneficiaryInfo =
     retirement_beneficiary_harmonized ??
-    retirement_account ??
     retirement_beneficiary ??
+    retirement_account ??
     retirement_note ??
     retirement_reason
 
