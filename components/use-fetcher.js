@@ -20,6 +20,7 @@ const fetcher = ([
   issuedBounds,
   countries,
   protocols,
+  beneficiarySearch,
 ]) => {
   const params = new URLSearchParams()
   params.append('path', path)
@@ -69,6 +70,18 @@ const fetcher = ([
 
   if (search?.trim()) {
     params.append('search', search.trim())
+  }
+
+  if (beneficiarySearch?.trim()) {
+    params.append('beneficiary_search', beneficiarySearch.trim())
+    params.append(
+      'beneficiary_search_fields',
+      'retirement_beneficiary_harmonized'
+    )
+    params.append('beneficiary_search_fields', 'retirement_account')
+    params.append('beneficiary_search_fields', 'retirement_beneficiary')
+    params.append('beneficiary_search_fields', 'retirement_note')
+    params.append('beneficiary_search_fields', 'retirement_reason')
   }
 
   if (typeof complianceOnly === 'boolean') {
@@ -136,6 +149,7 @@ const useFetcher = (
     issuedBounds,
     countries,
     protocols,
+    beneficiarySearch,
   } = useQueries()
 
   const filterArgs = [
@@ -148,6 +162,7 @@ const useFetcher = (
     useDebounce(issuedBounds),
     countries,
     protocols,
+    useDebounce(beneficiarySearch, 500),
   ]
 
   return useSWR(

@@ -36,17 +36,16 @@ const Sidebar = ({ children }) => {
           pb: [4, 3, 5, 5],
         }}
       >
-        <Box as='h1' sx={{ variant: 'styles.h1', mt: 4, mb: 3 }}>
+        <Box
+          as='h1'
+          sx={{ variant: 'styles.h1', fontSize: [5, 6, 6, 7], mt: 3, mb: 3 }}
+        >
           OffsetsDB
         </Box>
-        <Box as='p' sx={{ mb: 5 }}>
+        <Box as='p' sx={{ fontSize: 1, mb: 5 }}>
           This database collects and standardizes data about offset projects and
-          offset credits issued by five of the largest offset registries:
-          American Carbon Registry (ACR), ART TREES (ART), Climate Action
-          Reserve (CAR), Gold Standard (GLD), and Verra (VCS).
-          <br />
-          <br />
-          View the latest{' '}
+          offset credits issued by five of the largest offset registries. View
+          the latest{' '}
           <Link href='https://carbonplan.org/research/offsets-db/updates'>
             updates
           </Link>{' '}

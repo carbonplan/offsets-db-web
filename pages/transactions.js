@@ -1,8 +1,8 @@
-import Projects from '../components/projects'
+import Credits from '../components/credits'
 import LandingLayout from '../components/landing-layout'
 
 const Page = () => {
-  return <Projects />
+  return <Credits />
 }
 
 Page.getLayout = function getLayout(page) {

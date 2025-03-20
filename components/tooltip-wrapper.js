@@ -1,36 +1,19 @@
-import { Box, Flex } from 'theme-ui'
-import { useState } from 'react'
-import AnimateHeight from 'react-animate-height'
+import { Box } from 'theme-ui'
+import { Info } from '@carbonplan/icons'
+import IconWrapper from './icon-wrapper'
 
-import Tooltip from './tooltip'
-
-const TooltipWrapper = ({ children, tooltip, mt = '8px', color, sx }) => {
-  const [expanded, setExpanded] = useState(false)
-
+const TooltipWrapper = ({ children, tooltip, color, sx, top }) => {
   return (
-    <>
-      <Flex
-        sx={{
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          ...sx,
-        }}
-      >
-        {children}
-        <Tooltip
-          expanded={expanded}
-          setExpanded={setExpanded}
-          sx={{ mt: mt, flexShrink: 0 }}
-        />
-      </Flex>
-      <AnimateHeight
-        duration={100}
-        height={expanded ? 'auto' : 0}
-        easing={'linear'}
-      >
+    <IconWrapper
+      Icon={Info}
+      content={
         <Box sx={{ my: 1, fontSize: [1, 1, 1, 2], color }}>{tooltip}</Box>
-      </AnimateHeight>
-    </>
+      }
+      sx={sx}
+      top={top}
+    >
+      {children}
+    </IconWrapper>
   )
 }
 

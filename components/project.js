@@ -114,7 +114,7 @@ const Project = ({ project }) => {
               </Row>
             </Column>
 
-            <Column start={[1]} width={[6, 6, 6, 6]} sx={{ mt: [3, 5, 5, 5] }}>
+            <Column start={[1]} width={[6, 6, 7, 7]} sx={{ mt: [3, 5, 5, 5] }}>
               <Box sx={sx.sectionLabel}>Transactions</Box>
 
               <Credits
