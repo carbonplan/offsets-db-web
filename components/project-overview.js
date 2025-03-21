@@ -149,7 +149,9 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Proponent</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
+        <Box sx={{ ...sx.value, mr: columns === 4 ? [0, 0, 2, 2] : 0 }}>
+          {proponent ?? <Empty />}
+        </Box>
       </Column>
 
       <Column start={[1, 1, 1, 1]} width={[3, 2, 2, 2]}>
