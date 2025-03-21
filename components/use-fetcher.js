@@ -13,6 +13,7 @@ const fetcher = ([
   binWidth,
   registry,
   category,
+  projectType,
   complianceOnly,
   search,
   listingBounds,
@@ -20,6 +21,7 @@ const fetcher = ([
   issuedBounds,
   countries,
   protocols,
+  beneficiarySearch,
 ]) => {
   const params = new URLSearchParams()
   params.append('path', path)
@@ -67,8 +69,28 @@ const fetcher = ([
     }
   }
 
+  if (projectType) {
+    if (projectType.length === 0) {
+      params.append('project_type', 'none')
+    } else {
+      projectType.forEach((t) => params.append('project_type', t))
+    }
+  }
+
   if (search?.trim()) {
     params.append('search', search.trim())
+  }
+
+  if (beneficiarySearch?.trim()) {
+    params.append('beneficiary_search', beneficiarySearch.trim())
+    params.append(
+      'beneficiary_search_fields',
+      'retirement_beneficiary_harmonized'
+    )
+    params.append('beneficiary_search_fields', 'retirement_account')
+    params.append('beneficiary_search_fields', 'retirement_beneficiary')
+    params.append('beneficiary_search_fields', 'retirement_note')
+    params.append('beneficiary_search_fields', 'retirement_reason')
   }
 
   if (typeof complianceOnly === 'boolean') {
@@ -129,6 +151,7 @@ const useFetcher = (
   const {
     registry,
     category,
+    projectType,
     complianceOnly,
     search,
     listingBounds,
@@ -136,11 +159,13 @@ const useFetcher = (
     issuedBounds,
     countries,
     protocols,
+    beneficiarySearch,
   } = useQueries()
 
   const filterArgs = [
     useDebounce(registry),
     useDebounce(category),
+    useDebounce(projectType),
     complianceOnly,
     useDebounce(search),
     useDebounce(listingBounds),
@@ -148,6 +173,7 @@ const useFetcher = (
     useDebounce(issuedBounds),
     countries,
     protocols,
+    useDebounce(beneficiarySearch, 500),
   ]
 
   return useSWR(

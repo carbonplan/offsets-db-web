@@ -9,6 +9,7 @@ import { COLORS } from './constants'
 import { TableRow } from './table'
 import ProjectOverview from './project-overview'
 import Quantity from './quantity'
+import ProjectBadge from './project-badge'
 
 const fade = keyframes({
   from: {
@@ -70,14 +71,7 @@ const ProjectRow = ({ project }) => {
                     stroke: expanded ? alpha(color, 0.8) : 'secondary',
                   }}
                 />
-                <Badge
-                  sx={{
-                    color: color,
-                    userSelect: 'all',
-                  }}
-                >
-                  {project_id}
-                </Badge>
+                <ProjectBadge project={project} />
               </Box>
             ),
             key: 'project_id',

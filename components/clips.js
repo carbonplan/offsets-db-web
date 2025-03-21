@@ -3,7 +3,6 @@ import {
   Row,
   formatDate,
   Button,
-  Badge,
   Tag,
   Expander,
   Link,
@@ -13,6 +12,7 @@ import { useMemo, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import { COLORS } from './constants'
+import ProjectBadge from './project-badge'
 
 // 10px less than column gutter widths
 const CIRCLE_WIDTHS = [24 - 10, 32 - 10, 32 - 10, 48 - 10]
@@ -28,22 +28,18 @@ const ClipText = ({ projects, children }) => {
 
       const regex = new RegExp(`(${ids.join('|')})`, 'gi')
 
-      return children.split(regex).map((part) =>
-        ids.includes(part) ? (
-          <Link href={`/projects/${part}`} key={part}>
-            <Badge
-              sx={{
-                color: COLORS[categories[part]] ?? COLORS.other,
-                userSelect: 'text',
-              }}
-            >
-              {part}
-            </Badge>
-          </Link>
-        ) : (
-          part
+      return children
+        .split(regex)
+        .map((part) =>
+          ids.includes(part) ? (
+            <ProjectBadge
+              project={{ project_id: part, category: [categories[part]] }}
+              link
+            />
+          ) : (
+            part
+          )
         )
-      )
     }
 
     return children
@@ -58,7 +54,9 @@ const ClipText = ({ projects, children }) => {
 
 const Clip = ({ date, label, url, projects, source, index }) => {
   const { theme } = useThemeUI()
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(
+    projects.length <= 5 && projects.some((p) => !label.includes(p.project_id))
+  )
   const left = index % 2 === 0
 
   return (
@@ -145,22 +143,13 @@ const Clip = ({ date, label, url, projects, source, index }) => {
         )}
         <AnimateHeight
           duration={100}
-          height={projects.length <= 5 || expanded ? 'auto' : 0}
+          height={expanded ? 'auto' : 0}
           easing={'linear'}
         >
-          {(projects.length <= 5 || expanded) && (
+          {expanded && (
             <Flex sx={{ gap: 2, flexWrap: 'wrap', mt: 3 }}>
-              {projects?.map(({ project_id, category }) => (
-                <Link href={`/projects/${project_id}`} key={project_id}>
-                  <Badge
-                    sx={{
-                      color: COLORS[category[0]] ?? COLORS.other,
-                      userSelect: 'text',
-                    }}
-                  >
-                    {project_id}
-                  </Badge>
-                </Link>
+              {projects?.map((project) => (
+                <ProjectBadge project={project} key={project.project_id} link />
               ))}
             </Flex>
           )}
@@ -266,6 +255,7 @@ const Clips = ({ clips }) => {
             position: 'absolute',
             width: [CIRCLE_WIDTHS[0] / 2, '50%', '50%', '50%'],
             height: '100%',
+            top: [0, 0, -100, -100],
             borderColor: 'secondary',
             borderWidth: 0,
             borderRightWidth: 1,
