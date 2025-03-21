@@ -159,17 +159,24 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                       },
                     }}
                   >
-                    <Box
-                      sx={{
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        mr: [0, 2, 4, 4],
-                      }}
-                    >
-                      {beneficiaryInfo}
-                    </Box>
+                    <Row columns={projectView ? [0, 2, 2, 2] : [0, 3, 3, 3]}>
+                      <Column
+                        start={1}
+                        width={projectView ? [0, 2, 2, 2] : [0, 2, 2, 2]}
+                      >
+                        <Box
+                          sx={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            mr: [0, 2, 4, 4],
+                          }}
+                        >
+                          {beneficiaryInfo}
+                        </Box>
+                      </Column>
+                    </Row>
                     <Expander
                       id='expander'
                       value={expanded}
@@ -178,7 +185,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                         top: '-2px',
                         right: projectView
                           ? [0, 0, '-14px', '-14px']
-                          : [0, 0, 2, 2],
+                          : [0, 0, 5, 6],
                         width: 18,
                         stroke: expanded ? alpha(eventColor, 0.8) : 'secondary',
                       }}
