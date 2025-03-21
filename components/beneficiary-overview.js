@@ -1,6 +1,5 @@
-import { Button, Column } from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
-import { Box, Flex } from 'theme-ui'
+import { Column } from '@carbonplan/components'
+import { Box } from 'theme-ui'
 
 import TooltipWrapper from './tooltip-wrapper'
 import { alpha } from '@theme-ui/color'
@@ -30,6 +29,7 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
       fontSize: 1,
       mt: 2,
       mb: 5,
+      mr: 2,
     },
     tooltipWrapper: {
       justifyContent: 'flex-start',

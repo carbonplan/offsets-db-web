@@ -1,16 +1,21 @@
 import { useState } from 'react'
-import { formatDate, Button, Row, Column } from '@carbonplan/components'
-import { Box, Flex, IconButton, Text } from 'theme-ui'
+import {
+  formatDate,
+  Button,
+  Row,
+  Column,
+  Expander,
+} from '@carbonplan/components'
+import { Box, Flex, Text } from 'theme-ui'
 import { keyframes } from '@emotion/react'
 import { alpha } from '@theme-ui/color'
-import { RotatingArrow, Info, X } from '@carbonplan/icons'
+import { RotatingArrow } from '@carbonplan/icons'
 
 import Quantity from './quantity'
 import { TableRow } from './table'
 import ProjectBadge from './project-badge'
 import { COLORS } from './constants'
 import BeneficiaryOverview from './beneficiary-overview'
-import IconLabel from './icon-label'
 
 const fade = keyframes({
   from: {
@@ -52,6 +57,10 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
       animationName: fade.toString(),
       animationFillMode: 'backwards',
     },
+    element: {
+      transition: 'color 0.15s',
+      color: expanded ? 'primary' : 'secondary',
+    },
   }
 
   const beneficiaryInfo =
@@ -79,7 +88,13 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
           {
             key: 'transaction_date',
             label: transaction_date ? (
-              <Text sx={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+              <Text
+                sx={{
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                  ...sx.element,
+                }}
+              >
                 {formatDate(transaction_date, {
                   day: 'numeric',
                   month: 'numeric',
@@ -95,7 +110,12 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
           {
             key: 'transaction_type',
             label: (
-              <Text sx={{ textTransform: 'capitalize' }}>
+              <Text
+                sx={{
+                  textTransform: 'capitalize',
+                  ...sx.element,
+                }}
+              >
                 {transaction_type}
               </Text>
             ),
@@ -104,8 +124,11 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
           {
             key: 'quantity',
             label: (
-              <Flex sx={{ gap: 2 }}>
-                <Quantity color={color} value={quantity} />
+              <Flex sx={{ gap: 2, ...sx.element }}>
+                <Quantity
+                  color={expanded ? eventColor : color}
+                  value={quantity}
+                />
                 <Box sx={{ display: ['inherit', 'none', 'none', 'none'] }}>
                   {transaction_type === 'retirement' ? 'retired' : 'issued'}
                 </Box>
@@ -115,7 +138,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
           },
           {
             key: 'vintage',
-            label: vintage ?? '?',
+            label: <Box sx={{ ...sx.element }}>{vintage ?? '?'}</Box>,
             width: [projectView ? 1 : 0, 1, 1, 1],
           },
           {
@@ -123,13 +146,18 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             label: (
               <Text>
                 {beneficiaryInfo ? (
-                  <IconLabel
-                    Icon={Info}
-                    onClick={() => setExpanded(!expanded)}
-                    activated={expanded}
-                    color={eventColor}
-                    sx={sx.tooltipWrapper}
-                    top='2px'
+                  <Box
+                    onClick={() => setExpanded((prev) => !prev)}
+                    sx={{
+                      ...sx.element,
+                      cursor: 'pointer',
+                      position: 'relative',
+                      '@media (hover: hover) and (pointer: fine)': {
+                        '&:hover #expander': {
+                          stroke: eventColor,
+                        },
+                      },
+                    }}
                   >
                     <Box
                       sx={{
@@ -137,11 +165,25 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
+                        mr: [0, 2, 4, 4],
                       }}
                     >
                       {beneficiaryInfo}
                     </Box>
-                  </IconLabel>
+                    <Expander
+                      id='expander'
+                      value={expanded}
+                      sx={{
+                        position: 'absolute',
+                        top: '-2px',
+                        right: projectView
+                          ? [0, 0, '-14px', '-14px']
+                          : [0, 0, 2, 2],
+                        width: 18,
+                        stroke: expanded ? alpha(eventColor, 0.8) : 'secondary',
+                      }}
+                    />
+                  </Box>
                 ) : (
                   <Text sx={{ opacity: 0.5 }}>
                     {transaction_type === 'issuance' ? 'N/A' : 'None listed'}
@@ -152,6 +194,14 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             width: projectView ? [0, 2, 2, 2] : [0, 3, 3, 3],
           },
         ]}
+        sx={{
+          ml: [-4, -5, -5, -6],
+          pl: [4, 5, 5, 6],
+          mr: [-4, -5, 0, 0],
+          pr: [4, 5, 0, 0],
+          backgroundColor: expanded ? alpha(eventColor, 0.2) : 'none',
+          transition: 'background-color 0.3s ease',
+        }}
         {...props}
       />
 
@@ -173,19 +223,6 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                       height: 'fit-content',
                     }}
                   >
-                    <IconButton
-                      onClick={() => setExpanded(false)}
-                      sx={{
-                        p: 0,
-                        width: 20,
-                        color: eventColor,
-                        cursor: 'pointer',
-                        '&:hover': { color: 'primary' },
-                      }}
-                    >
-                      <X />
-                    </IconButton>
-
                     <BeneficiaryOverview
                       event={event}
                       color={eventColor}
