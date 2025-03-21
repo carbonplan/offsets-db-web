@@ -9,7 +9,7 @@ const ViewHeading = ({ border = true, sticky = true }) => {
     <Box
       sx={{
         position: sticky ? 'sticky' : 'inherit',
-        top: 56,
+        top: 0,
         bg: 'background',
         mb: 2,
         borderWidth: 0,
