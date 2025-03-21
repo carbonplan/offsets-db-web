@@ -152,7 +152,11 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                       ...sx.element,
                       cursor: 'pointer',
                       position: 'relative',
+                      transition: 'color 0.25s',
                       '@media (hover: hover) and (pointer: fine)': {
+                        '&:hover': {
+                          color: 'primary',
+                        },
                         '&:hover #expander': {
                           stroke: eventColor,
                         },
