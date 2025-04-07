@@ -255,7 +255,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
             ),
             key: 'pagination',
             start: [1, 5, 5, 5],
-            width: [4, 4, 4, 4],
+            width: [6, 4, 4, 4],
           },
         ]}
       />
