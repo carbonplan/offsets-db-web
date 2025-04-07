@@ -23,7 +23,21 @@ const LandingLayout = ({ children }) => {
           <Sidebar>
             <Queries />
           </Sidebar>
-          <Column start={[1, 1, 5, 5]} width={[6, 8, 8, 8]}>
+          <Column
+            start={[1, 1, 5, 5]}
+            width={[6, 8, 8, 8]}
+            sx={{
+              height: [
+                'inherit',
+                'inherit',
+                'calc(100vh - 56px)',
+                'calc(100vh - 56px)',
+              ],
+              overflowY: ['inherit', 'inherit', 'scroll', 'scroll'],
+              mx: [-4, -5, -5, -6],
+              px: [4, 5, 5, 6],
+            }}
+          >
             <Divider
               sx={{
                 display: ['inherit', 'inherit', 'none', 'none'],
