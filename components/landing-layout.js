@@ -29,8 +29,8 @@ const LandingLayout = ({ children }) => {
             sx={{
               height: 'calc(100vh - 56px)',
               overflowY: 'scroll',
-              mr: [-4, -5, -5, -6],
-              pr: [4, 5, 5, 6],
+              mx: [-4, -5, -5, -6],
+              px: [4, 5, 5, 6],
             }}
           >
             <Divider
