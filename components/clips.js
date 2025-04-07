@@ -23,7 +23,7 @@ const ClipText = ({ projects, children }) => {
     if (typeof children === 'string') {
       const ids = projects.map((p) => p.project_id)
       const categories = projects.reduce((a, p) => {
-        a[p.project_id] = getProjectCategory(project)
+        a[p.project_id] = getProjectCategory(p)
         return a
       }, {})
 
