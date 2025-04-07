@@ -4,6 +4,7 @@ import { Box, Flex } from 'theme-ui'
 
 import { COLORS, LABELS } from './constants'
 import TooltipWrapper from './tooltip-wrapper'
+import { getProjectCategory } from './utils'
 
 const Empty = ({ label = 'N/A' }) => {
   return <Box>{label}</Box>
@@ -20,7 +21,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     project_url,
     registry,
   } = project
-  const color = COLORS[category[0]] ?? COLORS.other
+  const color = COLORS[getProjectCategory(project)] ?? COLORS.other
 
   const sx = {
     label: {
