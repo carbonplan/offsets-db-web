@@ -45,3 +45,9 @@ export const useDebounce = (value, delay = 100) => {
 
   return debounced
 }
+
+export const getProjectCategory = (project) => {
+  return Array.isArray(project.category)
+    ? project.category[0]
+    : project.category
+}

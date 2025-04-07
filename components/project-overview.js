@@ -81,7 +81,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
           <Box sx={sx.label}>Category</Box>
         </TooltipWrapper>
         <Box sx={sx.value}>
-          {category.map((c) => (
+          {(Array.isArray(category) ? category : [category]).map((c) => (
             <Box key={c} sx={{ width: 'fit-content' }}>
               {LABELS.category[c]}
             </Box>

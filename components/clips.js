@@ -13,6 +13,7 @@ import { useMemo, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { Box, Flex, useThemeUI } from 'theme-ui'
 import { COLORS } from './constants'
+import { getProjectCategory } from './utils'
 
 // 10px less than column gutter widths
 const CIRCLE_WIDTHS = [24 - 10, 32 - 10, 32 - 10, 48 - 10]
@@ -22,7 +23,7 @@ const ClipText = ({ projects, children }) => {
     if (typeof children === 'string') {
       const ids = projects.map((p) => p.project_id)
       const categories = projects.reduce((a, p) => {
-        a[p.project_id] = p.category[0]
+        a[p.project_id] = getProjectCategory(project)
         return a
       }, {})
 
@@ -150,15 +151,15 @@ const Clip = ({ date, label, url, projects, source, index }) => {
         >
           {(projects.length <= 5 || expanded) && (
             <Flex sx={{ gap: 2, flexWrap: 'wrap', mt: 3 }}>
-              {projects?.map(({ project_id, category }) => (
-                <Link href={`/projects/${project_id}`} key={project_id}>
+              {projects?.map((p) => (
+                <Link href={`/projects/${p.project_id}`} key={p.project_id}>
                   <Badge
                     sx={{
-                      color: COLORS[category[0]] ?? COLORS.other,
+                      color: COLORS[getProjectCategory(p)] ?? COLORS.other,
                       userSelect: 'text',
                     }}
                   >
-                    {project_id}
+                    {p.project_id}
                   </Badge>
                 </Link>
               ))}
