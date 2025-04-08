@@ -36,6 +36,7 @@ const LandingLayout = ({ children }) => {
               overflowY: ['inherit', 'inherit', 'scroll', 'scroll'],
               mx: [-4, -5, -5, -6],
               px: [4, 5, 5, 6],
+              position: 'relative',
             }}
           >
             <Divider
