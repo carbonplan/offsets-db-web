@@ -16,6 +16,7 @@ import { TableRow } from './table'
 import ProjectBadge from './project-badge'
 import { COLORS } from './constants'
 import BeneficiaryOverview from './beneficiary-overview'
+import { getProjectCategory } from './utils'
 
 const fade = keyframes({
   from: {
@@ -42,7 +43,8 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
   } = event
 
   const columns = projectView ? [6, 6, 7, 7] : [6, 8, 8, 8]
-  const eventColor = color ?? COLORS[projects[0].category[0]] ?? COLORS.other
+  const eventColor =
+    color ?? COLORS[getProjectCategory(projects[0])] ?? COLORS.other
   const sx = {
     expanded: {
       background: alpha(eventColor, 0.2),

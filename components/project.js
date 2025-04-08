@@ -8,10 +8,11 @@ import ProjectOverview from './project-overview'
 import Timeline from './timeline'
 import BackButton from './back-button'
 import Quantity from './quantity'
+import { getProjectCategory } from './utils'
 
 const Project = ({ project }) => {
-  const { project_id, name, category, issued, retired } = project
-  const color = COLORS[category[0]] ?? COLORS.other
+  const { project_id, name, issued, retired } = project
+  const color = COLORS[getProjectCategory(project)] ?? COLORS.other
 
   const sx = {
     sectionLabel: {

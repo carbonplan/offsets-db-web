@@ -10,6 +10,7 @@ import { TableRow } from './table'
 import ProjectOverview from './project-overview'
 import Quantity from './quantity'
 import ProjectBadge from './project-badge'
+import { getProjectCategory } from './utils'
 
 const fade = keyframes({
   from: {
@@ -21,10 +22,10 @@ const fade = keyframes({
 })
 
 const ProjectRow = ({ project }) => {
-  const { project_id, category, name, issued, retired } = project
+  const { project_id, name, issued, retired } = project
   const [expanded, setExpanded] = useState(false)
   const [hoveredDetails, setHoveredDetails] = useState(false)
-  const color = COLORS[category[0]] ?? COLORS.other
+  const color = COLORS[getProjectCategory(project)] ?? COLORS.other
 
   const sx = {
     expanded: {

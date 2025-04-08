@@ -5,14 +5,13 @@ import {
   Button,
   Tag,
   Expander,
-  Link,
 } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { useMemo, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { Box, Flex, useThemeUI } from 'theme-ui'
-import { COLORS } from './constants'
 import ProjectBadge from './project-badge'
+import { getProjectCategory } from './utils'
 
 // 10px less than column gutter widths
 const CIRCLE_WIDTHS = [24 - 10, 32 - 10, 32 - 10, 48 - 10]
@@ -22,7 +21,7 @@ const ClipText = ({ projects, children }) => {
     if (typeof children === 'string') {
       const ids = projects.map((p) => p.project_id)
       const categories = projects.reduce((a, p) => {
-        a[p.project_id] = p.category[0]
+        a[p.project_id] = getProjectCategory(p)
         return a
       }, {})
 

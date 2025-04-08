@@ -1,10 +1,11 @@
 import { Badge, Link } from '@carbonplan/components'
 
 import { COLORS } from './constants'
+import { getProjectCategory } from './utils'
 
 const ProjectBadge = ({ project, link }) => {
-  const { project_id, category } = project
-  const color = COLORS[category[0]] ?? COLORS.other
+  const { project_id } = project
+  const color = COLORS[getProjectCategory(project)] ?? COLORS.other
 
   const inner = (
     <Badge

@@ -4,6 +4,7 @@ import { Box, Flex } from 'theme-ui'
 
 import { COLORS, LABELS } from './constants'
 import TooltipWrapper from './tooltip-wrapper'
+import { getProjectCategory } from './utils'
 
 const Empty = ({ label = 'N/A' }) => {
   return <Box>{label}</Box>
@@ -22,7 +23,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     project_type,
     project_type_source,
   } = project
-  const color = COLORS[category[0]] ?? COLORS.other
+  const color = COLORS[getProjectCategory(project)] ?? COLORS.other
 
   const sx = {
     label: {
@@ -86,7 +87,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
           <Box sx={sx.label}>Category</Box>
         </TooltipWrapper>
         <Box sx={sx.value}>
-          {category.map((c) => (
+          {(Array.isArray(category) ? category : [category]).map((c) => (
             <Box key={c} sx={{ width: 'fit-content' }}>
               {LABELS.category[c]}
             </Box>
