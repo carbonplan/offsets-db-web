@@ -81,7 +81,39 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             ? []
             : [
                 {
-                  label: <ProjectBadge project={projects[0]} link />,
+                  label: (
+                    <Box
+                      sx={{
+                        transition: 'color 0.15s',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        '@media (hover: hover) and (pointer: fine)': {
+                          '&:hover #expander': {
+                            stroke: eventColor,
+                          },
+                        },
+                      }}
+                    >
+                      {transaction_type === 'retirement' && (
+                        <Expander
+                          id='expander'
+                          value={expanded}
+                          sx={{
+                            position: 'absolute',
+                            display: ['inherit', 'none', 'none', 'none'],
+                            ml: '-17px',
+                            top: '2px', // centering, not ideal.
+                            width: 18,
+                            stroke: expanded
+                              ? alpha(eventColor, 0.8)
+                              : 'secondary',
+                          }}
+                          onClick={() => setExpanded((prev) => !prev)}
+                        />
+                      )}
+                      <ProjectBadge project={projects[0]} link />
+                    </Box>
+                  ),
                   key: 'project_id',
                   width: [2, 1, 1, 1],
                 },

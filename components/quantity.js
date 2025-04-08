@@ -22,6 +22,7 @@ const Quantity = ({ color, value, badge = true, sx, ...props }) => {
       sx={{
         color,
         userSelect: isNumber ? 'all' : 'none',
+        flexShrink: 0,
         ...sx,
       }}
       {...props}
