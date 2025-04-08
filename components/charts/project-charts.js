@@ -6,7 +6,6 @@ import { LABELS } from '../constants'
 import useFetcher from '../use-fetcher'
 import CategoryBar from './category-bar'
 import DetailCharts from './detail-charts'
-import { useQueries } from '../queries'
 
 const EMPTY = {
   issued: { total: 0, mapping: {} },
