@@ -41,11 +41,16 @@ export const QueryProvider = ({ children }) => {
   const [sort, setSort] = useState('-issued')
 
   useEffect(() => {
-    if (router.query.project_id) {
+    if (router.pathname === '/' && router.query.project_id) {
       setSearch(router.query.project_id)
       router.replace({ pathname: router.pathname, query: {} })
     }
-  }, [router.query.project_id])
+
+    if (router.pathname === '/transactions' && router.query.beneficiary) {
+      setBeneficiarySearch(router.query.beneficiary)
+      router.replace({ pathname: router.pathname, query: {} })
+    }
+  }, [router.query.project_id, router.query.beneficiary, router.pathname])
 
   return (
     <QueryContext.Provider
