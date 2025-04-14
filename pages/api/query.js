@@ -15,13 +15,15 @@ function constructSearch(search = {}) {
 
 export default async function handler(req, res) {
   const origin = req.headers.origin || ''
-  let isAllowedOrigin
-  try {
-    const { hostname } = new URL(origin)
-    isAllowedOrigin =
-      hostname === 'carbonplan.org' || hostname.endsWith('.carbonplan.org')
-  } catch {
-    isAllowedOrigin = false
+  let isAllowedOrigin = !origin
+  if (origin) {
+    try {
+      const { hostname } = new URL(origin)
+      isAllowedOrigin =
+        hostname === 'carbonplan.org' || hostname.endsWith('.carbonplan.org')
+    } catch {
+      isAllowedOrigin = false
+    }
   }
 
   if (isAllowedOrigin) {
