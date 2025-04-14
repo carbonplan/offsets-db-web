@@ -173,7 +173,7 @@ const useFetcher = (
     useDebounce(issuedBounds),
     countries,
     protocols,
-    useDebounce(beneficiarySearch, 500),
+    useDebounce(beneficiarySearch),
   ]
 
   return useSWR(
