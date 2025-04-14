@@ -13,8 +13,6 @@ function constructSearch(search = {}) {
   return params.toString()
 }
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*.carbonplan.org')
-
   try {
     const { path, ...search } = req.query
     const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${path}`)
