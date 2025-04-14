@@ -12,7 +12,31 @@ function constructSearch(search = {}) {
 
   return params.toString()
 }
+
 export default async function handler(req, res) {
+  const origin = req.headers.origin || ''
+  let isAllowedOrigin
+  try {
+    const { hostname } = new URL(origin)
+    isAllowedOrigin =
+      hostname === 'carbonplan.org' || hostname.endsWith('.carbonplan.org')
+  } catch {
+    isAllowedOrigin = false
+  }
+
+  if (isAllowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+
+  if (req.method === 'OPTIONS') {
+    res.status(204).end()
+    return
+  }
+
   try {
     const { path, ...search } = req.query
     const reqUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${path}`)
