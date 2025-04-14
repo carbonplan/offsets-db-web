@@ -92,10 +92,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
             value: 'transaction_date',
             key: 'transaction_date',
             label: (
-              <TooltipWrapper
-                sx={sx.tooltip}
-                tooltip='Recorded transaction date'
-              >
+              <TooltipWrapper sx={sx.tooltip} tooltip='Transaction date'>
                 Date
               </TooltipWrapper>
             ),
@@ -108,14 +105,30 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           },
           {
             value: 'quantity',
-            label: 'Quantity',
+            key: 'quantity',
+            label: (
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip={
+                  <>
+                    Number of credits (each credit representing one tonne of CO
+                    <sub>2</sub>e)
+                  </>
+                }
+              >
+                Quantity
+              </TooltipWrapper>
+            ),
             width: [2, 1, 1, 1],
           },
           {
             value: 'vintage',
             key: 'vintage',
             label: (
-              <TooltipWrapper sx={sx.tooltip} tooltip='Recorded credit vintage'>
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip='Year when carbon avoidance/removal occurred'
+              >
                 Vintage
               </TooltipWrapper>
             ),
@@ -123,10 +136,14 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           },
           {
             value: 'beneficiary',
+            key: 'beneficiary',
             label: project_id ? (
               <BeneficiaryHeading sx={sx.tooltip} color={color} />
             ) : (
-              <TooltipWrapper sx={sx.tooltip} tooltip='Retirement beneficiary'>
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip='Entity claiming credits’ environmental benefits'
+              >
                 Beneficiary
               </TooltipWrapper>
             ),

@@ -157,7 +157,7 @@ const Queries = () => {
                       setSearch('')
                     }}
                   >
-                    search by transaction
+                    search by transaction beneficiary
                   </Link>
                   .
                 </>
@@ -213,7 +213,10 @@ const Queries = () => {
           <Box sx={sx.label}>Registry</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper top='4px' tooltip='Filter projects by registry.'>
+          <TooltipWrapper
+            top='4px'
+            tooltip='Filter projects by offset registry.'
+          >
             <Filter
               values={registry}
               setValues={setRegistry}
@@ -229,7 +232,10 @@ const Queries = () => {
           <Box sx={sx.label}>Category</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper top='4px' tooltip='Filter projects by category.'>
+          <TooltipWrapper
+            top='4px'
+            tooltip='Filter projects by protocol category.'
+          >
             <Category />
           </TooltipWrapper>
         </Column>
@@ -239,7 +245,10 @@ const Queries = () => {
           <Box sx={sx.label}>Type</Box>
         </Column>
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
-          <TooltipWrapper top='4px' tooltip='Filter projects by type.'>
+          <TooltipWrapper
+            top='4px'
+            tooltip='Filter projects by type of activity involved.'
+          >
             <ProjectType />
           </TooltipWrapper>
         </Column>

@@ -231,7 +231,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                   </Box>
                 ) : (
                   <Text sx={{ opacity: 0.5 }}>
-                    {transaction_type === 'issuance' ? 'N/A' : 'None listed'}
+                    {transaction_type === 'issuance' ? 'N/A' : 'Data missing'}
                   </Text>
                 )}
               </Text>

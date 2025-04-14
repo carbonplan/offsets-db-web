@@ -45,7 +45,11 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
   return (
     <>
       <Column start={[1, 3, 3, 3]} width={[3, width, width, width]}>
-        <TooltipWrapper color={color} tooltip='TK' sx={sx.tooltipWrapper}>
+        <TooltipWrapper
+          color={color}
+          tooltip='Note specifically designating the entity claiming a credit’s environmental benefits.'
+          sx={sx.tooltipWrapper}
+        >
           <Box sx={sx.label}>Retirement beneficiary</Box>
         </TooltipWrapper>
         <Box sx={sx.value}>{retirement_beneficiary ?? <Empty />}</Box>
@@ -55,14 +59,22 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
         start={[4, 3 + width, 3 + width, 3 + width]}
         width={[3, width, width, width]}
       >
-        <TooltipWrapper color={color} tooltip='TK' sx={sx.tooltipWrapper}>
+        <TooltipWrapper
+          color={color}
+          tooltip='Name on account from which credits were retired.'
+          sx={sx.tooltipWrapper}
+        >
           <Box sx={sx.label}>Retirement account</Box>
         </TooltipWrapper>
         <Box sx={sx.value}>{retirement_account ?? <Empty />}</Box>
       </Column>
 
       <Column start={[1, 3, 3, 3]} width={[3, width, width, width]}>
-        <TooltipWrapper color={color} tooltip='TK' sx={sx.tooltipWrapper}>
+        <TooltipWrapper
+          color={color}
+          tooltip='Short-form text accompanying credit retirement.'
+          sx={sx.tooltipWrapper}
+        >
           <Box sx={sx.label}>Retirement note</Box>
         </TooltipWrapper>
         <Box sx={sx.value}>{retirement_note ?? <Empty />}</Box>
@@ -72,7 +84,11 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
         start={[4, 3 + width, 3 + width, 3 + width]}
         width={[3, width, width, width]}
       >
-        <TooltipWrapper color={color} tooltip='TK' sx={sx.tooltipWrapper}>
+        <TooltipWrapper
+          color={color}
+          tooltip='Short form note specifying why credits were retired (e.g., compliance purposes). Sometimes similar to a retirement note.'
+          sx={sx.tooltipWrapper}
+        >
           <Box sx={sx.label}>Retirement reason</Box>
         </TooltipWrapper>
         <Box sx={sx.value}>{retirement_reason ?? <Empty />}</Box>
