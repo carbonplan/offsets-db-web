@@ -20,7 +20,8 @@ export default async function handler(req, res) {
     try {
       const { hostname } = new URL(origin)
       isAllowedOrigin =
-        hostname === 'carbonplan.org' || hostname.endsWith('.carbonplan.org')
+        hostname === 'https://carbonplan.org' ||
+        hostname.endsWith('.carbonplan.org')
     } catch {
       isAllowedOrigin = false
     }
