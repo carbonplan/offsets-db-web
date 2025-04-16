@@ -50,7 +50,7 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
           tooltip='Note specifically designating the entity claiming a credit’s environmental benefits.'
           sx={sx.tooltipWrapper}
         >
-          <Box sx={sx.label}>Retirement beneficiary</Box>
+          <Box sx={sx.label}>Retirement user</Box>
         </TooltipWrapper>
         <Box sx={sx.value}>{retirement_beneficiary ?? <Empty />}</Box>
       </Column>

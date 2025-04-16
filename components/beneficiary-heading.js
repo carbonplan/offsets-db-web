@@ -67,7 +67,7 @@ const BeneficiaryHeading = ({ sx, color }) => {
         />
       }
     >
-      Beneficiary
+      User
     </IconWrapper>
   )
 }

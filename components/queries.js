@@ -157,7 +157,7 @@ const Queries = () => {
                       setSearch('')
                     }}
                   >
-                    search by transaction beneficiary
+                    search for a retirement user
                   </Link>
                   .
                 </>
@@ -177,14 +177,14 @@ const Queries = () => {
       {view === 'transactions' && (
         <Row columns={[6, 8, 3, 3]}>
           <Column start={1} width={[2, 2, 1, 1]}>
-            <Box sx={sx.label}>Beneficiary</Box>
+            <Box sx={sx.label}>User</Box>
           </Column>
           <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
             <TooltipWrapper
               top='4px'
               tooltip={
                 <>
-                  Search transactions by retirement beneficiary. Or,{' '}
+                  Search transactions by the user who made the retirement. Or,{' '}
                   <Link
                     href='/'
                     onClick={() => {
@@ -247,7 +247,7 @@ const Queries = () => {
         <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
           <TooltipWrapper
             top='4px'
-            tooltip='Filter projects by type of activity involved.'
+            tooltip='Filter projects by type of activity within a category. Select from the most-used types, or search for less common types.'
           >
             <ProjectType />
           </TooltipWrapper>

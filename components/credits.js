@@ -144,7 +144,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
                 sx={sx.tooltip}
                 tooltip='Entity claiming credits’ environmental benefits'
               >
-                Beneficiary
+                User
               </TooltipWrapper>
             ),
             width: project_id ? [0, 2, 2, 2] : [0, 3, 3, 3],
