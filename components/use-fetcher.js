@@ -3,6 +3,13 @@ import useSWR from 'swr'
 import { useQueries } from './queries'
 import { useDebounce } from './utils'
 
+function escapeUnicode(str) {
+  return str.replace(/[\s\S]/g, (char) => {
+    const code = char.charCodeAt(0)
+    return code > 127 ? `\\\\u${code.toString(16).padStart(4, '0')}` : char
+  })
+}
+
 const fetcher = ([
   path,
   creditType,
@@ -73,7 +80,9 @@ const fetcher = ([
     if (projectType.length === 0) {
       params.append('project_type', 'none')
     } else {
-      projectType.forEach((t) => params.append('project_type', t))
+      projectType.forEach((t) =>
+        params.append('project_type', escapeUnicode(t))
+      )
     }
   }
 

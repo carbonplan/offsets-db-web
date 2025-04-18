@@ -5,6 +5,13 @@ import { useQueries } from './queries'
 import { Box } from 'theme-ui'
 import { ListSelection } from './list-filter'
 
+// From https://stackoverflow.com/questions/35166758/react-javascript-displaying-decoding-unicode-characters
+function convertUnicode(input) {
+  return input.replace(/\\+u([0-9a-fA-F]{4})/g, (a, b) =>
+    String.fromCharCode(parseInt(b, 16))
+  )
+}
+
 const fetcher = (path) => {
   const params = new URLSearchParams()
   params.append('path', path)
@@ -15,7 +22,9 @@ const fetcher = (path) => {
   )
   reqUrl.search = params.toString()
 
-  return fetch(reqUrl).then((r) => r.json())
+  return fetch(reqUrl)
+    .then((r) => r.json())
+    .then(({ Top, Other }) => ({ Top, Other: Other.map(convertUnicode) }))
 }
 
 const SHORT_LABELS = {
