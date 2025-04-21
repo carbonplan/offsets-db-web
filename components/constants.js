@@ -47,6 +47,7 @@ export const ALL_CATEGORIES = [
   'mine-methane',
   'renewable-energy',
   'transportation',
+  'carbon-capture',
   'unknown',
 ]
 
