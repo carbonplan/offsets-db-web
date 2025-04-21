@@ -65,12 +65,14 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
     },
   }
 
-  const beneficiaryInfo =
+  const userInfo = retirement_beneficiary_harmonized ?? retirement_beneficiary
+  const hasBeneficiaryInfo = !!(
     retirement_beneficiary_harmonized ??
     retirement_beneficiary ??
     retirement_account ??
     retirement_note ??
     retirement_reason
+  )
 
   return (
     <>
@@ -179,7 +181,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             key: 'beneficiary',
             label: (
               <Text>
-                {beneficiaryInfo ? (
+                {hasBeneficiaryInfo ? (
                   <Box
                     onClick={() => setExpanded((prev) => !prev)}
                     sx={{
@@ -211,7 +213,9 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                             mr: [0, 2, 4, 4],
                           }}
                         >
-                          {beneficiaryInfo}
+                          {userInfo ?? (
+                            <Text sx={{ opacity: 0.5 }}>Data missing</Text>
+                          )}
                         </Box>
                       </Column>
                     </Row>
