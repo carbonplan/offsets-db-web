@@ -7,6 +7,11 @@ import useFetcher from '../use-fetcher'
 import CategoryBar from './category-bar'
 import DetailCharts from './detail-charts'
 
+const EMPTY = {
+  issued: { total: 0, mapping: {} },
+  retired: { total: 0, mapping: {} },
+}
+
 const ProjectCharts = () => {
   const [expanded, setExpanded] = useState(false)
   const { data, error, isLoading } = useFetcher(
@@ -15,12 +20,8 @@ const ProjectCharts = () => {
   )
 
   const { issued, retired } = useMemo(() => {
-    const empty = {
-      issued: { total: 0, mapping: {} },
-      retired: { total: 0, mapping: {} },
-    }
     if (!data) {
-      return empty
+      return EMPTY
     }
 
     return data.data.reduce(
@@ -29,25 +30,29 @@ const ProjectCharts = () => {
         { category, retired, issued }
       ) => {
         const key = LABELS.category[category] ? category : 'other'
-        prevIssued.mapping[key] = prevIssued.mapping[key]
-          ? prevIssued.mapping[key] + issued
-          : issued
-        prevRetired.mapping[key] = prevRetired.mapping[key]
-          ? prevRetired.mapping[key] + retired
-          : retired
         return {
           issued: {
             total: prevIssued.total + issued,
-            mapping: prevIssued.mapping,
+            mapping: {
+              ...prevIssued.mapping,
+              [key]: prevIssued.mapping[key]
+                ? prevIssued.mapping[key] + issued
+                : issued,
+            },
           },
           retired: {
             total: prevRetired.total + retired,
-            mapping: prevRetired.mapping,
+            mapping: {
+              ...prevRetired.mapping,
+              [key]: prevRetired.mapping[key]
+                ? prevRetired.mapping[key] + retired
+                : retired,
+            },
             issuedTotal: prevIssued.total + issued,
           },
         }
       },
-      empty
+      EMPTY
     )
   }, [data])
 
@@ -71,7 +76,7 @@ const ProjectCharts = () => {
           fontFamily: 'mono',
           letterSpacing: 'mono',
           textTransform: 'uppercase',
-          mt: [5, 5, 7, 7],
+          mt: [5, 5, 5, 5],
           mb: 3,
         }}
       >
@@ -81,6 +86,7 @@ const ProjectCharts = () => {
             {...issued}
             expanded={expanded}
             showExpander={issuedKeys.length > 0}
+            forceEmpty={!issued.total && retired.total}
           />
         </Column>
         <Column start={[1, 5, 5, 5]} width={[6, 4, 4, 4]}>

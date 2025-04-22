@@ -22,7 +22,7 @@ export const ListSelection = ({
     let filtered = items.filter(
       (item) =>
         !selectedItems?.includes(item) &&
-        item.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+        item?.toLocaleLowerCase().includes(query.toLocaleLowerCase())
     )
 
     if (filtered.length > 5) {
@@ -31,7 +31,7 @@ export const ListSelection = ({
     }
 
     return { filtered, hidden }
-  }, [selectedItems, query])
+  }, [items, selectedItems, query])
 
   const addItem = useCallback(
     (item) => {

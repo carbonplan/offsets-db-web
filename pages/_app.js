@@ -8,6 +8,8 @@ import theme from '@carbonplan/theme'
 import { QueryProvider } from '../components/queries'
 
 const App = ({ Component, pageProps }) => {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <ThemeProvider theme={theme}>
       {process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
@@ -18,9 +20,7 @@ const App = ({ Component, pageProps }) => {
         />
       )}
       <MDXProvider>
-        <QueryProvider>
-          <Component {...pageProps} />
-        </QueryProvider>
+        <QueryProvider>{getLayout(<Component {...pageProps} />)}</QueryProvider>
       </MDXProvider>
     </ThemeProvider>
   )

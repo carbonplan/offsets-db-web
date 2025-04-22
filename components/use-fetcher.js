@@ -3,6 +3,13 @@ import useSWR from 'swr'
 import { useQueries } from './queries'
 import { useDebounce } from './utils'
 
+function escapeUnicode(str) {
+  return str.replace(/[\s\S]/g, (char) => {
+    const code = char.charCodeAt(0)
+    return code > 127 ? `\\\\u${code.toString(16).padStart(4, '0')}` : char
+  })
+}
+
 const fetcher = ([
   path,
   creditType,
@@ -13,6 +20,7 @@ const fetcher = ([
   binWidth,
   registry,
   category,
+  projectType,
   complianceOnly,
   search,
   listingBounds,
@@ -20,6 +28,7 @@ const fetcher = ([
   issuedBounds,
   countries,
   protocols,
+  beneficiarySearch,
 ]) => {
   const params = new URLSearchParams()
   params.append('path', path)
@@ -67,8 +76,30 @@ const fetcher = ([
     }
   }
 
+  if (projectType) {
+    if (projectType.length === 0) {
+      params.append('project_type', 'none')
+    } else {
+      projectType.forEach((t) =>
+        params.append('project_type', escapeUnicode(t))
+      )
+    }
+  }
+
   if (search?.trim()) {
     params.append('search', search.trim())
+  }
+
+  if (beneficiarySearch?.trim()) {
+    params.append('beneficiary_search', beneficiarySearch.trim())
+    params.append(
+      'beneficiary_search_fields',
+      'retirement_beneficiary_harmonized'
+    )
+    params.append('beneficiary_search_fields', 'retirement_account')
+    params.append('beneficiary_search_fields', 'retirement_beneficiary')
+    params.append('beneficiary_search_fields', 'retirement_note')
+    params.append('beneficiary_search_fields', 'retirement_reason')
   }
 
   if (typeof complianceOnly === 'boolean') {
@@ -129,6 +160,7 @@ const useFetcher = (
   const {
     registry,
     category,
+    projectType,
     complianceOnly,
     search,
     listingBounds,
@@ -136,11 +168,13 @@ const useFetcher = (
     issuedBounds,
     countries,
     protocols,
+    beneficiarySearch,
   } = useQueries()
 
   const filterArgs = [
     useDebounce(registry),
     useDebounce(category),
+    useDebounce(projectType),
     complianceOnly,
     useDebounce(search),
     useDebounce(listingBounds),
@@ -148,6 +182,7 @@ const useFetcher = (
     useDebounce(issuedBounds),
     countries,
     protocols,
+    useDebounce(beneficiarySearch),
   ]
 
   return useSWR(

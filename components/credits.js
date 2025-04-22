@@ -1,4 +1,4 @@
-import { Badge, FadeIn } from '@carbonplan/components'
+import { FadeIn } from '@carbonplan/components'
 import { useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
 
@@ -10,11 +10,12 @@ import {
   TableRow,
 } from './table'
 import { useQueries } from './queries'
-import { formatValue } from './utils'
 import useFetcher from './use-fetcher'
 import CreditRow from './credit-row'
 import Pagination from './pagination'
 import TooltipWrapper from './tooltip-wrapper'
+import BeneficiaryHeading from './beneficiary-heading'
+import Quantity from './quantity'
 
 const sx = {
   footerLabel: {
@@ -34,8 +35,14 @@ const sx = {
 }
 
 const Credits = ({ project_id, color, borderTop = true }) => {
-  const { registry, category, complianceOnly, search, transactionBounds } =
-    useQueries()
+  const {
+    registry,
+    category,
+    complianceOnly,
+    search,
+    beneficiarySearch,
+    transactionBounds,
+  } = useQueries()
   const [sort, setSort] = useState('-transaction_date')
   const [page, setPage] = useState(1)
   const { data, error, isLoading } = useFetcher('credits/', {
@@ -51,48 +58,97 @@ const Credits = ({ project_id, color, borderTop = true }) => {
 
   useEffect(() => {
     setPage(1)
-  }, [sort, transactionBounds, registry, category, complianceOnly, search])
+  }, [
+    sort,
+    transactionBounds,
+    registry,
+    category,
+    complianceOnly,
+    search,
+    beneficiarySearch,
+  ])
+
+  const columns = project_id ? [6, 6, 7, 7] : [6, 8, 8, 8]
 
   return (
-    <Box as='table' sx={{ width: '100%' }}>
+    <Box as='table' sx={{ width: '100%', borderCollapse: 'collapse' }}>
       <TableHead
         color={color}
-        columns={[6, 6, 6, 6]}
+        columns={columns}
         sort={sort}
         setSort={setSort}
+        sx={project_id ? { top: 55 } : undefined}
         values={[
+          ...(project_id
+            ? []
+            : [
+                {
+                  value: 'project_id',
+                  label: 'Project ID',
+                  width: [2, 1, 1, 1],
+                },
+              ]),
           {
             value: 'transaction_date',
             key: 'transaction_date',
             label: (
-              <TooltipWrapper
-                sx={sx.tooltip}
-                tooltip='Recorded transaction date'
-              >
+              <TooltipWrapper sx={sx.tooltip} tooltip='Transaction date'>
                 Date
               </TooltipWrapper>
             ),
-            width: 2,
+            width: [2, 1, 1, 1],
+          },
+          {
+            value: 'transaction_type',
+            label: 'Event',
+            width: [0, 1, 1, 1],
+          },
+          {
+            value: 'quantity',
+            key: 'quantity',
+            label: (
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip={
+                  <>
+                    Number of credits (each credit representing one tonne of CO
+                    <sub>2</sub>e)
+                  </>
+                }
+              >
+                Quantity
+              </TooltipWrapper>
+            ),
+            width: [2, 1, 1, 1],
           },
           {
             value: 'vintage',
             key: 'vintage',
             label: (
-              <TooltipWrapper sx={sx.tooltip} tooltip='Recorded credit vintage'>
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip='Year when carbon avoidance/removal occurred'
+              >
                 Vintage
               </TooltipWrapper>
             ),
             width: [project_id ? 1 : 0, 1, 1, 1],
           },
           {
-            value: 'transaction_type',
-            label: 'Type',
-            width: [0, 2, 2, 2],
+            value: 'beneficiary',
+            key: 'beneficiary',
+            label: project_id ? (
+              <BeneficiaryHeading sx={sx.tooltip} color={color} />
+            ) : (
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip='Entity claiming credits’ environmental benefits'
+              >
+                User
+              </TooltipWrapper>
+            ),
+            width: project_id ? [0, 2, 2, 2] : [0, 3, 3, 3],
           },
-          ...(project_id
-            ? []
-            : [{ value: 'project_id', label: 'Project ID', width: 2 }]),
-          { value: 'quantity', label: 'Quantity', width: 1 },
         ]}
         borderTop={borderTop}
       />
@@ -108,13 +164,13 @@ const Credits = ({ project_id, color, borderTop = true }) => {
           ))}
           {data.data.length === 0 ? (
             <TableRow
-              columns={[6, 6, 6, 6]}
+              columns={columns}
               sx={{ minHeight: [0, 200, 200, 200] }}
               values={[
                 {
                   label: 'No results found',
                   key: 'empty',
-                  width: [6, 6, 6, 6],
+                  width: columns,
                 },
               ]}
             />
@@ -125,20 +181,31 @@ const Credits = ({ project_id, color, borderTop = true }) => {
       {isLoading && (
         <FadeIn as='tbody'>
           <LoadingState
-            columns={[6, 6, 6, 6]}
+            columns={columns}
             values={[
-              { key: 'transaction_date', width: 2 },
+              ...(project_id
+                ? []
+                : [
+                    {
+                      key: 'project_id',
+                      width: [2, 1, 1, 1],
+                    },
+                  ]),
+
+              { key: 'transaction_date', width: [2, 1, 1, 1] },
+              {
+                key: 'transaction_type',
+                width: [0, 1, 1, 1],
+              },
+              { key: 'quantity', width: [2, 1, 1, 1] },
               {
                 value: 'vintage',
                 width: [project_id ? 1 : 0, 1, 1, 1],
               },
-
               {
-                key: 'transaction_type',
-                width: [0, 2, 2, 2],
+                key: 'beneficiary',
+                width: project_id ? [0, 2, 2, 2] : [0, 3, 3, 3],
               },
-              ...(project_id ? [] : [{ key: 'project_id', width: 2 }]),
-              { key: 'quantity', width: 1 },
             ]}
           />
         </FadeIn>
@@ -149,22 +216,39 @@ const Credits = ({ project_id, color, borderTop = true }) => {
         </FadeIn>
       )}
       <TableFoot
-        columns={[6, 6, 6, 6]}
+        columns={columns}
         values={[
           {
             label: (
               <Flex sx={sx.footerLabel}>
                 Total
-                <Badge sx={{ color, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                  {unfilteredData
-                    ? formatValue(unfilteredData.pagination.total_entries)
-                    : '-'}
-                </Badge>
+                <Quantity
+                  sx={{ whiteSpace: 'nowrap' }}
+                  value={
+                    unfilteredData
+                      ? unfilteredData.pagination.total_entries
+                      : '-'
+                  }
+                />
               </Flex>
             ),
             key: 'total',
             start: 1,
-            width: [2, 2, 2, 2],
+            width: [3, 2, 2, 2],
+          },
+          {
+            label: (
+              <Flex sx={sx.footerLabel}>
+                Selected
+                <Quantity
+                  sx={{ flexShrink: 0 }}
+                  value={data ? data.pagination.total_entries : '-'}
+                />
+              </Flex>
+            ),
+            key: 'selected',
+            start: [4, 3, 3, 3],
+            width: [3, 2, 2, 2],
           },
           {
             label: (
@@ -187,8 +271,8 @@ const Credits = ({ project_id, color, borderTop = true }) => {
               </Flex>
             ),
             key: 'pagination',
-            start: [3, 5, 5, 5],
-            width: [4, 4, 4, 4],
+            start: [1, 5, 5, 5],
+            width: [6, 4, 4, 4],
           },
         ]}
       />

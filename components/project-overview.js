@@ -20,6 +20,8 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     proponent,
     project_url,
     registry,
+    project_type,
+    project_type_source,
   } = project
   const color = COLORS[getProjectCategory(project)] ?? COLORS.other
 
@@ -50,6 +52,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     <>
       <Column start={[1]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Location of project'
           sx={sx.tooltipWrapper}
@@ -61,6 +64,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
 
       <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Stage in project lifecycle'
           sx={sx.tooltipWrapper}
@@ -75,6 +79,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Project category inferred from protocol(s)'
           sx={sx.tooltipWrapper}
@@ -95,6 +100,25 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
+          top='-0.5px'
+          color={color}
+          tooltip={
+            LABELS.project_type_source[project_type_source] ??
+            LABELS.project_type_source.empty
+          }
+          sx={sx.tooltipWrapper}
+        >
+          <Box sx={sx.label}>Project type</Box>
+        </TooltipWrapper>
+        <Box sx={sx.value}>{project_type ?? <Empty />}</Box>
+      </Column>
+
+      <Column
+        start={[1, 3, columns === 4 ? 1 : 3, columns === 4 ? 1 : 3]}
+        width={[3, 2, 2, 2]}
+      >
+        <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Methodology used to issue credits'
           sx={sx.tooltipWrapper}
@@ -115,24 +139,25 @@ const ProjectOverview = ({ project, columns = 4 }) => {
       </Column>
 
       <Column
-        start={[1, 3, columns === 4 ? 1 : 3, columns === 4 ? 1 : 3]}
+        start={[4, 5, columns === 4 ? 3 : 5, columns === 4 ? 3 : 5]}
         width={[3, 2, 2, 2]}
       >
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Project proponent listed on registry'
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Proponent</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{proponent ?? <Empty />}</Box>
+        <Box sx={{ ...sx.value, mr: columns === 4 ? [0, 0, 2, 2] : 0 }}>
+          {proponent ?? <Empty />}
+        </Box>
       </Column>
 
-      <Column
-        start={[4, 5, columns === 4 ? 3 : 5, columns === 4 ? 3 : 5]}
-        width={[3, 2, 2, 2]}
-      >
+      <Column start={[1, 1, 1, 1]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Whether project is enrolled in a compliance program'
           sx={sx.tooltipWrapper}
@@ -142,8 +167,9 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <Box sx={sx.value}>{is_compliance ? 'Yes' : 'No'}</Box>
       </Column>
 
-      <Column start={[1]} width={[3, 2, 2, 2]}>
+      <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
         <TooltipWrapper
+          top='-0.5px'
           color={color}
           tooltip='Link to project registry page'
           sx={sx.tooltipWrapper}
