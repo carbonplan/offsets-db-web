@@ -92,7 +92,10 @@ const Credits = ({ project_id, color, borderTop = true }) => {
             value: 'transaction_date',
             key: 'transaction_date',
             label: (
-              <TooltipWrapper sx={sx.tooltip} tooltip='Transaction date'>
+              <TooltipWrapper
+                sx={sx.tooltip}
+                tooltip='Date transaction occurred.'
+              >
                 Date
               </TooltipWrapper>
             ),
@@ -112,7 +115,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
                 tooltip={
                   <>
                     Number of credits (each credit representing one tonne of CO
-                    <sub>2</sub>e)
+                    <sub>2</sub>e).
                   </>
                 }
               >
@@ -127,7 +130,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
             label: (
               <TooltipWrapper
                 sx={sx.tooltip}
-                tooltip='Year when carbon avoidance/removal occurred'
+                tooltip='Year when carbon avoidance/removal occurred.'
               >
                 Vintage
               </TooltipWrapper>
@@ -142,7 +145,7 @@ const Credits = ({ project_id, color, borderTop = true }) => {
             ) : (
               <TooltipWrapper
                 sx={sx.tooltip}
-                tooltip='Entity claiming credits’ environmental benefits'
+                tooltip='Entity claiming credits’ environmental benefits.'
               >
                 User
               </TooltipWrapper>
