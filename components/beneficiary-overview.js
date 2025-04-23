@@ -86,7 +86,7 @@ const BeneficiaryOverview = ({ event, color, columns = 4 }) => {
       >
         <TooltipWrapper
           color={color}
-          tooltip='Short form note specifying why credits were retired (e.g., compliance purposes). Sometimes similar to a retirement note.'
+          tooltip='Short-form text specifying why credits were retired (e.g., compliance purposes). Sometimes similar to a retirement note.'
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Retirement reason</Box>
