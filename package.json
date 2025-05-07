@@ -27,7 +27,7 @@
     "@carbonplan/icons": "^2.0.0",
     "@carbonplan/layouts": "^5.0.2",
     "@carbonplan/theme": "^8.0.0",
-    "@emotion/react": "^11.10.0",
+    "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.10.0",
     "@mdx-js/loader": "^2.1.5",
     "@mdx-js/react": "^2.1.5",
