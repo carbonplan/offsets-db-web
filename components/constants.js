@@ -21,7 +21,7 @@ export const LABELS = {
     'offsets-db-automation':
       'Type of project inferred by CarbonPlan based on project paperwork',
     empty:
-      'Type of project reported by the Berkeley CarbonPlan Trading Project or inferred by CarbonPlan based on project paperwork',
+      'Type of project reported by the Berkeley Carbon Trading Project or inferred by CarbonPlan based on project paperwork',
   },
 }
 
