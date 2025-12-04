@@ -102,9 +102,15 @@ const Map = ({ project }) => {
               attribution: 'CarbonPlan, TK ref/link',
             },
           },
-          layers: [...mapLayers, ...boundaryLayers],
+          layers: mapLayers,
         },
         attributionControl: false,
+      })
+
+      map.current.on('load', () => {
+        boundaryLayers.forEach((layer) => {
+          map.current.addLayer(layer, 'address_label')
+        })
       })
 
       attributionControl.current = new maplibregl.AttributionControl({
