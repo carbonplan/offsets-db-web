@@ -8,6 +8,7 @@ import ProjectOverview from './project-overview'
 import Timeline from './timeline'
 import BackButton from './back-button'
 import Quantity from './quantity'
+import Map from './map'
 import { getProjectCategory } from './utils'
 
 const Project = ({ project }) => {
@@ -114,6 +115,17 @@ const Project = ({ project }) => {
                 </Column>
               </Row>
             </Column>
+
+            {project.bbox && (
+              <>
+                <Column start={[1]} width={[6, 6, 6, 6]}>
+                  <Box sx={sx.sectionLabel}>Boundary</Box>
+                </Column>
+                <Column start={[1]} width={[6, 6, 10, 10]}>
+                  <Map project={project} />
+                </Column>
+              </>
+            )}
 
             <Column start={[1]} width={[6, 6, 7, 7]} sx={{ mt: [3, 5, 5, 5] }}>
               <Box sx={sx.sectionLabel}>Transactions</Box>
