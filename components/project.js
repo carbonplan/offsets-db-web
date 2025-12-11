@@ -118,7 +118,7 @@ const Project = ({ project }) => {
 
             {project.bbox && (
               <>
-                <Column start={[1]} width={[6, 6, 6, 6]}>
+                <Column start={[1]} width={[6, 6, 10, 10]}>
                   <Box sx={sx.sectionLabel}>Boundary</Box>
                 </Column>
                 <Column start={[1]} width={[6, 6, 10, 10]}>
