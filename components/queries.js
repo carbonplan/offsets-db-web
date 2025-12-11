@@ -146,7 +146,7 @@ const Queries = () => {
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
       {view === 'projects' && (
-        <Row columns={[6, 8, 3, 3]}>
+        <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
           <Column start={1} width={[2, 2, 1, 1]}>
             <Box sx={sx.label}>Project</Box>
           </Column>
@@ -180,7 +180,7 @@ const Queries = () => {
         </Row>
       )}
       {view === 'transactions' && (
-        <Row columns={[6, 8, 3, 3]}>
+        <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
           <Column start={1} width={[2, 2, 1, 1]}>
             <Box sx={sx.label}>User</Box>
           </Column>
@@ -213,7 +213,7 @@ const Queries = () => {
           </Column>
         </Row>
       )}
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Registry</Box>
         </Column>
@@ -232,7 +232,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Category</Box>
         </Column>
@@ -245,7 +245,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Type</Box>
         </Column>
@@ -258,7 +258,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Country</Box>
         </Column>
@@ -274,7 +274,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Protocol</Box>
         </Column>
@@ -290,7 +290,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Program</Box>
         </Column>
@@ -321,7 +321,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Geography</Box>
         </Column>
