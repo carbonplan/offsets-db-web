@@ -247,7 +247,8 @@ const Map = ({ project }) => {
             'project-boundaries': {
               type: 'vector',
               url: `pmtiles://${BOUNDARY_PMTILES_URL}`,
-              attribution: 'CarbonPlan, TK ref/link',
+              attribution:
+                '<a href="https://www.nature.com/articles/s41597-025-04868-2">Karnik et al. (2025)</a>',
             },
           },
           layers: mapLayers,
