@@ -1,4 +1,4 @@
-import { Column, Filter, Input, Link, Row } from '@carbonplan/components'
+import { Column, Filter, Input, Link, Row, Tag } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
@@ -30,6 +30,7 @@ export const QueryProvider = ({ children }) => {
   )
   const [projectType, setProjectType] = useState(null)
   const [complianceOnly, setComplianceOnly] = useState(null)
+  const [hasBoundaryData, setHasBoundaryData] = useState(false)
   const [search, setSearch] = useState('')
   const [beneficiarySearch, setBeneficiarySearch] = useState('')
   const [listingBounds, setListingBounds] = useState(null)
@@ -59,6 +60,8 @@ export const QueryProvider = ({ children }) => {
         setRegistry,
         category,
         setCategory,
+        hasBoundaryData,
+        setHasBoundaryData,
         projectType,
         setProjectType,
         complianceOnly,
@@ -118,6 +121,8 @@ const Queries = () => {
     setRegistry,
     complianceOnly,
     setComplianceOnly,
+    hasBoundaryData,
+    setHasBoundaryData,
     search,
     setSearch,
     beneficiarySearch,
@@ -313,6 +318,24 @@ const Queries = () => {
               }}
               multiSelect
             />
+          </TooltipWrapper>
+        </Column>
+      </Row>
+      <Row columns={[6, 8, 3, 3]}>
+        <Column start={1} width={[2, 2, 1, 1]}>
+          <Box sx={sx.label}>Geography</Box>
+        </Column>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+          <TooltipWrapper
+            top='4px'
+            tooltip='Filter projects by geographic boundary data availability.'
+          >
+            <Tag
+              onClick={() => setHasBoundaryData(!hasBoundaryData)}
+              value={hasBoundaryData}
+            >
+              Has boundary
+            </Tag>
           </TooltipWrapper>
         </Column>
       </Row>
