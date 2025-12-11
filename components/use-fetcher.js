@@ -22,7 +22,7 @@ const fetcher = ([
   category,
   projectType,
   complianceOnly,
-  hasBoundaryData,
+  hasGeography,
   search,
   listingBounds,
   transactionBounds,
@@ -130,8 +130,8 @@ const fetcher = ([
     protocols.forEach((protocol) => params.append('protocol', protocol))
   }
 
-  if (hasBoundaryData) {
-    params.append('has_boundary_data', 'true')
+  if (hasGeography) {
+    params.append('geography', 'true')
   }
 
   const reqUrl = new URL(
@@ -167,7 +167,7 @@ const useFetcher = (
     category,
     projectType,
     complianceOnly,
-    hasBoundaryData,
+    hasGeography,
     search,
     listingBounds,
     transactionBounds,
@@ -182,7 +182,7 @@ const useFetcher = (
     useDebounce(category),
     useDebounce(projectType),
     complianceOnly,
-    hasBoundaryData,
+    hasGeography,
     useDebounce(search),
     useDebounce(listingBounds),
     useDebounce(transactionBounds),

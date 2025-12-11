@@ -30,7 +30,7 @@ export const QueryProvider = ({ children }) => {
   )
   const [projectType, setProjectType] = useState(null)
   const [complianceOnly, setComplianceOnly] = useState(null)
-  const [hasBoundaryData, setHasBoundaryData] = useState(false)
+  const [hasGeography, setHasGeography] = useState(false)
   const [search, setSearch] = useState('')
   const [beneficiarySearch, setBeneficiarySearch] = useState('')
   const [listingBounds, setListingBounds] = useState(null)
@@ -60,8 +60,8 @@ export const QueryProvider = ({ children }) => {
         setRegistry,
         category,
         setCategory,
-        hasBoundaryData,
-        setHasBoundaryData,
+        hasGeography,
+        setHasGeography,
         projectType,
         setProjectType,
         complianceOnly,
@@ -121,8 +121,8 @@ const Queries = () => {
     setRegistry,
     complianceOnly,
     setComplianceOnly,
-    hasBoundaryData,
-    setHasBoundaryData,
+    hasGeography,
+    setHasGeography,
     search,
     setSearch,
     beneficiarySearch,
@@ -331,8 +331,8 @@ const Queries = () => {
             tooltip='Filter projects by geographic boundary data availability.'
           >
             <Tag
-              onClick={() => setHasBoundaryData(!hasBoundaryData)}
-              value={hasBoundaryData}
+              onClick={() => setHasGeography(!hasGeography)}
+              value={hasGeography}
             >
               Has boundary
             </Tag>
