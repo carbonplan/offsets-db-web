@@ -30,7 +30,7 @@ export const QueryProvider = ({ children }) => {
   )
   const [projectType, setProjectType] = useState(null)
   const [complianceOnly, setComplianceOnly] = useState(null)
-  const [hasGeography, setHasGeography] = useState(false)
+  const [hasGeography, setHasGeography] = useState(null)
   const [search, setSearch] = useState('')
   const [beneficiarySearch, setBeneficiarySearch] = useState('')
   const [listingBounds, setListingBounds] = useState(null)
@@ -330,12 +330,27 @@ const Queries = () => {
             top='4px'
             tooltip='Filter projects by geographic boundary data availability.'
           >
-            <Tag
-              onClick={() => setHasGeography(!hasGeography)}
-              value={hasGeography}
-            >
-              Has boundary
-            </Tag>
+            <Filter
+              values={{
+                all: typeof hasGeography !== 'boolean',
+                available: hasGeography || typeof hasGeography !== 'boolean',
+                missing: typeof hasGeography !== 'boolean' || !hasGeography,
+              }}
+              setValues={(obj) => {
+                let value
+                if (obj.available && obj.missing) {
+                  value = null
+                } else if (obj.available) {
+                  value = true
+                } else if (obj.missing) {
+                  value = false
+                } else {
+                  return
+                }
+                setHasGeography(value)
+              }}
+              multiSelect
+            />
           </TooltipWrapper>
         </Column>
       </Row>

@@ -130,8 +130,8 @@ const fetcher = ([
     protocols.forEach((protocol) => params.append('protocol', protocol))
   }
 
-  if (hasGeography) {
-    params.append('geography', 'true')
+  if (typeof hasGeography === 'boolean') {
+    params.append('geography', hasGeography ? 'true' : 'false')
   }
 
   const reqUrl = new URL(
