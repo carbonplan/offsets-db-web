@@ -28,7 +28,8 @@ export const LABELS = {
 export const BOUNDARY_PMTILES_URL =
   'https://carbonplan-offsets-db.s3.us-west-2.amazonaws.com/miscellaneous/project-boundaries.pmtiles'
 
-export const BOUNDARY_LAYER_ID = 'project-boundaries'
+export const BOUNDARY_LAYER_ID = 'boundaries'
+export const CENTROIDS_LAYER_ID = 'centroids'
 
 export const BASEMAP_PMTILES_URL =
   'https://carbonplan-maps.s3.us-west-2.amazonaws.com/basemaps/pmtiles/global.pmtiles'
