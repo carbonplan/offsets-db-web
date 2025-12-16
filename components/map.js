@@ -250,9 +250,7 @@ const Map = ({ project }) => {
       const charWidth = fontSize * (0.55 + letterSpacing)
       const textWidth = projectId.length * charWidth
       const offsetX = textWidth / 2 + 8
-      console.log(offsetX)
 
-      // Convert back to lng/lat with the offset
       const offsetPoint = map.current.unproject([point.x + offsetX, point.y])
       markerRef.current.setLngLat(offsetPoint)
       setMarkerVisible(true)
