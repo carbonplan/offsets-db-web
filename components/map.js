@@ -366,7 +366,22 @@ const Map = ({ project }) => {
       map.current.on('click', 'project-centroids-label', handleClick)
     })
 
+    const handleWheel = (e) => {
+      if (e.metaKey || e.ctrlKey) {
+        e.preventDefault()
+        const delta = -e.deltaY * 0.01
+        map.current?.zoomTo(map.current.getZoom() + delta, { duration: 100 })
+      }
+    }
+
+    mapContainer.current.addEventListener('wheel', handleWheel, {
+      passive: false,
+    })
+
+    const container = mapContainer.current
+
     return () => {
+      container?.removeEventListener('wheel', handleWheel)
       if (markerRef.current) {
         markerRef.current.remove()
         markerRef.current = null
