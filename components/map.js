@@ -59,9 +59,9 @@ const Map = ({ project }) => {
           'line-color': ['case', isProject, color, secondary],
           'line-width': [
             'case',
-            ['==', ['feature-state', 'hover'], true],
-            ['case', isProject, 1, 1],
-            ['case', isProject, 0.5, 0.1],
+            isProject,
+            1,
+            ['case', ['==', ['feature-state', 'hover'], true], 1, 0.5],
           ],
         },
       },
@@ -91,9 +91,14 @@ const Map = ({ project }) => {
           ],
           'text-halo-color': [
             'case',
-            ['==', ['feature-state', 'hover'], true],
-            hinted,
+            isProject,
             background,
+            [
+              'case',
+              ['==', ['feature-state', 'hover'], true],
+              hinted,
+              background,
+            ],
           ],
           'text-halo-width': 2,
         },
@@ -154,12 +159,15 @@ const Map = ({ project }) => {
 
     const updateHover = (feature) => {
       const featureId = feature.id || feature.properties.project_id
+      const featureProjectId = feature.properties?.project_id
       if (featureId !== hoveredFeatureId.current) {
         clearHover()
         hoveredFeatureId.current = featureId
         setFeatureHover(featureId, true)
       }
-      map.current.getCanvas().style.cursor = 'pointer'
+      if (featureProjectId !== project.project_id) {
+        map.current.getCanvas().style.cursor = 'pointer'
+      }
     }
 
     const handleMouseMove = (event) => {
