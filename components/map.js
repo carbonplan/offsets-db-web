@@ -73,7 +73,8 @@ const Map = ({ project }) => {
         layout: {
           'text-field': ['get', 'project_id'],
           'text-size': 16,
-          'text-font': ['Relative Pro Book'],
+          'text-font': ['Relative Mono Pro 11 Pitch'],
+          'text-letter-spacing': 0.02,
           'text-anchor': 'center',
           'symbol-sort-key': ['case', isProject, 0, 1],
         },
@@ -92,7 +93,7 @@ const Map = ({ project }) => {
           'text-halo-color': [
             'case',
             isProject,
-            background,
+            'transparent',
             [
               'case',
               ['==', ['feature-state', 'hover'], true],
@@ -128,9 +129,60 @@ const Map = ({ project }) => {
             )}' d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")`,
           },
         },
+        '& .maplibregl-ctrl-group': {
+          marginBottom: 0,
+          bg: 'hinted',
+          border: `1px solid`,
+          borderColor: 'muted',
+          borderRadius: '20px',
+          boxShadow: 'none',
+          overflow: 'hidden',
+          '& button': {
+            bg: 'hinted',
+            border: 'none',
+            borderBottom: `1px solid`,
+            borderColor: 'muted',
+            width: '24px',
+            height: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            '&:last-child': {
+              borderBottom: 'none',
+            },
+            '& .maplibregl-ctrl-icon': {
+              backgroundSize: '20px',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+            },
+          },
+          '& .maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon': {
+            backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath stroke='${encodeURIComponent(
+              primary
+            )}' stroke-width='2' stroke-linecap='round' fill='none' d='M10 6v8M6 10h8'/%3E%3C/svg%3E")`,
+          },
+          '& .maplibregl-ctrl-zoom-in:hover .maplibregl-ctrl-icon, & .maplibregl-ctrl-zoom-in:focus-visible .maplibregl-ctrl-icon':
+            {
+              backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath stroke='${encodeURIComponent(
+                secondary
+              )}' stroke-width='2' stroke-linecap='round' fill='none' d='M10 6v8M6 10h8'/%3E%3C/svg%3E")`,
+            },
+          '& .maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon': {
+            backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath stroke='${encodeURIComponent(
+              primary
+            )}' stroke-width='2' stroke-linecap='round' fill='none' d='M6 10h8'/%3E%3C/svg%3E")`,
+          },
+          '& .maplibregl-ctrl-zoom-out:hover .maplibregl-ctrl-icon, & .maplibregl-ctrl-zoom-out:focus-visible .maplibregl-ctrl-icon':
+            {
+              backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath stroke='${encodeURIComponent(
+                secondary
+              )}' stroke-width='2' stroke-linecap='round' fill='none' d='M6 10h8'/%3E%3C/svg%3E")`,
+            },
+        },
       },
     }),
-    [secondary]
+    [primary, secondary]
   )
 
   useEffect(() => {
@@ -201,6 +253,7 @@ const Map = ({ project }) => {
       container: mapContainer.current,
       bounds,
       fitBoundsOptions: { padding: 10 },
+      scrollZoom: false,
       style: {
         version: 8,
         glyphs:
@@ -227,6 +280,11 @@ const Map = ({ project }) => {
 
     map.current.addControl(
       new maplibregl.AttributionControl({ compact: true }),
+      'bottom-right'
+    )
+
+    map.current.addControl(
+      new maplibregl.NavigationControl({ showCompass: false }),
       'bottom-right'
     )
 

@@ -14,6 +14,7 @@ export const useMapTheme = () => {
   const primary = get(theme, 'rawColors.primary')
   const muted = get(theme, 'rawColors.muted')
   const background = get(theme, 'rawColors.background')
+  const secondary = get(theme, 'rawColors.secondary')
 
   const mapTheme = useMemo(
     () => ({
@@ -96,11 +97,27 @@ export const useMapTheme = () => {
         primary,
       ],
       subplace_label_halo: background,
-      city_label: ['interpolate', ['linear'], ['zoom'], 8, muted, 22, primary],
+      city_label: ['interpolate', ['linear'], ['zoom'], 0, muted, 8, secondary],
       city_label_halo: background,
-      state_label: muted,
+      state_label: [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        0,
+        muted,
+        8,
+        secondary,
+      ],
       state_label_halo: background,
-      country_label: muted,
+      country_label: [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        0,
+        muted,
+        8,
+        secondary,
+      ],
 
       address_label: muted,
       address_label_halo: background,
