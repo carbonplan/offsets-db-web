@@ -144,10 +144,11 @@ export const useMapTheme = () => {
 
     return baseLayers.map((layer) => {
       if (layer.id === 'places_locality' && layer.type === 'symbol') {
+        const { 'text-variable-anchor': _, ...restLayout } = layer.layout
         return {
           ...layer,
           layout: {
-            ...layer.layout,
+            ...restLayout,
             'text-anchor': 'center',
             'text-justify': 'center',
           },
