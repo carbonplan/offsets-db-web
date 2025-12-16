@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Box, get, useThemeUI } from 'theme-ui'
 import { useRouter } from 'next/router'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { Protocol } from 'pmtiles'
+import { Arrow } from '@carbonplan/icons'
 import {
   BOUNDARY_PMTILES_URL,
   BASEMAP_PMTILES_URL,
@@ -18,6 +20,9 @@ const Map = ({ project }) => {
   const mapContainer = useRef(null)
   const map = useRef(null)
   const hoveredFeatureId = useRef(null)
+  const markerRef = useRef(null)
+  const [markerEl, setMarkerEl] = useState(null)
+  const [markerVisible, setMarkerVisible] = useState(false)
   const mapLayers = useMapTheme()
   const { theme } = useThemeUI()
   const router = useRouter()
@@ -212,6 +217,7 @@ const Map = ({ project }) => {
       if (map.current) {
         map.current.getCanvas().style.cursor = ''
       }
+      setMarkerVisible(false)
     }
 
     const updateHover = (feature) => {
@@ -227,6 +233,31 @@ const Map = ({ project }) => {
       }
     }
 
+    const updateMarkerPosition = (feature) => {
+      if (!markerRef.current || !feature) return
+
+      const projectId = feature.properties?.project_id
+      if (projectId === project.project_id) {
+        setMarkerVisible(false)
+        return
+      }
+
+      const coords = feature.geometry.coordinates
+      const point = map.current.project(coords)
+
+      const fontSize = 16
+      const letterSpacing = 0.02 // em
+      const charWidth = fontSize * (0.55 + letterSpacing)
+      const textWidth = projectId.length * charWidth
+      const offsetX = textWidth / 2 + 8
+      console.log(offsetX)
+
+      // Convert back to lng/lat with the offset
+      const offsetPoint = map.current.unproject([point.x + offsetX, point.y])
+      markerRef.current.setLngLat(offsetPoint)
+      setMarkerVisible(true)
+    }
+
     const handleMouseMove = (event) => {
       // Query both layers, prioritize labels over fills
       const labels = map.current.queryRenderedFeatures(event.point, {
@@ -234,6 +265,7 @@ const Map = ({ project }) => {
       })
       if (labels[0]) {
         updateHover(labels[0])
+        updateMarkerPosition(labels[0])
         return
       }
 
@@ -245,7 +277,22 @@ const Map = ({ project }) => {
       const fills = map.current.queryRenderedFeatures(bbox, {
         layers: ['project-boundaries-fill'],
       })
-      fills[0] ? updateHover(fills[0]) : clearHover()
+      if (fills[0]) {
+        updateHover(fills[0])
+        // Find the visible centroid label for this project to position the marker
+        const projectId = fills[0].properties?.project_id
+        const centroids = map.current.queryRenderedFeatures(undefined, {
+          layers: ['project-centroids-label'],
+          filter: ['==', ['get', 'project_id'], projectId],
+        })
+        if (centroids[0]) {
+          updateMarkerPosition(centroids[0])
+        } else {
+          setMarkerVisible(false)
+        }
+      } else {
+        clearHover()
+      }
     }
 
     const handleClick = (event) => {
@@ -298,16 +345,23 @@ const Map = ({ project }) => {
     )
 
     map.current.on('load', () => {
-      // Add boundary layers before address labels
       projectLayers
         .filter((layer) => layer.id !== 'project-centroids-label')
         .forEach((layer) => map.current.addLayer(layer, 'address_label'))
 
-      // Add centroid labels on top of everything
       const labelLayer = projectLayers.find(
         (layer) => layer.id === 'project-centroids-label'
       )
       if (labelLayer) map.current.addLayer(labelLayer)
+
+      const el = document.createElement('div')
+      markerRef.current = new maplibregl.Marker({
+        element: el,
+        anchor: 'center',
+      })
+        .setLngLat([0, 0])
+        .addTo(map.current)
+      setMarkerEl(el)
 
       map.current.on('mousemove', handleMouseMove)
       map.current.on('click', 'project-boundaries-fill', handleClick)
@@ -315,6 +369,11 @@ const Map = ({ project }) => {
     })
 
     return () => {
+      if (markerRef.current) {
+        markerRef.current.remove()
+        markerRef.current = null
+      }
+      setMarkerEl(null)
       if (map.current) {
         clearHover()
         map.current.remove()
@@ -325,16 +384,33 @@ const Map = ({ project }) => {
   }, [bounds, projectLayers, mapLayers, project.project_id, router])
 
   return (
-    <Box
-      ref={mapContainer}
-      sx={{
-        width: '100%',
-        height: ['300px', '300px', '500px', '500px'],
-        border: '1px solid',
-        borderColor: 'muted',
-        ...mapControlStyles,
-      }}
-    />
+    <>
+      <Box
+        ref={mapContainer}
+        sx={{
+          width: '100%',
+          height: ['300px', '300px', '500px', '500px'],
+          border: '1px solid',
+          borderColor: 'muted',
+          ...mapControlStyles,
+        }}
+      />
+      {markerEl &&
+        createPortal(
+          <Arrow
+            sx={{
+              width: 14,
+              height: 14,
+              color: 'primary',
+              display: 'block',
+              opacity: markerVisible ? 1 : 0,
+              pointerEvents: 'none',
+              filter: `drop-shadow(0 0 2px ${hinted}) drop-shadow(0 0 2px ${hinted})`,
+            }}
+          />,
+          markerEl
+        )}
+    </>
   )
 }
 
