@@ -93,7 +93,7 @@ const Map = ({ project }) => {
           'text-halo-color': [
             'case',
             isProject,
-            'transparent',
+            background,
             [
               'case',
               ['==', ['feature-state', 'hover'], true],
@@ -125,8 +125,13 @@ const Map = ({ project }) => {
           '& .maplibregl-ctrl-attrib-button': {
             bg: 'hinted',
             backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath fill='${encodeURIComponent(
-              secondary
+              primary
             )}' d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")`,
+            '&:hover, &:focus-visible': {
+              backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath fill='${encodeURIComponent(
+                secondary
+              )}' d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")`,
+            },
           },
         },
         '& .maplibregl-ctrl-group': {
