@@ -223,20 +223,24 @@ const Map = ({ project }) => {
     }
 
     const handleMouseMove = (event) => {
+      // Query both layers, prioritize labels over fills
+      const labels = map.current.queryRenderedFeatures(event.point, {
+        layers: ['project-centroids-label'],
+      })
+      if (labels[0]) {
+        updateHover(labels[0])
+        return
+      }
+
       const tolerance = 3
       const bbox = [
         [event.point.x - tolerance, event.point.y - tolerance],
         [event.point.x + tolerance, event.point.y + tolerance],
       ]
-      const features = map.current.queryRenderedFeatures(bbox, {
+      const fills = map.current.queryRenderedFeatures(bbox, {
         layers: ['project-boundaries-fill'],
       })
-      features[0] ? updateHover(features[0]) : clearHover()
-    }
-
-    const handleMouseEnter = (event) => {
-      const feature = event.features?.[0]
-      if (feature) updateHover(feature)
+      fills[0] ? updateHover(fills[0]) : clearHover()
     }
 
     const handleClick = (event) => {
@@ -300,11 +304,8 @@ const Map = ({ project }) => {
       )
       if (labelLayer) map.current.addLayer(labelLayer)
 
-      map.current.on('mousemove', 'project-boundaries-fill', handleMouseMove)
-      map.current.on('mouseleave', 'project-boundaries-fill', clearHover)
+      map.current.on('mousemove', handleMouseMove)
       map.current.on('click', 'project-boundaries-fill', handleClick)
-      map.current.on('mouseenter', 'project-centroids-label', handleMouseEnter)
-      map.current.on('mouseleave', 'project-centroids-label', clearHover)
       map.current.on('click', 'project-centroids-label', handleClick)
     })
 
