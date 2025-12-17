@@ -366,22 +366,24 @@ const Map = ({ project }) => {
       map.current.on('click', 'project-centroids-label', handleClick)
     })
 
-    const handleWheel = (e) => {
-      if (e.metaKey || e.ctrlKey) {
-        e.preventDefault()
-        const delta = -e.deltaY * 0.01
-        map.current?.zoomTo(map.current.getZoom() + delta, { duration: 100 })
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && map.current) {
+        map.current.scrollZoom.enable()
       }
     }
 
-    mapContainer.current.addEventListener('wheel', handleWheel, {
-      passive: false,
-    })
+    const handleKeyUp = (e) => {
+      if (!e.metaKey && !e.ctrlKey && map.current) {
+        map.current.scrollZoom.disable()
+      }
+    }
 
-    const container = mapContainer.current
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('keyup', handleKeyUp)
 
     return () => {
-      container?.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('keyup', handleKeyUp)
       if (markerRef.current) {
         markerRef.current.remove()
         markerRef.current = null
