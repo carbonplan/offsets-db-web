@@ -20,6 +20,7 @@ const Map = ({ project }) => {
   const mapContainer = useRef(null)
   const map = useRef(null)
   const hoveredFeatureId = useRef(null)
+  const hoveredFeature = useRef(null)
   const markerRef = useRef(null)
   const [markerEl, setMarkerEl] = useState(null)
   const [markerVisible, setMarkerVisible] = useState(false)
@@ -214,6 +215,7 @@ const Map = ({ project }) => {
         setFeatureHover(hoveredFeatureId.current, false)
         hoveredFeatureId.current = null
       }
+      hoveredFeature.current = null
       if (map.current) {
         map.current.getCanvas().style.cursor = ''
       }
@@ -234,14 +236,19 @@ const Map = ({ project }) => {
     }
 
     const updateMarkerPosition = (feature) => {
-      if (!markerRef.current || !feature) return
+      if (!markerRef.current || !feature) {
+        hoveredFeature.current = null
+        return
+      }
 
       const projectId = feature.properties?.project_id
       if (projectId === project.project_id) {
         setMarkerVisible(false)
+        hoveredFeature.current = null
         return
       }
 
+      hoveredFeature.current = feature
       const coords = feature.geometry.coordinates
       const point = map.current.project(coords)
 
@@ -254,6 +261,12 @@ const Map = ({ project }) => {
       const offsetPoint = map.current.unproject([point.x + offsetX, point.y])
       markerRef.current.setLngLat(offsetPoint)
       setMarkerVisible(true)
+    }
+
+    const handleZoom = () => {
+      if (hoveredFeature.current) {
+        updateMarkerPosition(hoveredFeature.current)
+      }
     }
 
     const handleMouseMove = (event) => {
@@ -362,6 +375,7 @@ const Map = ({ project }) => {
       setMarkerEl(el)
 
       map.current.on('mousemove', handleMouseMove)
+      map.current.on('zoom', handleZoom)
       map.current.on('click', 'project-boundaries-fill', handleClick)
       map.current.on('click', 'project-centroids-label', handleClick)
     })
