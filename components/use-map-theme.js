@@ -130,9 +130,9 @@ export const useMapTheme = () => {
       address_label: muted,
       address_label_halo: background,
 
-      regular: 'Relative Pro Book',
-      bold: 'Relative Pro Book',
-      italic: 'Relative Pro Book',
+      regular: 'Relative Faux Pro Book',
+      bold: 'Relative Faux Pro Book',
+      italic: 'Relative Faux Pro Book',
     }),
     [flavorName, hinted, muted, background, primary]
   )
@@ -151,6 +151,16 @@ export const useMapTheme = () => {
             ...restLayout,
             'text-anchor': 'center',
             'text-justify': 'center',
+            'text-letter-spacing': 0.05,
+          },
+        }
+      }
+      if (layer.type === 'symbol' && layer.layout?.['text-field']) {
+        return {
+          ...layer,
+          layout: {
+            ...layer.layout,
+            'text-letter-spacing': 0.05,
           },
         }
       }
