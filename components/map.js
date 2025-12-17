@@ -401,6 +401,7 @@ const Map = ({ project }) => {
       <Box
         ref={mapContainer}
         sx={{
+          mt: 5,
           width: '100%',
           height: ['300px', '300px', '500px', '500px'],
           border: '1px solid',
