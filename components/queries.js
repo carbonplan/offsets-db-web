@@ -51,16 +51,19 @@ export const QueryProvider = ({ children }) => {
       setBeneficiarySearch(router.query.beneficiary)
       router.replace({ pathname: router.pathname, query: {} })
     }
-  }, [router.query.project_id, router.query.beneficiary, router.pathname])
 
-  useEffect(() => {
     const { geography } = router.query
     if (geography === 'true') {
       setHasGeography(true)
     } else if (geography === 'false') {
       setHasGeography(false)
     }
-  }, [])
+  }, [
+    router.query.project_id,
+    router.query.beneficiary,
+    router.query.geography,
+    router.pathname,
+  ])
 
   return (
     <QueryContext.Provider
