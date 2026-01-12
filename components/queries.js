@@ -53,6 +53,15 @@ export const QueryProvider = ({ children }) => {
     }
   }, [router.query.project_id, router.query.beneficiary, router.pathname])
 
+  useEffect(() => {
+    const { geography } = router.query
+    if (geography === 'true') {
+      setHasGeography(true)
+    } else if (geography === 'false') {
+      setHasGeography(false)
+    }
+  }, [])
+
   return (
     <QueryContext.Provider
       value={{
