@@ -42,21 +42,24 @@ export const QueryProvider = ({ children }) => {
   const [sort, setSort] = useState('-issued')
 
   useEffect(() => {
-    if (router.pathname === '/' && router.query.project_id) {
-      setSearch(router.query.project_id)
-      router.replace({ pathname: router.pathname, query: {} })
+    const { project_id, beneficiary, geography } = router.query
+
+    if (router.pathname === '/' && project_id) {
+      setSearch(project_id)
     }
 
-    if (router.pathname === '/transactions' && router.query.beneficiary) {
-      setBeneficiarySearch(router.query.beneficiary)
-      router.replace({ pathname: router.pathname, query: {} })
+    if (router.pathname === '/transactions' && beneficiary) {
+      setBeneficiarySearch(beneficiary)
     }
 
-    const { geography } = router.query
     if (geography === 'true') {
       setHasGeography(true)
     } else if (geography === 'false') {
       setHasGeography(false)
+    }
+
+    if (project_id || beneficiary || geography) {
+      router.replace({ pathname: router.pathname, query: {} })
     }
   }, [
     router.query.project_id,
