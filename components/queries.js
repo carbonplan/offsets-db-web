@@ -1,4 +1,4 @@
-import { Column, Filter, Input, Link, Row } from '@carbonplan/components'
+import { Column, Filter, Input, Link, Row, Tag } from '@carbonplan/components'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Box, Flex } from 'theme-ui'
@@ -30,6 +30,7 @@ export const QueryProvider = ({ children }) => {
   )
   const [projectType, setProjectType] = useState(null)
   const [complianceOnly, setComplianceOnly] = useState(null)
+  const [hasGeography, setHasGeography] = useState(null)
   const [search, setSearch] = useState('')
   const [beneficiarySearch, setBeneficiarySearch] = useState('')
   const [listingBounds, setListingBounds] = useState(null)
@@ -41,16 +42,31 @@ export const QueryProvider = ({ children }) => {
   const [sort, setSort] = useState('-issued')
 
   useEffect(() => {
-    if (router.pathname === '/' && router.query.project_id) {
-      setSearch(router.query.project_id)
-      router.replace({ pathname: router.pathname, query: {} })
+    const { project_id, beneficiary, geography } = router.query
+
+    if (router.pathname === '/' && project_id) {
+      setSearch(project_id)
     }
 
-    if (router.pathname === '/transactions' && router.query.beneficiary) {
-      setBeneficiarySearch(router.query.beneficiary)
+    if (router.pathname === '/transactions' && beneficiary) {
+      setBeneficiarySearch(beneficiary)
+    }
+
+    if (geography === 'true') {
+      setHasGeography(true)
+    } else if (geography === 'false') {
+      setHasGeography(false)
+    }
+
+    if (project_id || beneficiary || geography) {
       router.replace({ pathname: router.pathname, query: {} })
     }
-  }, [router.query.project_id, router.query.beneficiary, router.pathname])
+  }, [
+    router.query.project_id,
+    router.query.beneficiary,
+    router.query.geography,
+    router.pathname,
+  ])
 
   return (
     <QueryContext.Provider
@@ -59,6 +75,8 @@ export const QueryProvider = ({ children }) => {
         setRegistry,
         category,
         setCategory,
+        hasGeography,
+        setHasGeography,
         projectType,
         setProjectType,
         complianceOnly,
@@ -118,6 +136,8 @@ const Queries = () => {
     setRegistry,
     complianceOnly,
     setComplianceOnly,
+    hasGeography,
+    setHasGeography,
     search,
     setSearch,
     beneficiarySearch,
@@ -141,7 +161,7 @@ const Queries = () => {
   return (
     <Flex sx={{ flexDirection: 'column', gap: 5, mt: 5 }}>
       {view === 'projects' && (
-        <Row columns={[6, 8, 3, 3]}>
+        <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
           <Column start={1} width={[2, 2, 1, 1]}>
             <Box sx={sx.label}>Project</Box>
           </Column>
@@ -175,7 +195,7 @@ const Queries = () => {
         </Row>
       )}
       {view === 'transactions' && (
-        <Row columns={[6, 8, 3, 3]}>
+        <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
           <Column start={1} width={[2, 2, 1, 1]}>
             <Box sx={sx.label}>User</Box>
           </Column>
@@ -208,7 +228,7 @@ const Queries = () => {
           </Column>
         </Row>
       )}
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Registry</Box>
         </Column>
@@ -227,7 +247,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Category</Box>
         </Column>
@@ -240,7 +260,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Type</Box>
         </Column>
@@ -253,7 +273,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Country</Box>
         </Column>
@@ -269,7 +289,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Protocol</Box>
         </Column>
@@ -285,7 +305,7 @@ const Queries = () => {
           </TooltipWrapper>
         </Column>
       </Row>
-      <Row columns={[6, 8, 3, 3]}>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
         <Column start={1} width={[2, 2, 1, 1]}>
           <Box sx={sx.label}>Program</Box>
         </Column>
@@ -310,6 +330,39 @@ const Queries = () => {
                   return
                 }
                 setComplianceOnly(value)
+              }}
+              multiSelect
+            />
+          </TooltipWrapper>
+        </Column>
+      </Row>
+      <Row columns={[6, 8, 3, 3]} sx={{ alignItems: 'baseline' }}>
+        <Column start={1} width={[2, 2, 1, 1]}>
+          <Box sx={sx.label}>Geography</Box>
+        </Column>
+        <Column start={[1, 3, 2, 2]} width={[6, 5, 2, 2]}>
+          <TooltipWrapper
+            top='4px'
+            tooltip='Filter projects by geographic boundary data availability.'
+          >
+            <Filter
+              values={{
+                all: typeof hasGeography !== 'boolean',
+                available: hasGeography || typeof hasGeography !== 'boolean',
+                missing: typeof hasGeography !== 'boolean' || !hasGeography,
+              }}
+              setValues={(obj) => {
+                let value
+                if (obj.available && obj.missing) {
+                  value = null
+                } else if (obj.available) {
+                  value = true
+                } else if (obj.missing) {
+                  value = false
+                } else {
+                  return
+                }
+                setHasGeography(value)
               }}
               multiSelect
             />

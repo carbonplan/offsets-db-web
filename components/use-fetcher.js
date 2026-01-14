@@ -22,6 +22,7 @@ const fetcher = ([
   category,
   projectType,
   complianceOnly,
+  hasGeography,
   search,
   listingBounds,
   transactionBounds,
@@ -129,6 +130,10 @@ const fetcher = ([
     protocols.forEach((protocol) => params.append('protocol', protocol))
   }
 
+  if (typeof hasGeography === 'boolean') {
+    params.append('geography', hasGeography ? 'true' : 'false')
+  }
+
   const reqUrl = new URL(
     '/research/offsets-db/api/query',
     window.location.origin
@@ -162,6 +167,7 @@ const useFetcher = (
     category,
     projectType,
     complianceOnly,
+    hasGeography,
     search,
     listingBounds,
     transactionBounds,
@@ -176,6 +182,7 @@ const useFetcher = (
     useDebounce(category),
     useDebounce(projectType),
     complianceOnly,
+    hasGeography,
     useDebounce(search),
     useDebounce(listingBounds),
     useDebounce(transactionBounds),
