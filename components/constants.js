@@ -2,7 +2,7 @@ export const LABELS = {
   registry: {
     'american-carbon-registry': 'ACR',
     'art-trees': 'ART',
-    cercarbono: 'CCBCDC',
+    cercarbono: 'CCB',
     'climate-action-reserve': 'CAR',
     'gold-standard': 'GLD',
     isometric: 'ISO',
