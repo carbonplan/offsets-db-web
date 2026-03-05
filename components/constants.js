@@ -2,8 +2,10 @@ export const LABELS = {
   registry: {
     'american-carbon-registry': 'ACR',
     'art-trees': 'ART',
+    cercarbono: 'CCB',
     'climate-action-reserve': 'CAR',
     'gold-standard': 'GLD',
+    isometric: 'ISO',
     verra: 'VCS',
   },
   category: {
@@ -46,7 +48,10 @@ export const COLORS = {
 
 export const ALL_CATEGORIES = [
   'agriculture',
+  'air-capture',
+  'alkalinity-cdr',
   'biochar',
+  'biomass-cdr',
   'cookstove',
   'energy-efficiency',
   'forest',
