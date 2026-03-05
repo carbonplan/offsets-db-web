@@ -18,8 +18,10 @@ export const QueryProvider = ({ children }) => {
   const [registry, setRegistry] = useState({
     'american-carbon-registry': true,
     'art-trees': true,
+    cercarbono: true,
     'climate-action-reserve': true,
     'gold-standard': true,
+    isometric: true,
     verra: true,
   })
   const [category, setCategory] = useState(() =>
