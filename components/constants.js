@@ -48,7 +48,10 @@ export const COLORS = {
 
 export const ALL_CATEGORIES = [
   'agriculture',
+  'air-capture',
+  'alkalinity-cdr',
   'biochar',
+  'biomass-cdr',
   'cookstove',
   'energy-efficiency',
   'forest',
