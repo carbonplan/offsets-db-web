@@ -25,7 +25,6 @@
     "@carbonplan/components": "^13.3.0",
     "@carbonplan/emoji": "^2.0.0",
     "@carbonplan/icons": "^2.0.0",
-    "@carbonplan/layouts": "^5.2.0",
     "@carbonplan/theme": "^8.0.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
