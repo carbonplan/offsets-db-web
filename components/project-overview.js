@@ -1,5 +1,5 @@
-import { Button, Column } from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
+import { Button, Column, Expander } from '@carbonplan/components'
+import { QuestionCircle, RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex } from 'theme-ui'
 
 import { COLORS, LABELS } from './constants'
@@ -16,6 +16,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     country,
     status,
     protocol,
+    protocol_unassigned,
     is_compliance,
     proponent,
     project_url,
@@ -135,7 +136,21 @@ const ProjectOverview = ({ project, columns = 4 }) => {
               ))}
             </Flex>
           ) : (
-            <Empty label='Unknown' />
+            <TooltipWrapper
+              color={'primary'}
+              Icon={QuestionCircle}
+              tooltip={
+                protocol_unassigned?.length > 0
+                  ? `Reported as ${protocol_unassigned.join(', ')}`
+                  : 'No information reported'
+              }
+              sx={{
+                ...sx.tooltipWrapper,
+                '& svg': { stroke: 'primary' },
+              }}
+            >
+              <Empty label='Unknown' />
+            </TooltipWrapper>
           )}
         </Box>
       </Column>
