@@ -6,7 +6,7 @@ import { COLORS, LABELS } from './constants'
 import TooltipWrapper from './tooltip-wrapper'
 import { getProjectCategory } from './utils'
 
-const Empty = ({ label = 'N/A' }) => {
+const Empty = ({ label = 'Unknown' }) => {
   return <Box>{label}</Box>
 }
 
@@ -60,7 +60,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Country</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{country}</Box>
+        <Box sx={sx.value}>{country ?? <Empty />}</Box>
       </Column>
 
       <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
@@ -72,7 +72,9 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Status</Box>
         </TooltipWrapper>
-        <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>{status}</Box>
+        <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>
+          {status ?? <Empty />}
+        </Box>
       </Column>
 
       <Column
@@ -90,7 +92,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <Box sx={sx.value}>
           {(Array.isArray(category) ? category : [category]).map((c) => (
             <Box key={c} sx={{ width: 'fit-content' }}>
-              {LABELS.category[c] ?? <Empty label='Unknown' />}
+              {LABELS.category[c] ?? <Empty />}
             </Box>
           ))}
         </Box>
@@ -111,7 +113,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Project type</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{project_type ?? <Empty />}</Box>
+        <Box sx={sx.value}>{project_type ?? <Empty label='N/A' />}</Box>
       </Column>
 
       <Column
@@ -149,7 +151,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
                 '& svg': { stroke: 'primary' },
               }}
             >
-              <Empty label='Unknown' />
+              <Empty />
             </TooltipWrapper>
           )}
         </Box>
@@ -168,7 +170,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
           <Box sx={sx.label}>Proponent</Box>
         </TooltipWrapper>
         <Box sx={{ ...sx.value, mr: columns === 4 ? [0, 0, 2, 2] : 0 }}>
-          {proponent ?? <Empty />}
+          {proponent ?? <Empty label='N/A' />}
         </Box>
       </Column>
 
