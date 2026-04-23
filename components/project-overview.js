@@ -89,7 +89,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <Box sx={sx.value}>
           {(Array.isArray(category) ? category : [category]).map((c) => (
             <Box key={c} sx={{ width: 'fit-content' }}>
-              {LABELS.category[c]}
+              {LABELS.category[c] ?? <Empty label='Unknown' />}
             </Box>
           ))}
         </Box>
@@ -125,15 +125,17 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Protocol</Box>
         </TooltipWrapper>
-        <Box sx={{ ...sx.value, textTransform: 'uppercase' }}>
-          {protocol.length > 0 ? (
+        <Box sx={sx.value}>
+          {protocol?.length > 0 ? (
             <Flex sx={{ flexDirection: 'column', gap: 2 }}>
               {protocol.map((d) => (
-                <Box key={d}>{d}</Box>
+                <Box key={d} sx={{ textTransform: 'uppercase' }}>
+                  {d}
+                </Box>
               ))}
             </Flex>
           ) : (
-            <Empty />
+            <Empty label='Unknown' />
           )}
         </Box>
       </Column>
