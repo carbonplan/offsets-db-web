@@ -5,7 +5,6 @@ export const LABELS = {
     cercarbono: 'CCB',
     'climate-action-reserve': 'CAR',
     'gold-standard': 'GLD',
-    isometric: 'ISO',
     verra: 'VCS',
   },
   category: {
