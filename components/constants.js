@@ -27,6 +27,18 @@ export const LABELS = {
   },
 }
 
+export const LONG_NAMES = {
+  registry: {
+    'american-carbon-registry': 'American Carbon Registry',
+    'art-trees': 'ART TREES',
+    cercarbono: 'Cercarbono',
+    'climate-action-reserve': 'Climate Action Reserve',
+    'gold-standard': 'Gold Standard',
+    isometric: 'Isometric',
+    verra: 'Verra',
+  },
+}
+
 export const BOUNDARY_PMTILES_URL =
   'https://carbonplan-offsets-db.s3.us-west-2.amazonaws.com/miscellaneous/project-boundaries.pmtiles'
 

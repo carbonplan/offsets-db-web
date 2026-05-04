@@ -2,7 +2,7 @@ import { Button, Column, Expander } from '@carbonplan/components'
 import { QuestionCircle, RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex } from 'theme-ui'
 
-import { COLORS, LABELS } from './constants'
+import { COLORS, LABELS, LONG_NAMES } from './constants'
 import TooltipWrapper from './tooltip-wrapper'
 import { getProjectCategory } from './utils'
 
@@ -190,7 +190,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <TooltipWrapper
           top='-0.5px'
           color={color}
-          tooltip='Link to project registry page'
+          tooltip={`Source: ${LONG_NAMES.registry[registry]}`}
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Registry</Box>
