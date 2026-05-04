@@ -21,6 +21,7 @@ export const QueryProvider = ({ children }) => {
     cercarbono: true,
     'climate-action-reserve': true,
     'gold-standard': true,
+    isometric: true,
     verra: true,
   })
   const [category, setCategory] = useState(() =>
