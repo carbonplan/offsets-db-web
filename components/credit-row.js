@@ -40,6 +40,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
     retirement_beneficiary,
     retirement_note,
     retirement_reason,
+    transaction_url,
   } = event
 
   const columns = projectView ? [6, 6, 7, 7] : [6, 8, 8, 8]
@@ -73,6 +74,12 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
     retirement_note ??
     retirement_reason
   )
+  let userSummary = userInfo
+  if (transaction_type === 'issuance') {
+    userSummary = 'N/A'
+  } else if (!userInfo) {
+    userSummary = 'Data missing'
+  }
 
   return (
     <>
@@ -96,7 +103,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                         },
                       }}
                     >
-                      {transaction_type === 'retirement' && (
+                      {transaction_type === 'retirement' || transaction_url ? (
                         <Expander
                           id='expander'
                           value={expanded}
@@ -112,7 +119,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                           }}
                           onClick={() => setExpanded((prev) => !prev)}
                         />
-                      )}
+                      ) : null}
                       <ProjectBadge project={projects[0]} link />
                     </Box>
                   ),
@@ -181,7 +188,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
             key: 'beneficiary',
             label: (
               <Text>
-                {hasBeneficiaryInfo ? (
+                {hasBeneficiaryInfo || transaction_url ? (
                   <Box
                     onClick={() => setExpanded((prev) => !prev)}
                     sx={{
@@ -214,7 +221,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                           }}
                         >
                           {userInfo ?? (
-                            <Text sx={{ opacity: 0.5 }}>Data missing</Text>
+                            <Text sx={{ opacity: 0.5 }}>{userSummary}</Text>
                           )}
                         </Box>
                       </Column>
@@ -234,9 +241,7 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                     />
                   </Box>
                 ) : (
-                  <Text sx={{ opacity: 0.5 }}>
-                    {transaction_type === 'issuance' ? 'N/A' : 'Data missing'}
-                  </Text>
+                  <Text sx={{ opacity: 0.5 }}>{userSummary}</Text>
                 )}
               </Text>
             ),
@@ -272,13 +277,49 @@ const CreditRow = ({ color, event, projectView, ...props }) => {
                       height: 'fit-content',
                     }}
                   >
-                    <BeneficiaryOverview
-                      event={event}
-                      color={eventColor}
-                      columns={projectView ? 4 : 6}
-                    />
+                    {hasBeneficiaryInfo && (
+                      <BeneficiaryOverview
+                        event={event}
+                        color={eventColor}
+                        columns={projectView ? 4 : 6}
+                      />
+                    )}
+
+                    {transaction_url && (
+                      <Column
+                        start={projectView ? [1, 5, 5, 5] : [1, 3, 3, 3]}
+                        width={projectView ? [6, 6, 3, 3] : [1, 3, 3, 3]}
+                      >
+                        <Button
+                          href={transaction_url}
+                          onClick={(e) => e.stopPropagation()}
+                          sx={{
+                            color: eventColor,
+                            fontFamily: 'mono',
+                            letterSpacing: 'mono',
+                            textTransform: 'uppercase',
+                            fontSize: 1,
+                          }}
+                          suffix={
+                            <RotatingArrow
+                              sx={{
+                                width: 14,
+                                height: 14,
+                                mt: -1,
+                              }}
+                            />
+                          }
+                        >
+                          View transaction
+                        </Button>
+                      </Column>
+                    )}
+
                     {!projectView && (
-                      <Column start={[1, 3, 3, 3]} width={3}>
+                      <Column
+                        start={transaction_url ? [4, 6, 6, 6] : [1, 3, 3, 3]}
+                        width={3}
+                      >
                         <Button
                           href={`/projects/${projects[0].project_id}`}
                           onClick={(e) => e.stopPropagation()}

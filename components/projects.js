@@ -10,7 +10,6 @@ import {
   TableRow,
 } from './table'
 import { useQueries } from './queries'
-import { projectSorters } from './utils'
 import Pagination from './pagination'
 import ProjectRow from './project-row'
 import TooltipWrapper from './tooltip-wrapper'
@@ -111,11 +110,9 @@ const Projects = () => {
         />
         {data && (
           <FadeIn as='tbody'>
-            {data.data
-              .sort(projectSorters[sort] ?? projectSorters.default(sort))
-              .map((d) => (
-                <ProjectRow key={d.project_id} project={d} />
-              ))}
+            {data.data.map((d) => (
+              <ProjectRow key={d.project_id} project={d} />
+            ))}
             {data.data.length === 0 ? (
               <TableRow
                 values={[

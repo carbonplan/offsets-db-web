@@ -1,12 +1,12 @@
-import { Button, Column } from '@carbonplan/components'
-import { RotatingArrow } from '@carbonplan/icons'
+import { Button, Column, Expander } from '@carbonplan/components'
+import { QuestionCircle, RotatingArrow } from '@carbonplan/icons'
 import { Box, Flex } from 'theme-ui'
 
-import { COLORS, LABELS } from './constants'
+import { COLORS, LABELS, LONG_NAMES } from './constants'
 import TooltipWrapper from './tooltip-wrapper'
 import { getProjectCategory } from './utils'
 
-const Empty = ({ label = 'N/A' }) => {
+const Empty = ({ label = 'Unknown' }) => {
   return <Box>{label}</Box>
 }
 
@@ -16,6 +16,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
     country,
     status,
     protocol,
+    protocol_unassigned,
     is_compliance,
     proponent,
     project_url,
@@ -59,7 +60,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Country</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{country}</Box>
+        <Box sx={sx.value}>{country ?? <Empty />}</Box>
       </Column>
 
       <Column start={[4, 3, 3, 3]} width={[3, 2, 2, 2]}>
@@ -71,7 +72,9 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Status</Box>
         </TooltipWrapper>
-        <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>{status}</Box>
+        <Box sx={{ ...sx.value, textTransform: 'capitalize' }}>
+          {status ?? <Empty />}
+        </Box>
       </Column>
 
       <Column
@@ -89,7 +92,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <Box sx={sx.value}>
           {(Array.isArray(category) ? category : [category]).map((c) => (
             <Box key={c} sx={{ width: 'fit-content' }}>
-              {LABELS.category[c]}
+              {LABELS.category[c] ?? <Empty />}
             </Box>
           ))}
         </Box>
@@ -110,7 +113,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Project type</Box>
         </TooltipWrapper>
-        <Box sx={sx.value}>{project_type ?? <Empty />}</Box>
+        <Box sx={sx.value}>{project_type ?? <Empty label='N/A' />}</Box>
       </Column>
 
       <Column
@@ -125,15 +128,31 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         >
           <Box sx={sx.label}>Protocol</Box>
         </TooltipWrapper>
-        <Box sx={{ ...sx.value, textTransform: 'uppercase' }}>
-          {protocol.length > 0 ? (
+        <Box sx={sx.value}>
+          {protocol?.length > 0 ? (
             <Flex sx={{ flexDirection: 'column', gap: 2 }}>
               {protocol.map((d) => (
-                <Box key={d}>{d}</Box>
+                <Box key={d} sx={{ textTransform: 'uppercase' }}>
+                  {d}
+                </Box>
               ))}
             </Flex>
           ) : (
-            <Empty />
+            <TooltipWrapper
+              color={'primary'}
+              Icon={QuestionCircle}
+              tooltip={
+                protocol_unassigned?.length > 0
+                  ? `Reported as ${protocol_unassigned.join(', ')}`
+                  : 'No information reported'
+              }
+              sx={{
+                ...sx.tooltipWrapper,
+                '& svg': { stroke: 'primary' },
+              }}
+            >
+              <Empty />
+            </TooltipWrapper>
           )}
         </Box>
       </Column>
@@ -151,7 +170,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
           <Box sx={sx.label}>Proponent</Box>
         </TooltipWrapper>
         <Box sx={{ ...sx.value, mr: columns === 4 ? [0, 0, 2, 2] : 0 }}>
-          {proponent ?? <Empty />}
+          {proponent ?? <Empty label='N/A' />}
         </Box>
       </Column>
 
@@ -171,7 +190,7 @@ const ProjectOverview = ({ project, columns = 4 }) => {
         <TooltipWrapper
           top='-0.5px'
           color={color}
-          tooltip='Link to project registry page'
+          tooltip={`Source: ${LONG_NAMES.registry[registry]}`}
           sx={sx.tooltipWrapper}
         >
           <Box sx={sx.label}>Registry</Box>
