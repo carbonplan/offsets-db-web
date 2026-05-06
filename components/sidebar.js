@@ -44,7 +44,7 @@ const Sidebar = ({ children }) => {
         </Box>
         <Box as='p' sx={{ fontSize: 1, mb: 5 }}>
           This database collects and standardizes data about offset projects and
-          offset credits issued by five of the largest offset registries. View
+          offset credits issued by seven of the largest offset registries. View
           the latest{' '}
           <Link href='https://carbonplan.org/research/offsets-db/updates'>
             updates
