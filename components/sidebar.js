@@ -1,6 +1,7 @@
 import { Column, Link } from '@carbonplan/components'
 import { Box, Divider } from 'theme-ui'
 import LastUpdated from './last-updated'
+import Notice from './notice'
 
 const Sidebar = ({ children }) => {
   return (
@@ -36,6 +37,7 @@ const Sidebar = ({ children }) => {
           pb: [4, 3, 5, 5],
         }}
       >
+        <Notice />
         <Box
           as='h1'
           sx={{ variant: 'styles.h1', fontSize: [5, 6, 6, 7], mt: 3, mb: 3 }}
